@@ -1,5 +1,5 @@
-import 'package:events_jo/config/custom_icons_icons.dart';
-import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';

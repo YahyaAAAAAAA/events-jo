@@ -1,4 +1,4 @@
-import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 

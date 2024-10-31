@@ -1,4 +1,4 @@
-import 'package:events_jo/config/loading_indicator.dart';
+import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/auth/representation/components/change_user_type_row.dart';
 import 'package:events_jo/features/auth/representation/components/events_jo_logo_auth.dart';
 import 'package:events_jo/features/location/representation/components/location_loading_dialog.dart';
@@ -6,7 +6,7 @@ import 'package:events_jo/features/location/representation/components/location_p
 import 'package:events_jo/features/auth/representation/components/auth_button.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/location/representation/cubits/location_states.dart';
 import 'package:events_jo/features/location/representation/components/map_dialog.dart';

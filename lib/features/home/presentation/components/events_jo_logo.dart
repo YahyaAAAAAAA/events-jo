@@ -1,5 +1,5 @@
-import 'package:events_jo/config/custom_icons_icons.dart';
-import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
@@ -23,8 +23,8 @@ class EventsJoLogo extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: MyColors.royalBlue.withOpacity(0.2),
-            blurRadius: 5,
-            offset: const Offset(3, 3),
+            blurRadius: 3,
+            offset: const Offset(1, 1),
           ),
         ],
       ),

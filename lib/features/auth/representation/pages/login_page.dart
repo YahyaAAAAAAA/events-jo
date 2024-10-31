@@ -2,7 +2,7 @@ import 'package:events_jo/features/auth/representation/components/events_jo_logo
 import 'package:events_jo/features/auth/representation/components/auth_button.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

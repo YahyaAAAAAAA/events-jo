@@ -1,4 +1,4 @@
-import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter/material.dart';
 

@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:events_jo/config/custom_icons_icons.dart';
-import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
+import 'package:events_jo/features/home/presentation/components/owner_button.dart';
+import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 
 class HomePage extends StatefulWidget {
@@ -93,105 +94,17 @@ class _HomePageState extends State<HomePage> {
         leadingWidth: 90,
         toolbarHeight: 70,
       ),
-
-      body:
-          // ListView(
-          //   shrinkWrap: true,
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: 15,
-          //   ),
-          //   children: [
-          //     //logo
-          //     const EventsJoLogo(),
-          //     //spacing
-          //     Divider(
-          //       thickness: 0.2,
-          //       color: MyColors.black,
-          //       indent: 100,
-          //       endIndent: 100,
-          //     ),
-          //     //welocme text
-          //     Text(
-          //       "Choose which category you would like to book",
-          //       style: TextStyle(
-          //         color: MyColors.black,
-          //         fontSize: 20,
-          //       ),
-          //       textAlign: TextAlign.center,
-          //     ),
-          //     //spacing
-          //     const SizedBox(height: 20),
-          //     //weddings card -> to weddings page
-          //     HomeCard(
-          //       text: 'Wedding Venues',
-          //       subText: 'See wedding venues in Jordan',
-          //       image: 'assets/images/wedding_ring.png',
-          //       width: 110,
-          //       onPressed: () => Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) => const WeddingVenuesPage(),
-          //         ),
-          //       ),
-          //     ),
-          //     //spacing
-          //     Divider(thickness: 0.2, color: MyColors.black),
-          //     HomeCard(
-          //       text: 'Personal Event',
-          //       subText: 'Book your own in-house event',
-          //       image: 'assets/images/person.png',
-          //       width: 100,
-          //       onPressed: () => Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) => const WeddingVenuesPage(),
-          //         ),
-          //       ),
-          //     ),
-          //     //spacing
-          //     Divider(thickness: 0.2, color: MyColors.black),
-          //     //farms card -> to farms page
-          //     HomeCard(
-          //       text: 'Farms',
-          //       subText: 'See farms in Jordan',
-          //       image: 'assets/images/farm.png',
-          //       width: 110,
-          //       onPressed: () => Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) => const WeddingVenuesPage(),
-          //         ),
-          //       ),
-          //     ),
-          //     //spacing
-          //     Divider(thickness: 0.2, color: MyColors.black),
-          //     const SizedBox(height: 20),
-          //     //football courtes card -> to football courtes page
-          //     HomeCard(
-          //       text: 'Football Courts',
-          //       subText: 'See football courts in Jordan',
-          //       image: 'assets/images/football.png',
-          //       leftPadding: 10,
-          //       width: 110,
-          //       onPressed: () => Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) => const WeddingVenuesPage(),
-          //         ),
-          //       ),
-          //     ),
-          //     //spacing
-          //     Divider(thickness: 0.2, color: MyColors.black),
-          //   ],
-          // ),
-          Padding(
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
+
             const EventsJoLogo(),
+
             const SizedBox(height: 50),
+
             Text(
               "Browse a category",
               style: TextStyle(
@@ -250,58 +163,18 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            // addToDatabaseButton(),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Add Your Venue,Farm or Court',
-                    style: TextStyle(
-                      color: MyColors.poloBlue,
-                      fontSize: 17,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  IconButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStatePropertyAll(MyColors.royalBlue),
-                        shadowColor: WidgetStatePropertyAll(
-                          MyColors.black.withOpacity(0.5),
-                        ),
-                        elevation: const WidgetStatePropertyAll(3),
-                        shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        padding: const WidgetStatePropertyAll(EdgeInsets.zero)),
-                    icon: Ink(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          colors: MyColors.logoGradient,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.add,
-                          size: 50,
-                          color: MyColors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
 
-            const SizedBox(height: 10),
+            //display button if user is an owner
+            currentUser!.type == 'owner'
+                ? OwnerButton(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const OwnerPage(),
+                      ),
+                    ),
+                  )
+                //else display nothing
+                : const SizedBox(),
 
             const SizedBox(height: 10),
 
@@ -315,13 +188,11 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      //dev delete later
-      // drawer: const MyDrawer(),
     );
   }
 }
 
-//extend string class -> capitlize the begging of every word
+//dev extend string class -> capitlize the begging of every word
 extension StringCasingExtension on String {
   String get toCapitalized =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';

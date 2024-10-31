@@ -1,4 +1,4 @@
-import 'package:events_jo/config/loading_indicator.dart';
+import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/auth/data/firebase_auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
@@ -6,9 +6,11 @@ import 'package:events_jo/features/auth/representation/pages/auth_page.dart';
 import 'package:events_jo/features/location/data/geolocator_location_repo.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/navigation/presentation/navigation_bar.dart';
+import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
+import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_cubit.dart';
-import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
   final weddingVenueRepo = FirebaseWeddingVenueRepo();
   final locationRepo = GeolocatorLocationRepo();
+  final ownerRepo = FirebaseOwnerRepo();
 
   MyApp({super.key});
 
@@ -51,6 +54,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               WeddingVenueCubit(weddingVenueRepo: weddingVenueRepo),
+        ),
+        //owner cubit
+        BlocProvider(
+          create: (context) => OwnerCubit(ownerRepo: ownerRepo),
         ),
       ],
       child: MaterialApp(

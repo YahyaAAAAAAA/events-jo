@@ -1,5 +1,5 @@
-import 'package:events_jo/config/my_colors.dart';
-import 'package:events_jo/config/loading_indicator.dart';
+import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/my_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/wedding_venue_card.dart';
