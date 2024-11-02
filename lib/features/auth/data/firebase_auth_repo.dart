@@ -15,14 +15,14 @@ class FirebaseAuthRepo implements AuthRepo {
     //fetch user's name
     final name = await getCurrentUserName();
 
-    //fetch user's latitude
-    final latitude = await getCurrentUserLatitude();
-
-    //fetch user's longitude
-    final longitude = await getCurrentUserLongitude();
-
     //fetch user's type
     final type = await getUserType();
+
+    //fetch user's latitude
+    final latitude = await getCurrentUserLatitude(type);
+
+    //fetch user's longitude
+    final longitude = await getCurrentUserLongitude(type);
 
     //no user logged in
     if (firebaseUser == null) {
@@ -50,14 +50,14 @@ class FirebaseAuthRepo implements AuthRepo {
       //fetch user's name
       final name = await getCurrentUserName();
 
-      //fetch user's latitude
-      final latitude = await getCurrentUserLatitude();
-
-      //fetch user's longitude
-      final longitude = await getCurrentUserLongitude();
-
       //fetch user's type
       final type = await getUserType();
+
+      //fetch user's latitude
+      final latitude = await getCurrentUserLatitude(type);
+
+      //fetch user's longitude
+      final longitude = await getCurrentUserLongitude(type);
 
       //create user
       AppUser user = AppUser(
@@ -180,7 +180,7 @@ class FirebaseAuthRepo implements AuthRepo {
   }
 
   //get user latitude
-  Future<double?> getCurrentUserLatitude() async {
+  Future<double?> getCurrentUserLatitude(String? type) async {
     //current user
     final firebaseUser = firebaseAuth.currentUser;
 
@@ -189,8 +189,12 @@ class FirebaseAuthRepo implements AuthRepo {
       return 0;
     }
 
-    //access users
-    final collection = FirebaseFirestore.instance.collection('users');
+    if (type!.isEmpty) {
+      return 0;
+    }
+
+    //access users or owners
+    final collection = FirebaseFirestore.instance.collection('${type}s');
 
     //get data fields as json
     final docSnapshot = await collection.doc(firebaseUser.uid).get();
@@ -205,7 +209,7 @@ class FirebaseAuthRepo implements AuthRepo {
   }
 
   //get user longitude
-  Future<double?> getCurrentUserLongitude() async {
+  Future<double?> getCurrentUserLongitude(String? type) async {
     //current user
     final firebaseUser = firebaseAuth.currentUser;
 
@@ -214,8 +218,12 @@ class FirebaseAuthRepo implements AuthRepo {
       return 0;
     }
 
-    //access users
-    final collection = FirebaseFirestore.instance.collection('users');
+    if (type!.isEmpty) {
+      return 0;
+    }
+
+    //access users or owners
+    final collection = FirebaseFirestore.instance.collection('${type}s');
 
     //get data fields as json
     final docSnapshot = await collection.doc(firebaseUser.uid).get();

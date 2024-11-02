@@ -1,4 +1,4 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChangeUserTypeRow extends StatelessWidget {
@@ -20,7 +20,7 @@ class ChangeUserTypeRow extends StatelessWidget {
         TextButton(
           onPressed: setUserType,
           style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(MyColors.white),
+            backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
             shape: WidgetStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -33,14 +33,14 @@ class ChangeUserTypeRow extends StatelessWidget {
           child: Icon(
             Icons.person,
             size: 30,
-            color: isOwner ? MyColors.black : MyColors.royalBlue,
+            color: isOwner ? GlobalColors.black : GlobalColors.royalBlue,
           ),
         ),
         const SizedBox(width: 10),
         TextButton(
           onPressed: setOwnerType,
           style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(MyColors.white),
+            backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
             shape: WidgetStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -53,7 +53,7 @@ class ChangeUserTypeRow extends StatelessWidget {
           child: Icon(
             Icons.person_4,
             size: 30,
-            color: isOwner ? MyColors.royalBlue : MyColors.black,
+            color: isOwner ? GlobalColors.royalBlue : GlobalColors.black,
           ),
         ),
         const SizedBox(width: 10),

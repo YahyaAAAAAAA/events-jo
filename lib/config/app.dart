@@ -1,4 +1,5 @@
 import 'package:events_jo/config/utils/loading_indicator.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/data/firebase_auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
@@ -10,7 +11,7 @@ import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_cubit.dart';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,15 +65,15 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Abel',
-          scaffoldBackgroundColor: MyColors.scaffoldBg,
+          scaffoldBackgroundColor: GlobalColors.scaffoldBg,
           appBarTheme: AppBarTheme(
-            backgroundColor: MyColors.appBarBg,
+            backgroundColor: GlobalColors.appBarBg,
             iconTheme: IconThemeData(
-              color: MyColors.black,
+              color: GlobalColors.black,
             ),
           ),
           iconTheme: IconThemeData(
-            color: MyColors.whiteShade3,
+            color: GlobalColors.whiteShade3,
           ),
         ),
         home: BlocConsumer<AuthCubit, AuthStates>(
@@ -94,13 +95,7 @@ class MyApp extends StatelessWidget {
           },
           listener: (context, state) {
             if (state is AuthError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    state.message,
-                  ),
-                ),
-              );
+              GlobalSnackBar.show(context: context, text: state.message);
             }
           },
         ),

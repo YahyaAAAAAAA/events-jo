@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyColors {
+class GlobalColors {
   //main bg color
   static Color whiteShade3 = const Color.fromRGBO(241, 246, 255, 1);
 

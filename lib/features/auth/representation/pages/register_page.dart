@@ -1,4 +1,5 @@
 import 'package:events_jo/config/utils/loading_indicator.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/representation/components/change_user_type_row.dart';
 import 'package:events_jo/features/auth/representation/components/events_jo_logo_auth.dart';
 import 'package:events_jo/features/location/representation/components/location_loading_dialog.dart';
@@ -6,7 +7,7 @@ import 'package:events_jo/features/location/representation/components/location_p
 import 'package:events_jo/features/auth/representation/components/auth_button.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/location/representation/cubits/location_states.dart';
 import 'package:events_jo/features/location/representation/components/map_dialog.dart';
@@ -58,11 +59,22 @@ class _RegisterPageState extends State<RegisterPage> {
       point: LatLng(lat, long),
       child: Icon(
         Icons.location_pin,
-        color: MyColors.black,
+        color: GlobalColors.black,
       ),
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    nameController.dispose();
+    pwController.dispose();
+    confirmPwController.dispose();
+    locationCubit.emit(LocationInitial());
+  }
+
+  //some checks then proceeds with user registration
   void register() {
     //prepare email & pw
     final String email = emailController.text;
@@ -75,13 +87,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
     //location doesn't exist
     if (lat == 0 || long == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Please provide your location',
-          ),
-        ),
+      GlobalSnackBar.show(
+        context: context,
+        text: 'Please provide your location',
       );
+
       return;
     }
 
@@ -99,33 +109,81 @@ class _RegisterPageState extends State<RegisterPage> {
           isOwner,
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Passwords dont match',
-            ),
-          ),
+        GlobalSnackBar.show(
+          context: context,
+          text: 'Passwords dont match',
         );
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Please enter both email and password',
-          ),
-        ),
+      GlobalSnackBar.show(
+        context: context,
+        text: 'Please enter both email and password',
       );
     }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
-    nameController.dispose();
-    pwController.dispose();
-    confirmPwController.dispose();
-    locationCubit.emit(LocationInitial());
+  //shows map to change locaiton
+  Future<Object?> showMapDialog(BuildContext context) {
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) => StatefulBuilder(
+        builder: (context, setState) => MapDialog(
+          latitude: lat,
+          longitude: long,
+          marker: marker,
+          onTap: (tapPoint, point) {
+            setState(() {
+              //update coords
+              lat = point.latitude;
+              long = point.longitude;
+
+              //update marker
+              marker = Marker(
+                point: point,
+                child: Icon(
+                  Icons.location_pin,
+                  color: GlobalColors.black,
+                ),
+              );
+            });
+          },
+          //bring coords and marker to init value
+          onCancel: () {
+            Navigator.of(context).pop();
+            setState(
+              () {
+                lat = initLat;
+                long = initLong;
+                marker = Marker(
+                  point: LatLng(lat, long),
+                  child: Icon(
+                    Icons.location_pin,
+                    color: GlobalColors.black,
+                  ),
+                );
+              },
+            );
+          },
+          //saves coords and marker new values
+          onConfirm: () {
+            setState(
+              () {
+                Navigator.of(context).pop();
+                initLat = lat;
+                initLong = long;
+                marker = Marker(
+                  point: LatLng(lat, long),
+                  child: Icon(
+                    Icons.location_pin,
+                    color: GlobalColors.black,
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -144,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Text(
                   "Create an account",
                   style: TextStyle(
-                    color: MyColors.black,
+                    color: GlobalColors.black,
                     fontSize: 22,
                   ),
                 ),
@@ -220,7 +278,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             child: Icon(
                               Icons.location_pin,
-                              color: MyColors.black,
+                              color: GlobalColors.black,
                             ),
                           );
                         },
@@ -233,77 +291,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (state is LocationLoaded) {
                       //* allow user to change location
                       return LocationProvided(
-                        onPressed: () async {
-                          return showDialog(
-                            context: context,
-                            builder: (context) => StatefulBuilder(
-                              builder: (context, setState) => MapDialog(
-                                latitude: lat,
-                                longitude: long,
-                                marker: marker,
-                                onTap: (tapPoint, point) {
-                                  setState(() {
-                                    //update coords
-                                    lat = point.latitude;
-                                    long = point.longitude;
-
-                                    //update marker
-                                    marker = Marker(
-                                      point: point,
-                                      child: Icon(
-                                        Icons.location_pin,
-                                        color: MyColors.black,
-                                      ),
-                                    );
-                                  });
-                                },
-                                //bring coords and marker to init value
-                                onCancel: () {
-                                  Navigator.of(context).pop();
-                                  setState(
-                                    () {
-                                      lat = initLat;
-                                      long = initLong;
-                                      marker = Marker(
-                                        point: LatLng(lat, long),
-                                        child: Icon(
-                                          Icons.location_pin,
-                                          color: MyColors.black,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                                //saves coords and marker new values
-                                onConfirm: () {
-                                  setState(
-                                    () {
-                                      Navigator.of(context).pop();
-                                      initLat = lat;
-                                      initLong = long;
-                                      marker = Marker(
-                                        point: LatLng(lat, long),
-                                        child: Icon(
-                                          Icons.location_pin,
-                                          color: MyColors.black,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        },
+                        onPressed: () => showMapDialog(context),
                       );
                     }
 
                     //loading...
-
                     return Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: MyColors.white,
+                        color: GlobalColors.white,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Row(
@@ -342,7 +338,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Text(
                       'You have an accout ? ',
                       style: TextStyle(
-                        color: MyColors.black,
+                        color: GlobalColors.black,
                         fontSize: 17,
                       ),
                     ),
@@ -352,7 +348,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         'Login now!',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: MyColors.royalBlue,
+                          color: GlobalColors.royalBlue,
                           fontSize: 17,
                         ),
                       ),

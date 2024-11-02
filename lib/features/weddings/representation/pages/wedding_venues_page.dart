@@ -1,5 +1,6 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading_indicator.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/my_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/wedding_venue_card.dart';
@@ -43,7 +44,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         title: Text(
           'Wedding Venues in Jordan',
           style: TextStyle(
-            color: MyColors.black,
+            color: GlobalColors.black,
           ),
         ),
         centerTitle: true,
@@ -55,7 +56,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
             },
             child: Icon(
               Icons.sort_by_alpha_rounded,
-              color: MyColors.black,
+              color: GlobalColors.black,
             ),
           )
         ],
@@ -63,7 +64,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: MyColors.black,
+            color: GlobalColors.black,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -118,13 +119,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         listener: (context, state) {
           //listens for errors
           if (state is WeddingVenueError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.message,
-                ),
-              ),
-            );
+            GlobalSnackBar.show(context: context, text: state.message);
           }
         },
       ),

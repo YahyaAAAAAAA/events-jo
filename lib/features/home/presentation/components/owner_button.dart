@@ -1,11 +1,24 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class OwnerButton extends StatelessWidget {
   final void Function()? onPressed;
+  final String text;
+  final double fontSize;
+  final double iconSize;
+  final double padding;
+  final IconData icon;
+  final FontWeight fontWeight;
+
   const OwnerButton({
     super.key,
     required this.onPressed,
+    required this.icon,
+    required this.text,
+    required this.fontSize,
+    required this.iconSize,
+    required this.padding,
+    required this.fontWeight,
   });
 
   @override
@@ -16,19 +29,20 @@ class OwnerButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Add Your Venue,Farm or Court',
+            text,
             style: TextStyle(
-              color: MyColors.poloBlue,
-              fontSize: 17,
+              color: GlobalColors.poloBlue,
+              fontSize: fontSize,
+              fontWeight: fontWeight,
             ),
           ),
           const SizedBox(height: 5),
           IconButton(
             onPressed: onPressed,
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(MyColors.royalBlue),
+                backgroundColor: WidgetStatePropertyAll(GlobalColors.royalBlue),
                 shadowColor: WidgetStatePropertyAll(
-                  MyColors.black.withOpacity(0.5),
+                  GlobalColors.black.withOpacity(0.5),
                 ),
                 elevation: const WidgetStatePropertyAll(3),
                 shape: WidgetStatePropertyAll(
@@ -42,15 +56,15 @@ class OwnerButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
-                  colors: MyColors.logoGradient,
+                  colors: GlobalColors.logoGradient,
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(padding),
                 child: Icon(
-                  Icons.add,
-                  size: 50,
-                  color: MyColors.white,
+                  icon,
+                  size: iconSize,
+                  color: GlobalColors.white,
                 ),
               ),
             ),

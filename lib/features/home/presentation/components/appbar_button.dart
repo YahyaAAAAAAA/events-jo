@@ -1,4 +1,4 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppBarButton extends StatelessWidget {
@@ -29,9 +29,9 @@ class AppBarButton extends StatelessWidget {
           style: ButtonStyle(
             fixedSize: const WidgetStatePropertyAll(Size.fromWidth(20)),
             padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
-            backgroundColor: WidgetStatePropertyAll(MyColors.white),
+            backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
             shadowColor: WidgetStatePropertyAll(
-              MyColors.black.withOpacity(0.5),
+              GlobalColors.black.withOpacity(0.5),
             ),
             elevation: const WidgetStatePropertyAll(3),
             shape: WidgetStatePropertyAll(
@@ -42,7 +42,7 @@ class AppBarButton extends StatelessWidget {
           ),
           child: Icon(
             icon,
-            color: MyColors.poloBlue,
+            color: GlobalColors.poloBlue,
             size: size,
           ),
         ),

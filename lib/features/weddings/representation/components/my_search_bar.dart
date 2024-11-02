@@ -1,4 +1,4 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class MySearchBar extends StatelessWidget {
@@ -21,24 +21,24 @@ class MySearchBar extends StatelessWidget {
         hintText: 'Search Venues...',
         textStyle: WidgetStatePropertyAll(
           TextStyle(
-            color: MyColors.black,
+            color: GlobalColors.black,
           ),
         ),
         elevation: const WidgetStatePropertyAll(0),
-        backgroundColor: WidgetStatePropertyAll(MyColors.white),
+        backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
         trailing: [
           //clear search
           IconButton(
             onPressed: onPressed,
             icon: Icon(
               Icons.clear,
-              color: MyColors.black,
+              color: GlobalColors.black,
             ),
           ),
         ],
         leading: Icon(
           Icons.search,
-          color: MyColors.black,
+          color: GlobalColors.black,
         ),
         //start search
         onChanged: onChanged,

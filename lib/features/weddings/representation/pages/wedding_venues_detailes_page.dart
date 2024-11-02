@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/rating_venues.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
         title: Text(
           'Wedding Venue in Jordan',
           style: TextStyle(
-            color: MyColors.black,
+            color: GlobalColors.black,
           ),
         ),
         actions: [
@@ -47,14 +47,14 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
             onPressed: () {},
             child: Icon(
               Icons.report_problem_rounded,
-              color: MyColors.black,
+              color: GlobalColors.black,
             ),
           )
         ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: MyColors.black,
+            color: GlobalColors.black,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -75,8 +75,8 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
                 indicatorPadding: 10,
                 indicatorBottomPadding: 20,
                 indicatorRadius: 4,
-                indicatorColor: MyColors.royalBlue,
-                indicatorBackgroundColor: MyColors.white,
+                indicatorColor: GlobalColors.royalBlue,
+                indicatorBackgroundColor: GlobalColors.white,
                 autoPlayInterval: 3000,
                 isLoop: true,
                 children: widget.picsList,
@@ -91,7 +91,7 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
                   Text(
                     weddingVenue.name,
                     style: TextStyle(
-                      color: MyColors.black,
+                      color: GlobalColors.black,
                       fontSize: 28,
                     ),
                   ),

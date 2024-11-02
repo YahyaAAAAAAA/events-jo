@@ -1,8 +1,9 @@
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/representation/components/events_jo_logo_auth.dart';
 import 'package:events_jo/features/auth/representation/components/auth_button.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,13 +34,8 @@ class _LoginPageState extends State<LoginPage> {
     if (email.isNotEmpty && pw.isNotEmpty) {
       authCubit.login(email, pw);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Please enter both email and password',
-          ),
-        ),
-      );
+      GlobalSnackBar.show(
+          context: context, text: 'Please enter both email and password');
     }
   }
 
@@ -69,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                 Text(
                   "Login to EventsJO",
                   style: TextStyle(
-                    color: MyColors.black,
+                    color: GlobalColors.black,
                     fontSize: 22,
                   ),
                 ),
@@ -110,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text(
                       'Don\'t have an account ?',
                       style: TextStyle(
-                        color: MyColors.black,
+                        color: GlobalColors.black,
                         fontSize: 17,
                       ),
                     ),
@@ -120,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                         ' Register now!',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: MyColors.royalBlue,
+                          color: GlobalColors.royalBlue,
                           fontSize: 17,
                         ),
                       ),

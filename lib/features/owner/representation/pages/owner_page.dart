@@ -1,11 +1,18 @@
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/location/representation/components/map_dialog.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_navigation_bar.dart';
+import 'package:events_jo/features/owner/representation/components/select_event_locaiton.dart';
+import 'package:events_jo/features/owner/representation/components/select_event_name.dart';
+import 'package:events_jo/features/owner/representation/components/select_event_type.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 
 class OwnerPage extends StatefulWidget {
   final AppUser? user;
@@ -19,16 +26,119 @@ class OwnerPage extends StatefulWidget {
 }
 
 class _OwnerPageState extends State<OwnerPage> {
+  final TextEditingController nameController = TextEditingController();
   late final OwnerCubit ownerCubit;
   DateTimeRange? range;
   List<int> time = [0, 0];
   int selectedEventType = 0;
   int index = 0;
 
+  Position? location;
+
+  //users coords
+  double lat = 0;
+  double long = 0;
+  //init location incase the user cancel
+  double initLat = 0;
+  double initLong = 0;
+
+  //empty marker for now
+  late Marker marker;
+
   @override
   void initState() {
     super.initState();
     ownerCubit = context.read<OwnerCubit>();
+
+    //save location
+    lat = widget.user!.latitude;
+    long = widget.user!.longitude;
+
+    //save initial location
+    initLat = widget.user!.latitude;
+    initLong = widget.user!.longitude;
+
+    //set marker to user location
+    marker = Marker(
+      point: LatLng(
+        lat,
+        long,
+      ),
+      child: Icon(
+        Icons.location_pin,
+        color: GlobalColors.black,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    //todo cubit
+  }
+
+  Future<Object?> showMapDialog(BuildContext context) {
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) => StatefulBuilder(
+        builder: (context, setState) => MapDialog(
+          latitude: lat,
+          longitude: long,
+          marker: marker,
+          onTap: (tapPoint, point) {
+            setState(() {
+              //update coords
+              lat = point.latitude;
+              long = point.longitude;
+
+              //update marker
+              marker = Marker(
+                point: point,
+                child: Icon(
+                  Icons.location_pin,
+                  color: GlobalColors.black,
+                ),
+              );
+            });
+          },
+          //bring coords and marker to init value
+          onCancel: () {
+            Navigator.of(context).pop();
+            setState(
+              () {
+                lat = initLat;
+                long = initLong;
+                marker = Marker(
+                  point: LatLng(lat, long),
+                  child: Icon(
+                    Icons.location_pin,
+                    color: GlobalColors.black,
+                  ),
+                );
+              },
+            );
+          },
+          //saves coords and marker new values
+          onConfirm: () {
+            setState(
+              () {
+                Navigator.of(context).pop();
+                initLat = lat;
+                initLong = long;
+                marker = Marker(
+                  point: LatLng(lat, long),
+                  child: Icon(
+                    Icons.location_pin,
+                    color: GlobalColors.black,
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 
   //dev remove both buttons
@@ -65,155 +175,70 @@ class _OwnerPageState extends State<OwnerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: IndexedStack(
-        index: index,
-        children: [
-          //0
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Pick which type of event you would like to add',
-                style: TextStyle(
-                  color: MyColors.poloBlue,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 25),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: ColoredBox(
-                      color: MyColors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          children: [
-                            Icon(
-                              selectedEventType == 0
-                                  ? CustomIcons.wedding
-                                  : selectedEventType == 1
-                                      ? CustomIcons.farm
-                                      : CustomIcons.football,
-                              color: MyColors.royalBlue,
-                            ),
-                            const SizedBox(width: 15),
-                            Text(
-                              selectedEventType == 0
-                                  ? 'Wedding Venue'
-                                  : selectedEventType == 1
-                                      ? 'Farm'
-                                      : 'Football Court',
-                              style: TextStyle(
-                                color: MyColors.royalBlue,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 25),
-                  PopupMenuButton(
-                    icon: Icon(
-                      Icons.menu,
-                      size: 30,
-                      color: MyColors.royalBlue,
-                    ),
-                    style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(MyColors.white),
-                        shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        )),
-                    color: MyColors.white,
-                    position: PopupMenuPosition.under,
-                    offset: const Offset(0, 20),
-                    constraints: const BoxConstraints.tightFor(width: 150),
-                    initialValue: 0,
-                    tooltip: '',
-                    popUpAnimationStyle: AnimationStyle(
-                      duration: const Duration(milliseconds: 200),
-                    ),
-                    padding: const EdgeInsets.all(15),
-                    itemBuilder: (BuildContext context) {
-                      return [
-                        PopupMenuItem(
-                          onTap: () => setState(() => selectedEventType = 0),
-                          child: Text(
-                            'Wedding Venue',
-                            style: TextStyle(
-                              color: MyColors.royalBlue,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          onTap: () => setState(() => selectedEventType = 1),
-                          child: Text(
-                            'Farm',
-                            style: TextStyle(
-                              color: MyColors.royalBlue,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          onTap: () => setState(() => selectedEventType = 2),
-                          child: Text(
-                            'Football Court',
-                            style: TextStyle(
-                              color: MyColors.royalBlue,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ];
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          //1
-          const Center(
-            child: Text(
-              'data',
-              style: TextStyle(
-                fontSize: 40,
-              ),
+    return PopScope(
+      //todo same method as back button
+      // canPop: false,
+      // onPopInvokedWithResult: (didPop, result) => setState(() {
+      //   if (index == 0) {
+      //     print('object');
+      //   } else {
+      //     index -= 1;
+      //   }
+      // }),
+      child: Scaffold(
+        appBar: AppBar(),
+        body: IndexedStack(
+          index: index,
+          children: [
+            //type
+            SelectEventType(
+              selectedEventType: selectedEventType,
+              onTap1: () => setState(() => selectedEventType = 0),
+              onTap2: () => setState(() => selectedEventType = 1),
+              onTap3: () => setState(() => selectedEventType = 2),
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
-          color: MyColors.white,
+
+            //location
+            SelectEventName(
+              selectedEventType: selectedEventType,
+              nameController: nameController,
+            ),
+
+            //location
+            SelectEventLocation(
+              selectedEventType: selectedEventType,
+              onPressed: () => showMapDialog(context),
+            ),
+
+            //scehdule (date and time togther or seperated)
+
+            //pics
+
+            //submit
+          ],
         ),
-        padding: const EdgeInsets.all(20),
-        child: OwnerPageNavigationBar(
-          onPressedNext: () => setState(() => index += 1),
+        bottomNavigationBar: OwnerPageNavigationBar(
+          onPressedNext: () => setState(() {
+            //if no name provided
+            if (index == 1) {
+              if (nameController.text.isEmpty) {
+                GlobalSnackBar.show(
+                    context: context, text: 'Please enter a name');
+                return;
+              }
+            }
+
+            //next page
+            index += 1;
+          }),
           onPressedBack: () => setState(() {
+            //if no more pages (go home)
             if (index == 0) {
               Navigator.of(context).pop();
               return;
             }
+
+            //previous page
             index -= 1;
           }),
         ),

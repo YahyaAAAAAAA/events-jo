@@ -1,5 +1,5 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
@@ -13,7 +13,7 @@ class EventsJoLogo extends StatelessWidget {
       padding: const EdgeInsets.only(left: 13, right: 13, bottom: 13, top: 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: MyColors.white,
+        color: GlobalColors.white,
         border: const Border(
           left: BorderSide(
             color: Color(0xFF306bdd),
@@ -22,7 +22,7 @@ class EventsJoLogo extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: MyColors.royalBlue.withOpacity(0.2),
+            color: GlobalColors.royalBlue.withOpacity(0.2),
             blurRadius: 3,
             offset: const Offset(1, 1),
           ),
@@ -37,7 +37,7 @@ class EventsJoLogo extends StatelessWidget {
             icon: CustomIcons.eventsjo,
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              colors: MyColors.logoGradient,
+              colors: GlobalColors.logoGradient,
             ),
             size: 80,
           ),
@@ -45,10 +45,10 @@ class EventsJoLogo extends StatelessWidget {
             'EventsJo',
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              colors: MyColors.logoGradient.reversed.toList(),
+              colors: GlobalColors.logoGradient.reversed.toList(),
             ),
             style: TextStyle(
-              color: MyColors.black,
+              color: GlobalColors.black,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),

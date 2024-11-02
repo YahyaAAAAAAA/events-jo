@@ -1,4 +1,4 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 
@@ -56,7 +56,7 @@ class HomeCard extends StatelessWidget {
                 onPressed: onPressed,
                 icon: Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: MyColors.white,
+                  color: GlobalColors.white,
                 ),
               ),
             ),
@@ -77,12 +77,12 @@ class HomeCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           width: 3,
-                          color: MyColors.white,
+                          color: GlobalColors.white,
                         ),
                       ),
                       child: Icon(
                         icon,
-                        color: MyColors.white,
+                        color: GlobalColors.white,
                         size: 25,
                       ),
                     ),
@@ -90,7 +90,7 @@ class HomeCard extends StatelessWidget {
                     Text(
                       text,
                       style: TextStyle(
-                        color: MyColors.white,
+                        color: GlobalColors.white,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),

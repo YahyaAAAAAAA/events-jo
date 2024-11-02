@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,11 +13,11 @@ class LocationLoadingDialog {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: AlertDialog(
-              backgroundColor: MyColors.poloBlue,
+              backgroundColor: GlobalColors.poloBlue,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
                 side: BorderSide(
-                  color: MyColors.poloBlue,
+                  color: GlobalColors.poloBlue,
                   width: 7,
                 ),
               ),
@@ -39,7 +39,7 @@ class LocationLoadingDialog {
                   child: Text(
                     'Getting your location, please wait...',
                     style: TextStyle(
-                      color: MyColors.white,
+                      color: GlobalColors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),

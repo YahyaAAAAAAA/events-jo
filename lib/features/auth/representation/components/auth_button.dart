@@ -1,4 +1,4 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
@@ -17,7 +17,7 @@ class AuthButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: MyColors.white,
+        color: GlobalColors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -30,7 +30,7 @@ class AuthButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 21,
                   fontWeight: FontWeight.normal,
-                  color: MyColors.black,
+                  color: GlobalColors.black,
                 ),
               ),
             ),
@@ -50,7 +50,7 @@ class AuthButton extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
-                  colors: MyColors.logoGradient,
+                  colors: GlobalColors.logoGradient,
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -58,7 +58,7 @@ class AuthButton extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: Icon(
                   icon,
-                  color: MyColors.whiteShade3,
+                  color: GlobalColors.whiteShade3,
                 ),
               ),
             ),

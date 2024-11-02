@@ -1,5 +1,5 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
@@ -13,7 +13,7 @@ class EventsJoLogoAuth extends StatelessWidget {
       padding: const EdgeInsets.only(left: 13, right: 13, bottom: 13, top: 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: MyColors.whiteShade3,
+        color: GlobalColors.whiteShade3,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -23,7 +23,7 @@ class EventsJoLogoAuth extends StatelessWidget {
             icon: CustomIcons.eventsjo,
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              colors: MyColors.logoGradient,
+              colors: GlobalColors.logoGradient,
             ),
             size: 80,
           ),
@@ -31,10 +31,10 @@ class EventsJoLogoAuth extends StatelessWidget {
             'EventsJo',
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              colors: MyColors.logoGradient,
+              colors: GlobalColors.logoGradient,
             ),
             style: TextStyle(
-              color: MyColors.black,
+              color: GlobalColors.black,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),

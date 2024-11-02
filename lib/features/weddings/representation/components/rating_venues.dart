@@ -1,4 +1,4 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter/material.dart';
 
@@ -17,32 +17,37 @@ class VenuesRating extends StatelessWidget {
       children: [
         Icon(
           Icons.star,
-          color:
-              weddingVenue.rate >= 1 ? MyColors.fullRate : MyColors.emptyRate,
+          color: weddingVenue.rate >= 1
+              ? GlobalColors.fullRate
+              : GlobalColors.emptyRate,
           size: size,
         ),
         Icon(
           Icons.star,
-          color:
-              weddingVenue.rate >= 2 ? MyColors.fullRate : MyColors.emptyRate,
+          color: weddingVenue.rate >= 2
+              ? GlobalColors.fullRate
+              : GlobalColors.emptyRate,
           size: size,
         ),
         Icon(
           Icons.star,
-          color:
-              weddingVenue.rate >= 3 ? MyColors.fullRate : MyColors.emptyRate,
+          color: weddingVenue.rate >= 3
+              ? GlobalColors.fullRate
+              : GlobalColors.emptyRate,
           size: size,
         ),
         Icon(
           Icons.star,
-          color:
-              weddingVenue.rate >= 4 ? MyColors.fullRate : MyColors.emptyRate,
+          color: weddingVenue.rate >= 4
+              ? GlobalColors.fullRate
+              : GlobalColors.emptyRate,
           size: size,
         ),
         Icon(
           Icons.star,
-          color:
-              weddingVenue.rate >= 5 ? MyColors.fullRate : MyColors.emptyRate,
+          color: weddingVenue.rate >= 5
+              ? GlobalColors.fullRate
+              : GlobalColors.emptyRate,
           size: size,
         ),
       ],

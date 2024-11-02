@@ -1,5 +1,5 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -19,7 +19,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       child: Text(
         'List of the user orders',
         style: TextStyle(
-          color: MyColors.black,
+          color: GlobalColors.black,
         ),
       ),
     ),
@@ -28,7 +28,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       child: Text(
         'Settings page',
         style: TextStyle(
-          color: MyColors.black,
+          color: GlobalColors.black,
         ),
       ),
     ),
@@ -52,23 +52,23 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: GNav(
-            backgroundColor: MyColors.navBar,
+            backgroundColor: GlobalColors.navBar,
             tabBorderRadius: 0,
             duration: const Duration(milliseconds: 300),
-            color: MyColors.poloBlue,
-            activeColor: MyColors.royalBlue,
-            rippleColor: MyColors.white.withOpacity(0.2),
+            color: GlobalColors.poloBlue,
+            activeColor: GlobalColors.royalBlue,
+            rippleColor: GlobalColors.white.withOpacity(0.2),
             iconSize: 24,
             tabBackgroundColor: Colors.transparent,
             tabActiveBorder: Border(
               bottom: BorderSide(
-                color: MyColors.royalBlue,
+                color: GlobalColors.royalBlue,
                 width: 10,
               ),
             ),
             textStyle: TextStyle(
               fontSize: 15,
-              color: MyColors.royalBlue,
+              color: GlobalColors.royalBlue,
               fontWeight: FontWeight.bold,
             ),
             selectedIndex: selecetedPage,

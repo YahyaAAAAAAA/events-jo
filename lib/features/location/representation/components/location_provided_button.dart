@@ -1,4 +1,4 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class LocationProvided extends StatelessWidget {
@@ -16,7 +16,7 @@ class LocationProvided extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: MyColors.poloBlue,
+            color: GlobalColors.poloBlue,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -26,14 +26,14 @@ class LocationProvided extends StatelessWidget {
               Text(
                 'Done',
                 style: TextStyle(
-                  color: MyColors.white,
+                  color: GlobalColors.white,
                   fontSize: 22,
                 ),
               ),
               const SizedBox(width: 10),
               Icon(
                 Icons.check,
-                color: MyColors.white,
+                color: GlobalColors.white,
               ),
               const Spacer(),
               IconButton(
@@ -45,11 +45,11 @@ class LocationProvided extends StatelessWidget {
                     ),
                   ),
                   padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
-                  backgroundColor: WidgetStatePropertyAll(MyColors.white),
+                  backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
                 ),
                 icon: Icon(
                   Icons.location_on_outlined,
-                  color: MyColors.poloBlue,
+                  color: GlobalColors.poloBlue,
                 ),
               ),
             ],
@@ -59,7 +59,7 @@ class LocationProvided extends StatelessWidget {
           'Click the button check or change the location.',
           style: TextStyle(
             fontSize: 13,
-            color: MyColors.black,
+            color: GlobalColors.black,
           ),
         )
       ],

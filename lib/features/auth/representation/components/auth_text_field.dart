@@ -1,18 +1,26 @@
-import 'package:events_jo/config/utils/my_colors.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
+  final TextAlign textAlign;
   final void Function(String)? onChanged;
+  final Color textColor;
+  final FontWeight fontWeight;
   const AuthTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
     this.onChanged,
+    this.textAlign = TextAlign.start,
+    this.textColor = Colors.black,
+    this.fontWeight = FontWeight.normal,
   });
+
+  //todo focus node
 
   @override
   Widget build(BuildContext context) {
@@ -21,32 +29,34 @@ class AuthTextField extends StatelessWidget {
       obscureText: obscureText,
       onChanged: onChanged,
       style: TextStyle(
-        color: MyColors.black,
+        color: textColor,
         fontSize: 17,
+        fontWeight: fontWeight,
       ),
+      textAlign: textAlign,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(
-          color: MyColors.black,
+          color: GlobalColors.black,
           fontSize: 17,
         ),
-        fillColor: MyColors.white,
+        fillColor: GlobalColors.white,
         filled: true,
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: MyColors.whiteShade3,
+            color: GlobalColors.whiteShade3,
           ),
           borderRadius: BorderRadius.circular(12),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: MyColors.whiteShade3,
+            color: GlobalColors.whiteShade3,
           ),
           borderRadius: BorderRadius.circular(12),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: MyColors.black,
+            color: GlobalColors.royalBlue,
           ),
           borderRadius: BorderRadius.circular(12),
         ),
