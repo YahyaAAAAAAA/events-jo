@@ -45,7 +45,7 @@ class EventsJoLogo extends StatelessWidget {
             'EventsJo',
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              colors: MyColors.logoGradient,
+              colors: MyColors.logoGradient.reversed.toList(),
             ),
             style: TextStyle(
               color: MyColors.black,

@@ -1,47 +1,55 @@
 class WeddingVenue {
   late String name;
-  late String openTime;
   late String latitude;
   late String longitude;
+  late String owner;
   late int rate;
   late bool isOpen;
   late List<dynamic> pics;
-  late String owner;
+  late List<int> startDate;
+  late List<int> endDate;
+  late List<int> time;
 
   WeddingVenue({
     required this.name,
-    required this.openTime,
     required this.latitude,
     required this.longitude,
     required this.rate,
     required this.isOpen,
     required this.pics,
     required this.owner,
+    required this.startDate,
+    required this.endDate,
+    required this.time,
   });
 
   //convert wedding venue to json
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'openTime': openTime,
       'latitude': latitude,
       'longitude': longitude,
       'rate': rate,
       'isOpen': isOpen,
       'pics': pics,
       'owner': owner,
+      'startDate': startDate,
+      'endDate': endDate,
+      'time': time,
     };
   }
 
   //convert json to wedding venue
   WeddingVenue.fromJson(Map<String, dynamic> jsonVenue) {
     name = jsonVenue['name'];
-    openTime = jsonVenue['openTime'];
     latitude = jsonVenue['latitude'];
     longitude = jsonVenue['longitude'];
     rate = jsonVenue['rate'];
     isOpen = jsonVenue['isOpen'];
     pics = jsonVenue['pics'];
     owner = jsonVenue['owner'];
+    startDate = jsonVenue['startDate'];
+    endDate = jsonVenue['endDate'];
+    time = jsonVenue['time'];
   }
 }

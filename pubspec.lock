@@ -296,6 +296,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  from_to_time_picker:
+    dependency: "direct main"
+    description:
+      name: from_to_time_picker
+      sha256: f9b1033a7005ae0a3b174ee69e0066ac781136fc7b261a018ec3534d61382011
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.2"
   geolocator:
     dependency: "direct main"
     description:
@@ -758,5 +766,5 @@ packages:
     source: hosted
     version: "1.1.0"
 sdks:
-  dart: ">=3.5.0-180.3.beta <4.0.0"
+  dart: ">=3.5.0-180.3.beta <3.19.2"
   flutter: ">=3.22.0"

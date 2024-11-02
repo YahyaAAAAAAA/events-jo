@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/my_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -9,7 +8,6 @@ import 'package:events_jo/features/home/presentation/components/home_card.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,29 +47,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   //dev for later
-  Widget addToDatabaseButton() {
-    return TextButton(
-      onPressed: () async {
-        //* adding new venus to database (for me)
-        WeddingVenue weddingVenue = WeddingVenue(
-          latitude: "31.84480325226184",
-          longitude: "35.88135319995705",
-          name: "country club".toTitleCase,
-          openTime: "10 AM–10 PM",
-          isOpen: true,
-          owner: currentUser!.uid,
-          pics: [
-            'https://i.ibb.co/ZVf53hB/placeholder.png',
-          ],
-          rate: 0,
-        );
-        FirebaseFirestore.instance
-            .collection('venues')
-            .add(weddingVenue.toJson());
-      },
-      child: const Text('add to database'),
-    );
-  }
+  // Widget addToDatabaseButton() {
+  //   return TextButton(
+  //     onPressed: () async {
+  //       //* adding new venus to database (for me)
+  //       WeddingVenue weddingVenue = WeddingVenue(
+  //         latitude: "31.84480325226184",
+  //         longitude: "35.88135319995705",
+  //         name: "country club".toTitleCase,
+  //         openTime: "10 AM–10 PM",
+  //         isOpen: true,
+  //         owner: currentUser!.uid,
+  //         pics: [
+  //           'https://i.ibb.co/ZVf53hB/placeholder.png',
+  //         ],
+  //         rate: 0,
+  //       );
+  //       FirebaseFirestore.instance
+  //           .collection('venues')
+  //           .add(weddingVenue.toJson());
+  //     },
+  //     child: const Text('add to database'),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +167,9 @@ class _HomePageState extends State<HomePage> {
                 ? OwnerButton(
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const OwnerPage(),
+                        builder: (context) => OwnerPage(
+                          user: currentUser,
+                        ),
                       ),
                     ),
                   )

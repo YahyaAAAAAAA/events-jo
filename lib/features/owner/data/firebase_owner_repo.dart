@@ -9,6 +9,9 @@ class FirebaseOwnerRepo implements OwnerRepo {
     required String lat,
     required String lon,
     required String ownerId,
+    required List<int> startDate,
+    required List<int> endDate,
+    required List<int> time,
     List<String>? pics,
   }) async {
     //create weddingVenue object
@@ -16,8 +19,9 @@ class FirebaseOwnerRepo implements OwnerRepo {
       latitude: lat,
       longitude: lon,
       name: name.toTitleCase,
-      //dev might delete both
-      openTime: "10 AM-10 PM",
+      startDate: startDate,
+      endDate: endDate,
+      time: time,
       isOpen: true,
       owner: ownerId,
       pics: pics ??

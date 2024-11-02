@@ -5,6 +5,9 @@ abstract class OwnerRepo {
     required String lat,
     required String lon,
     required String ownerId,
+    required List<int> startDate,
+    required List<int> endDate,
+    required List<int> time,
     List<String>? pics,
   });
 }

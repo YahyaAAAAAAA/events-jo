@@ -12,6 +12,9 @@ class OwnerCubit extends Cubit<OwnerStates> {
     required String lat,
     required String lon,
     required String ownerId,
+    required List<int> startDate,
+    required List<int> endDate,
+    required List<int> time,
     List<String>? pics,
   }) async {
     try {
@@ -23,7 +26,11 @@ class OwnerCubit extends Cubit<OwnerStates> {
         name: name,
         lat: lat,
         lon: lon,
+        startDate: startDate,
+        endDate: endDate,
+        time: time,
         ownerId: ownerId,
+        pics: pics,
       );
 
       //done
