@@ -29,7 +29,7 @@ class SelectEventType extends StatelessWidget {
           icon: CustomIcons.eventsjo,
           gradient: LinearGradient(
             begin: Alignment.topLeft,
-            colors: GlobalColors.logoGradient,
+            colors: GColors.logoGradient,
           ),
           size: 100,
         ),
@@ -37,10 +37,10 @@ class SelectEventType extends StatelessWidget {
           'EventsJo for Owners',
           gradient: LinearGradient(
             begin: Alignment.topLeft,
-            colors: GlobalColors.logoGradient,
+            colors: GColors.logoGradient,
           ),
           style: TextStyle(
-            color: GlobalColors.black,
+            color: GColors.black,
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
@@ -49,7 +49,7 @@ class SelectEventType extends StatelessWidget {
         Text(
           'Pick which type of event you would like to add',
           style: TextStyle(
-            color: GlobalColors.poloBlue,
+            color: GColors.poloBlue,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -61,7 +61,7 @@ class SelectEventType extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: ColoredBox(
-                color: GlobalColors.white,
+                color: GColors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
@@ -72,7 +72,7 @@ class SelectEventType extends StatelessWidget {
                             : selectedEventType == 1
                                 ? CustomIcons.farm
                                 : CustomIcons.football,
-                        color: GlobalColors.royalBlue,
+                        color: GColors.royalBlue,
                       ),
                       const SizedBox(width: 15),
                       Text(
@@ -82,9 +82,9 @@ class SelectEventType extends StatelessWidget {
                                 ? 'Farm'
                                 : 'Football Court',
                         style: TextStyle(
-                          color: GlobalColors.royalBlue,
+                          color: GColors.royalBlue,
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ],
@@ -97,16 +97,16 @@ class SelectEventType extends StatelessWidget {
               icon: Icon(
                 Icons.menu,
                 size: 30,
-                color: GlobalColors.royalBlue,
+                color: GColors.royalBlue,
               ),
               style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
+                  backgroundColor: WidgetStatePropertyAll(GColors.white),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   )),
-              color: GlobalColors.white,
+              color: GColors.white,
               position: PopupMenuPosition.under,
               offset: const Offset(0, 20),
               constraints: const BoxConstraints.tightFor(width: 150),
@@ -123,7 +123,7 @@ class SelectEventType extends StatelessWidget {
                     child: Text(
                       'Wedding Venue',
                       style: TextStyle(
-                        color: GlobalColors.royalBlue,
+                        color: GColors.royalBlue,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),
@@ -134,7 +134,7 @@ class SelectEventType extends StatelessWidget {
                     child: Text(
                       'Farm',
                       style: TextStyle(
-                        color: GlobalColors.royalBlue,
+                        color: GColors.royalBlue,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),
@@ -145,7 +145,7 @@ class SelectEventType extends StatelessWidget {
                     child: Text(
                       'Football Court',
                       style: TextStyle(
-                        color: GlobalColors.royalBlue,
+                        color: GColors.royalBlue,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),

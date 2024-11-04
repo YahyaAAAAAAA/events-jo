@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-class GlobalColors {
+//global colors
+class GColors {
   //main bg color
-  static Color whiteShade3 = const Color.fromRGBO(241, 246, 255, 1);
+  static Color whiteShade3 = const Color(0xFFF1F6FF);
 
   //for buttons and exposed texts mostly
   static Color royalBlue = const Color(0xFF306BDD);
@@ -25,10 +26,10 @@ class GlobalColors {
 
   //main logo gradient
   static List<Color> logoGradient = [
-    const Color.fromARGB(255, 68, 48, 221),
+    const Color(0xFF4430DD),
     const Color(0xFF306BDD),
-    const Color.fromARGB(255, 48, 140, 221),
-    const Color.fromARGB(255, 48, 178, 221),
+    const Color(0xFF308CDD),
+    const Color(0xFF30B2DD)
   ];
 
   static List<Color> weddingCardGradient = const [
@@ -59,11 +60,11 @@ class GlobalColors {
     Color.fromARGB(255, 117, 103, 223),
   ];
 
-  //scaffold, appbarand logo
+  //scaffold, appbar and logo
   static Color scaffoldBg = const Color.fromARGB(255, 241, 246, 255);
   static Color appBarBg = const Color.fromARGB(255, 241, 246, 255);
 
-  //for availablitiy
+  //for availability
   static Color greenShade3 = Colors.green.shade300;
   static Color redShade3 = Colors.red.shade300;
 }

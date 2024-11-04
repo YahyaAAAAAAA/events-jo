@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     if (email.isNotEmpty && pw.isNotEmpty) {
       authCubit.login(email, pw);
     } else {
-      GlobalSnackBar.show(
+      GSnackBar.show(
           context: context, text: 'Please enter both email and password');
     }
   }
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                 Text(
                   "Login to EventsJO",
                   style: TextStyle(
-                    color: GlobalColors.black,
+                    color: GColors.black,
                     fontSize: 22,
                   ),
                 ),
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text(
                       'Don\'t have an account ?',
                       style: TextStyle(
-                        color: GlobalColors.black,
+                        color: GColors.black,
                         fontSize: 17,
                       ),
                     ),
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                         ' Register now!',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.royalBlue,
+                          color: GColors.royalBlue,
                           fontSize: 17,
                         ),
                       ),

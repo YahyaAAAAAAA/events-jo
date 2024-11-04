@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             Text(
               "Browse a category",
               style: TextStyle(
-                color: GlobalColors.poloBlue,
+                color: GColors.poloBlue,
                 fontSize: 20,
               ),
             ),
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                     subText: 'See wedding venues in Jordan',
                     icon: CustomIcons.wedding,
                     index: 1,
-                    colors: GlobalColors.weddingCardGradient,
+                    colors: GColors.weddingCardGradient,
                     //background-image: linear-gradient(to top, #dbdcd7 0%, #dddcd7 24%, #e2c9cc 30%, #e7627d 46%, #b8235a 59%, #801357 71%, #3d1635 84%, #1c1a27 100%);
                   ),
                   HomeCard(
@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                     subText: 'Book your own event',
                     icon: Icons.person,
                     index: 2,
-                    colors: GlobalColors.personalCardGradient,
+                    colors: GColors.personalCardGradient,
                   ),
                   HomeCard(
                     onPressed: () {},
@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                     subText: 'See farms in Jordan',
                     icon: CustomIcons.farm,
                     index: 3,
-                    colors: GlobalColors.farmCardGradient,
+                    colors: GColors.farmCardGradient,
                   ),
                   HomeCard(
                     onPressed: () {},
@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                     subText: 'See football courts in Jordan',
                     icon: CustomIcons.football,
                     index: 4,
-                    colors: GlobalColors.footballCardGradient,
+                    colors: GColors.footballCardGradient,
                   ),
                 ],
               ),
@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
 
             //dev add this for (orders,settings) screens
             Divider(
-              color: GlobalColors.poloBlue,
+              color: GColors.poloBlue,
               thickness: 0.5,
               indent: 10,
               endIndent: 10,

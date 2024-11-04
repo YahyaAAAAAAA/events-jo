@@ -44,7 +44,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         title: Text(
           'Wedding Venues in Jordan',
           style: TextStyle(
-            color: GlobalColors.black,
+            color: GColors.black,
           ),
         ),
         centerTitle: true,
@@ -56,7 +56,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
             },
             child: Icon(
               Icons.sort_by_alpha_rounded,
-              color: GlobalColors.black,
+              color: GColors.black,
             ),
           )
         ],
@@ -64,7 +64,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: GlobalColors.black,
+            color: GColors.black,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -119,7 +119,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         listener: (context, state) {
           //listens for errors
           if (state is WeddingVenueError) {
-            GlobalSnackBar.show(context: context, text: state.message);
+            GSnackBar.show(context: context, text: state.message);
           }
         },
       ),

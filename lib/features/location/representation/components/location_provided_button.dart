@@ -16,7 +16,7 @@ class LocationProvided extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: GlobalColors.poloBlue,
+            color: GColors.poloBlue,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -26,14 +26,14 @@ class LocationProvided extends StatelessWidget {
               Text(
                 'Done',
                 style: TextStyle(
-                  color: GlobalColors.white,
+                  color: GColors.white,
                   fontSize: 22,
                 ),
               ),
               const SizedBox(width: 10),
               Icon(
                 Icons.check,
-                color: GlobalColors.white,
+                color: GColors.white,
               ),
               const Spacer(),
               IconButton(
@@ -45,11 +45,11 @@ class LocationProvided extends StatelessWidget {
                     ),
                   ),
                   padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
-                  backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
+                  backgroundColor: WidgetStatePropertyAll(GColors.white),
                 ),
                 icon: Icon(
                   Icons.location_on_outlined,
-                  color: GlobalColors.poloBlue,
+                  color: GColors.poloBlue,
                 ),
               ),
             ],
@@ -59,7 +59,7 @@ class LocationProvided extends StatelessWidget {
           'Click the button check or change the location.',
           style: TextStyle(
             fontSize: 13,
-            color: GlobalColors.black,
+            color: GColors.black,
           ),
         )
       ],

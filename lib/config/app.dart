@@ -65,15 +65,15 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Abel',
-          scaffoldBackgroundColor: GlobalColors.scaffoldBg,
+          scaffoldBackgroundColor: GColors.scaffoldBg,
           appBarTheme: AppBarTheme(
-            backgroundColor: GlobalColors.appBarBg,
+            backgroundColor: GColors.appBarBg,
             iconTheme: IconThemeData(
-              color: GlobalColors.black,
+              color: GColors.black,
             ),
           ),
           iconTheme: IconThemeData(
-            color: GlobalColors.whiteShade3,
+            color: GColors.whiteShade3,
           ),
         ),
         home: BlocConsumer<AuthCubit, AuthStates>(
@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
           },
           listener: (context, state) {
             if (state is AuthError) {
-              GlobalSnackBar.show(context: context, text: state.message);
+              GSnackBar.show(context: context, text: state.message);
             }
           },
         ),

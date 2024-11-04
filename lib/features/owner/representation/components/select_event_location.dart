@@ -25,7 +25,7 @@ class SelectEventLocation extends StatelessWidget {
           icon: CustomIcons.eventsjo,
           gradient: LinearGradient(
             begin: Alignment.topLeft,
-            colors: GlobalColors.logoGradient,
+            colors: GColors.logoGradient,
           ),
           size: 100,
         ),
@@ -33,10 +33,10 @@ class SelectEventLocation extends StatelessWidget {
           'EventsJo for Owners',
           gradient: LinearGradient(
             begin: Alignment.topLeft,
-            colors: GlobalColors.logoGradient,
+            colors: GColors.logoGradient,
           ),
           style: TextStyle(
-            color: GlobalColors.black,
+            color: GColors.black,
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),

@@ -17,37 +17,27 @@ class VenuesRating extends StatelessWidget {
       children: [
         Icon(
           Icons.star,
-          color: weddingVenue.rate >= 1
-              ? GlobalColors.fullRate
-              : GlobalColors.emptyRate,
+          color: weddingVenue.rate >= 1 ? GColors.fullRate : GColors.emptyRate,
           size: size,
         ),
         Icon(
           Icons.star,
-          color: weddingVenue.rate >= 2
-              ? GlobalColors.fullRate
-              : GlobalColors.emptyRate,
+          color: weddingVenue.rate >= 2 ? GColors.fullRate : GColors.emptyRate,
           size: size,
         ),
         Icon(
           Icons.star,
-          color: weddingVenue.rate >= 3
-              ? GlobalColors.fullRate
-              : GlobalColors.emptyRate,
+          color: weddingVenue.rate >= 3 ? GColors.fullRate : GColors.emptyRate,
           size: size,
         ),
         Icon(
           Icons.star,
-          color: weddingVenue.rate >= 4
-              ? GlobalColors.fullRate
-              : GlobalColors.emptyRate,
+          color: weddingVenue.rate >= 4 ? GColors.fullRate : GColors.emptyRate,
           size: size,
         ),
         Icon(
           Icons.star,
-          color: weddingVenue.rate >= 5
-              ? GlobalColors.fullRate
-              : GlobalColors.emptyRate,
+          color: weddingVenue.rate >= 5 ? GColors.fullRate : GColors.emptyRate,
           size: size,
         ),
       ],

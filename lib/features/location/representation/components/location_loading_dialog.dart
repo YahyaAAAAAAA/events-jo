@@ -13,11 +13,11 @@ class LocationLoadingDialog {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: AlertDialog(
-              backgroundColor: GlobalColors.poloBlue,
+              backgroundColor: GColors.poloBlue,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
                 side: BorderSide(
-                  color: GlobalColors.poloBlue,
+                  color: GColors.poloBlue,
                   width: 7,
                 ),
               ),
@@ -39,7 +39,7 @@ class LocationLoadingDialog {
                   child: Text(
                     'Getting your location, please wait...',
                     style: TextStyle(
-                      color: GlobalColors.white,
+                      color: GColors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),

@@ -37,7 +37,7 @@ class MapDialog extends StatelessWidget {
                 child: Text(
                   'Your current location, you can pick a new one',
                   style: TextStyle(
-                    color: GlobalColors.black,
+                    color: GColors.black,
                     fontSize: 21,
                   ),
                 ),
@@ -78,7 +78,7 @@ class MapDialog extends StatelessWidget {
                       onPressed: onCancel,
                       style: ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
-                          GlobalColors.white,
+                          GColors.white,
                         ),
                         shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(
@@ -90,12 +90,12 @@ class MapDialog extends StatelessWidget {
                       ),
                       icon: Icon(
                         Icons.clear,
-                        color: GlobalColors.redShade3,
+                        color: GColors.redShade3,
                       ),
                       label: Text(
                         'Cancel',
                         style: TextStyle(
-                          color: GlobalColors.black,
+                          color: GColors.black,
                           fontSize: 22,
                         ),
                       ),
@@ -105,7 +105,7 @@ class MapDialog extends StatelessWidget {
                       onPressed: onConfirm,
                       style: ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
-                          GlobalColors.white,
+                          GColors.white,
                         ),
                         shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(
@@ -117,12 +117,12 @@ class MapDialog extends StatelessWidget {
                       ),
                       icon: Icon(
                         Icons.check,
-                        color: GlobalColors.greenShade3,
+                        color: GColors.greenShade3,
                       ),
                       label: Text(
                         'Confirm',
                         style: TextStyle(
-                          color: GlobalColors.black,
+                          color: GColors.black,
                           fontSize: 22,
                         ),
                       ),

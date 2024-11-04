@@ -31,7 +31,7 @@ class OwnerButton extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
-              color: GlobalColors.poloBlue,
+              color: GColors.poloBlue,
               fontSize: fontSize,
               fontWeight: fontWeight,
             ),
@@ -40,9 +40,9 @@ class OwnerButton extends StatelessWidget {
           IconButton(
             onPressed: onPressed,
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(GlobalColors.royalBlue),
+                backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
                 shadowColor: WidgetStatePropertyAll(
-                  GlobalColors.black.withOpacity(0.5),
+                  GColors.black.withOpacity(0.5),
                 ),
                 elevation: const WidgetStatePropertyAll(3),
                 shape: WidgetStatePropertyAll(
@@ -56,7 +56,7 @@ class OwnerButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
-                  colors: GlobalColors.logoGradient,
+                  colors: GColors.logoGradient,
                 ),
               ),
               child: Padding(
@@ -64,7 +64,7 @@ class OwnerButton extends StatelessWidget {
                 child: Icon(
                   icon,
                   size: iconSize,
-                  color: GlobalColors.white,
+                  color: GColors.white,
                 ),
               ),
             ),

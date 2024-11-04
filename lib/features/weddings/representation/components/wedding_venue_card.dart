@@ -3,7 +3,7 @@ import 'package:events_jo/config/utils/image_loading_indicator.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/rating_venues.dart';
-import 'package:events_jo/features/weddings/representation/pages/wedding_venues_detailes_page.dart';
+import 'package:events_jo/features/weddings/representation/pages/wedding_venues_details_page.dart';
 import 'package:flutter/material.dart';
 
 class WeddingVenueCard extends StatelessWidget {
@@ -29,7 +29,7 @@ class WeddingVenueCard extends StatelessWidget {
           width: 100,
           child: Icon(
             Icons.error_outline,
-            color: GlobalColors.black,
+            color: GColors.black,
             size: 40,
           ),
         ),
@@ -50,7 +50,7 @@ class WeddingVenueCard extends StatelessWidget {
             height: 110,
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: GlobalColors.white,
+              color: GColors.white,
               borderRadius: BorderRadius.circular(5),
               //dev might change later
               boxShadow: [
@@ -77,7 +77,7 @@ class WeddingVenueCard extends StatelessWidget {
                   width: 100,
                   child: Icon(
                     Icons.error_outline,
-                    color: GlobalColors.black,
+                    color: GColors.black,
                     size: 40,
                   ),
                 ),
@@ -92,7 +92,7 @@ class WeddingVenueCard extends StatelessWidget {
               height: 100,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: GlobalColors.white,
+                color: GColors.white,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +103,7 @@ class WeddingVenueCard extends StatelessWidget {
                     child: Text(
                       weddingVenue.name,
                       style: TextStyle(
-                        color: GlobalColors.black,
+                        color: GColors.black,
                         fontSize: 22,
                       ),
                     ),
@@ -115,15 +115,15 @@ class WeddingVenueCard extends StatelessWidget {
                         Icon(
                           Icons.circle,
                           color: weddingVenue.isOpen
-                              ? GlobalColors.greenShade3
-                              : GlobalColors.redShade3,
+                              ? GColors.greenShade3
+                              : GColors.redShade3,
                           size: 13,
                         ),
                         const SizedBox(width: 5),
                         Text(
                           weddingVenue.isOpen ? "Available" : "Full",
                           style: TextStyle(
-                            color: GlobalColors.black,
+                            color: GColors.black,
                             fontSize: 15,
                           ),
                         ),
@@ -150,7 +150,7 @@ class WeddingVenueCard extends StatelessWidget {
                 bottomRight: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
-              color: GlobalColors.white,
+              color: GColors.white,
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -159,7 +159,7 @@ class WeddingVenueCard extends StatelessWidget {
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WeddingVenuesDetailesPage(
+                    builder: (context) => WeddingVenuesDetailsPage(
                       weddingVenue: weddingVenue,
                       picsList: addPicsToList(),
                     ),
@@ -171,12 +171,11 @@ class WeddingVenueCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  backgroundColor:
-                      WidgetStatePropertyAll(GlobalColors.royalBlue),
+                  backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
                 ),
                 child: Icon(
                   Icons.arrow_forward_ios,
-                  color: GlobalColors.white,
+                  color: GColors.white,
                 ),
               ),
             ),

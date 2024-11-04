@@ -20,7 +20,7 @@ class ChangeUserTypeRow extends StatelessWidget {
         TextButton(
           onPressed: setUserType,
           style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
+            backgroundColor: WidgetStatePropertyAll(GColors.white),
             shape: WidgetStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -33,14 +33,14 @@ class ChangeUserTypeRow extends StatelessWidget {
           child: Icon(
             Icons.person,
             size: 30,
-            color: isOwner ? GlobalColors.black : GlobalColors.royalBlue,
+            color: isOwner ? GColors.black : GColors.royalBlue,
           ),
         ),
         const SizedBox(width: 10),
         TextButton(
           onPressed: setOwnerType,
           style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
+            backgroundColor: WidgetStatePropertyAll(GColors.white),
             shape: WidgetStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -53,7 +53,7 @@ class ChangeUserTypeRow extends StatelessWidget {
           child: Icon(
             Icons.person_4,
             size: 30,
-            color: isOwner ? GlobalColors.royalBlue : GlobalColors.black,
+            color: isOwner ? GColors.royalBlue : GColors.black,
           ),
         ),
         const SizedBox(width: 10),

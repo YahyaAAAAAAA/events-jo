@@ -13,7 +13,7 @@ class EventsJoLogoAuth extends StatelessWidget {
       padding: const EdgeInsets.only(left: 13, right: 13, bottom: 13, top: 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: GlobalColors.whiteShade3,
+        color: GColors.whiteShade3,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -23,7 +23,7 @@ class EventsJoLogoAuth extends StatelessWidget {
             icon: CustomIcons.eventsjo,
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              colors: GlobalColors.logoGradient,
+              colors: GColors.logoGradient,
             ),
             size: 80,
           ),
@@ -31,10 +31,10 @@ class EventsJoLogoAuth extends StatelessWidget {
             'EventsJo',
             gradient: LinearGradient(
               begin: Alignment.topLeft,
-              colors: GlobalColors.logoGradient,
+              colors: GColors.logoGradient,
             ),
             style: TextStyle(
-              color: GlobalColors.black,
+              color: GColors.black,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),

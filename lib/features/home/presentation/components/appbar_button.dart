@@ -29,9 +29,9 @@ class AppBarButton extends StatelessWidget {
           style: ButtonStyle(
             fixedSize: const WidgetStatePropertyAll(Size.fromWidth(20)),
             padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
-            backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
+            backgroundColor: WidgetStatePropertyAll(GColors.white),
             shadowColor: WidgetStatePropertyAll(
-              GlobalColors.black.withOpacity(0.5),
+              GColors.black.withOpacity(0.5),
             ),
             elevation: const WidgetStatePropertyAll(3),
             shape: WidgetStatePropertyAll(
@@ -42,7 +42,7 @@ class AppBarButton extends StatelessWidget {
           ),
           child: Icon(
             icon,
-            color: GlobalColors.poloBlue,
+            color: GColors.poloBlue,
             size: size,
           ),
         ),

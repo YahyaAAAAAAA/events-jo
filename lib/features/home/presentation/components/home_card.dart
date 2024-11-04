@@ -56,7 +56,7 @@ class HomeCard extends StatelessWidget {
                 onPressed: onPressed,
                 icon: Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: GlobalColors.white,
+                  color: GColors.white,
                 ),
               ),
             ),
@@ -77,12 +77,12 @@ class HomeCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           width: 3,
-                          color: GlobalColors.white,
+                          color: GColors.white,
                         ),
                       ),
                       child: Icon(
                         icon,
-                        color: GlobalColors.white,
+                        color: GColors.white,
                         size: 25,
                       ),
                     ),
@@ -90,7 +90,7 @@ class HomeCard extends StatelessWidget {
                     Text(
                       text,
                       style: TextStyle(
-                        color: GlobalColors.white,
+                        color: GColors.white,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),

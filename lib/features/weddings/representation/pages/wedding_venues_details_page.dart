@@ -6,24 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:lottie/lottie.dart';
 
-class WeddingVenuesDetailesPage extends StatefulWidget {
+class WeddingVenuesDetailsPage extends StatefulWidget {
   final WeddingVenue weddingVenue;
 
   //request the pics for null safety
   final List<CachedNetworkImage> picsList;
 
-  const WeddingVenuesDetailesPage({
+  const WeddingVenuesDetailsPage({
     super.key,
     required this.weddingVenue,
     required this.picsList,
   });
 
   @override
-  State<WeddingVenuesDetailesPage> createState() =>
-      _WeddingVenuesDetailesPageState();
+  State<WeddingVenuesDetailsPage> createState() =>
+      _WeddingVenuesDetailsPageState();
 }
 
-class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
+class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   late final WeddingVenue weddingVenue;
 
   @override
@@ -39,7 +39,7 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
         title: Text(
           'Wedding Venue in Jordan',
           style: TextStyle(
-            color: GlobalColors.black,
+            color: GColors.black,
           ),
         ),
         actions: [
@@ -47,14 +47,14 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
             onPressed: () {},
             child: Icon(
               Icons.report_problem_rounded,
-              color: GlobalColors.black,
+              color: GColors.black,
             ),
           )
         ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: GlobalColors.black,
+            color: GColors.black,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -75,8 +75,8 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
                 indicatorPadding: 10,
                 indicatorBottomPadding: 20,
                 indicatorRadius: 4,
-                indicatorColor: GlobalColors.royalBlue,
-                indicatorBackgroundColor: GlobalColors.white,
+                indicatorColor: GColors.royalBlue,
+                indicatorBackgroundColor: GColors.white,
                 autoPlayInterval: 3000,
                 isLoop: true,
                 children: widget.picsList,
@@ -91,7 +91,7 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
                   Text(
                     weddingVenue.name,
                     style: TextStyle(
-                      color: GlobalColors.black,
+                      color: GColors.black,
                       fontSize: 28,
                     ),
                   ),

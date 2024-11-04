@@ -19,7 +19,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       child: Text(
         'List of the user orders',
         style: TextStyle(
-          color: GlobalColors.black,
+          color: GColors.black,
         ),
       ),
     ),
@@ -28,7 +28,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       child: Text(
         'Settings page',
         style: TextStyle(
-          color: GlobalColors.black,
+          color: GColors.black,
         ),
       ),
     ),
@@ -52,23 +52,23 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: GNav(
-            backgroundColor: GlobalColors.navBar,
+            backgroundColor: GColors.navBar,
             tabBorderRadius: 0,
             duration: const Duration(milliseconds: 300),
-            color: GlobalColors.poloBlue,
-            activeColor: GlobalColors.royalBlue,
-            rippleColor: GlobalColors.white.withOpacity(0.2),
+            color: GColors.poloBlue,
+            activeColor: GColors.royalBlue,
+            rippleColor: GColors.white.withOpacity(0.2),
             iconSize: 24,
             tabBackgroundColor: Colors.transparent,
             tabActiveBorder: Border(
               bottom: BorderSide(
-                color: GlobalColors.royalBlue,
+                color: GColors.royalBlue,
                 width: 10,
               ),
             ),
             textStyle: TextStyle(
               fontSize: 15,
-              color: GlobalColors.royalBlue,
+              color: GColors.royalBlue,
               fontWeight: FontWeight.bold,
             ),
             selectedIndex: selecetedPage,

@@ -36,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
   late final LocationCubit locationCubit;
   Position? location;
 
-  //determain which account to create (user or owner)
+  //determine which account to create (user or owner)
   bool isOwner = false;
 
   //users coords
@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
       point: LatLng(lat, long),
       child: Icon(
         Icons.location_pin,
-        color: GlobalColors.black,
+        color: GColors.black,
       ),
     );
   }
@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     //location doesn't exist
     if (lat == 0 || long == 0) {
-      GlobalSnackBar.show(
+      GSnackBar.show(
         context: context,
         text: 'Please provide your location',
       );
@@ -109,20 +109,20 @@ class _RegisterPageState extends State<RegisterPage> {
           isOwner,
         );
       } else {
-        GlobalSnackBar.show(
+        GSnackBar.show(
           context: context,
           text: 'Passwords dont match',
         );
       }
     } else {
-      GlobalSnackBar.show(
+      GSnackBar.show(
         context: context,
         text: 'Please enter both email and password',
       );
     }
   }
 
-  //shows map to change locaiton
+  //shows map to change location
   Future<Object?> showMapDialog(BuildContext context) {
     return showGeneralDialog(
       context: context,
@@ -142,7 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 point: point,
                 child: Icon(
                   Icons.location_pin,
-                  color: GlobalColors.black,
+                  color: GColors.black,
                 ),
               );
             });
@@ -158,7 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   point: LatLng(lat, long),
                   child: Icon(
                     Icons.location_pin,
-                    color: GlobalColors.black,
+                    color: GColors.black,
                   ),
                 );
               },
@@ -175,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   point: LatLng(lat, long),
                   child: Icon(
                     Icons.location_pin,
-                    color: GlobalColors.black,
+                    color: GColors.black,
                   ),
                 );
               },
@@ -202,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Text(
                   "Create an account",
                   style: TextStyle(
-                    color: GlobalColors.black,
+                    color: GColors.black,
                     fontSize: 22,
                   ),
                 ),
@@ -278,7 +278,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             child: Icon(
                               Icons.location_pin,
-                              color: GlobalColors.black,
+                              color: GColors.black,
                             ),
                           );
                         },
@@ -299,7 +299,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     return Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: GlobalColors.white,
+                        color: GColors.white,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Row(
@@ -338,7 +338,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Text(
                       'You have an accout ? ',
                       style: TextStyle(
-                        color: GlobalColors.black,
+                        color: GColors.black,
                         fontSize: 17,
                       ),
                     ),
@@ -348,7 +348,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         'Login now!',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.royalBlue,
+                          color: GColors.royalBlue,
                           fontSize: 17,
                         ),
                       ),

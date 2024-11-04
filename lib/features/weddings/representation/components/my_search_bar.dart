@@ -21,24 +21,24 @@ class MySearchBar extends StatelessWidget {
         hintText: 'Search Venues...',
         textStyle: WidgetStatePropertyAll(
           TextStyle(
-            color: GlobalColors.black,
+            color: GColors.black,
           ),
         ),
         elevation: const WidgetStatePropertyAll(0),
-        backgroundColor: WidgetStatePropertyAll(GlobalColors.white),
+        backgroundColor: WidgetStatePropertyAll(GColors.white),
         trailing: [
           //clear search
           IconButton(
             onPressed: onPressed,
             icon: Icon(
               Icons.clear,
-              color: GlobalColors.black,
+              color: GColors.black,
             ),
           ),
         ],
         leading: Icon(
           Icons.search,
-          color: GlobalColors.black,
+          color: GColors.black,
         ),
         //start search
         onChanged: onChanged,

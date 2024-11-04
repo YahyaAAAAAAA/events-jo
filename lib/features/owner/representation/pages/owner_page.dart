@@ -1,17 +1,21 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
+import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/representation/components/map_dialog.dart';
+import 'package:events_jo/features/owner/representation/components/confirm_and_add_event_to_database.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_navigation_bar.dart';
-import 'package:events_jo/features/owner/representation/components/select_event_locaiton.dart';
+import 'package:events_jo/features/owner/representation/components/select_event_location.dart';
 import 'package:events_jo/features/owner/representation/components/select_event_name.dart';
 import 'package:events_jo/features/owner/representation/components/select_event_type.dart';
+import 'package:events_jo/features/owner/representation/components/select_range_date.dart';
+import 'package:events_jo/features/owner/representation/components/select_range_time.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
 class OwnerPage extends StatefulWidget {
@@ -26,18 +30,29 @@ class OwnerPage extends StatefulWidget {
 }
 
 class _OwnerPageState extends State<OwnerPage> {
-  final TextEditingController nameController = TextEditingController();
+  //cubit
   late final OwnerCubit ownerCubit;
-  DateTimeRange? range;
-  List<int> time = [0, 0];
-  int selectedEventType = 0;
+
+  //event name
+  final TextEditingController nameController = TextEditingController();
+
+  //current page in the stack
   int index = 0;
 
-  Position? location;
+  //venue, farm or court
+  int selectedEventType = 0;
 
-  //users coords
+  //event date and time
+  DateTimeRange? range;
+  List<int> time = [12, 12];
+
+  //temp value for UI control
+  int tempValueForTime = 0;
+
+  //event coords
   double lat = 0;
   double long = 0;
+
   //init location incase the user cancel
   double initLat = 0;
   double initLong = 0;
@@ -48,6 +63,7 @@ class _OwnerPageState extends State<OwnerPage> {
   @override
   void initState() {
     super.initState();
+    //get cubit
     ownerCubit = context.read<OwnerCubit>();
 
     //save location
@@ -66,7 +82,7 @@ class _OwnerPageState extends State<OwnerPage> {
       ),
       child: Icon(
         Icons.location_pin,
-        color: GlobalColors.black,
+        color: GColors.black,
       ),
     );
   }
@@ -76,6 +92,8 @@ class _OwnerPageState extends State<OwnerPage> {
     super.dispose();
     nameController.dispose();
     //todo cubit
+
+    ownerCubit.emit(OwnerInitial());
   }
 
   Future<Object?> showMapDialog(BuildContext context) {
@@ -97,7 +115,7 @@ class _OwnerPageState extends State<OwnerPage> {
                 point: point,
                 child: Icon(
                   Icons.location_pin,
-                  color: GlobalColors.black,
+                  color: GColors.black,
                 ),
               );
             });
@@ -113,7 +131,7 @@ class _OwnerPageState extends State<OwnerPage> {
                   point: LatLng(lat, long),
                   child: Icon(
                     Icons.location_pin,
-                    color: GlobalColors.black,
+                    color: GColors.black,
                   ),
                 );
               },
@@ -130,7 +148,7 @@ class _OwnerPageState extends State<OwnerPage> {
                   point: LatLng(lat, long),
                   child: Icon(
                     Icons.location_pin,
-                    color: GlobalColors.black,
+                    color: GColors.black,
                   ),
                 );
               },
@@ -140,38 +158,6 @@ class _OwnerPageState extends State<OwnerPage> {
       ),
     );
   }
-
-  //dev remove both buttons
-  // TextButton(
-  //   onPressed: () async {
-  //     date = await showDatePickerDialog(
-  //       context: context,
-  //       minDate: range!.start,
-  //       maxDate: range!.end,
-  //     );
-  //     setState(() {});
-  //   },
-  //   child: const Text('temp'),
-  // ),
-  // TextButton(
-  //   onPressed: () async {
-  //     TimeOfDay? t = await showTimePicker(
-  //       context: context,
-  //       initialTime: TimeOfDay.now(),
-  //       initialEntryMode: TimePickerEntryMode.dialOnly,
-  //     );
-  //     date = DateTime(
-  //       date!.year,
-  //       date!.month,
-  //       date!.day,
-  //       t!.hour,
-  //       t.minute,
-  //     );
-  //     print(date!.hour);
-  //     setState(() {});
-  //   },
-  //   child: const Text('temp'),
-  // ),
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +173,7 @@ class _OwnerPageState extends State<OwnerPage> {
       // }),
       child: Scaffold(
         appBar: AppBar(),
-        body: IndexedStack(
+        body: LazyIndexedStack(
           index: index,
           children: [
             //type
@@ -210,11 +196,32 @@ class _OwnerPageState extends State<OwnerPage> {
               onPressed: () => showMapDialog(context),
             ),
 
-            //scehdule (date and time togther or seperated)
+            //date range
+            SelectRangeDate(
+              range: range,
+              onRangeSelected: (value) => setState(() => range = value),
+            ),
+
+            //time range
+            SelectRangeTime(
+              tempValueForTime: tempValueForTime,
+              time: time,
+              onTab: (from, to) => setState(
+                () {
+                  //control UI
+                  tempValueForTime = 1;
+
+                  //set time
+                  time[0] = from.hour;
+                  time[1] = to.hour;
+                },
+              ),
+            ),
 
             //pics
 
             //submit
+            submitEvent(),
           ],
         ),
         bottomNavigationBar: OwnerPageNavigationBar(
@@ -222,8 +229,24 @@ class _OwnerPageState extends State<OwnerPage> {
             //if no name provided
             if (index == 1) {
               if (nameController.text.isEmpty) {
-                GlobalSnackBar.show(
-                    context: context, text: 'Please enter a name');
+                GSnackBar.show(context: context, text: 'Please enter a name');
+                return;
+              }
+            }
+            //if no date range provided
+            if (index == 3) {
+              if (range == null) {
+                GSnackBar.show(
+                    context: context, text: 'Please enter a range of date');
+                return;
+              }
+            }
+
+            //if no time range provided
+            if (index == 4) {
+              if (tempValueForTime == 0) {
+                GSnackBar.show(
+                    context: context, text: 'Please enter a range of time');
                 return;
               }
             }
@@ -250,11 +273,15 @@ class _OwnerPageState extends State<OwnerPage> {
     return BlocConsumer<OwnerCubit, OwnerStates>(
       builder: (context, state) {
         if (state is OwnerInitial) {
-          return TextButton(
+          return ConfirmAndAddEventToDatabase(
+            selectedEventType: selectedEventType,
+            nameController: nameController,
+            range: range,
+            time: time,
             onPressed: () async => await ownerCubit.addVenueToDatabase(
-              name: 'TT',
-              lat: '0',
-              lon: '0',
+              name: nameController.text,
+              lat: lat.toString(),
+              lon: long.toString(),
               startDate: [
                 range!.start.year,
                 range!.start.month,
@@ -271,13 +298,12 @@ class _OwnerPageState extends State<OwnerPage> {
               ],
               ownerId: widget.user!.uid,
             ),
-            child: const Text('Add to db'),
           );
         }
         if (state is OwnerLoaded) {
           return const Text('Done');
         } else {
-          return const CircularProgressIndicator();
+          return const LoadingIndicator();
         }
       },
       listener: (context, state) {

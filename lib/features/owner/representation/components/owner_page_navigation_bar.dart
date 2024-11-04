@@ -18,7 +18,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
         ),
-        color: GlobalColors.white,
+        color: GColors.white,
       ),
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -29,10 +29,9 @@ class OwnerPageNavigationBar extends StatelessWidget {
               IconButton(
                 onPressed: onPressedBack,
                 style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStatePropertyAll(GlobalColors.royalBlue),
+                    backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
                     shadowColor: WidgetStatePropertyAll(
-                      GlobalColors.black.withOpacity(0.5),
+                      GColors.black.withOpacity(0.5),
                     ),
                     elevation: const WidgetStatePropertyAll(3),
                     shape: WidgetStatePropertyAll(
@@ -46,7 +45,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
-                      colors: GlobalColors.logoGradient,
+                      colors: GColors.logoGradient,
                     ),
                   ),
                   child: Padding(
@@ -54,7 +53,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
                     child: Icon(
                       Icons.arrow_back_ios_new_rounded,
                       size: 30,
-                      color: GlobalColors.white,
+                      color: GColors.white,
                     ),
                   ),
                 ),
@@ -63,7 +62,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
               Text(
                 'Back',
                 style: TextStyle(
-                  color: GlobalColors.royalBlue,
+                  color: GColors.royalBlue,
                   fontSize: 25,
                 ),
               ),
@@ -74,7 +73,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
               Text(
                 'Next',
                 style: TextStyle(
-                  color: GlobalColors.royalBlue,
+                  color: GColors.royalBlue,
                   fontSize: 25,
                 ),
               ),
@@ -82,10 +81,9 @@ class OwnerPageNavigationBar extends StatelessWidget {
               IconButton(
                 onPressed: onPressedNext,
                 style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStatePropertyAll(GlobalColors.royalBlue),
+                    backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
                     shadowColor: WidgetStatePropertyAll(
-                      GlobalColors.black.withOpacity(0.5),
+                      GColors.black.withOpacity(0.5),
                     ),
                     elevation: const WidgetStatePropertyAll(3),
                     shape: WidgetStatePropertyAll(
@@ -99,7 +97,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
-                      colors: GlobalColors.logoGradient,
+                      colors: GColors.logoGradient,
                     ),
                   ),
                   child: Padding(
@@ -107,7 +105,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
                     child: Icon(
                       Icons.arrow_forward_ios_rounded,
                       size: 30,
-                      color: GlobalColors.white,
+                      color: GColors.white,
                     ),
                   ),
                 ),

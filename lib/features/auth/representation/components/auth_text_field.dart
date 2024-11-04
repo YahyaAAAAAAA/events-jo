@@ -37,26 +37,26 @@ class AuthTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(
-          color: GlobalColors.black,
+          color: GColors.black,
           fontSize: 17,
         ),
-        fillColor: GlobalColors.white,
+        fillColor: GColors.white,
         filled: true,
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: GlobalColors.whiteShade3,
+            color: GColors.whiteShade3,
           ),
           borderRadius: BorderRadius.circular(12),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: GlobalColors.whiteShade3,
+            color: GColors.whiteShade3,
           ),
           borderRadius: BorderRadius.circular(12),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: GlobalColors.royalBlue,
+            color: GColors.royalBlue,
           ),
           borderRadius: BorderRadius.circular(12),
         ),

@@ -1,19 +1,19 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
+import 'package:events_jo/features/owner/representation/components/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-class SelectEventName extends StatelessWidget {
-  const SelectEventName({
+class SelectRangeDate extends StatelessWidget {
+  final void Function(DateTimeRange)? onRangeSelected;
+  const SelectRangeDate({
     super.key,
-    required this.selectedEventType,
-    required this.nameController,
+    required this.range,
+    required this.onRangeSelected,
   });
 
-  final int selectedEventType;
-  final TextEditingController nameController;
+  final DateTimeRange? range;
 
   @override
   Widget build(BuildContext context) {
@@ -42,27 +42,25 @@ class SelectEventName extends StatelessWidget {
           ),
         ),
         const Spacer(),
+        DatePicker(
+          onRangeSelected: onRangeSelected,
+        ),
         Text(
-          selectedEventType == 0
-              ? 'Enter your Wedding Venue name'
-              : selectedEventType == 1
-                  ? 'Enter your Farm name'
-                  : 'Enter your Football Court name',
+          'Please pick your availability date',
           style: TextStyle(
             color: GColors.poloBlue,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(12),
-          child: AuthTextField(
-            controller: nameController,
-            hintText: '',
-            textColor: GColors.royalBlue,
-            fontWeight: FontWeight.bold,
-            obscureText: false,
-            textAlign: TextAlign.center,
+        Text(
+          range != null
+              ? 'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'
+              : '',
+          style: TextStyle(
+            color: GColors.royalBlue,
+            fontSize: 22,
+            fontWeight: FontWeight.normal,
           ),
         ),
         const Spacer(flex: 2),
