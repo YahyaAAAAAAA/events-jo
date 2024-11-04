@@ -9,6 +9,7 @@ import 'package:gradient_icon/gradient_icon.dart';
 
 class ConfirmAndAddEventToDatabase extends StatelessWidget {
   final void Function()? onPressed;
+  final void Function()? showMap;
   final int selectedEventType;
   final TextEditingController nameController;
   final DateTimeRange? range;
@@ -21,6 +22,7 @@ class ConfirmAndAddEventToDatabase extends StatelessWidget {
     required this.nameController,
     required this.range,
     required this.time,
+    this.showMap,
   });
 
   @override
@@ -71,8 +73,6 @@ class ConfirmAndAddEventToDatabase extends StatelessWidget {
 
         localDivider(),
 
-        //todo different row that shows map (not changeable)
-
         //date
         OwnerConfirmationDisplayRow(
             mainText: 'Date: ',
@@ -86,6 +86,16 @@ class ConfirmAndAddEventToDatabase extends StatelessWidget {
             mainText: 'Open Hours: ',
             subText:
                 'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
+
+        localDivider(),
+
+        //location
+        OwnerConfirmationDisplayRow(
+          mainText: 'Location: ',
+          isText: false,
+          subText: '',
+          onPressed: showMap,
+        ),
 
         localDivider(),
 

@@ -18,6 +18,13 @@ class OwnerPageNavigationBar extends StatelessWidget {
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: GColors.royalBlue.withOpacity(0.5),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          )
+        ],
         color: GColors.white,
       ),
       padding: const EdgeInsets.all(20),

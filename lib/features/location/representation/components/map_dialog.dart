@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+//* This shows map for the user/event location (CAN BE CHANGED)
 class MapDialog extends StatelessWidget {
   final double latitude;
   final double longitude;

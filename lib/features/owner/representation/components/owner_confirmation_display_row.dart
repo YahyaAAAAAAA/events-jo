@@ -4,10 +4,17 @@ import 'package:flutter/material.dart';
 class OwnerConfirmationDisplayRow extends StatelessWidget {
   final String mainText;
   final String subText;
+
+  //if false display button instead
+  final bool isText;
+  final void Function()? onPressed;
+
   const OwnerConfirmationDisplayRow({
     super.key,
     required this.mainText,
     required this.subText,
+    this.isText = true,
+    this.onPressed,
   });
 
   @override
@@ -34,15 +41,45 @@ class OwnerConfirmationDisplayRow extends StatelessWidget {
                 Flexible(
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: Text(
-                      subText,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: GColors.royalBlue,
-                        fontSize: 21,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                    child: isText
+                        ? Text(
+                            subText,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: GColors.royalBlue,
+                              fontSize: 21,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          )
+                        : IconButton(
+                            onPressed: onPressed,
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(GColors.royalBlue),
+                              shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                              ),
+                              padding:
+                                  const WidgetStatePropertyAll(EdgeInsets.zero),
+                            ),
+                            icon: Ink(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  colors: GColors.logoGradient,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.location_on_outlined,
+                                  color: GColors.white,
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                 ),
               ],

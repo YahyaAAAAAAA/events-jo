@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/representation/components/map_dialog.dart';
+import 'package:events_jo/features/location/representation/components/map_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/components/confirm_and_add_event_to_database.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_navigation_bar.dart';
 import 'package:events_jo/features/owner/representation/components/select_event_location.dart';
@@ -16,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 
 class OwnerPage extends StatefulWidget {
@@ -45,6 +50,8 @@ class _OwnerPageState extends State<OwnerPage> {
   //event date and time
   DateTimeRange? range;
   List<int> time = [12, 12];
+
+  File? selectedImage;
 
   //temp value for UI control
   int tempValueForTime = 0;
@@ -159,6 +166,17 @@ class _OwnerPageState extends State<OwnerPage> {
     );
   }
 
+  Future<Object?> showMapDialogPreview(BuildContext context) {
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) => MapDialogPreview(
+        latitude: lat,
+        longitude: long,
+        marker: marker,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -219,6 +237,24 @@ class _OwnerPageState extends State<OwnerPage> {
             ),
 
             //pics
+            TextButton(
+              child: selectedImage != null
+                  ? Image.file(selectedImage!)
+                  : const Text('data'),
+              onPressed: () async {
+                final returnedImage =
+                    await ImagePicker().pickImage(source: ImageSource.gallery);
+
+                if (returnedImage == null) return;
+
+                List<int> imageBytes = selectedImage!.readAsBytesSync();
+                String base64File = base64Encode(imageBytes);
+
+                setState(() {
+                  selectedImage = File(returnedImage.path);
+                });
+              },
+            ),
 
             //submit
             submitEvent(),
@@ -278,6 +314,7 @@ class _OwnerPageState extends State<OwnerPage> {
             nameController: nameController,
             range: range,
             time: time,
+            showMap: () => showMapDialogPreview(context),
             onPressed: () async => await ownerCubit.addVenueToDatabase(
               name: nameController.text,
               lat: lat.toString(),
