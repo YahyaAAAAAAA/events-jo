@@ -34,7 +34,7 @@ class EventsJoLogo extends StatelessWidget {
         // mainAxisSize: MainAxisSize.max,
         children: [
           GradientIcon(
-            icon: CustomIcons.eventsjo,
+            icon: CustomIcons.events_jo,
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               colors: GColors.logoGradient,

@@ -19,7 +19,7 @@ class WeddingVenuesPage extends StatefulWidget {
 class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   late List<WeddingVenue> weddingVenuList = [];
   late List<WeddingVenue> filterdWeddingVenuList = [];
-  late final WeddingVenueCubit cubit;
+  late final alphabetically cubit;
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -27,7 +27,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
     super.initState();
 
     //get cubit
-    cubit = context.read<WeddingVenueCubit>();
+    cubit = context.read<alphabetically>();
 
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
@@ -52,7 +52,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
           TextButton(
             onPressed: () {
               cubit.sortFromClosest(weddingVenuList);
-              // cubit.sortAlpha(weddingVenuList);
+              // cubit.sortAlpha(weddingVenueList);
             },
             child: Icon(
               Icons.sort_by_alpha_rounded,
@@ -71,7 +71,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         backgroundColor: Colors.transparent,
       ),
       //states
-      body: BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
+      body: BlocConsumer<alphabetically, WeddingVenueStates>(
         builder: (context, state) {
           //loading...
           if (state is WeddingVenueLoading) {

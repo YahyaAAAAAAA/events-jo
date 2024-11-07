@@ -45,7 +45,7 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
-  //regitser with email+pass
+  //register with email+pass
   Future<void> regitser(
     String name,
     String email,

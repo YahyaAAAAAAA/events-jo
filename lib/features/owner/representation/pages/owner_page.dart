@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading_indicator.dart';
@@ -236,23 +238,41 @@ class _OwnerPageState extends State<OwnerPage> {
               ),
             ),
 
+            Image.asset('assets/images/icon.png'),
             //pics
             TextButton(
               child: selectedImage != null
                   ? Image.file(selectedImage!)
                   : const Text('data'),
               onPressed: () async {
+                //dev upload image
                 final returnedImage =
                     await ImagePicker().pickImage(source: ImageSource.gallery);
 
                 if (returnedImage == null) return;
 
-                List<int> imageBytes = selectedImage!.readAsBytesSync();
-                String base64File = base64Encode(imageBytes);
+                selectedImage = File(returnedImage.path);
 
-                setState(() {
-                  selectedImage = File(returnedImage.path);
-                });
+                List<int> imageBytes = selectedImage!.readAsBytesSync();
+                String base64File =
+                    "data:image/png;base64,${base64Encode(imageBytes)}";
+
+                Dio dio = Dio();
+
+                log(base64File);
+                String s =
+                    'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+                // final response = await dio
+                //     .post('https://api.imgbb.com/1/upload?', queryParameters: {
+                //   'key': '0142889b2d4067562ccaeacbd88ab980',
+                //   'image': base64File,
+                // });
+
+                // print(response.data.toString());
+
+                // setState(() {
+                //   selectedImage = File(returnedImage.path);
+                // });
               },
             ),
 

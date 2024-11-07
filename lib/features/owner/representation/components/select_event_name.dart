@@ -22,7 +22,7 @@ class SelectEventName extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GradientIcon(
-          icon: CustomIcons.eventsjo,
+          icon: CustomIcons.events_jo,
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             colors: GColors.logoGradient,

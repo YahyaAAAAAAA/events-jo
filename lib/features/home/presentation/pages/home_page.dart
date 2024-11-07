@@ -197,13 +197,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-//dev extend string class -> capitlize the begging of every word
-extension StringCasingExtension on String {
-  String get toCapitalized =>
-      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
-  String get toTitleCase => replaceAll(RegExp(' +'), ' ')
-      .split(' ')
-      .map((str) => str.toCapitalized)
-      .join(' ');
-}

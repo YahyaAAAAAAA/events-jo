@@ -26,7 +26,7 @@ class SelectEventType extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GradientIcon(
-          icon: CustomIcons.eventsjo,
+          icon: CustomIcons.events_jo,
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             colors: GColors.logoGradient,

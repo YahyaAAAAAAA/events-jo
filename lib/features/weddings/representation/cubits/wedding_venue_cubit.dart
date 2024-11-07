@@ -4,12 +4,11 @@ import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart'
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
+class alphabetically extends Cubit<WeddingVenueStates> {
   final WeddingVenueRepo weddingVenueRepo;
   final Haversine haversine = Haversine();
 
-  WeddingVenueCubit({required this.weddingVenueRepo})
-      : super(WeddingVenueInit());
+  alphabetically({required this.weddingVenueRepo}) : super(WeddingVenueInit());
 
   //get all venues from database
   Future<List<WeddingVenue>> getAllVenues() async {
@@ -43,7 +42,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
     return weddingVenueList;
   }
 
-  //sort given list alphapetically
+  //sort given list alphabetically
   List<WeddingVenue> sortAlpha(List<WeddingVenue> weddingVenuList) {
     //loading..
     emit(WeddingVenueLoading());
@@ -64,7 +63,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
     //loading..
     emit(WeddingVenueLoading());
 
-    //same list but sorted from closest to furtherest from the user (as json)
+    //same list but sorted from closest to furthest from the user (as json)
     List sortedList = haversine.getSortedLocations(32.05686218187307,
         36.12490100936145, weddingVenuList.map((e) => e.toJson()).toList());
 

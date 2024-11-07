@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 //welcome back message
                 Text(
-                  "Login to EventsJO",
+                  "Login to EventsJo",
                   style: TextStyle(
                     color: GColors.black,
                     fontSize: 22,

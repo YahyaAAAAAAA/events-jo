@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/representation/components/rating_venues.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-import 'package:lottie/lottie.dart';
 
 class WeddingVenuesDetailsPage extends StatefulWidget {
   final WeddingVenue weddingVenue;

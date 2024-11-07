@@ -38,7 +38,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
   }
 }
 
-//extend string class -> capitlize the beginning of every word
+//extend string class -> capitalize the beginning of every word
 extension StringCasingExtension on String {
   String get toCapitalized =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
