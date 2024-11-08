@@ -41,7 +41,7 @@
 
 ###
 
-<h2 align="left">Project Architecture, UML and Screens</h2>
+<h2 align="left">Project Architecture, Use Case Diagram and Screens</h2>
 <div align="left">
   
 <a href="https://drive.google.com/file/d/151Gh3IPBVC2VyLv4quY4qaiMTGQLyQC-/view?usp=sharing" style="text-decoration: none">
