@@ -51,7 +51,7 @@
 <img width="12" />
   
 <a  style="text-decoration: dotted" href="https://drive.google.com/file/d/1Jdf2Tx_KFwl9lGgbJFPikjUTi1AOaaDE/view?usp=sharing">
-  <img src="assets/git_images/diagramjo.png" height="100" alt="Project UML"  />
+  <img src="assets/git_images/diagramjo.png" height="100" alt="Project Use Case"  />
 </a>
 
 <img width="12" />
