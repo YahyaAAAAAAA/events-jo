@@ -1,8 +1,6 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
-
-import 'package:dio/dio.dart';
+import 'package:cloudinary_api/uploader/cloudinary_uploader.dart';
+import 'package:cloudinary_url_gen/cloudinary.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading_indicator.dart';
@@ -20,10 +18,12 @@ import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart'
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:cloudinary_api/src/request/model/uploader_params.dart';
 
 class OwnerPage extends StatefulWidget {
   final AppUser? user;
@@ -53,8 +53,6 @@ class _OwnerPageState extends State<OwnerPage> {
   DateTimeRange? range;
   List<int> time = [12, 12];
 
-  File? selectedImage;
-
   //temp value for UI control
   int tempValueForTime = 0;
 
@@ -69,11 +67,20 @@ class _OwnerPageState extends State<OwnerPage> {
   //empty marker for now
   late Marker marker;
 
+  //dev
+  //setup Cloudinary server
+  var cloudinary = Cloudinary.fromStringUrl(
+      'cloudinary://${dotenv.get('IMG_API_KEY')}:${dotenv.get('IMG_API_SECRET')}@${dotenv.get('IMG_CLOUD_NAME')}');
+
+  String url = '';
+
   @override
   void initState() {
     super.initState();
     //get cubit
     ownerCubit = context.read<OwnerCubit>();
+
+    cloudinary.config.urlConfig.secure = true;
 
     //save location
     lat = widget.user!.latitude;
@@ -100,8 +107,6 @@ class _OwnerPageState extends State<OwnerPage> {
   void dispose() {
     super.dispose();
     nameController.dispose();
-    //todo cubit
-
     ownerCubit.emit(OwnerInitial());
   }
 
@@ -238,43 +243,42 @@ class _OwnerPageState extends State<OwnerPage> {
               ),
             ),
 
-            Image.asset('assets/images/icon.png'),
+            //todo in new feature (image)
+            //1- user pick up to 5 images
+            //2- display and save images (in pick page and submit page)
+            //3- on submit ->
+            //3.1- upload all images to server
+            //3.2- save all urls to user in database
+            //3.3- pop from page
+
             //pics
             TextButton(
-              child: selectedImage != null
-                  ? Image.file(selectedImage!)
-                  : const Text('data'),
+              child: const Text('data'),
               onPressed: () async {
-                //dev upload image
+                //pick image
                 final returnedImage =
                     await ImagePicker().pickImage(source: ImageSource.gallery);
 
                 if (returnedImage == null) return;
 
-                selectedImage = File(returnedImage.path);
+                //request upload to server
+                var response = await cloudinary.uploader().upload(
+                      File(returnedImage.path),
+                      params: UploadParams(
+                        uniqueFilename: true,
+                        overwrite: true,
+                      ),
+                    );
 
-                List<int> imageBytes = selectedImage!.readAsBytesSync();
-                String base64File =
-                    "data:image/png;base64,${base64Encode(imageBytes)}";
-
-                Dio dio = Dio();
-
-                log(base64File);
-                String s =
-                    'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-                // final response = await dio
-                //     .post('https://api.imgbb.com/1/upload?', queryParameters: {
-                //   'key': '0142889b2d4067562ccaeacbd88ab980',
-                //   'image': base64File,
-                // });
-
-                // print(response.data.toString());
-
-                // setState(() {
-                //   selectedImage = File(returnedImage.path);
-                // });
+                //save url
+                setState(() {
+                  url = response!.data!.secureUrl ?? '';
+                });
               },
             ),
+
+            //dev temp
+            Image(image: NetworkImage(url)),
 
             //submit
             submitEvent(),
