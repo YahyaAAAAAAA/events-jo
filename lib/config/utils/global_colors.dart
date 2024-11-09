@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //global colors
 class GColors {
   //main bg color
-  static Color whiteShade3 = const Color(0xFFF1F6FF);
+  static Color whiteShade3 = const Color.fromRGBO(241, 246, 255, 1);
 
   //for buttons and exposed texts mostly
   static Color royalBlue = const Color(0xFF306BDD);
@@ -58,6 +58,12 @@ class GColors {
     Color.fromARGB(255, 98, 83, 211),
     Color.fromARGB(255, 120, 108, 213),
     Color.fromARGB(255, 117, 103, 223),
+  ];
+
+  static List<Color> imageCardGradient = const [
+    Colors.white,
+    const Color.fromRGBO(245, 245, 245, 1),
+    const Color.fromRGBO(238, 238, 238, 1),
   ];
 
   //scaffold, appbar and logo

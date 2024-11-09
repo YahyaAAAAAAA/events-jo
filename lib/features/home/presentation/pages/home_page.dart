@@ -46,31 +46,6 @@ class _HomePageState extends State<HomePage> {
     animatedController.dispose();
   }
 
-  //dev for later
-  // Widget addToDatabaseButton() {
-  //   return TextButton(
-  //     onPressed: () async {
-  //       //* adding new venus to database (for me)
-  //       WeddingVenue weddingVenue = WeddingVenue(
-  //         latitude: "31.84480325226184",
-  //         longitude: "35.88135319995705",
-  //         name: "country club".toTitleCase,
-  //         openTime: "10 AM–10 PM",
-  //         isOpen: true,
-  //         owner: currentUser!.uid,
-  //         pics: [
-  //           'https://i.ibb.co/ZVf53hB/placeholder.png',
-  //         ],
-  //         rate: 0,
-  //       );
-  //       FirebaseFirestore.instance
-  //           .collection('venues')
-  //           .add(weddingVenue.toJson());
-  //     },
-  //     child: const Text('add to database'),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +95,9 @@ class _HomePageState extends State<HomePage> {
                   HomeCard(
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const WeddingVenuesPage(),
+                        builder: (context) => WeddingVenuesPage(
+                          appUser: currentUser,
+                        ),
                       ),
                     ),
                     controller: animatedController,

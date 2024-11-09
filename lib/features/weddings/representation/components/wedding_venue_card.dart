@@ -48,20 +48,19 @@ class WeddingVenueCard extends StatelessWidget {
           //* image
           Container(
             height: 110,
+            width: 150,
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
               color: GColors.white,
               borderRadius: BorderRadius.circular(5),
-              //dev might change later
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 20,
+                  color: GColors.poloBlue.withOpacity(0.3),
+                  blurRadius: 10,
                   offset: const Offset(2, 2),
                 ),
               ],
             ),
-            // width: 100,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               //display preview image
@@ -81,7 +80,7 @@ class WeddingVenueCard extends StatelessWidget {
                     size: 40,
                   ),
                 ),
-                fit: BoxFit.scaleDown,
+                fit: BoxFit.cover,
               ),
             ),
           ),

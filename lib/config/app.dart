@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         //wedding venue cubit
         BlocProvider(
           create: (context) =>
-              alphabetically(weddingVenueRepo: weddingVenueRepo),
+              WeddingVenueCubit(weddingVenueRepo: weddingVenueRepo),
         ),
         //owner cubit
         BlocProvider(

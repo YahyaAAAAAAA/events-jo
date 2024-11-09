@@ -1,6 +1,7 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
+import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/my_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/wedding_venue_card.dart';
@@ -10,7 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WeddingVenuesPage extends StatefulWidget {
-  const WeddingVenuesPage({super.key});
+  //get user
+  final AppUser? appUser;
+
+  const WeddingVenuesPage({
+    super.key,
+    required this.appUser,
+  });
 
   @override
   State<WeddingVenuesPage> createState() => _WeddingVenuesPageState();
@@ -19,7 +26,7 @@ class WeddingVenuesPage extends StatefulWidget {
 class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   late List<WeddingVenue> weddingVenuList = [];
   late List<WeddingVenue> filterdWeddingVenuList = [];
-  late final alphabetically cubit;
+  late final WeddingVenueCubit weddingVenueCubit;
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -27,12 +34,12 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
     super.initState();
 
     //get cubit
-    cubit = context.read<alphabetically>();
+    weddingVenueCubit = context.read<WeddingVenueCubit>();
 
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
         //get original list
-        weddingVenuList = await cubit.getAllVenues();
+        weddingVenuList = await weddingVenueCubit.getAllVenues();
       },
     );
   }
@@ -51,8 +58,11 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         actions: [
           TextButton(
             onPressed: () {
-              cubit.sortFromClosest(weddingVenuList);
-              // cubit.sortAlpha(weddingVenueList);
+              weddingVenueCubit.sortFromClosest(
+                weddingVenuList,
+                widget.appUser!.latitude,
+                widget.appUser!.longitude,
+              );
             },
             child: Icon(
               Icons.sort_by_alpha_rounded,
@@ -71,7 +81,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         backgroundColor: Colors.transparent,
       ),
       //states
-      body: BlocConsumer<alphabetically, WeddingVenueStates>(
+      body: BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
         builder: (context, state) {
           //loading...
           if (state is WeddingVenueLoading) {
@@ -88,7 +98,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                 MySearchBar(
                   controller: searchController,
                   onPressed: () => setState(() => searchController.clear()),
-                  onChanged: (venue) => cubit.searchList(
+                  onChanged: (venue) => weddingVenueCubit.searchList(
                       weddingVenuList, filterdWeddingVenuList, venue),
                 ),
                 //venues list

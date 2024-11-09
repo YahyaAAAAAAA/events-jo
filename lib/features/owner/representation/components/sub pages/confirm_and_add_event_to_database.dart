@@ -3,13 +3,14 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/owner_confirmation_display_row.dart';
-import 'package:events_jo/features/owner/representation/components/select_range_time.dart';
+import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
 class ConfirmAndAddEventToDatabase extends StatelessWidget {
   final void Function()? onPressed;
   final void Function()? showMap;
+  final void Function()? showImages;
   final int selectedEventType;
   final TextEditingController nameController;
   final DateTimeRange? range;
@@ -23,6 +24,7 @@ class ConfirmAndAddEventToDatabase extends StatelessWidget {
     required this.range,
     required this.time,
     this.showMap,
+    this.showImages,
   });
 
   @override
@@ -89,6 +91,17 @@ class ConfirmAndAddEventToDatabase extends StatelessWidget {
 
         localDivider(),
 
+        //images
+        OwnerConfirmationDisplayRow(
+          mainText: 'Images:   ',
+          isText: false,
+          subText: '',
+          icon: Icons.image,
+          onPressed: showImages,
+        ),
+
+        localDivider(),
+
         //location
         OwnerConfirmationDisplayRow(
           mainText: 'Location: ',
@@ -98,8 +111,6 @@ class ConfirmAndAddEventToDatabase extends StatelessWidget {
         ),
 
         localDivider(),
-
-        //todo pics preview
 
         const Spacer(flex: 2),
 

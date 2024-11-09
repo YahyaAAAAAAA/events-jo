@@ -5,7 +5,11 @@ import 'package:gradient_icon/gradient_icon.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({super.key});
+  final bool? withImage;
+  const LoadingIndicator({
+    super.key,
+    this.withImage = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +18,17 @@ class LoadingIndicator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          GradientIcon(
-            icon: CustomIcons.events_jo,
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              colors: GColors.logoGradient,
-            ),
-            size: 100,
-          ),
-          SizedBox(height: 20),
+          withImage!
+              ? GradientIcon(
+                  icon: CustomIcons.events_jo,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    colors: GColors.logoGradient,
+                  ),
+                  size: 100,
+                )
+              : SizedBox(),
+          withImage! ? SizedBox(height: 20) : SizedBox(),
           Lottie.asset(
             'assets/animations/loading.json',
             frameRate: const FrameRate(60),

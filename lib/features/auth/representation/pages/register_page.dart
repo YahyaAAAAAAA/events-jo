@@ -305,7 +305,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          LoadingIndicator(),
+                          LoadingIndicator(withImage: false),
                         ],
                       ),
                     );

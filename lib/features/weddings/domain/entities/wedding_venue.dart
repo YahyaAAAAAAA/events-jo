@@ -6,9 +6,9 @@ class WeddingVenue {
   late int rate;
   late bool isOpen;
   late List<dynamic> pics;
-  late List<int> startDate;
-  late List<int> endDate;
-  late List<int> time;
+  late List<dynamic> startDate;
+  late List<dynamic> endDate;
+  late List<dynamic> time;
 
   WeddingVenue({
     required this.name,

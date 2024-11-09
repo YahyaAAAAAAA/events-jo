@@ -7,6 +7,7 @@ class OwnerConfirmationDisplayRow extends StatelessWidget {
 
   //if false display button instead
   final bool isText;
+  final IconData icon;
   final void Function()? onPressed;
 
   const OwnerConfirmationDisplayRow({
@@ -14,6 +15,7 @@ class OwnerConfirmationDisplayRow extends StatelessWidget {
     required this.mainText,
     required this.subText,
     this.isText = true,
+    this.icon = Icons.location_on_outlined,
     this.onPressed,
   });
 
@@ -74,7 +76,7 @@ class OwnerConfirmationDisplayRow extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(
-                                  Icons.location_on_outlined,
+                                  icon,
                                   color: GColors.white,
                                 ),
                               ),

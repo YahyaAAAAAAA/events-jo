@@ -125,7 +125,7 @@ class SelectEventType extends StatelessWidget {
                       style: TextStyle(
                         color: GColors.royalBlue,
                         fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),
@@ -136,7 +136,7 @@ class SelectEventType extends StatelessWidget {
                       style: TextStyle(
                         color: GColors.royalBlue,
                         fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),
@@ -147,7 +147,7 @@ class SelectEventType extends StatelessWidget {
                       style: TextStyle(
                         color: GColors.royalBlue,
                         fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),

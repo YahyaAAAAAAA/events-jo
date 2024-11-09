@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class OwnerPageNavigationBar extends StatelessWidget {
   final void Function()? onPressedNext;
   final void Function()? onPressedBack;
+  final int index;
   const OwnerPageNavigationBar({
     super.key,
     required this.onPressedNext,
     required this.onPressedBack,
+    required this.index,
   });
 
   @override
@@ -21,7 +23,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: GColors.royalBlue.withOpacity(0.5),
-            blurRadius: 10,
+            blurRadius: 7,
             offset: const Offset(0, 4),
           )
         ],
@@ -31,6 +33,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          //back button
           Row(
             children: [
               IconButton(
@@ -75,50 +78,101 @@ class OwnerPageNavigationBar extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            children: [
-              Text(
-                'Next',
-                style: TextStyle(
-                  color: GColors.royalBlue,
-                  fontSize: 25,
-                ),
-              ),
-              const SizedBox(width: 10),
-              IconButton(
-                onPressed: onPressedNext,
-                style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
-                    shadowColor: WidgetStatePropertyAll(
-                      GColors.black.withOpacity(0.5),
-                    ),
-                    elevation: const WidgetStatePropertyAll(3),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+          //next button
+          index != 6
+              ? Row(
+                  children: [
+                    Text(
+                      'Next',
+                      style: TextStyle(
+                        color: GColors.royalBlue,
+                        fontSize: 25,
                       ),
                     ),
-                    padding: const WidgetStatePropertyAll(EdgeInsets.zero)),
-                icon: Ink(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      colors: GColors.logoGradient,
+                    const SizedBox(width: 10),
+                    IconButton(
+                      onPressed: onPressedNext,
+                      style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStatePropertyAll(GColors.royalBlue),
+                          shadowColor: WidgetStatePropertyAll(
+                            GColors.black.withOpacity(0.5),
+                          ),
+                          elevation: const WidgetStatePropertyAll(3),
+                          shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          padding:
+                              const WidgetStatePropertyAll(EdgeInsets.zero)),
+                      icon: Ink(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            colors: GColors.logoGradient,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 30,
+                            color: GColors.white,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 30,
-                      color: GColors.white,
+                  ],
+                )
+              //last page
+              : Row(
+                  children: [
+                    Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: GColors.royalBlue,
+                        fontSize: 25,
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 10),
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStatePropertyAll(GColors.royalBlue),
+                          shadowColor: WidgetStatePropertyAll(
+                            GColors.black.withOpacity(0.5),
+                          ),
+                          elevation: const WidgetStatePropertyAll(3),
+                          shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          padding:
+                              const WidgetStatePropertyAll(EdgeInsets.zero)),
+                      icon: Ink(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            colors: GColors.logoGradient,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Icon(
+                            Icons.clear,
+                            size: 30,
+                            color: GColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ],
       ),
     );
