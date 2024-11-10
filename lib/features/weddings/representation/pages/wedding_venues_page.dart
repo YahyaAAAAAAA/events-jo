@@ -3,12 +3,16 @@ import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/representation/components/my_search_bar.dart';
+import 'package:events_jo/features/weddings/representation/components/weddings_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/wedding_venue_card.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// 11/8/2024 lil break for midterm.
+//TODO: BACK TRACK THE PROJECT , CHECK UI RESPONSIVENESS , MEMORY LEAK ,
+// DOCUMENT THE PROJECT , MAYBE RENAME FILES AND THEN VENUE DETAILS.
 
 class WeddingVenuesPage extends StatefulWidget {
   //get user
@@ -95,7 +99,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
             return Column(
               children: [
                 //search bar
-                MySearchBar(
+                WeddingsSearchBar(
                   controller: searchController,
                   onPressed: () => setState(() => searchController.clear()),
                   onChanged: (venue) => weddingVenueCubit.searchList(

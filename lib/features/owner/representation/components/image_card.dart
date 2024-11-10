@@ -16,8 +16,8 @@ class ImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
-      width: 100,
+      padding: const EdgeInsets.all(10),
+      width: 250,
       height: 100,
       decoration: BoxDecoration(
         color: GColors.white,

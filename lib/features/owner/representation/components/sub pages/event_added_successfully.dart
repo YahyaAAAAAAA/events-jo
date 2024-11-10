@@ -40,7 +40,7 @@ class EventAddedSuccessfully extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Spacer(),
+        const Spacer(),
         OwnerButton(
           text: selectedEventType == 0
               ? 'Congrats your Venue has been added'
@@ -54,7 +54,7 @@ class EventAddedSuccessfully extends StatelessWidget {
           fontWeight: FontWeight.bold,
           onPressed: onPressed,
         ),
-        Spacer(flex: 2),
+        const Spacer(flex: 2),
       ],
     );
   }

@@ -10,7 +10,7 @@ class GSnackBar {
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: duration ?? Duration(seconds: 4),
+        duration: duration ?? const Duration(seconds: 4),
         backgroundColor: GColors.poloBlue,
         padding: const EdgeInsets.all(18),
         shape: const RoundedRectangleBorder(

@@ -24,51 +24,31 @@ class HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: colors[0].withOpacity(0.3),
-          blurRadius: 20,
-          offset: const Offset(0, 0),
-        )
-      ]),
-      child: Padding(
-        padding: EdgeInsets.only(
-          bottom: 10,
-          top: 5,
-          left: index % 2 == 0 ? 10 : 0,
-          right: index % 2 != 0 ? 10 : 0,
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: GridTile(
-            // header: Container(
-            //   color: Colors.white.withOpacity(0.2),
-            //   child: const Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Text(''),
-            //     ],
-            //   ),
-            // ),
-            footer: Align(
-              alignment: Alignment.bottomRight,
-              child: IconButton(
-                onPressed: onPressed,
-                icon: Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: GColors.white,
-                ),
-              ),
-            ),
-            child: AnimatedMeshGradient(
-              colors: colors,
-              controller: controller,
-              options: AnimatedMeshGradientOptions(
-                speed: 15,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(),
-                child: Row(
+      width: 200,
+      height: 120,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: colors[0].withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 0),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: AnimatedMeshGradient(
+          colors: colors,
+          controller: controller,
+          options: AnimatedMeshGradientOptions(
+            speed: 15,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: Column(
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
@@ -97,7 +77,19 @@ class HomeCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: onPressed,
+                      icon: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: GColors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

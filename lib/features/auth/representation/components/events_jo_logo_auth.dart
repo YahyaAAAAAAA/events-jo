@@ -9,37 +9,39 @@ class EventsJoLogoAuth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 13, right: 13, bottom: 13, top: 0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: GColors.whiteShade3,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GradientIcon(
-            icon: CustomIcons.events_jo,
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              colors: GColors.logoGradient,
+    return FittedBox(
+      child: Container(
+        padding: const EdgeInsets.only(left: 13, right: 13, bottom: 13, top: 0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: GColors.whiteShade3,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GradientIcon(
+              icon: CustomIcons.events_jo,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                colors: GColors.logoGradient,
+              ),
+              size: 80,
             ),
-            size: 80,
-          ),
-          GradientText(
-            'EventsJo',
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              colors: GColors.logoGradient,
-            ),
-            style: TextStyle(
-              color: GColors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-        ],
+            GradientText(
+              'EventsJo',
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                colors: GColors.logoGradient,
+              ),
+              style: TextStyle(
+                color: GColors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

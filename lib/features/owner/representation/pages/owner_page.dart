@@ -75,7 +75,7 @@ class _OwnerPageState extends State<OwnerPage> {
     //get cubit
     ownerCubit = context.read<OwnerCubit>();
 
-    //dev will use this for quick addition
+    //todo will use this for quick addition
     // lat = 31.863837903688133;
     // long = 35.89443320390641;
 
@@ -217,7 +217,7 @@ class _OwnerPageState extends State<OwnerPage> {
       child: Scaffold(
         appBar: AppBar(
           //hides back button
-          leading: SizedBox(),
+          leading: const SizedBox(),
           centerTitle: true,
           title: Text(
             '( ${(index + 1).toString()}/7 )',
@@ -352,7 +352,7 @@ class _OwnerPageState extends State<OwnerPage> {
                 }),
               );
             } else {
-              return SizedBox();
+              return const SizedBox();
             }
           },
           listener: (context, state) {
@@ -430,7 +430,7 @@ class _OwnerPageState extends State<OwnerPage> {
           GSnackBar.show(
               context: context,
               text: state.messege,
-              duration: Duration(seconds: 1));
+              duration: const Duration(seconds: 1));
         }
         //error
         if (state is OwnerError) {

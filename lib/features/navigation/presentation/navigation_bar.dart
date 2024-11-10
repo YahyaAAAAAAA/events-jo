@@ -49,48 +49,52 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
           right: 15,
           bottom: 15,
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: GNav(
-            backgroundColor: GColors.navBar,
-            tabBorderRadius: 0,
-            duration: const Duration(milliseconds: 300),
-            color: GColors.poloBlue,
-            activeColor: GColors.royalBlue,
-            rippleColor: GColors.white.withOpacity(0.2),
-            iconSize: 24,
-            tabBackgroundColor: Colors.transparent,
-            tabActiveBorder: Border(
-              bottom: BorderSide(
-                color: GColors.royalBlue,
-                width: 10,
-              ),
-            ),
-            textStyle: TextStyle(
-              fontSize: 15,
-              color: GColors.royalBlue,
-              fontWeight: FontWeight.bold,
-            ),
-            selectedIndex: selecetedPage,
-            tabMargin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.all(20),
-            tabs: const [
-              GButton(
-                icon: CustomIcons.list,
-                text: ' Your Orders',
-              ),
-              GButton(
-                icon: CustomIcons.home,
-                text: ' Home',
-              ),
-              GButton(
-                icon: CustomIcons.settings,
-                text: ' Settings',
-              ),
-            ],
-            onTabChange: (value) => setState(() => selecetedPage = value),
-          ),
-        ),
+        child: MediaQuery.of(context).size.width > 320
+            ? GNav(
+                backgroundColor: GColors.navBar,
+                tabBorderRadius: 12,
+                duration: const Duration(milliseconds: 300),
+                color: GColors.poloBlue,
+                activeColor: GColors.royalBlue,
+                rippleColor: GColors.white.withOpacity(0.2),
+                iconSize: 24,
+                tabBackgroundColor: Colors.transparent,
+                tabActiveBorder: Border(
+                  left: BorderSide(
+                    color: GColors.royalBlue,
+                    width: 5,
+                  ),
+                  right: BorderSide(
+                    color: GColors.royalBlue,
+                    width: 5,
+                  ),
+                ),
+                textStyle: TextStyle(
+                  fontSize: 15,
+                  color: GColors.royalBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+                selectedIndex: selecetedPage,
+                tabMargin: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(20),
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                tabs: const [
+                  GButton(
+                    icon: CustomIcons.list,
+                    text: ' Your Orders',
+                  ),
+                  GButton(
+                    icon: CustomIcons.home,
+                    text: ' Home',
+                  ),
+                  GButton(
+                    icon: CustomIcons.settings,
+                    text: ' Settings',
+                  ),
+                ],
+                onTabChange: (value) => setState(() => selecetedPage = value),
+              )
+            : const SizedBox(),
       ),
       body: screens[selecetedPage],
     );

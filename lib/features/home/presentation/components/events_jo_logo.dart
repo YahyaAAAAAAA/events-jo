@@ -19,6 +19,10 @@ class EventsJoLogo extends StatelessWidget {
             color: Color(0xFF306bdd),
             width: 10,
           ),
+          right: BorderSide(
+            color: Color(0xFF306bdd),
+            width: 10,
+          ),
         ),
         boxShadow: [
           BoxShadow(
@@ -28,32 +32,36 @@ class EventsJoLogo extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.start,
-        // mainAxisSize: MainAxisSize.max,
-        children: [
-          GradientIcon(
-            icon: CustomIcons.events_jo,
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              colors: GColors.logoGradient,
+      child: FittedBox(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          // mainAxisSize: MainAxisSize.max,
+          children: [
+            const SizedBox(width: 90),
+            GradientIcon(
+              icon: CustomIcons.events_jo,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                colors: GColors.logoGradient,
+              ),
+              size: 80,
             ),
-            size: 80,
-          ),
-          GradientText(
-            'EventsJo',
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              colors: GColors.logoGradient.reversed.toList(),
+            GradientText(
+              'EventsJo',
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                colors: GColors.logoGradient.reversed.toList(),
+              ),
+              style: TextStyle(
+                color: GColors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            style: TextStyle(
-              color: GColors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-        ],
+            const SizedBox(width: 90),
+          ],
+        ),
       ),
     );
   }

@@ -15,55 +15,60 @@ class ChangeUserTypeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        TextButton(
-          onPressed: setUserType,
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(GColors.white),
-            shape: WidgetStatePropertyAll(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Wrap(
+        runSpacing: 10,
+        spacing: 10,
+        alignment: WrapAlignment.start,
+        children: [
+          TextButton(
+            onPressed: setUserType,
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(GColors.white),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              padding: const WidgetStatePropertyAll(
+                EdgeInsets.all(12),
               ),
             ),
-            padding: const WidgetStatePropertyAll(
-              EdgeInsets.all(12),
+            child: Icon(
+              Icons.person,
+              size: 30,
+              color: isOwner ? GColors.black : GColors.royalBlue,
             ),
           ),
-          child: Icon(
-            Icons.person,
-            size: 30,
-            color: isOwner ? GColors.black : GColors.royalBlue,
-          ),
-        ),
-        const SizedBox(width: 10),
-        TextButton(
-          onPressed: setOwnerType,
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(GColors.white),
-            shape: WidgetStatePropertyAll(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          TextButton(
+            onPressed: setOwnerType,
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(GColors.white),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              padding: const WidgetStatePropertyAll(
+                EdgeInsets.all(12),
               ),
             ),
-            padding: const WidgetStatePropertyAll(
-              EdgeInsets.all(12),
+            child: Icon(
+              Icons.person_4,
+              size: 30,
+              color: isOwner ? GColors.royalBlue : GColors.black,
             ),
           ),
-          child: Icon(
-            Icons.person_4,
-            size: 30,
-            color: isOwner ? GColors.royalBlue : GColors.black,
+          Text(
+            isOwner ? 'Owner Account' : 'User Account',
+            style: const TextStyle(
+              fontSize: 18,
+              overflow: TextOverflow.clip,
+            ),
           ),
-        ),
-        const SizedBox(width: 10),
-        Text(
-          isOwner ? 'Owner Account' : 'User Account',
-          style: const TextStyle(
-            fontSize: 18,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

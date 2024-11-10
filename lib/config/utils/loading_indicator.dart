@@ -27,8 +27,8 @@ class LoadingIndicator extends StatelessWidget {
                   ),
                   size: 100,
                 )
-              : SizedBox(),
-          withImage! ? SizedBox(height: 20) : SizedBox(),
+              : const SizedBox(),
+          withImage! ? const SizedBox(height: 20) : const SizedBox(),
           Lottie.asset(
             'assets/animations/loading.json',
             frameRate: const FrameRate(60),

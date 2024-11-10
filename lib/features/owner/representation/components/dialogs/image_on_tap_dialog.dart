@@ -22,7 +22,7 @@ class ImageOnTapDialog extends StatelessWidget {
         child: Scaffold(
           //close
           appBar: AppBar(
-            leading: SizedBox(),
+            leading: const SizedBox(),
             backgroundColor: Colors.transparent,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.end,

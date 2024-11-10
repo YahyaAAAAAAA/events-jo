@@ -35,34 +35,36 @@ class AuthButton extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            onPressed: onTap,
-            style: ButtonStyle(
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
-              // backgroundColor: WidgetStatePropertyAll(MyColors.royalBlue),
-            ),
-            icon: Ink(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  colors: GColors.logoGradient,
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Icon(
-                  icon,
-                  color: GColors.whiteShade3,
-                ),
-              ),
-            ),
-          ),
+          MediaQuery.of(context).size.width > 140
+              ? IconButton(
+                  onPressed: onTap,
+                  style: ButtonStyle(
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
+                    // backgroundColor: WidgetStatePropertyAll(MyColors.royalBlue),
+                  ),
+                  icon: Ink(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        colors: GColors.logoGradient,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Icon(
+                        icon,
+                        color: GColors.whiteShade3,
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );

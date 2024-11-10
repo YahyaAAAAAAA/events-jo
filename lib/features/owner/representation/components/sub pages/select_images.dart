@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
@@ -21,6 +22,7 @@ class SelectImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +47,7 @@ class SelectImages extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        images.isEmpty ? Spacer() : SizedBox(height: 20),
+        images.isEmpty ? const Spacer() : const SizedBox(height: 20),
         OwnerButton(
           text: selectedEventType == 0
               ? 'Select images for your Venue'
@@ -59,21 +61,30 @@ class SelectImages extends StatelessWidget {
           fontWeight: FontWeight.bold,
           onPressed: onPressed,
         ),
-        Expanded(
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-            ),
-            itemCount: images.length,
-            padding: EdgeInsets.all(20),
-            itemBuilder: (context, index) => images.isNotEmpty
-                ? ImageCard(images: images, index: index)
-                : SizedBox(),
-          ),
-        ),
-        images.isEmpty ? Spacer() : SizedBox(height: 0),
+
+        const SizedBox(height: 10),
+
+        //images slider
+        images.isNotEmpty
+            ? CarouselSlider.builder(
+                itemCount: images.length,
+                itemBuilder: (context, index, realIndex) => images.isNotEmpty
+                    ? ImageCard(images: images, index: index)
+                    : const SizedBox(),
+                options: CarouselOptions(
+                  height: MediaQuery.of(context).size.height > 693
+                      ? 250
+                      : MediaQuery.of(context).size.height > 643
+                          ? 200
+                          : MediaQuery.of(context).size.height > 595
+                              ? 150
+                              : 0,
+                  enlargeFactor: 1,
+                  enlargeCenterPage: true,
+                ),
+              )
+            : const SizedBox(),
+        images.isEmpty ? const Spacer(flex: 2) : const SizedBox(height: 0),
       ],
     );
   }

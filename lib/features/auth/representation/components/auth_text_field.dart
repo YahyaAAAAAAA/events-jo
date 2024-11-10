@@ -54,13 +54,12 @@ class AuthTextField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(12),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: GColors.royalBlue,
-          ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: GColors.royalBlue, width: 2),
           borderRadius: BorderRadius.circular(12),
         ),
       ),
+      cursorColor: GColors.royalBlue,
     );
   }
 }

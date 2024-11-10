@@ -7,7 +7,7 @@ class LocationLoadingDialog {
   static showLocationLoadingDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: false,
       builder: (context) {
         return ClipRRect(
           child: BackdropFilter(
