@@ -10,13 +10,14 @@ import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/location/representation/cubits/location_states.dart';
-import 'package:events_jo/features/location/representation/components/map_dialog.dart';
+import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
+//* This page allows user to make a new account (user or owner) to EventsJo
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
   const RegisterPage({
@@ -29,37 +30,39 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  //text fields
   final emailController = TextEditingController();
   final nameController = TextEditingController();
   final pwController = TextEditingController();
   final confirmPwController = TextEditingController();
+
+  //location related
   late final LocationCubit locationCubit;
+  late UserLocation userLocation;
   Position? location;
 
   //determine which account to create (user or owner)
   bool isOwner = false;
 
-  //users coords
-  double lat = 0;
-  double long = 0;
-  //init location incase the user cancel
-  double initLat = 0;
-  double initLong = 0;
-
-  //empty marker for now
-  late Marker marker;
-
   @override
   void initState() {
     super.initState();
 
+    //get location cubit
     locationCubit = context.read<LocationCubit>();
 
-    marker = Marker(
-      point: LatLng(lat, long),
-      child: Icon(
-        Icons.location_pin,
-        color: GColors.black,
+    //prepare user location object
+    userLocation = UserLocation(
+      lat: 0,
+      long: 0,
+      initLat: 0,
+      initLong: 0,
+      marker: Marker(
+        point: const LatLng(0, 0),
+        child: Icon(
+          Icons.location_pin,
+          color: GColors.black,
+        ),
       ),
     );
   }
@@ -74,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
     locationCubit.emit(LocationInitial());
   }
 
-  //some checks then proceeds with user registration
+  //some checks then proceeds with user registration through cubit
   void register() {
     //prepare email & pw
     final String email = emailController.text;
@@ -85,8 +88,8 @@ class _RegisterPageState extends State<RegisterPage> {
     //cubit
     final authCubit = context.read<AuthCubit>();
 
-    //location doesn't exist
-    if (lat == 0 || long == 0) {
+    //location empty
+    if (userLocation.lat == 0 || userLocation.long == 0) {
       GSnackBar.show(
         context: context,
         text: 'Please provide your location',
@@ -104,8 +107,8 @@ class _RegisterPageState extends State<RegisterPage> {
           name,
           email,
           pw,
-          lat,
-          long,
+          userLocation.lat,
+          userLocation.long,
           isOwner,
         );
       } else {
@@ -120,70 +123,6 @@ class _RegisterPageState extends State<RegisterPage> {
         text: 'Please enter both email and password',
       );
     }
-  }
-
-  //shows map to change location
-  Future<Object?> showMapDialog(BuildContext context) {
-    return showGeneralDialog(
-      context: context,
-      pageBuilder: (context, animation, secondaryAnimation) => StatefulBuilder(
-        builder: (context, setState) => MapDialog(
-          latitude: lat,
-          longitude: long,
-          marker: marker,
-          onTap: (tapPoint, point) {
-            setState(() {
-              //update coords
-              lat = point.latitude;
-              long = point.longitude;
-
-              //update marker
-              marker = Marker(
-                point: point,
-                child: Icon(
-                  Icons.location_pin,
-                  color: GColors.black,
-                ),
-              );
-            });
-          },
-          //bring coords and marker to init value
-          onCancel: () {
-            Navigator.of(context).pop();
-            setState(
-              () {
-                lat = initLat;
-                long = initLong;
-                marker = Marker(
-                  point: LatLng(lat, long),
-                  child: Icon(
-                    Icons.location_pin,
-                    color: GColors.black,
-                  ),
-                );
-              },
-            );
-          },
-          //saves coords and marker new values
-          onConfirm: () {
-            setState(
-              () {
-                Navigator.of(context).pop();
-                initLat = lat;
-                initLong = long;
-                marker = Marker(
-                  point: LatLng(lat, long),
-                  child: Icon(
-                    Icons.location_pin,
-                    color: GColors.black,
-                  ),
-                );
-              },
-            );
-          },
-        ),
-      ),
-    );
   }
 
   @override
@@ -266,18 +205,18 @@ class _RegisterPageState extends State<RegisterPage> {
                             location = await locationCubit.getUserLocation();
 
                             //save location
-                            lat = location!.latitude;
-                            long = location!.longitude;
+                            userLocation.lat = location!.latitude;
+                            userLocation.long = location!.longitude;
 
                             //save initial location
-                            initLat = location!.latitude;
-                            initLong = location!.longitude;
+                            userLocation.initLat = location!.latitude;
+                            userLocation.initLong = location!.longitude;
 
                             //set marker to user location
-                            marker = Marker(
+                            userLocation.marker = Marker(
                               point: LatLng(
-                                lat,
-                                long,
+                                userLocation.lat,
+                                userLocation.long,
                               ),
                               child: Icon(
                                 Icons.location_pin,
@@ -294,7 +233,15 @@ class _RegisterPageState extends State<RegisterPage> {
                       if (state is LocationLoaded) {
                         //* allow user to change location
                         return LocationProvided(
-                          onPressed: () => showMapDialog(context),
+                          onPressed: () => locationCubit.showMapDialog(context,
+                              userLocation: userLocation),
+                        );
+                      }
+
+                      //error
+                      if (state is LocationError) {
+                        return const Center(
+                          child: Text('Error getting location!'),
                         );
                       }
 
@@ -314,12 +261,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
                     },
                     listener: (context, state) {
+                      //open loading dialog
                       if (state is LocationLoading) {
                         LocationLoadingDialog.showLocationLoadingDialog(
                             context);
                       }
+
+                      //close loading dialog
                       if (state is LocationLoaded) {
                         Navigator.of(context).pop();
+                      }
+
+                      //error
+                      if (state is LocationError) {
+                        GSnackBar.show(context: context, text: state.message);
                       }
                     },
                   ),

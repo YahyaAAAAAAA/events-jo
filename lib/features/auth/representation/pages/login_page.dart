@@ -7,6 +7,7 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+//* This page allows an existing user to login to EventsJo
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
   const LoginPage({

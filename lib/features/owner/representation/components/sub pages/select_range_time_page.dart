@@ -5,17 +5,18 @@ import 'package:events_jo/features/owner/representation/components/time_picker.d
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-class SelectRangeTime extends StatelessWidget {
+//* This page lets the user pick between a range between 2 times (REQUIRED)
+class SelectRangeTimePage extends StatelessWidget {
+  final List<int> time;
+  final int tempValueForTime;
   final dynamic Function(TimeOfDay, TimeOfDay)? onTab;
-  const SelectRangeTime({
+
+  const SelectRangeTimePage({
     super.key,
     required this.tempValueForTime,
     required this.time,
     required this.onTab,
   });
-
-  final int tempValueForTime;
-  final List<int> time;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class SelectRangeTime extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        //logo icon
         GradientIcon(
           icon: CustomIcons.events_jo,
           gradient: LinearGradient(
@@ -31,6 +33,8 @@ class SelectRangeTime extends StatelessWidget {
           ),
           size: 100,
         ),
+
+        //logo text
         GradientText(
           'EventsJo for Owners',
           gradient: LinearGradient(
@@ -43,10 +47,12 @@ class SelectRangeTime extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
         const Spacer(),
-        TimePicker(
-          onTab: onTab,
-        ),
+
+        //time range
+        TimePicker(onTab: onTab),
+
         Text(
           'Please pick your open hours',
           style: TextStyle(
@@ -55,7 +61,10 @@ class SelectRangeTime extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
         const SizedBox(height: 10),
+
+        //display time
         Text(
           tempValueForTime != 0
               ? 'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'
@@ -66,6 +75,7 @@ class SelectRangeTime extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
         ),
+
         const Spacer(flex: 2),
       ],
     );

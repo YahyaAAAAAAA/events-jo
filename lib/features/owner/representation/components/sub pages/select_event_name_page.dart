@@ -5,8 +5,9 @@ import 'package:events_jo/features/home/presentation/components/gradient_text.da
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-class SelectEventName extends StatelessWidget {
-  const SelectEventName({
+//* This page lets the user to pick a name for their event (REQUIRED)
+class SelectEventNamePage extends StatelessWidget {
+  const SelectEventNamePage({
     super.key,
     required this.selectedEventType,
     required this.nameController,
@@ -21,6 +22,7 @@ class SelectEventName extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        //logo icon
         GradientIcon(
           icon: CustomIcons.events_jo,
           gradient: LinearGradient(
@@ -29,6 +31,8 @@ class SelectEventName extends StatelessWidget {
           ),
           size: 100,
         ),
+
+        //logo text
         GradientText(
           'EventsJo for Owners',
           gradient: LinearGradient(
@@ -41,7 +45,9 @@ class SelectEventName extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
         const Spacer(),
+
         Text(
           selectedEventType == 0
               ? 'Enter your Wedding Venue name'
@@ -54,6 +60,8 @@ class SelectEventName extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
+        //name text field
         Padding(
           padding: const EdgeInsets.all(12),
           child: AuthTextField(
@@ -65,6 +73,7 @@ class SelectEventName extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
+
         const Spacer(flex: 2),
       ],
     );

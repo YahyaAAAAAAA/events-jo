@@ -12,5 +12,14 @@ abstract class AuthRepo {
 
   Future<AppUser?> getCurrentUser();
 
+  //the following methods are helper methods
+  //only called withing the data layer
+
   Future<String?> getUserType();
+
+  Future<String?> getCurrentUserName();
+
+  Future<double?> getCurrentUserLatitude(String? type);
+
+  Future<double?> getCurrentUserLongitude(String? type);
 }

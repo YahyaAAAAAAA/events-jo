@@ -1,5 +1,3 @@
-import 'package:geolocator/geolocator.dart';
-
 abstract class LocationStates {}
 
 //init
@@ -9,11 +7,7 @@ class LocationInitial extends LocationStates {}
 class LocationLoading extends LocationStates {}
 
 //loaded
-class LocationLoaded extends LocationStates {
-  final Position position;
-
-  LocationLoaded(this.position);
-}
+class LocationLoaded extends LocationStates {}
 
 //error
 class LocationError extends LocationStates {

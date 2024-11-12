@@ -3,11 +3,12 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/owner_confirmation_display_row.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time.dart';
+import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-class ConfirmAndAddEventToDatabase extends StatelessWidget {
+//* This page displays info for the user's even
+class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
   final void Function()? onPressed;
   final void Function()? showMap;
   final void Function()? showImages;
@@ -16,7 +17,7 @@ class ConfirmAndAddEventToDatabase extends StatelessWidget {
   final DateTimeRange? range;
   final List<int> time;
 
-  const ConfirmAndAddEventToDatabase({
+  const ConfirmAndAddEventToDatabasePage({
     super.key,
     required this.onPressed,
     required this.selectedEventType,

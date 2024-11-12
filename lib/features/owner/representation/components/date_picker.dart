@@ -2,6 +2,7 @@ import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
+//* This widget let you pick between a range between 2 dates
 class DatePicker extends StatelessWidget {
   final void Function(DateTimeRange)? onRangeSelected;
   const DatePicker({

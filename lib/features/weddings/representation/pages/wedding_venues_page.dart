@@ -52,14 +52,20 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Wedding Venues in Jordan',
-          style: TextStyle(
-            color: GColors.black,
+        title: FittedBox(
+          child: Text(
+            'Wedding Venues in Jordan',
+            style: TextStyle(
+              color: GColors.black,
+            ),
           ),
         ),
         centerTitle: true,
         actions: [
+          //todo make sort menu
+          //sort by closest,rating and availability
+
+          //sort
           TextButton(
             onPressed: () {
               weddingVenueCubit.sortFromClosest(
@@ -74,7 +80,8 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
             ),
           )
         ],
-        //override back button
+
+        //back button
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new,
@@ -84,16 +91,10 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         ),
         backgroundColor: Colors.transparent,
       ),
+
       //states
       body: BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
         builder: (context, state) {
-          //loading...
-          if (state is WeddingVenueLoading) {
-            return const Center(
-              child: LoadingIndicator(),
-            );
-          }
-
           //list ready
           if (state is WeddingVenueLoaded) {
             return Column(
@@ -105,6 +106,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                   onChanged: (venue) => weddingVenueCubit.searchList(
                       weddingVenuList, filterdWeddingVenuList, venue),
                 ),
+
                 //venues list
                 Expanded(
                   child: ListView.builder(
@@ -123,10 +125,18 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
               ],
             );
           }
-          //error state
-          else {
+
+          //error
+          if (state is WeddingVenueError) {
             return const Center(
               child: Text('Error getting venues list'),
+            );
+          }
+
+          //loading...
+          else {
+            return const Center(
+              child: LoadingIndicator(),
             );
           }
         },

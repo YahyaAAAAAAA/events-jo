@@ -154,7 +154,11 @@ class FirebaseAuthRepo implements AuthRepo {
     return '';
   }
 
+  //the following methods are helper methods
+  //their returns saved in the current user object with every login
+
   //get user name
+  @override
   Future<String?> getCurrentUserName() async {
     //current user
     final firebaseUser = firebaseAuth.currentUser;
@@ -180,6 +184,7 @@ class FirebaseAuthRepo implements AuthRepo {
   }
 
   //get user latitude
+  @override
   Future<double?> getCurrentUserLatitude(String? type) async {
     //current user
     final firebaseUser = firebaseAuth.currentUser;
@@ -209,6 +214,7 @@ class FirebaseAuthRepo implements AuthRepo {
   }
 
   //get user longitude
+  @override
   Future<double?> getCurrentUserLongitude(String? type) async {
     //current user
     final firebaseUser = firebaseAuth.currentUser;

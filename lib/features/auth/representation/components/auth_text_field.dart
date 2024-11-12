@@ -42,20 +42,14 @@ class AuthTextField extends StatelessWidget {
         ),
         fillColor: GColors.white,
         filled: true,
-        disabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: GColors.whiteShade3,
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: GColors.whiteShade3,
           ),
           borderRadius: BorderRadius.circular(12),
         ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: GColors.royalBlue, width: 2),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: GColors.royalBlue, width: 1),
           borderRadius: BorderRadius.circular(12),
         ),
       ),

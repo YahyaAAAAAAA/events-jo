@@ -7,8 +7,10 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
 
   @override
   Future<List<WeddingVenue>> getAllVenues() async {
+    //gets a reference for the specified path in firebase
     final collectionRef = firebaseFirestore.collection('venues');
 
+    //fetch the documents for this query
     QuerySnapshot querySnapshot = await collectionRef.get();
 
     //get data as json first then as list

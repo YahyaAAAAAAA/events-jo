@@ -5,10 +5,13 @@ import 'package:events_jo/features/home/presentation/components/owner_button.dar
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-class EventAddedSuccessfully extends StatelessWidget {
-  final void Function()? onPressed;
+//* This page lets the user to choose a location on a map (NOT REQUIRED)
+//default is the user's stored location if empty
+class SelectEventLocationPage extends StatelessWidget {
   final int selectedEventType;
-  const EventAddedSuccessfully({
+  final void Function()? onPressed;
+
+  const SelectEventLocationPage({
     super.key,
     required this.selectedEventType,
     required this.onPressed,
@@ -20,6 +23,7 @@ class EventAddedSuccessfully extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        //logo icon
         GradientIcon(
           icon: CustomIcons.events_jo,
           gradient: LinearGradient(
@@ -28,6 +32,8 @@ class EventAddedSuccessfully extends StatelessWidget {
           ),
           size: 100,
         ),
+
+        //logo text
         GradientText(
           'EventsJo for Owners',
           gradient: LinearGradient(
@@ -40,20 +46,24 @@ class EventAddedSuccessfully extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
         const Spacer(),
+
+        //location button
         OwnerButton(
           text: selectedEventType == 0
-              ? 'Congrats your Venue has been added'
+              ? 'Select your Venue location'
               : selectedEventType == 1
-                  ? 'Congrats your Farm has been added'
-                  : 'Congrats your Court has been added',
-          icon: CustomIcons.home,
+                  ? 'Select your Farm location'
+                  : 'Select your Court location',
+          icon: Icons.location_on_outlined,
           fontSize: 20,
           iconSize: 40,
           padding: 20,
           fontWeight: FontWeight.bold,
           onPressed: onPressed,
         ),
+
         const Spacer(flex: 2),
       ],
     );

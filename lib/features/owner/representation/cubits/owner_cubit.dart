@@ -1,23 +1,18 @@
 import 'dart:io';
-import 'package:cloudinary_api/src/request/model/uploader_params.dart';
-import 'package:cloudinary_api/uploader/cloudinary_uploader.dart';
-import 'package:cloudinary_url_gen/cloudinary.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
+import 'package:events_jo/features/owner/representation/components/dialogs/images_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 
 class OwnerCubit extends Cubit<OwnerStates> {
   //repo instance
   final OwnerRepo ownerRepo;
 
-  //setup Cloudinary server
-  var cloudinary = Cloudinary.fromStringUrl(
-      'cloudinary://${dotenv.get('IMG_API_KEY')}:${dotenv.get('IMG_API_SECRET')}@${dotenv.get('IMG_CLOUD_NAME')}');
-
   OwnerCubit({required this.ownerRepo}) : super(OwnerInitial());
 
+  //add event
   Future<void> addVenueToDatabase({
     required String name,
     required String lat,
@@ -52,34 +47,47 @@ class OwnerCubit extends Cubit<OwnerStates> {
     }
   }
 
+  //add images
   Future<List<String>> addImagesToServer(List<XFile> images) async {
     try {
       //loading...
       emit(OwnerLoading('Uploading Images, Please Wait...'));
 
-      //server config
-      cloudinary.config.urlConfig.secure = true;
-
-      List<String> urls = [];
-      urls.clear();
-
-      // request upload to server
-      for (int i = 0; i < images.length; i++) {
-        var response = await cloudinary.uploader().upload(
-              File(images[i].path),
-              params: UploadParams(
-                uniqueFilename: true,
-                overwrite: true,
-              ),
-            );
-        urls.add(response!.data!.secureUrl ?? '');
-      }
+      //add images
+      List<String> urls = await ownerRepo.addImagesToServer(images);
 
       return urls;
     } catch (e) {
       //error
       emit(OwnerError(e.toString()));
+
       return [];
     }
+  }
+
+  //this shows user's images
+  Future<Object?> showImagesDialogPreview(
+      BuildContext context, List<XFile> images) {
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          ImagesDialogPreview(images: imagesFilesToWidgets(images)),
+    );
+  }
+
+  //convert files -> images
+  List<Widget> imagesFilesToWidgets(List<XFile> images) {
+    List<Widget> imagesWidgets = [];
+    imagesWidgets.clear();
+    for (int i = 0; i < images.length; i++) {
+      imagesWidgets.add(
+        Image.file(
+          File(images[i].path),
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+
+    return imagesWidgets;
   }
 }

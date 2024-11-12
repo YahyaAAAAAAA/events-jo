@@ -67,7 +67,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
 
     //same list but sorted from closest to furthest from the user (as json)
     List sortedList = haversine.getSortedLocations(
-        lat, long, weddingVenuList.map((e) => e.toJson()).toList());
+        lat, long, weddingVenuList.map((venue) => venue.toJson()).toList());
 
     //ensure list clear
     weddingVenuList.clear();

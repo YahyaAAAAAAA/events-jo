@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SelectImages extends StatelessWidget {
+//* This page lets the user select images for their event (NOT REQUIRED)
+//if empty a placeholder image will be displayed instead
+class SelectImagesPage extends StatelessWidget {
   final List<XFile> images;
   final int selectedEventType;
   final void Function()? onPressed;
 
-  const SelectImages({
+  const SelectImagesPage({
     super.key,
     required this.images,
     required this.selectedEventType,
@@ -22,11 +24,11 @@ class SelectImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        //logo icon
         GradientIcon(
           icon: CustomIcons.events_jo,
           gradient: LinearGradient(
@@ -35,6 +37,8 @@ class SelectImages extends StatelessWidget {
           ),
           size: 100,
         ),
+
+        //logo text
         GradientText(
           'EventsJo for Owners',
           gradient: LinearGradient(
@@ -47,7 +51,10 @@ class SelectImages extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        images.isEmpty ? const Spacer() : const SizedBox(height: 20),
+
+        const Spacer(),
+
+        //images button
         OwnerButton(
           text: selectedEventType == 0
               ? 'Select images for your Venue'
@@ -62,7 +69,7 @@ class SelectImages extends StatelessWidget {
           onPressed: onPressed,
         ),
 
-        const SizedBox(height: 10),
+        images.isEmpty ? const SizedBox() : const SizedBox(height: 20),
 
         //images slider
         images.isNotEmpty
@@ -71,6 +78,7 @@ class SelectImages extends StatelessWidget {
                 itemBuilder: (context, index, realIndex) => images.isNotEmpty
                     ? ImageCard(images: images, index: index)
                     : const SizedBox(),
+                //responsive height
                 options: CarouselOptions(
                   height: MediaQuery.of(context).size.height > 693
                       ? 250
@@ -81,10 +89,13 @@ class SelectImages extends StatelessWidget {
                               : 0,
                   enlargeFactor: 1,
                   enlargeCenterPage: true,
+                  enlargeStrategy: CenterPageEnlargeStrategy.height,
+                  autoPlay: true,
                 ),
               )
             : const SizedBox(),
-        images.isEmpty ? const Spacer(flex: 2) : const SizedBox(height: 0),
+
+        const Spacer(flex: 2),
       ],
     );
   }

@@ -4,6 +4,8 @@ import 'package:events_jo/features/home/presentation/components/gradient_text.da
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
+//* This page lets the user to pick the event type (NOT REQUIRED)
+//default is a Wedding Venue if empty
 class SelectEventType extends StatelessWidget {
   final void Function()? onTap1;
   final void Function()? onTap2;
@@ -25,6 +27,7 @@ class SelectEventType extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        //logo icon
         GradientIcon(
           icon: CustomIcons.events_jo,
           gradient: LinearGradient(
@@ -33,6 +36,8 @@ class SelectEventType extends StatelessWidget {
           ),
           size: 100,
         ),
+
+        //logo text
         GradientText(
           'EventsJo for Owners',
           gradient: LinearGradient(
@@ -45,7 +50,9 @@ class SelectEventType extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
         const Spacer(),
+
         Text(
           'Pick which type of event you would like to add',
           style: TextStyle(
@@ -54,10 +61,15 @@ class SelectEventType extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
         const SizedBox(height: 25),
+
+        //type display
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            //note no need to use container (heavy widget) if only (color and border) is required
+            //-instead use ColoredBox and ClipRRect
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: ColoredBox(
@@ -66,6 +78,7 @@ class SelectEventType extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Row(
                     children: [
+                      //type icon
                       Icon(
                         selectedEventType == 0
                             ? CustomIcons.wedding
@@ -74,7 +87,10 @@ class SelectEventType extends StatelessWidget {
                                 : CustomIcons.football,
                         color: GColors.royalBlue,
                       ),
+
                       const SizedBox(width: 15),
+
+                      //type name
                       Text(
                         selectedEventType == 0
                             ? 'Wedding Venue'
@@ -92,7 +108,10 @@ class SelectEventType extends StatelessWidget {
                 ),
               ),
             ),
+
             const SizedBox(width: 25),
+
+            //types menu
             PopupMenuButton(
               icon: Icon(
                 Icons.menu,
@@ -118,6 +137,7 @@ class SelectEventType extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               itemBuilder: (BuildContext context) {
                 return [
+                  //menu items
                   PopupMenuItem(
                     onTap: onTap1,
                     child: Text(
@@ -156,6 +176,7 @@ class SelectEventType extends StatelessWidget {
             ),
           ],
         ),
+
         const Spacer(flex: 2),
       ],
     );

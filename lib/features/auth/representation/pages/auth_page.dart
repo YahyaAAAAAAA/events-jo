@@ -2,6 +2,7 @@ import 'package:events_jo/features/auth/representation/pages/login_page.dart';
 import 'package:events_jo/features/auth/representation/pages/register_page.dart';
 import 'package:flutter/material.dart';
 
+//* This page allows user to switch between (LoginPage) and (RegisterPage)
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
