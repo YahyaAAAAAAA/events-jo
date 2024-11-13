@@ -40,7 +40,7 @@ class EventsJoLogo extends StatelessWidget {
           children: [
             const SizedBox(width: 90),
             GradientIcon(
-              icon: CustomIcons.events_jo,
+              icon: CustomIcons.eventsjo,
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 colors: GColors.logoGradient,

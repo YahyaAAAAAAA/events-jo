@@ -20,7 +20,7 @@ class LoadingIndicator extends StatelessWidget {
         children: [
           withImage!
               ? GradientIcon(
-                  icon: CustomIcons.events_jo,
+                  icon: CustomIcons.eventsjo,
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     colors: GColors.logoGradient,

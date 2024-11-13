@@ -21,7 +21,7 @@ class EventsJoLogoAuth extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GradientIcon(
-              icon: CustomIcons.events_jo,
+              icon: CustomIcons.eventsjo,
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 colors: GColors.logoGradient,

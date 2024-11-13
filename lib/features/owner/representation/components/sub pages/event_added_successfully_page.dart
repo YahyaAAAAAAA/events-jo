@@ -22,7 +22,7 @@ class EventAddedSuccessfullyPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GradientIcon(
-          icon: CustomIcons.events_jo,
+          icon: CustomIcons.eventsjo,
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             colors: GColors.logoGradient,

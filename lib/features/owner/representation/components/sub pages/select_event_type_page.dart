@@ -29,7 +29,7 @@ class SelectEventType extends StatelessWidget {
       children: [
         //logo icon
         GradientIcon(
-          icon: CustomIcons.events_jo,
+          icon: CustomIcons.eventsjo,
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             colors: GColors.logoGradient,
