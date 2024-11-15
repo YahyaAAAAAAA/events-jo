@@ -65,7 +65,7 @@ dependencies:
   from_to_time_picker: ^1.2.2
   flutter_lazy_indexed_stack: ^0.0.6
   carousel_slider: ^4.2.1
-  time_picker_spinner_pop_up: ^2.0.0
+  # time_picker_spinner_pop_up: ^2.0.0
 
 
 dev_dependencies:
