@@ -14,4 +14,6 @@ abstract class OwnerRepo {
   });
 
   Future<List<String>> addImagesToServer(List<XFile> images);
+
+  String generateUniqueId();
 }

@@ -1,20 +1,18 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
-class VenueLocationButton extends StatelessWidget {
+class VenueDetailsButton extends StatelessWidget {
   final void Function()? onPressed;
   final double iconSize;
   final double padding;
   final IconData icon;
-  final FontWeight fontWeight;
 
-  const VenueLocationButton({
+  const VenueDetailsButton({
     super.key,
     required this.onPressed,
     required this.icon,
     required this.iconSize,
     required this.padding,
-    required this.fontWeight,
   });
 
   @override

@@ -1,15 +1,15 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
+import 'package:events_jo/config/utils/gradient_text.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/representation/components/rating_venues.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_location_button.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_rating.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
 import 'package:flutter/material.dart';
 
-class NameRatingAndLocation extends StatelessWidget {
-  const NameRatingAndLocation({
+class VenueNameRatingAndLocation extends StatelessWidget {
+  const VenueNameRatingAndLocation({
     super.key,
     required this.padding,
     required this.weddingVenue,
@@ -27,14 +27,19 @@ class NameRatingAndLocation extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: GColors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(12),
+          bottomRight: Radius.circular(12),
+        ),
       ),
       padding: EdgeInsets.all(padding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Wrap(
+        alignment: WrapAlignment.spaceBetween,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               //venue name
               GradientText(
@@ -49,18 +54,17 @@ class NameRatingAndLocation extends StatelessWidget {
               ),
 
               //rate
-              VenuesRating(weddingVenue: weddingVenue, size: 20),
+              VenueRating(weddingVenue: weddingVenue, size: 20),
             ],
           ),
 
           //location
-          VenueLocationButton(
+          VenueDetailsButton(
             onPressed: () => locationCubit.showMapDialogPreview(context,
                 userLocation: venueLocation),
             icon: CustomIcons.map_marker,
             iconSize: 30,
             padding: 18,
-            fontWeight: FontWeight.normal,
           ),
         ],
       ),

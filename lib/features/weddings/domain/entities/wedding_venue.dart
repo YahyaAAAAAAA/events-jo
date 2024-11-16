@@ -1,4 +1,5 @@
 class WeddingVenue {
+  late String id;
   late String name;
   late String latitude;
   late String longitude;
@@ -11,6 +12,7 @@ class WeddingVenue {
   late List<dynamic> time;
 
   WeddingVenue({
+    required this.id,
     required this.name,
     required this.latitude,
     required this.longitude,
@@ -26,6 +28,7 @@ class WeddingVenue {
   //convert wedding venue to json
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'latitude': latitude,
       'longitude': longitude,
@@ -41,6 +44,7 @@ class WeddingVenue {
 
   //convert json to wedding venue
   WeddingVenue.fromJson(Map<String, dynamic> jsonVenue) {
+    id = jsonVenue['id'];
     name = jsonVenue['name'];
     latitude = jsonVenue['latitude'];
     longitude = jsonVenue['longitude'];

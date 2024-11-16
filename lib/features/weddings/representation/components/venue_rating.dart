@@ -2,10 +2,10 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter/material.dart';
 
-class VenuesRating extends StatelessWidget {
+class VenueRating extends StatelessWidget {
   final WeddingVenue weddingVenue;
   final double size;
-  const VenuesRating({
+  const VenueRating({
     super.key,
     required this.weddingVenue,
     required this.size,
@@ -13,7 +13,7 @@ class VenuesRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
       children: [
         Icon(
           Icons.star,

@@ -3,8 +3,8 @@ import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/representation/components/weddings_search_bar.dart';
-import 'package:events_jo/features/weddings/representation/components/wedding_venue_card.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_card.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_states.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +100,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
             return Column(
               children: [
                 //search bar
-                WeddingsSearchBar(
+                VenueSearchBar(
                   controller: searchController,
                   onPressed: () => setState(() => searchController.clear()),
                   onChanged: (venue) => weddingVenueCubit.searchList(
@@ -114,7 +114,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                         ? weddingVenuList.length
                         : filterdWeddingVenuList.length,
                     itemBuilder: (context, index) {
-                      return WeddingVenueCard(
+                      return VenueCard(
                         weddingVenue: searchController.text.isEmpty
                             ? weddingVenuList[index]
                             : filterdWeddingVenuList[index],

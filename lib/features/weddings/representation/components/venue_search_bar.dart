@@ -1,11 +1,11 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
-class WeddingsSearchBar extends StatelessWidget {
+class VenueSearchBar extends StatelessWidget {
   final TextEditingController controller;
   final void Function()? onPressed;
   final void Function(String)? onChanged;
-  const WeddingsSearchBar({
+  const VenueSearchBar({
     super.key,
     required this.controller,
     required this.onPressed,

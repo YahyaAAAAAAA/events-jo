@@ -3,10 +3,10 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
-class ImageSlider extends StatelessWidget {
+class VenueImageSlider extends StatelessWidget {
   final List<CachedNetworkImage> picsList;
 
-  const ImageSlider({
+  const VenueImageSlider({
     super.key,
     required this.picsList,
   });
@@ -14,7 +14,10 @@ class ImageSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(5),
+        topRight: Radius.circular(5),
+      ),
       child: ImageSlideshow(
         width: double.infinity,
         height: 300,

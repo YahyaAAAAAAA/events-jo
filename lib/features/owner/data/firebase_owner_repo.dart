@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
@@ -20,8 +21,12 @@ class FirebaseOwnerRepo implements OwnerRepo {
     required List<int> time,
     List<String>? pics,
   }) async {
+    //set venue id
+    final String docId = generateUniqueId();
+
     //create weddingVenue object
     WeddingVenue weddingVenue = WeddingVenue(
+      id: docId,
       latitude: lat,
       longitude: lon,
       name: name.toTitleCase,
@@ -40,7 +45,12 @@ class FirebaseOwnerRepo implements OwnerRepo {
     // add new venue to database
     await FirebaseFirestore.instance
         .collection('venues')
-        .add(weddingVenue.toJson());
+        .doc(docId)
+        .set(weddingVenue.toJson());
+
+    //team we use (set) instead of (add) so we can specify the id
+    //in this case we have the id as (current time) + (rand num) because it's always unique
+    //if (add) is used Firebase will generate random id.
   }
 
   @override
@@ -68,6 +78,17 @@ class FirebaseOwnerRepo implements OwnerRepo {
     }
 
     return urls;
+  }
+
+  @override
+  String generateUniqueId() {
+    //current time (from year to microsecond)
+    final now = DateTime.now();
+    //get random number between 0 and 99999
+    int randomValue = Random().nextInt(100000);
+
+    //id example -> 2024111609413072511999
+    return "${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}${now.microsecond}$randomValue";
   }
 }
 

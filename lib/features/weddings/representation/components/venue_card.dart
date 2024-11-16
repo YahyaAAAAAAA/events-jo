@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/utils/image_loading_indicator.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/representation/components/rating_venues.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_rating.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_details_page.dart';
 import 'package:flutter/material.dart';
 
-class WeddingVenueCard extends StatelessWidget {
+class VenueCard extends StatelessWidget {
   final WeddingVenue weddingVenue;
-  const WeddingVenueCard({
+  const VenueCard({
     super.key,
     required this.weddingVenue,
   });
@@ -135,7 +135,7 @@ class WeddingVenueCard extends StatelessWidget {
 
                         //* rating
                         FittedBox(
-                          child: VenuesRating(
+                          child: VenueRating(
                             weddingVenue: weddingVenue,
                             size: 14,
                           ),

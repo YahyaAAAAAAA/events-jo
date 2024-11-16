@@ -1,7 +1,7 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
-import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
+import 'package:events_jo/config/utils/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 

@@ -1,6 +1,6 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/home/presentation/components/gradient_text.dart';
+import 'package:events_jo/config/utils/gradient_text.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/owner_confirmation_display_row.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time_page.dart';
