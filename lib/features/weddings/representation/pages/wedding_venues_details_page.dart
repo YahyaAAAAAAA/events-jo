@@ -186,7 +186,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                 const SizedBox(height: 20),
 
                 //* time
-
                 venueText('Select the time for your venue'),
                 VenueTimePicker(
                   text: timeText,
@@ -224,25 +223,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                 ),
 
                 const SizedBox(height: 20),
-
-                //todo add food and drinks in OwnerPage
-                //add n of people in OwnerPage
-                //pricing for both
-                //change meal collection to meals (in venue repo and db)
-                //? alternative to icons maybe ? if hard we stay on IFS algo
-                //reflect drinks here
-
-                //note add meal to db:
-                //await FirebaseFirestore.instance
-                //     .collection('venues')
-                //     .doc(weddingVenue.id)
-                //     .collection('meals')
-                //     .doc('3')
-                //     .set({
-                //   'name': 'cookie',
-                //   'amount': '200',
-                //   'id': '3' //same as doc id
-                // });
 
                 //* meals
                 venueText('Select your preferred meals'),

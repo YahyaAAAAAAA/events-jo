@@ -31,7 +31,7 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
   Future<List<WeddingVenueMeal>> getAllMeals(String id) async {
     //gets a reference for the specified path in firebase
     final collectionRef =
-        firebaseFirestore.collection('venues').doc(id).collection('meal');
+        firebaseFirestore.collection('venues').doc(id).collection('meals');
 
     //fetch the documents for this query
     QuerySnapshot querySnapshot = await collectionRef.get();

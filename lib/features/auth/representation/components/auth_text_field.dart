@@ -1,5 +1,6 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AuthTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -9,6 +10,8 @@ class AuthTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final Color textColor;
   final FontWeight fontWeight;
+  final bool isOnlyNumber;
+
   const AuthTextField({
     super.key,
     required this.controller,
@@ -18,6 +21,7 @@ class AuthTextField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.textColor = Colors.black,
     this.fontWeight = FontWeight.normal,
+    this.isOnlyNumber = false,
   });
 
   //todo focus node
@@ -34,6 +38,12 @@ class AuthTextField extends StatelessWidget {
         fontWeight: fontWeight,
       ),
       textAlign: textAlign,
+      keyboardType: isOnlyNumber
+          ? const TextInputType.numberWithOptions(decimal: true)
+          : null,
+      inputFormatters: isOnlyNumber
+          ? [FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]
+          : null,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(

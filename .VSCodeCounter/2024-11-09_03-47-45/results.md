@@ -20,7 +20,7 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | . (Files) | 1 | 13 | 3 | 5 | 21 |
 | config | 8 | 354 | 64 | 52 | 470 |
 | config (Files) | 2 | 152 | 31 | 13 | 196 |
-| config\\alogrithms | 1 | 40 | 6 | 11 | 57 |
+| config\\algorithms | 1 | 40 | 6 | 11 | 57 |
 | config\\utils | 5 | 162 | 27 | 28 | 217 |
 | features | 57 | 4,223 | 284 | 453 | 4,960 |
 | features\\auth | 12 | 951 | 94 | 157 | 1,202 |

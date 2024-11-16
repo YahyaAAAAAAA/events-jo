@@ -1,4 +1,4 @@
-import 'package:events_jo/config/alogrithms/haversine.dart';
+import 'package:events_jo/config/algorithms/haversine.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';

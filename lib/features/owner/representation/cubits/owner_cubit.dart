@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/owner/representation/components/dialogs/images_dialog_preview.dart';
+import 'package:events_jo/features/owner/representation/components/dialogs/meals_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,6 +24,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
     required List<int> endDate,
     required List<int> time,
     List<String>? pics,
+    List<WeddingVenueMeal>? meals,
   }) async {
     try {
       //loading...
@@ -37,6 +40,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
         time: time,
         ownerId: ownerId,
         pics: pics,
+        meals: meals,
       );
 
       //done
@@ -72,6 +76,16 @@ class OwnerCubit extends Cubit<OwnerStates> {
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) =>
           ImagesDialogPreview(images: imagesFilesToWidgets(images)),
+    );
+  }
+
+  //this shows user's meals
+  Future<Object?> showMealsDialogPreview(
+      BuildContext context, List<WeddingVenueMeal> meals) {
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          MealsDialogPreview(meals: meals),
     );
   }
 

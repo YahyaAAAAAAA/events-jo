@@ -4,10 +4,12 @@ import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
+import 'package:events_jo/features/owner/representation/components/owner_meal_card.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/confirm_and_add_event_to_database_page.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/event_added_successfully_page.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_navigation_bar.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_location_page.dart';
+import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_meals.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_name_page.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_type_page.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_images_page.dart';
@@ -15,6 +17,7 @@ import 'package:events_jo/features/owner/representation/components/sub%20pages/s
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time_page.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
@@ -35,12 +38,13 @@ class OwnerPage extends StatefulWidget {
 }
 
 class _OwnerPageState extends State<OwnerPage> {
-  //cubit instance
+  //owner cubit instance
   late final OwnerCubit ownerCubit;
 
+  //location cubit instance
   late final LocationCubit locationCubit;
 
-  //owner instance (mostly location related)
+  //location instance
   late final UserLocation userLocation;
 
   //event name
@@ -61,6 +65,12 @@ class _OwnerPageState extends State<OwnerPage> {
 
   //images list
   List<XFile> images = [];
+
+  //meals
+  List<WeddingVenueMeal> meals = [];
+  TextEditingController mealNameController = TextEditingController();
+  TextEditingController mealAmountController = TextEditingController();
+  TextEditingController mealPriceController = TextEditingController();
 
   //note for cubit ->
   //    (pass by reference)
@@ -106,6 +116,9 @@ class _OwnerPageState extends State<OwnerPage> {
   void dispose() {
     super.dispose();
     nameController.dispose();
+    mealNameController.dispose();
+    mealAmountController.dispose();
+    mealPriceController.dispose();
     ownerCubit.emit(OwnerInitial());
   }
 
@@ -120,7 +133,7 @@ class _OwnerPageState extends State<OwnerPage> {
           leading: const SizedBox(),
           centerTitle: true,
           title: Text(
-            '( ${(index + 1).toString()}/7 )',
+            '( ${(index + 1).toString()}/8 )',
             style: TextStyle(
               color: GColors.poloBlue,
               fontWeight: FontWeight.bold,
@@ -196,6 +209,63 @@ class _OwnerPageState extends State<OwnerPage> {
               ),
             ),
 
+            //todo people range or just a max? & price
+
+            //meals
+            SelectEventMeals(
+              mealNameController: mealNameController,
+              mealAmountController: mealAmountController,
+              mealPriceController: mealPriceController,
+              meals: meals,
+              itemBuilder: (context, index) {
+                return OwnerMealCard(
+                  meals: meals,
+                  index: index,
+                  onPressed: () => setState(() => meals.removeAt(index)),
+                );
+              },
+              onAddPressed: () {
+                //checks if fields are empty
+                if (mealNameController.text.isEmpty) {
+                  GSnackBar.show(
+                      context: context, text: 'Please add a name for the meal');
+                  return;
+                }
+                if (mealAmountController.text.isEmpty) {
+                  GSnackBar.show(
+                      context: context,
+                      text: 'Please add an amount for the meal');
+                  return;
+                }
+                if (mealPriceController.text.isEmpty) {
+                  GSnackBar.show(
+                      context: context,
+                      text: 'Please add a price for the meal');
+                  return;
+                }
+
+                //add meal to list
+                meals.add(
+                  WeddingVenueMeal(
+                    id: 'added later :D',
+                    name: mealNameController.text,
+                    amount: mealAmountController.text,
+                    price: mealPriceController.text,
+                  ),
+                );
+
+                //clear fields after addition
+                mealNameController.clear();
+                mealAmountController.clear();
+                mealPriceController.clear();
+
+                //update
+                setState(() {});
+              },
+            ),
+
+            //todo drinks
+
             //* submit
             submitEvent(),
           ],
@@ -238,7 +308,7 @@ class _OwnerPageState extends State<OwnerPage> {
                   }
 
                   //last page
-                  if (index == 6) {
+                  if (index == 7) {
                     return;
                   }
 
@@ -284,6 +354,7 @@ class _OwnerPageState extends State<OwnerPage> {
             nameController: nameController,
             range: range,
             time: time,
+            showMeals: () => ownerCubit.showMealsDialogPreview(context, meals),
             showMap: () => locationCubit.showMapDialogPreview(context,
                 userLocation: userLocation),
             showImages: () =>
@@ -303,6 +374,7 @@ class _OwnerPageState extends State<OwnerPage> {
                 lat: userLocation.lat.toString(),
                 lon: userLocation.long.toString(),
                 pics: images.isNotEmpty ? urls : null,
+                meals: meals.isNotEmpty ? meals : null,
                 startDate: [
                   range!.start.year,
                   range!.start.month,

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:cloudinary_api/src/request/model/uploader_params.dart';
 import 'package:cloudinary_api/uploader/cloudinary_uploader.dart';
@@ -20,6 +21,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
     required List<int> endDate,
     required List<int> time,
     List<String>? pics,
+    List<WeddingVenueMeal>? meals,
   }) async {
     //set venue id
     final String docId = generateUniqueId();
@@ -51,6 +53,27 @@ class FirebaseOwnerRepo implements OwnerRepo {
     //team we use (set) instead of (add) so we can specify the id
     //in this case we have the id as (current time) + (rand num) because it's always unique
     //if (add) is used Firebase will generate random id.
+
+    //user didn't add meals
+    if (meals == null || meals.isEmpty) {
+      return;
+    }
+
+    //fix meals id
+    for (int i = 0; i < meals.length; i++) {
+      meals[i].id = (i + 1).toString();
+    }
+
+    //add meals collection to user's venue
+    //then add user's individual meals
+    for (int i = 0; i < meals.length; i++) {
+      await FirebaseFirestore.instance
+          .collection('venues')
+          .doc(docId)
+          .collection('meals')
+          .doc(meals[i].id)
+          .set(meals[i].toJson());
+    }
   }
 
   @override

@@ -10,6 +10,7 @@ import 'package:gradient_icon/gradient_icon.dart';
 //* This page displays info for the user's even
 class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
   final void Function()? onPressed;
+  final void Function()? showMeals;
   final void Function()? showMap;
   final void Function()? showImages;
   final int selectedEventType;
@@ -26,6 +27,7 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
     required this.time,
     this.showMap,
     this.showImages,
+    this.showMeals,
   });
 
   @override
@@ -89,6 +91,17 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
             mainText: 'Open Hours: ',
             subText:
                 'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
+
+        localDivider(),
+
+        //images
+        OwnerConfirmationDisplayRow(
+          mainText: 'Meals:     ',
+          isText: false,
+          subText: '',
+          icon: Icons.cake_rounded,
+          onPressed: showMeals,
+        ),
 
         localDivider(),
 

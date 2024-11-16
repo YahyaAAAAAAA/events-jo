@@ -1,4 +1,4 @@
-import 'package:events_jo/config/alogrithms/icon_for_string.dart';
+import 'package:events_jo/config/algorithms/icon_for_string.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient_slider.dart';
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
@@ -58,55 +58,59 @@ class MealCard extends StatelessWidget {
                 fontSize: 21,
               ),
             ),
-            isChecked
-                ? Expanded(
-                    child: SliderTheme(
-                      data: SliderThemeData(
-                        trackShape: GradientRectSliderTrackShape(
-                          gradient: LinearGradient(
-                            colors: GColors.logoGradient,
-                          ),
-                          darkenInactive: true,
-                        ),
-                      ),
-                      child: Slider(
-                        value: selectedAmount,
-                        min: 0,
-                        max: amount,
-                        thumbColor: GColors.royalBlue,
-                        activeColor: GColors.royalBlue,
-                        inactiveColor: GColors.poloBlue,
-                        label: selectedAmount.toInt().toString(),
-                        divisions: amount.toInt(),
-                        onChanged: onSliderChanged,
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
-            isChecked
-                ? Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+            Expanded(
+              child: AnimatedOpacity(
+                opacity: isChecked ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: SliderTheme(
+                  data: SliderThemeData(
+                    trackShape: GradientRectSliderTrackShape(
                       gradient: LinearGradient(
-                        begin: Alignment.topLeft,
                         colors: GColors.logoGradient,
                       ),
+                      darkenInactive: true,
                     ),
-                    width: 50,
-                    height: 50,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: Text(
-                        selectedAmount.toInt().toString(),
-                        style: TextStyle(
-                          color: GColors.white,
-                        ),
-                      ),
+                  ),
+                  child: Slider(
+                    value: selectedAmount,
+                    min: 0,
+                    max: amount,
+                    thumbColor: GColors.royalBlue,
+                    activeColor: GColors.royalBlue,
+                    inactiveColor: GColors.poloBlue,
+                    label: selectedAmount.toInt().toString(),
+                    divisions: amount.toInt(),
+                    onChanged: onSliderChanged,
+                  ),
+                ),
+              ),
+            ),
+            AnimatedOpacity(
+              opacity: isChecked ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 300),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    colors: GColors.logoGradient,
+                  ),
+                ),
+                width: 50,
+                height: 50,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: Text(
+                    selectedAmount.toInt().toString(),
+                    style: TextStyle(
+                      color: GColors.white,
                     ),
-                  )
-                : const SizedBox(),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
