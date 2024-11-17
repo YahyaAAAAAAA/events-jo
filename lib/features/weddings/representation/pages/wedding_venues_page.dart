@@ -5,8 +5,8 @@ import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_card.dart';
-import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

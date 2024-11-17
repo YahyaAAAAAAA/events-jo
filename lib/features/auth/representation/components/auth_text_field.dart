@@ -10,7 +10,8 @@ class AuthTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final Color textColor;
   final FontWeight fontWeight;
-  final bool isOnlyNumber;
+  final bool isOnlyDouble;
+  final bool isOnlyInt;
 
   const AuthTextField({
     super.key,
@@ -21,7 +22,8 @@ class AuthTextField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.textColor = Colors.black,
     this.fontWeight = FontWeight.normal,
-    this.isOnlyNumber = false,
+    this.isOnlyDouble = false,
+    this.isOnlyInt = false,
   });
 
   //todo focus node
@@ -38,12 +40,27 @@ class AuthTextField extends StatelessWidget {
         fontWeight: fontWeight,
       ),
       textAlign: textAlign,
-      keyboardType: isOnlyNumber
-          ? const TextInputType.numberWithOptions(decimal: true)
-          : null,
-      inputFormatters: isOnlyNumber
-          ? [FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]
-          : null,
+      keyboardType:
+          // accepts only integers
+          isOnlyInt
+              ? TextInputType.number
+              //accepts only doubles
+              : isOnlyDouble
+                  ? const TextInputType.numberWithOptions(decimal: true)
+                  //accepts anything
+                  : null,
+      inputFormatters:
+          // accepts only integers
+          isOnlyInt
+              ? [FilteringTextInputFormatter.digitsOnly]
+              //accepts only doubles
+              : isOnlyDouble
+                  ? [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^(\d+)?\.?\d{0,2}'))
+                    ]
+                  //accepts anything
+                  : null,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(

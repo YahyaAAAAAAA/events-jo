@@ -3,26 +3,26 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient_text.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-class SelectEventMeals extends StatelessWidget {
-  final TextEditingController mealNameController;
-  final TextEditingController mealAmountController;
-  final TextEditingController mealPriceController;
+class SelectEventDrinks extends StatelessWidget {
+  final TextEditingController drinkNameController;
+  final TextEditingController drinkAmountController;
+  final TextEditingController drinkPriceController;
 
-  final List<WeddingVenueMeal> meals;
+  final List<WeddingVenueDrink> drinks;
   final void Function()? onAddPressed;
 
   final Widget? Function(BuildContext, int) itemBuilder;
 
-  const SelectEventMeals({
+  const SelectEventDrinks({
     super.key,
-    required this.mealNameController,
-    required this.mealAmountController,
-    required this.mealPriceController,
-    required this.meals,
+    required this.drinkNameController,
+    required this.drinkAmountController,
+    required this.drinkPriceController,
+    required this.drinks,
     required this.onAddPressed,
     required this.itemBuilder,
   });
@@ -59,7 +59,7 @@ class SelectEventMeals extends StatelessWidget {
 
         //* text
         Text(
-          'Please add Meals you offer in your Wedding Venue',
+          'Please add Drinks you offer in your Wedding Venue',
           style: TextStyle(
             color: GColors.poloBlue,
             fontSize: 17,
@@ -74,8 +74,8 @@ class SelectEventMeals extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: AuthTextField(
-                  controller: mealNameController,
-                  hintText: 'Meal Name',
+                  controller: drinkNameController,
+                  hintText: 'Drink Name',
                   obscureText: false,
                 ),
               ),
@@ -90,8 +90,8 @@ class SelectEventMeals extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: AuthTextField(
-                  controller: mealAmountController,
-                  hintText: 'Meal Amount',
+                  controller: drinkAmountController,
+                  hintText: 'Drink Amount',
                   isOnlyInt: true,
                   obscureText: false,
                 ),
@@ -101,8 +101,8 @@ class SelectEventMeals extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: AuthTextField(
-                  controller: mealPriceController,
-                  hintText: 'Meal Price',
+                  controller: drinkPriceController,
+                  hintText: 'Drink Price',
                   isOnlyDouble: true,
                   obscureText: false,
                 ),
@@ -119,7 +119,7 @@ class SelectEventMeals extends StatelessWidget {
           icon: Icons.add,
           iconSize: 50,
           padding: 8,
-          text: 'Add Meal',
+          text: 'Add Drink',
         ),
 
         //* text
@@ -128,7 +128,7 @@ class SelectEventMeals extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
-              'Your Meals',
+              'Your Drinks',
               style: TextStyle(
                 color: GColors.poloBlue,
                 fontSize: 17,
@@ -148,9 +148,9 @@ class SelectEventMeals extends StatelessWidget {
                 color: GColors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: meals.isNotEmpty
+              child: drinks.isNotEmpty
                   ? ListView.separated(
-                      itemCount: meals.length,
+                      itemCount: drinks.length,
                       padding: const EdgeInsets.all(12),
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10),
@@ -158,7 +158,7 @@ class SelectEventMeals extends StatelessWidget {
                     )
                   : Center(
                       child: Text(
-                      'No Meals Added',
+                      'No Drinks Added',
                       style: TextStyle(
                         fontSize: 17,
                         color: GColors.poloBlue,

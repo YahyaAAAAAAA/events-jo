@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 class VenuePeopleSlider extends StatelessWidget {
   final double padding;
+  final double min;
+  final double max;
   final double numberOfExpectedPeople;
   final String numberOfExpectedPeopleText;
   final void Function(double)? onChanged;
@@ -15,6 +17,8 @@ class VenuePeopleSlider extends StatelessWidget {
     required this.padding,
     required this.numberOfExpectedPeople,
     required this.numberOfExpectedPeopleText,
+    required this.max,
+    required this.min,
   });
 
   @override
@@ -38,8 +42,8 @@ class VenuePeopleSlider extends StatelessWidget {
                 ),
               ),
               child: Slider(
-                min: 0, //get from db
-                max: 100, //get from db
+                min: min,
+                max: max,
                 thumbColor: GColors.royalBlue,
                 value: numberOfExpectedPeople,
                 activeColor: GColors.royalBlue,

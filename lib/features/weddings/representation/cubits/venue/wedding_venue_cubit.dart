@@ -1,8 +1,7 @@
 import 'package:events_jo/config/algorithms/haversine.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
-import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
@@ -21,17 +20,6 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
     emit(WeddingVenueLoaded());
 
     return weddingVenuesList;
-  }
-
-  //get all venues from database
-  Future<List<WeddingVenueMeal>> getAllMeals(String id) async {
-    emit(WeddingVenueLoading());
-
-    final weddingVenueMealsList = await weddingVenueRepo.getAllMeals(id);
-
-    emit(WeddingVenueLoaded());
-
-    return weddingVenueMealsList;
   }
 
   //search given list

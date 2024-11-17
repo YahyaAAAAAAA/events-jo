@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:cloudinary_api/src/request/model/uploader_params.dart';
@@ -17,11 +18,15 @@ class FirebaseOwnerRepo implements OwnerRepo {
     required String lat,
     required String lon,
     required String ownerId,
+    required String peopleMax,
+    required String peopleMin,
+    required String peoplePrice,
     required List<int> startDate,
     required List<int> endDate,
     required List<int> time,
     List<String>? pics,
     List<WeddingVenueMeal>? meals,
+    List<WeddingVenueDrink>? drinks,
   }) async {
     //set venue id
     final String docId = generateUniqueId();
@@ -36,6 +41,9 @@ class FirebaseOwnerRepo implements OwnerRepo {
       endDate: endDate,
       time: time,
       isOpen: true,
+      peopleMax: peopleMax,
+      peopleMin: peopleMin,
+      peoplePrice: peoplePrice,
       owner: ownerId,
       pics: pics ??
           [
@@ -54,6 +62,18 @@ class FirebaseOwnerRepo implements OwnerRepo {
     //in this case we have the id as (current time) + (rand num) because it's always unique
     //if (add) is used Firebase will generate random id.
 
+    //------------------Meals---------------------
+
+    await addVenueMealsToDatabase(meals, docId);
+
+    //------------------Drinks--------------------
+
+    await addVenueDrinksToDatabase(drinks, docId);
+  }
+
+  @override
+  Future<void> addVenueMealsToDatabase(
+      List<WeddingVenueMeal>? meals, String docId) async {
     //user didn't add meals
     if (meals == null || meals.isEmpty) {
       return;
@@ -73,6 +93,31 @@ class FirebaseOwnerRepo implements OwnerRepo {
           .collection('meals')
           .doc(meals[i].id)
           .set(meals[i].toJson());
+    }
+  }
+
+  @override
+  Future<void> addVenueDrinksToDatabase(
+      List<WeddingVenueDrink>? drinks, String docId) async {
+    //user didn't add drinks
+    if (drinks == null || drinks.isEmpty) {
+      return;
+    }
+
+    //fix drinks id
+    for (int i = 0; i < drinks.length; i++) {
+      drinks[i].id = (i + 1).toString();
+    }
+
+    //add drinks collection to user's venue
+    //then add user's individual drinks
+    for (int i = 0; i < drinks.length; i++) {
+      await FirebaseFirestore.instance
+          .collection('venues')
+          .doc(docId)
+          .collection('drinks')
+          .doc(drinks[i].id)
+          .set(drinks[i].toJson());
     }
   }
 

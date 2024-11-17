@@ -21,6 +21,7 @@ class ChangeUserTypeRow extends StatelessWidget {
         runSpacing: 10,
         spacing: 10,
         alignment: WrapAlignment.start,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           TextButton(
             onPressed: setUserType,

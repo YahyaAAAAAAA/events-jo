@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/weddings/domain/repo/weddin_venue_drinks_repo.dart';
 
-class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
+class FirebaseWeddingVenueDrinksRepo implements WeddingVenueDrinksRepo {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   @override
-  Future<List<WeddingVenue>> getAllVenues() async {
+  Future<List<WeddingVenueDrink>> getAllDrinks(String id) async {
     //gets a reference for the specified path in firebase
-    final collectionRef = firebaseFirestore.collection('venues');
+    final collectionRef =
+        firebaseFirestore.collection('venues').doc(id).collection('drinks');
 
     //fetch the documents for this query
     QuerySnapshot querySnapshot = await collectionRef.get();
@@ -18,10 +19,10 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
       return doc.data();
     }).toList();
 
-    //convert list to venue obj
+    //convert list to venue drink obj
     return allData
         .map(
-          (venue) => WeddingVenue.fromJson(venue),
+          (drink) => WeddingVenueDrink.fromJson(drink),
         )
         .toList();
   }

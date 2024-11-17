@@ -11,12 +11,16 @@ import 'package:gradient_icon/gradient_icon.dart';
 class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
   final void Function()? onPressed;
   final void Function()? showMeals;
+  final void Function()? showDrinks;
   final void Function()? showMap;
   final void Function()? showImages;
   final int selectedEventType;
   final TextEditingController nameController;
   final DateTimeRange? range;
   final List<int> time;
+  final double peoplePrice;
+  final int peopleMax;
+  final int peopleMin;
 
   const ConfirmAndAddEventToDatabasePage({
     super.key,
@@ -25,9 +29,13 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
     required this.nameController,
     required this.range,
     required this.time,
+    required this.peopleMax,
+    required this.peopleMin,
+    required this.peoplePrice,
     this.showMap,
     this.showImages,
     this.showMeals,
+    this.showDrinks,
   });
 
   @override
@@ -58,75 +66,87 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
           ),
         ),
 
-        const Spacer(),
+        //summary list
+        Expanded(
+          child: ListView(
+            children: [
+              //type
+              OwnerConfirmationDisplayRow(
+                mainText: 'Type: ',
+                subText: selectedEventType == 0
+                    ? 'Wedding Venue'
+                    : selectedEventType == 1
+                        ? 'Farm'
+                        : 'Football Court',
+              ),
 
-        //type
-        OwnerConfirmationDisplayRow(
-          mainText: 'Type: ',
-          subText: selectedEventType == 0
-              ? 'Wedding Venue'
-              : selectedEventType == 1
-                  ? 'Farm'
-                  : 'Football Court',
+              localDivider(),
+
+              //name
+              OwnerConfirmationDisplayRow(
+                  mainText: 'Name: ', subText: nameController.text),
+
+              localDivider(),
+
+              //date
+              OwnerConfirmationDisplayRow(
+                  mainText: 'Date: ',
+                  subText:
+                      'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'),
+
+              localDivider(),
+
+              //time
+              OwnerConfirmationDisplayRow(
+                  mainText: 'Open Hours: ',
+                  subText:
+                      'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
+
+              localDivider(),
+
+              //people
+              OwnerConfirmationDisplayRow(
+                  mainText: 'People Range: ',
+                  subText:
+                      'Between ${peopleMin.toString()} Person To ${peopleMax.toString()}'),
+
+              localDivider(),
+
+              //images
+              OwnerConfirmationDisplayRow(
+                mainText: 'Meals:     ',
+                isText: false,
+                subText: '',
+                icon: Icons.cake_rounded,
+                withSecondIcon: true,
+                secondIcon: Icons.free_breakfast,
+                onPressed: showMeals,
+                onPressedSecondIcon: showDrinks,
+              ),
+
+              localDivider(),
+
+              //images
+              OwnerConfirmationDisplayRow(
+                mainText: 'Images:   ',
+                isText: false,
+                subText: '',
+                icon: Icons.image,
+                onPressed: showImages,
+              ),
+
+              localDivider(),
+
+              //location
+              OwnerConfirmationDisplayRow(
+                mainText: 'Location: ',
+                isText: false,
+                subText: '',
+                onPressed: showMap,
+              ),
+            ],
+          ),
         ),
-
-        localDivider(),
-
-        //name
-        OwnerConfirmationDisplayRow(
-            mainText: 'Name: ', subText: nameController.text),
-
-        localDivider(),
-
-        //date
-        OwnerConfirmationDisplayRow(
-            mainText: 'Date: ',
-            subText:
-                'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'),
-
-        localDivider(),
-
-        //time
-        OwnerConfirmationDisplayRow(
-            mainText: 'Open Hours: ',
-            subText:
-                'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
-
-        localDivider(),
-
-        //images
-        OwnerConfirmationDisplayRow(
-          mainText: 'Meals:     ',
-          isText: false,
-          subText: '',
-          icon: Icons.cake_rounded,
-          onPressed: showMeals,
-        ),
-
-        localDivider(),
-
-        //images
-        OwnerConfirmationDisplayRow(
-          mainText: 'Images:   ',
-          isText: false,
-          subText: '',
-          icon: Icons.image,
-          onPressed: showImages,
-        ),
-
-        localDivider(),
-
-        //location
-        OwnerConfirmationDisplayRow(
-          mainText: 'Location: ',
-          isText: false,
-          subText: '',
-          onPressed: showMap,
-        ),
-
-        localDivider(),
-
-        const Spacer(flex: 2),
 
         //add to db
         OwnerButton(
@@ -143,7 +163,7 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
           onPressed: onPressed,
         ),
 
-        const Spacer(),
+        const SizedBox(height: 10),
       ],
     );
   }

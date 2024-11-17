@@ -79,7 +79,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
             ],
           ),
           //next button
-          index != 7
+          index != 9
               ? Row(
                   children: [
                     Text(

@@ -45,6 +45,15 @@ class IconForString {
       "meatballs": Icons.fastfood,
       "lasagna": Icons.dining,
       "pizza": Icons.local_pizza,
+
+      // Drinks
+      "water": Icons.water_drop, // Water
+      "juice": Icons.local_bar, // Juice (placeholder)
+      "coffee": Icons.local_cafe, // Coffee
+      "tea": Icons.emoji_food_beverage, // Tea
+      "soda": Icons.bubble_chart, // Soda (placeholder)
+      "smoothie": Icons.blender, // Smoothie (placeholder)
+      "hot chocolate": Icons.coffee_maker, // Hot Chocolate (placeholder)
     };
 
     final normalizedInput = input.toLowerCase();

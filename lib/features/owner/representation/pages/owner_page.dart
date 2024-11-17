@@ -4,19 +4,23 @@ import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
+import 'package:events_jo/features/owner/representation/components/owner_drink_card.dart';
 import 'package:events_jo/features/owner/representation/components/owner_meal_card.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/confirm_and_add_event_to_database_page.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/event_added_successfully_page.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_navigation_bar.dart';
+import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_drinks.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_location_page.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_meals.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_name_page.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_type_page.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_images_page.dart';
+import 'package:events_jo/features/owner/representation/components/sub%20pages/select_people_range.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_date_page.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time_page.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,11 +70,22 @@ class _OwnerPageState extends State<OwnerPage> {
   //images list
   List<XFile> images = [];
 
+  //people
+  TextEditingController peopleMinController = TextEditingController();
+  TextEditingController peopleMaxController = TextEditingController();
+  TextEditingController peoplePriceController = TextEditingController();
+
   //meals
   List<WeddingVenueMeal> meals = [];
   TextEditingController mealNameController = TextEditingController();
   TextEditingController mealAmountController = TextEditingController();
   TextEditingController mealPriceController = TextEditingController();
+
+  //meals
+  List<WeddingVenueDrink> drinks = [];
+  TextEditingController drinkNameController = TextEditingController();
+  TextEditingController drinkAmountController = TextEditingController();
+  TextEditingController drinkPriceController = TextEditingController();
 
   //note for cubit ->
   //    (pass by reference)
@@ -119,7 +134,15 @@ class _OwnerPageState extends State<OwnerPage> {
     mealNameController.dispose();
     mealAmountController.dispose();
     mealPriceController.dispose();
+    drinkNameController.dispose();
+    drinkAmountController.dispose();
+    drinkPriceController.dispose();
+    peopleMinController.dispose();
+    peopleMaxController.dispose();
+    peoplePriceController.dispose();
+
     ownerCubit.emit(OwnerInitial());
+    //todo location cubit
   }
 
   @override
@@ -131,15 +154,18 @@ class _OwnerPageState extends State<OwnerPage> {
         appBar: AppBar(
           //hides back button
           leading: const SizedBox(),
+          //note: remove appbar color when scrolling
+          surfaceTintColor: Colors.transparent,
           centerTitle: true,
           title: Text(
-            '( ${(index + 1).toString()}/8 )',
+            '( ${(index + 1).toString()}/10 )',
             style: TextStyle(
               color: GColors.poloBlue,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
+        //loads children only when needed
         body: LazyIndexedStack(
           index: index,
           children: [
@@ -209,7 +235,12 @@ class _OwnerPageState extends State<OwnerPage> {
               ),
             ),
 
-            //todo people range or just a max? & price
+            //people range
+            SelectPeopleRange(
+              peoplePriceController: peoplePriceController,
+              peopleMinController: peopleMinController,
+              peopleMaxController: peopleMaxController,
+            ),
 
             //meals
             SelectEventMeals(
@@ -264,7 +295,59 @@ class _OwnerPageState extends State<OwnerPage> {
               },
             ),
 
-            //todo drinks
+            //drinks
+            SelectEventDrinks(
+              drinkNameController: drinkNameController,
+              drinkAmountController: drinkAmountController,
+              drinkPriceController: drinkPriceController,
+              drinks: drinks,
+              itemBuilder: (context, index) {
+                return OwnerDrinkCard(
+                  drinks: drinks,
+                  index: index,
+                  onPressed: () => setState(() => drinks.removeAt(index)),
+                );
+              },
+              onAddPressed: () {
+                //checks if fields are empty
+                if (drinkNameController.text.isEmpty) {
+                  GSnackBar.show(
+                      context: context,
+                      text: 'Please add a name for the drink');
+                  return;
+                }
+                if (drinkAmountController.text.isEmpty) {
+                  GSnackBar.show(
+                      context: context,
+                      text: 'Please add an amount for the drink');
+                  return;
+                }
+                if (drinkPriceController.text.isEmpty) {
+                  GSnackBar.show(
+                      context: context,
+                      text: 'Please add a price for the drink');
+                  return;
+                }
+
+                //add meal to list
+                drinks.add(
+                  WeddingVenueDrink(
+                    id: 'added later :D',
+                    name: drinkNameController.text,
+                    amount: drinkAmountController.text,
+                    price: drinkPriceController.text,
+                  ),
+                );
+
+                //clear fields after addition
+                drinkNameController.clear();
+                drinkAmountController.clear();
+                drinkPriceController.clear();
+
+                //update
+                setState(() {});
+              },
+            ),
 
             //* submit
             submitEvent(),
@@ -307,8 +390,38 @@ class _OwnerPageState extends State<OwnerPage> {
                     }
                   }
 
+                  //if no people price or range provided
+                  if (index == 6) {
+                    //checks if fields are empty
+                    if (peoplePriceController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context, text: 'Please add a price');
+                      return;
+                    }
+                    if (peopleMinController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add a minimum amount');
+                      return;
+                    }
+                    if (peopleMaxController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add a maximum amount');
+                      return;
+                    }
+                    //checks if valid range
+                    if (int.parse(peopleMinController.text) >
+                        int.parse(peopleMaxController.text)) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add a valid range of people');
+                      return;
+                    }
+                  }
+
                   //last page
-                  if (index == 7) {
+                  if (index == 9) {
                     return;
                   }
 
@@ -354,7 +467,12 @@ class _OwnerPageState extends State<OwnerPage> {
             nameController: nameController,
             range: range,
             time: time,
+            peopleMax: int.parse(peopleMaxController.text),
+            peopleMin: int.parse(peopleMinController.text),
+            peoplePrice: double.parse(peoplePriceController.text),
             showMeals: () => ownerCubit.showMealsDialogPreview(context, meals),
+            showDrinks: () =>
+                ownerCubit.showDrinksDialogPreview(context, drinks),
             showMap: () => locationCubit.showMapDialogPreview(context,
                 userLocation: userLocation),
             showImages: () =>
@@ -373,8 +491,12 @@ class _OwnerPageState extends State<OwnerPage> {
                 name: nameController.text,
                 lat: userLocation.lat.toString(),
                 lon: userLocation.long.toString(),
+                peopleMax: peopleMaxController.text,
+                peopleMin: peopleMinController.text,
+                peoplePrice: peoplePriceController.text,
                 pics: images.isNotEmpty ? urls : null,
                 meals: meals.isNotEmpty ? meals : null,
+                drinks: drinks.isNotEmpty ? drinks : null,
                 startDate: [
                   range!.start.year,
                   range!.start.month,

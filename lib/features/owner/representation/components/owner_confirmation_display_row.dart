@@ -7,16 +7,22 @@ class OwnerConfirmationDisplayRow extends StatelessWidget {
 
   //if false display button instead
   final bool isText;
+  final bool withSecondIcon;
   final IconData icon;
+  final IconData secondIcon;
   final void Function()? onPressed;
+  final void Function()? onPressedSecondIcon;
 
   const OwnerConfirmationDisplayRow({
     super.key,
     required this.mainText,
     required this.subText,
     this.isText = true,
+    this.withSecondIcon = false,
     this.icon = Icons.location_on_outlined,
+    this.secondIcon = Icons.location_on_outlined,
     this.onPressed,
+    this.onPressedSecondIcon,
   });
 
   @override
@@ -84,6 +90,42 @@ class OwnerConfirmationDisplayRow extends StatelessWidget {
                           ),
                   ),
                 ),
+                withSecondIcon
+                    ? Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: IconButton(
+                            onPressed: onPressedSecondIcon,
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(GColors.royalBlue),
+                              shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                              ),
+                              padding:
+                                  const WidgetStatePropertyAll(EdgeInsets.zero),
+                            ),
+                            icon: Ink(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  colors: GColors.logoGradient,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  secondIcon,
+                                  color: GColors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

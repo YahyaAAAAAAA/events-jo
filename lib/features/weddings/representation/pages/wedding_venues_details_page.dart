@@ -2,19 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
+import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time_page.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
-import 'package:events_jo/features/weddings/representation/components/details/meal_card.dart';
+import 'package:events_jo/features/weddings/representation/components/empty_card.dart';
+import 'package:events_jo/features/weddings/representation/components/meal_card.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_image_slider.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_name_rating_and_location.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_date_picker.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_people_slider.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_time_picker.dart';
-import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/drinks/wedding_venue_meals_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/drinks/wedding_venue_meals_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/meals/wedding_venue_meals_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/meals/wedding_venue_meals_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -38,10 +43,19 @@ class WeddingVenuesDetailsPage extends StatefulWidget {
 }
 
 class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
+  //current venue
   late final WeddingVenue weddingVenue;
+
+  //venue meals cubit & list
+  late final WeddingVenueMealsCubit weddingVenueMealsCubit;
   late List<WeddingVenueMeal> meals = [];
+
+  //venue meals cubit & list
+  late final WeddingVenueDrinksCubit weddingVenueDrinksCubit;
+  late List<WeddingVenueDrink> drinks = [];
+
+  //venue location
   late final LocationCubit locationCubit;
-  late final WeddingVenueCubit weddingVenueCubit;
   late final UserLocation venueLocation;
 
   late String timeText;
@@ -49,8 +63,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
   late double numberOfExpectedPeople;
   late String numberOfExpectedPeopleText;
-
-  bool isChecked = false;
 
   double padding = 12;
 
@@ -64,15 +76,18 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
     //get location cubit
     locationCubit = context.read<LocationCubit>();
 
-    //get venue cubit
-    weddingVenueCubit = context.read<WeddingVenueCubit>();
+    //get venue meals cubit
+    weddingVenueMealsCubit = context.read<WeddingVenueMealsCubit>();
+
+    //get venue drinks cubit
+    weddingVenueDrinksCubit = context.read<WeddingVenueDrinksCubit>();
 
     //setup time
     timeText = 'Your venue time: ' + weddingVenue.time[0].toString().toTime;
     initTimeText = 'Your venue time: ' + weddingVenue.time[0].toString().toTime;
 
     //setup people range
-    numberOfExpectedPeople = 0;
+    numberOfExpectedPeople = double.parse(weddingVenue.peopleMin);
     numberOfExpectedPeopleText = numberOfExpectedPeople.toString();
 
     //get venue location
@@ -96,7 +111,10 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
         //get meals list
-        meals = await weddingVenueCubit.getAllMeals(weddingVenue.id);
+        meals = await weddingVenueMealsCubit.getAllMeals(weddingVenue.id);
+
+        //get drinks list
+        drinks = await weddingVenueDrinksCubit.getAllDrinks(weddingVenue.id);
       },
     );
   }
@@ -112,6 +130,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
     return Scaffold(
       //* title
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: FittedBox(
           child: Text(
             'Wedding Venue in Jordan',
@@ -141,10 +160,9 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
         centerTitle: true,
       ),
       body: Center(
+        //note: limited width
         child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 400,
-          ),
+          constraints: const BoxConstraints(maxWidth: 400),
           //scroll bar
           child: RawScrollbar(
             thumbVisibility: true,
@@ -154,7 +172,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
             //main list
             child: ListView(
               padding: const EdgeInsets.all(12),
-              children: <Widget>[
+              children: [
                 //* images slider
                 VenueImageSlider(picsList: widget.picsList),
 
@@ -214,6 +232,8 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                     'Select the number of expected people for your venue'),
                 VenuePeopleSlider(
                   padding: padding,
+                  max: double.parse(weddingVenue.peopleMax),
+                  min: double.parse(weddingVenue.peopleMin),
                   numberOfExpectedPeople: numberOfExpectedPeople,
                   numberOfExpectedPeopleText: numberOfExpectedPeopleText,
                   onChanged: (value) => setState(() {
@@ -226,19 +246,19 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
                 //* meals
                 venueText('Select your preferred meals'),
-                BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
+                BlocConsumer<WeddingVenueMealsCubit, WeddingVenueMealsStates>(
                   builder: (context, state) {
                     //error
-                    if (state is WeddingVenueError) {
+                    if (state is WeddingVenueMealsError) {
                       return const Text('Error getting meals');
                     }
 
                     //done
-                    if (state is WeddingVenueLoaded) {
+                    if (state is WeddingVenueMealsLoaded) {
                       return ListView.separated(
                         shrinkWrap: true,
                         physics: const ClampingScrollPhysics(),
-                        itemCount: meals.length,
+                        itemCount: meals.isNotEmpty ? meals.length : 1,
                         //add gap between children
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 10,
@@ -246,34 +266,101 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                         //build meals
                         itemBuilder: (context, index) {
                           //todo needs ui testing
-                          return MealCard(
-                            isChecked: meals[index].isChecked,
-                            amount: double.parse(meals[index].amount),
-                            selectedAmount: meals[index].selectedAmount,
-                            name: meals[index].name,
-                            //check & uncheck meal
-                            onCheckBoxChanged: (value) => setState(() =>
-                                meals[index].isChecked =
-                                    !meals[index].isChecked),
-                            //change meal amount
-                            onSliderChanged: (value) => setState(
-                                () => meals[index].selectedAmount = value),
-                          );
+                          return meals.isNotEmpty
+                              ? MealCard(
+                                  isChecked: meals[index].isChecked,
+                                  amount: double.parse(meals[index].amount),
+                                  selectedAmount: meals[index].selectedAmount,
+                                  name: meals[index].name,
+                                  //check & uncheck meal
+                                  onCheckBoxChanged: (value) => setState(() =>
+                                      meals[index].isChecked =
+                                          !meals[index].isChecked),
+                                  //change meal amount
+                                  onSliderChanged: (value) => setState(() =>
+                                      meals[index].selectedAmount = value),
+                                )
+                              : EmptyCard(
+                                  text:
+                                      'No meals available for ${weddingVenue.name}',
+                                );
                         },
                       );
                     }
                     //loading...
                     else {
-                      return const Text('Loading...');
+                      return const LoadingIndicator(withImage: false);
                     }
                   },
                   listener: (context, state) {
                     //error
-                    if (state is WeddingVenueError) {
+                    if (state is WeddingVenueMealsError) {
                       GSnackBar.show(context: context, text: state.message);
                     }
                   },
                 ),
+
+                const SizedBox(height: 20),
+
+                //* drinks
+                venueText('Select your preferred drinks'),
+                BlocConsumer<WeddingVenueDrinksCubit, WeddingVenueDrinksStates>(
+                  builder: (context, state) {
+                    //error
+                    if (state is WeddingVenueDrinksError) {
+                      return const Text('Error getting drinks');
+                    }
+
+                    //done
+                    if (state is WeddingVenueDrinksLoaded) {
+                      return ListView.separated(
+                        //note: this is how to put listview inside a column
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: drinks.isNotEmpty ? drinks.length : 1,
+                        //add gap between children
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 10,
+                        ),
+                        //build meals
+                        itemBuilder: (context, index) {
+                          //todo needs ui testing
+                          return drinks.isNotEmpty
+                              ? MealCard(
+                                  isChecked: drinks[index].isChecked,
+                                  amount: double.parse(drinks[index].amount),
+                                  selectedAmount: drinks[index].selectedAmount,
+                                  name: drinks[index].name,
+                                  //check & uncheck meal
+                                  onCheckBoxChanged: (value) => setState(() =>
+                                      drinks[index].isChecked =
+                                          !drinks[index].isChecked),
+                                  //change meal amount
+                                  onSliderChanged: (value) => setState(() =>
+                                      drinks[index].selectedAmount = value),
+                                )
+                              : EmptyCard(
+                                  text:
+                                      'No drinks available for ${weddingVenue.name}',
+                                );
+                        },
+                      );
+                    }
+                    //loading...
+                    else {
+                      return const LoadingIndicator(withImage: false);
+                    }
+                  },
+                  listener: (context, state) {
+                    //error
+                    if (state is WeddingVenueDrinksError) {
+                      GSnackBar.show(context: context, text: state.message);
+                    }
+                  },
+                ),
+
+                //todo pricing for people and meals, drinks then some UI checks
+                //then a CHECKPOINT.
 
                 //payment
 

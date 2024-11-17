@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
+import 'package:events_jo/features/owner/representation/components/dialogs/drinks_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/components/dialogs/images_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/components/dialogs/meals_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,11 +22,15 @@ class OwnerCubit extends Cubit<OwnerStates> {
     required String lat,
     required String lon,
     required String ownerId,
+    required String peopleMax,
+    required String peopleMin,
+    required String peoplePrice,
     required List<int> startDate,
     required List<int> endDate,
     required List<int> time,
     List<String>? pics,
     List<WeddingVenueMeal>? meals,
+    List<WeddingVenueDrink>? drinks,
   }) async {
     try {
       //loading...
@@ -38,9 +44,13 @@ class OwnerCubit extends Cubit<OwnerStates> {
         startDate: startDate,
         endDate: endDate,
         time: time,
+        peopleMax: peopleMax,
+        peopleMin: peopleMin,
+        peoplePrice: peoplePrice,
         ownerId: ownerId,
         pics: pics,
         meals: meals,
+        drinks: drinks,
       );
 
       //done
@@ -86,6 +96,16 @@ class OwnerCubit extends Cubit<OwnerStates> {
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) =>
           MealsDialogPreview(meals: meals),
+    );
+  }
+
+  //this shows user's drinks
+  Future<Object?> showDrinksDialogPreview(
+      BuildContext context, List<WeddingVenueDrink> drinks) {
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          DrinksDialogPreview(drinks: drinks),
     );
   }
 

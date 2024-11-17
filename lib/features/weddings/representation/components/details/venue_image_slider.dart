@@ -18,18 +18,21 @@ class VenueImageSlider extends StatelessWidget {
         topLeft: Radius.circular(5),
         topRight: Radius.circular(5),
       ),
-      child: ImageSlideshow(
-        width: double.infinity,
-        height: 300,
-        initialPage: 0,
-        indicatorPadding: 10,
-        indicatorBottomPadding: 20,
-        indicatorRadius: 4,
-        indicatorColor: GColors.royalBlue,
-        indicatorBackgroundColor: GColors.white,
-        autoPlayInterval: 3000,
-        isLoop: true,
-        children: picsList,
+      child: ColoredBox(
+        color: GColors.white,
+        child: ImageSlideshow(
+          width: double.infinity,
+          height: 300,
+          initialPage: 0,
+          indicatorPadding: 10,
+          indicatorBottomPadding: 20,
+          indicatorRadius: 4,
+          indicatorColor: GColors.royalBlue,
+          indicatorBackgroundColor: GColors.white,
+          autoPlayInterval: 3000,
+          isLoop: true,
+          children: picsList,
+        ),
       ),
     );
   }
