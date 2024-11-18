@@ -4,7 +4,7 @@ import 'package:events_jo/config/utils/gradient_slider.dart';
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:flutter/material.dart';
 
-class MealCard extends StatelessWidget {
+class DrinkCard extends StatelessWidget {
   final bool isChecked;
   final String name;
   final int amount;
@@ -14,7 +14,7 @@ class MealCard extends StatelessWidget {
   final void Function(bool?)? onCheckBoxChanged;
   final void Function(double)? onSliderChanged;
 
-  const MealCard({
+  const DrinkCard({
     super.key,
     required this.isChecked,
     required this.name,
@@ -60,7 +60,6 @@ class MealCard extends StatelessWidget {
               const SizedBox(width: 5),
               Text(
                 name.toCapitalized,
-                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: GColors.royalBlue,
                   fontSize: 21,

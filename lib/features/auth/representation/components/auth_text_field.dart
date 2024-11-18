@@ -12,6 +12,7 @@ class AuthTextField extends StatelessWidget {
   final FontWeight fontWeight;
   final bool isOnlyDouble;
   final bool isOnlyInt;
+  final int? maxLength;
 
   const AuthTextField({
     super.key,
@@ -24,6 +25,7 @@ class AuthTextField extends StatelessWidget {
     this.fontWeight = FontWeight.normal,
     this.isOnlyDouble = false,
     this.isOnlyInt = false,
+    this.maxLength = null,
   });
 
   //todo focus node
@@ -34,6 +36,7 @@ class AuthTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       onChanged: onChanged,
+      maxLength: maxLength,
       style: TextStyle(
         color: textColor,
         fontSize: 17,

@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class VenueDatePicker extends StatelessWidget {
   final DateTime minDate;
   final DateTime maxDate;
+  final void Function(DateTime)? onDateSelected;
 
   const VenueDatePicker({
     super.key,
     required this.minDate,
     required this.maxDate,
+    required this.onDateSelected,
   });
 
   @override
@@ -24,6 +26,8 @@ class VenueDatePicker extends StatelessWidget {
       child: DatePicker(
         minDate: minDate,
         maxDate: maxDate,
+        selectedDate: minDate,
+        onDateSelected: onDateSelected,
         currentDateDecoration: BoxDecoration(
           border: Border.all(
             color: GColors.royalBlue,

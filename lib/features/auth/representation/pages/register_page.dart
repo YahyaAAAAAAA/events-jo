@@ -38,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   //location related
   late final LocationCubit locationCubit;
-  late UserLocation userLocation;
+  late MapLocation userLocation;
   Position? location;
 
   //determine which account to create (user or owner)
@@ -52,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
     locationCubit = context.read<LocationCubit>();
 
     //prepare user location object
-    userLocation = UserLocation(
+    userLocation = MapLocation(
       lat: 0,
       long: 0,
       initLat: 0,

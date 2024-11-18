@@ -1,10 +1,13 @@
 class WeddingVenueDrink {
   late String id;
   late String name;
-  late String amount;
-  late String price;
+  late int amount;
+  late double price;
+
+  //local variables
   bool isChecked = false;
-  double selectedAmount = 0;
+  int selectedAmount = 1;
+  double calculatedPrice = 1;
 
   WeddingVenueDrink({
     required this.id,
@@ -12,7 +15,7 @@ class WeddingVenueDrink {
     required this.amount,
     required this.price,
     this.isChecked = false,
-    this.selectedAmount = 0,
+    this.selectedAmount = 1,
   });
 
   //convert wedding venue meal to json
@@ -30,6 +33,6 @@ class WeddingVenueDrink {
     id = jsonVenue['id'];
     name = jsonVenue['name'];
     amount = jsonVenue['amount'];
-    price = jsonVenue['price'];
+    price = jsonVenue['price'].toDouble();
   }
 }

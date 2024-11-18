@@ -77,6 +77,7 @@ class SelectEventDrinks extends StatelessWidget {
                   controller: drinkNameController,
                   hintText: 'Drink Name',
                   obscureText: false,
+                  maxLength: 14,
                 ),
               ),
             ),

@@ -1,8 +1,8 @@
 class WeddingVenue {
   late String id;
   late String name;
-  late String latitude;
-  late String longitude;
+  late double latitude;
+  late double longitude;
   late String owner;
   late int rate;
   late bool isOpen;
@@ -10,9 +10,9 @@ class WeddingVenue {
   late List<dynamic> startDate;
   late List<dynamic> endDate;
   late List<dynamic> time;
-  late String peopleMax;
-  late String peopleMin;
-  late String peoplePrice;
+  late int peopleMax;
+  late int peopleMin;
+  late double peoplePrice;
 
   WeddingVenue({
     required this.id,
@@ -55,8 +55,8 @@ class WeddingVenue {
   WeddingVenue.fromJson(Map<String, dynamic> jsonVenue) {
     id = jsonVenue['id'];
     name = jsonVenue['name'];
-    latitude = jsonVenue['latitude'];
-    longitude = jsonVenue['longitude'];
+    latitude = jsonVenue['latitude'].toDouble();
+    longitude = jsonVenue['longitude'].toDouble();
     rate = jsonVenue['rate'];
     isOpen = jsonVenue['isOpen'];
     pics = jsonVenue['pics'];
@@ -66,6 +66,6 @@ class WeddingVenue {
     time = jsonVenue['time'];
     peopleMax = jsonVenue['peopleMax'];
     peopleMin = jsonVenue['peopleMin'];
-    peoplePrice = jsonVenue['peoplePrice'];
+    peoplePrice = jsonVenue['peoplePrice'].toDouble();
   }
 }

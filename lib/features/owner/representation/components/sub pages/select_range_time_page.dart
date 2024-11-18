@@ -98,4 +98,23 @@ extension StringCasingExtension on String {
     }
     return '$this AM';
   }
+
+  String toTimeWithMinutes(String minutes) {
+    if (int.parse(minutes) == 0) {
+      minutes = '00';
+    }
+
+    if (int.parse(this) > 12) {
+      return '${int.parse(this) - 12}:$minutes PM';
+    }
+
+    if (int.parse(this) == 12) {
+      return '12:$minutes PM';
+    }
+
+    if (int.parse(this) == 0) {
+      return '12:$minutes AM';
+    }
+    return '$this:$minutes AM';
+  }
 }

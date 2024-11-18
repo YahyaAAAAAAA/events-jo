@@ -93,59 +93,64 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
       ),
 
       //states
-      body: BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
-        builder: (context, state) {
-          //list ready
-          if (state is WeddingVenueLoaded) {
-            return Column(
-              children: [
-                //search bar
-                VenueSearchBar(
-                  controller: searchController,
-                  onPressed: () => setState(() => searchController.clear()),
-                  onChanged: (venue) => weddingVenueCubit.searchList(
-                      weddingVenuList, filterdWeddingVenuList, venue),
-                ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 400),
+          child: BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
+            builder: (context, state) {
+              //list ready
+              if (state is WeddingVenueLoaded) {
+                return Column(
+                  children: [
+                    //search bar
+                    VenueSearchBar(
+                      controller: searchController,
+                      onPressed: () => setState(() => searchController.clear()),
+                      onChanged: (venue) => weddingVenueCubit.searchList(
+                          weddingVenuList, filterdWeddingVenuList, venue),
+                    ),
 
-                //venues list
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: searchController.text.isEmpty
-                        ? weddingVenuList.length
-                        : filterdWeddingVenuList.length,
-                    itemBuilder: (context, index) {
-                      return VenueCard(
-                        weddingVenue: searchController.text.isEmpty
-                            ? weddingVenuList[index]
-                            : filterdWeddingVenuList[index],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
+                    //venues list
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: searchController.text.isEmpty
+                            ? weddingVenuList.length
+                            : filterdWeddingVenuList.length,
+                        itemBuilder: (context, index) {
+                          return VenueCard(
+                            weddingVenue: searchController.text.isEmpty
+                                ? weddingVenuList[index]
+                                : filterdWeddingVenuList[index],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }
 
-          //error
-          if (state is WeddingVenueError) {
-            return const Center(
-              child: Text('Error getting venues list'),
-            );
-          }
+              //error
+              if (state is WeddingVenueError) {
+                return const Center(
+                  child: Text('Error getting venues list'),
+                );
+              }
 
-          //loading...
-          else {
-            return const Center(
-              child: LoadingIndicator(),
-            );
-          }
-        },
-        listener: (context, state) {
-          //listens for errors
-          if (state is WeddingVenueError) {
-            GSnackBar.show(context: context, text: state.message);
-          }
-        },
+              //loading...
+              else {
+                return const Center(
+                  child: LoadingIndicator(),
+                );
+              }
+            },
+            listener: (context, state) {
+              //listens for errors
+              if (state is WeddingVenueError) {
+                GSnackBar.show(context: context, text: state.message);
+              }
+            },
+          ),
+        ),
       ),
     );
   }

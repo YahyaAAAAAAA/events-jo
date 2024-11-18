@@ -72,7 +72,7 @@ class DrinksDialogPreview extends StatelessWidget {
                   )
                 : Center(
                     child: Text(
-                      'You haven\'t choose any meals',
+                      'You haven\'t choose any drinks',
                       style: TextStyle(
                         fontSize: 17,
                         color: GColors.poloBlue,

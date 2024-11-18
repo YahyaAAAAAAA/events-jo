@@ -49,7 +49,7 @@ class _OwnerPageState extends State<OwnerPage> {
   late final LocationCubit locationCubit;
 
   //location instance
-  late final UserLocation userLocation;
+  late final MapLocation userLocation;
 
   //event name
   final TextEditingController nameController = TextEditingController();
@@ -109,7 +109,7 @@ class _OwnerPageState extends State<OwnerPage> {
     // long = 35.89443320390641;
 
     //setup user location values
-    userLocation = UserLocation(
+    userLocation = MapLocation(
       lat: widget.user!.latitude,
       long: widget.user!.longitude,
       initLat: widget.user!.latitude,
@@ -166,193 +166,202 @@ class _OwnerPageState extends State<OwnerPage> {
           ),
         ),
         //loads children only when needed
-        body: LazyIndexedStack(
-          index: index,
-          children: [
-            //* owner sub pages
+        body: Center(
+          child: ConstrainedBox(
+            constraints: index != 9
+                ? const BoxConstraints(maxWidth: 400)
+                : BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: LazyIndexedStack(
+              index: index,
+              children: [
+                //* owner sub pages
 
-            //type
-            SelectEventType(
-              selectedEventType: selectedEventType,
-              onTap1: () => setState(() => selectedEventType = 0),
-              onTap2: () => setState(() => selectedEventType = 1),
-              onTap3: () => setState(() => selectedEventType = 2),
-            ),
+                //type
+                SelectEventType(
+                  selectedEventType: selectedEventType,
+                  onTap1: () => setState(() => selectedEventType = 0),
+                  onTap2: () => setState(() => selectedEventType = 1),
+                  onTap3: () => setState(() => selectedEventType = 2),
+                ),
 
-            //name
-            SelectEventNamePage(
-              selectedEventType: selectedEventType,
-              nameController: nameController,
-            ),
+                //name
+                SelectEventNamePage(
+                  selectedEventType: selectedEventType,
+                  nameController: nameController,
+                ),
 
-            //location
-            SelectEventLocationPage(
-              selectedEventType: selectedEventType,
-              onPressed: () => locationCubit.showMapDialog(context,
-                  userLocation: userLocation),
-            ),
+                //location
+                SelectEventLocationPage(
+                  selectedEventType: selectedEventType,
+                  onPressed: () => locationCubit.showMapDialog(context,
+                      userLocation: userLocation),
+                ),
 
-            //pics
-            SelectImagesPage(
-              images: images,
-              selectedEventType: selectedEventType,
-              onPressed: () async {
-                //pick images
-                final selectedImages =
-                    await ImagePicker().pickMultiImage(limit: 6);
+                //pics
+                SelectImagesPage(
+                  images: images,
+                  selectedEventType: selectedEventType,
+                  onPressed: () async {
+                    //pick images
+                    final selectedImages =
+                        await ImagePicker().pickMultiImage(limit: 6);
 
-                //user cancels -> save old list
-                if (selectedImages.isEmpty) return;
+                    //user cancels -> save old list
+                    if (selectedImages.isEmpty) return;
 
-                //user confirms -> clear old list and add new images
-                images.clear();
-                images.addAll(selectedImages);
+                    //user confirms -> clear old list and add new images
+                    images.clear();
+                    images.addAll(selectedImages);
 
-                //update
-                setState(() {});
-              },
-            ),
+                    //update
+                    setState(() {});
+                  },
+                ),
 
-            //date range
-            SelectRangeDatePage(
-              range: range,
-              onRangeSelected: (value) => setState(() => range = value),
-            ),
+                //date range
+                SelectRangeDatePage(
+                  range: range,
+                  onRangeSelected: (value) => setState(() => range = value),
+                ),
 
-            //time range
-            SelectRangeTimePage(
-              tempValueForTime: tempValueForTime,
-              time: time,
-              onTab: (from, to) => setState(
-                () {
-                  //control UI
-                  tempValueForTime = 1;
+                //time range
+                SelectRangeTimePage(
+                  tempValueForTime: tempValueForTime,
+                  time: time,
+                  onTab: (from, to) => setState(
+                    () {
+                      //control UI
+                      tempValueForTime = 1;
 
-                  //set time
-                  time[0] = from.hour;
-                  time[1] = to.hour;
-                },
-              ),
-            ),
+                      //set time
+                      time[0] = from.hour;
+                      time[1] = to.hour;
+                    },
+                  ),
+                ),
 
-            //people range
-            SelectPeopleRange(
-              peoplePriceController: peoplePriceController,
-              peopleMinController: peopleMinController,
-              peopleMaxController: peopleMaxController,
-            ),
+                //people range
+                SelectPeopleRange(
+                  peoplePriceController: peoplePriceController,
+                  peopleMinController: peopleMinController,
+                  peopleMaxController: peopleMaxController,
+                ),
 
-            //meals
-            SelectEventMeals(
-              mealNameController: mealNameController,
-              mealAmountController: mealAmountController,
-              mealPriceController: mealPriceController,
-              meals: meals,
-              itemBuilder: (context, index) {
-                return OwnerMealCard(
+                //meals
+                SelectEventMeals(
+                  mealNameController: mealNameController,
+                  mealAmountController: mealAmountController,
+                  mealPriceController: mealPriceController,
                   meals: meals,
-                  index: index,
-                  onPressed: () => setState(() => meals.removeAt(index)),
-                );
-              },
-              onAddPressed: () {
-                //checks if fields are empty
-                if (mealNameController.text.isEmpty) {
-                  GSnackBar.show(
-                      context: context, text: 'Please add a name for the meal');
-                  return;
-                }
-                if (mealAmountController.text.isEmpty) {
-                  GSnackBar.show(
-                      context: context,
-                      text: 'Please add an amount for the meal');
-                  return;
-                }
-                if (mealPriceController.text.isEmpty) {
-                  GSnackBar.show(
-                      context: context,
-                      text: 'Please add a price for the meal');
-                  return;
-                }
+                  itemBuilder: (context, index) {
+                    return OwnerMealCard(
+                      meals: meals,
+                      index: index,
+                      onPressed: () => setState(() => meals.removeAt(index)),
+                    );
+                  },
+                  onAddPressed: () {
+                    //checks if fields are empty
+                    if (mealNameController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add a name for the meal');
+                      return;
+                    }
+                    if (mealAmountController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add an amount for the meal');
+                      return;
+                    }
+                    if (mealPriceController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add a price for the meal');
+                      return;
+                    }
 
-                //add meal to list
-                meals.add(
-                  WeddingVenueMeal(
-                    id: 'added later :D',
-                    name: mealNameController.text,
-                    amount: mealAmountController.text,
-                    price: mealPriceController.text,
-                  ),
-                );
+                    //add meal to list
+                    meals.add(
+                      WeddingVenueMeal(
+                        id: 'added later :D',
+                        name: mealNameController.text,
+                        amount: int.parse(mealAmountController.text),
+                        price: double.parse(mealPriceController.text),
+                      ),
+                    );
 
-                //clear fields after addition
-                mealNameController.clear();
-                mealAmountController.clear();
-                mealPriceController.clear();
+                    //clear fields after addition
+                    mealNameController.clear();
+                    mealAmountController.clear();
+                    mealPriceController.clear();
 
-                //update
-                setState(() {});
-              },
-            ),
+                    //update
+                    setState(() {});
+                  },
+                ),
 
-            //drinks
-            SelectEventDrinks(
-              drinkNameController: drinkNameController,
-              drinkAmountController: drinkAmountController,
-              drinkPriceController: drinkPriceController,
-              drinks: drinks,
-              itemBuilder: (context, index) {
-                return OwnerDrinkCard(
+                //drinks
+                SelectEventDrinks(
+                  drinkNameController: drinkNameController,
+                  drinkAmountController: drinkAmountController,
+                  drinkPriceController: drinkPriceController,
                   drinks: drinks,
-                  index: index,
-                  onPressed: () => setState(() => drinks.removeAt(index)),
-                );
-              },
-              onAddPressed: () {
-                //checks if fields are empty
-                if (drinkNameController.text.isEmpty) {
-                  GSnackBar.show(
-                      context: context,
-                      text: 'Please add a name for the drink');
-                  return;
-                }
-                if (drinkAmountController.text.isEmpty) {
-                  GSnackBar.show(
-                      context: context,
-                      text: 'Please add an amount for the drink');
-                  return;
-                }
-                if (drinkPriceController.text.isEmpty) {
-                  GSnackBar.show(
-                      context: context,
-                      text: 'Please add a price for the drink');
-                  return;
-                }
+                  itemBuilder: (context, index) {
+                    return OwnerDrinkCard(
+                      drinks: drinks,
+                      index: index,
+                      onPressed: () => setState(() => drinks.removeAt(index)),
+                    );
+                  },
+                  onAddPressed: () {
+                    //checks if fields are empty
+                    if (drinkNameController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add a name for the drink');
+                      return;
+                    }
+                    if (drinkAmountController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add an amount for the drink');
+                      return;
+                    }
+                    if (drinkPriceController.text.isEmpty) {
+                      GSnackBar.show(
+                          context: context,
+                          text: 'Please add a price for the drink');
+                      return;
+                    }
 
-                //add meal to list
-                drinks.add(
-                  WeddingVenueDrink(
-                    id: 'added later :D',
-                    name: drinkNameController.text,
-                    amount: drinkAmountController.text,
-                    price: drinkPriceController.text,
-                  ),
-                );
+                    //add meal to list
+                    drinks.add(
+                      WeddingVenueDrink(
+                        id: 'added later :D',
+                        name: drinkNameController.text,
+                        amount: int.parse(drinkAmountController.text),
+                        price: double.parse(drinkPriceController.text),
+                      ),
+                    );
 
-                //clear fields after addition
-                drinkNameController.clear();
-                drinkAmountController.clear();
-                drinkPriceController.clear();
+                    //clear fields after addition
+                    drinkNameController.clear();
+                    drinkAmountController.clear();
+                    drinkPriceController.clear();
 
-                //update
-                setState(() {});
-              },
+                    //update
+                    setState(() {});
+                  },
+                ),
+
+                //* submit
+                submitEvent(),
+              ],
             ),
-
-            //* submit
-            submitEvent(),
-          ],
+          ),
         ),
+
         //watch the state here to hide the bar when loading
         bottomNavigationBar: BlocConsumer<OwnerCubit, OwnerStates>(
           builder: (context, state) {
@@ -411,7 +420,7 @@ class _OwnerPageState extends State<OwnerPage> {
                       return;
                     }
                     //checks if valid range
-                    if (int.parse(peopleMinController.text) >
+                    if (int.parse(peopleMinController.text) >=
                         int.parse(peopleMaxController.text)) {
                       GSnackBar.show(
                           context: context,
@@ -489,11 +498,11 @@ class _OwnerPageState extends State<OwnerPage> {
               //call cubit
               await ownerCubit.addVenueToDatabase(
                 name: nameController.text,
-                lat: userLocation.lat.toString(),
-                lon: userLocation.long.toString(),
-                peopleMax: peopleMaxController.text,
-                peopleMin: peopleMinController.text,
-                peoplePrice: peoplePriceController.text,
+                lat: userLocation.lat,
+                lon: userLocation.long,
+                peopleMax: int.parse(peopleMaxController.text),
+                peopleMin: int.parse(peopleMinController.text),
+                peoplePrice: double.parse(peoplePriceController.text),
                 pics: images.isNotEmpty ? urls : null,
                 meals: meals.isNotEmpty ? meals : null,
                 drinks: drinks.isNotEmpty ? drinks : null,

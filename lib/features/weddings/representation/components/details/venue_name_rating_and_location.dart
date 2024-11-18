@@ -20,7 +20,7 @@ class VenueNameRatingAndLocation extends StatelessWidget {
   final double padding;
   final WeddingVenue weddingVenue;
   final LocationCubit locationCubit;
-  final UserLocation venueLocation;
+  final MapLocation venueLocation;
 
   @override
   Widget build(BuildContext context) {

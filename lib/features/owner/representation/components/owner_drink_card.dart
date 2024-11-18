@@ -34,9 +34,9 @@ class OwnerDrinkCard extends StatelessWidget {
                   '.  Name: ' +
                   drinks[index].name +
                   ' | Amount: ' +
-                  drinks[index].amount +
+                  drinks[index].amount.toString() +
                   ' | Price: ' +
-                  drinks[index].price,
+                  drinks[index].price.toString(),
               style: TextStyle(
                 fontSize: 17,
                 color: GColors.royalBlue,

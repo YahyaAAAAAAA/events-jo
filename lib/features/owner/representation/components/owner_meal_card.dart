@@ -34,9 +34,9 @@ class OwnerMealCard extends StatelessWidget {
                   '.  Name: ' +
                   meals[index].name +
                   ' | Amount: ' +
-                  meals[index].amount +
+                  meals[index].amount.toString() +
                   ' | Price: ' +
-                  meals[index].price,
+                  meals[index].price.toString(),
               style: TextStyle(
                 fontSize: 17,
                 color: GColors.royalBlue,

@@ -16,17 +16,21 @@ class OwnerPageNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: GColors.royalBlue.withOpacity(0.5),
-            blurRadius: 7,
-            offset: const Offset(0, 4),
-          )
-        ],
+        borderRadius: index != 9
+            ? const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              )
+            : null,
+        boxShadow: index != 9
+            ? [
+                BoxShadow(
+                  color: GColors.royalBlue.withOpacity(0.5),
+                  blurRadius: 7,
+                  offset: const Offset(0, 4),
+                )
+              ]
+            : null,
         color: GColors.white,
       ),
       padding: const EdgeInsets.all(20),

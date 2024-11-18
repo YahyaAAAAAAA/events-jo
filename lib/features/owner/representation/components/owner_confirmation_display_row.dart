@@ -90,6 +90,7 @@ class OwnerConfirmationDisplayRow extends StatelessWidget {
                           ),
                   ),
                 ),
+                withSecondIcon ? const SizedBox(width: 10) : const SizedBox(),
                 withSecondIcon
                     ? Flexible(
                         child: FittedBox(

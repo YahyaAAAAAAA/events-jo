@@ -1,3 +1,4 @@
+import 'package:events_jo/config/algorithms/icon_for_string.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -7,11 +8,9 @@ import 'package:events_jo/features/home/presentation/components/events_jo_logo.d
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
-import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,11 +21,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final weddingVenueRepo = FirebaseWeddingVenueRepo();
   final AnimatedMeshGradientController animatedController =
       AnimatedMeshGradientController();
   late AppUser? currentUser;
-  late Position? location;
+
+  TextEditingController c = TextEditingController();
 
   @override
   void initState() {
@@ -76,6 +75,21 @@ class _HomePageState extends State<HomePage> {
                 const EventsJoLogo(),
 
                 const SizedBox(height: 20),
+
+                //todo work on icons (maybe add it in OwnerPage ?)
+                //temp
+                Icon(
+                  IconForString.get(c.text),
+                  color: Colors.black,
+                ),
+                TextField(
+                  controller: c,
+                  onChanged: (value) {
+                    setState(() {
+                      c.text = value;
+                    });
+                  },
+                ),
 
                 Text(
                   "Browse a category",

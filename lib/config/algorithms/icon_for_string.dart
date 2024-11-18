@@ -13,6 +13,12 @@ class IconForString {
       "lamb": Icons.dinner_dining,
       "turkey": Icons.local_dining,
       "cookie": Icons.cookie,
+      "mansaf": Icons.food_bank, // Mansaf (National Dish of Jordan)
+      "maqluba": Icons.lunch_dining, // Maqluba
+      "musakhan": Icons.flatware, // Musakhan (placeholder)
+      "kebab": Icons.kebab_dining, // Kebab
+      "kofta": Icons.fastfood, // Kofta (placeholder)
+      "warak enab": Icons.food_bank, // Stuffed Grape Leaves
 
       // Side Dishes
       "rice": Icons.rice_bowl,
@@ -21,17 +27,23 @@ class IconForString {
       "pasta": Icons.dining,
       "salad": Icons.eco,
       "vegetables": Icons.spa,
+      "hummus": Icons.bubble_chart,
+      "mutabbal": Icons.fastfood, // Mutabbal (placeholder)
+      "fattoush": Icons.eco, // Fattoush (Salad)
+      "tabbouleh": Icons.spa, // Tabbouleh (Salad)
+      "falafel": Icons.donut_small, // Falafel
 
       // Appetizers
       "soup": Icons.ramen_dining,
       "spring rolls": Icons.fastfood,
-      "hummus": Icons.bubble_chart,
       "stuffed grape leaves": Icons.food_bank,
 
       // Breads
       "bread": Icons.bakery_dining,
       "naan": Icons.flatware,
       "pita": Icons.donut_small,
+      "shrak": Icons.flatware, // Shrak (Thin Bread) (placeholder)
+      "manakish": Icons.local_pizza, // Manakish (Thyme Bread)
 
       // Desserts
       "cake": Icons.cake,
@@ -39,9 +51,14 @@ class IconForString {
       "baklava": Icons.grain,
       "ice cream": Icons.icecream,
       "fruit salad": Icons.local_florist,
+      "kunafa": Icons.cake, // Kunafa
+      "maamoul": Icons.bakery_dining, // Maamoul (Stuffed Pastry)
+      "awameh": Icons.donut_small, // Awameh (Fried Dough Balls)
+      "atayef": Icons.donut_large, // Atayef
+      "halva": Icons.emoji_food_beverage, // Halva (placeholder)
+      "znoud el sit": Icons.local_dining, // Znoud el Sit (placeholder)
 
       // Miscellaneous
-      "kebab": Icons.kebab_dining,
       "meatballs": Icons.fastfood,
       "lasagna": Icons.dining,
       "pizza": Icons.local_pizza,
@@ -54,6 +71,12 @@ class IconForString {
       "soda": Icons.bubble_chart, // Soda (placeholder)
       "smoothie": Icons.blender, // Smoothie (placeholder)
       "hot chocolate": Icons.coffee_maker, // Hot Chocolate (placeholder)
+      "sahlab": Icons.ramen_dining, // Sahlab (Warm Milk Pudding Drink)
+      "jallab": Icons.bubble_chart, // Jallab (Grape Syrup Drink)
+      "qamar al-din": Icons.local_bar, // Qamar Al-Din (Apricot Juice)
+      "tamarind": Icons.spa, // Tamarind Juice (Placeholder)
+      "mint lemonade": Icons.local_drink, // Mint Lemonade
+      "rose water": Icons.local_florist, // Rose Water (Placeholder)
     };
 
     final normalizedInput = input.toLowerCase();

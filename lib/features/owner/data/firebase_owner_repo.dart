@@ -15,12 +15,12 @@ class FirebaseOwnerRepo implements OwnerRepo {
   @override
   Future<void> addVenueToDatabase({
     required String name,
-    required String lat,
-    required String lon,
+    required double lat,
+    required double lon,
     required String ownerId,
-    required String peopleMax,
-    required String peopleMin,
-    required String peoplePrice,
+    required int peopleMax,
+    required int peopleMin,
+    required double peoplePrice,
     required List<int> startDate,
     required List<int> endDate,
     required List<int> time,

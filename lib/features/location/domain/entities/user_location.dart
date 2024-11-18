@@ -1,17 +1,14 @@
 import 'package:flutter_map/flutter_map.dart';
 
-//UserLocation object is not a user object
-//it's used when a user IS an owner inside the OwnerPage to create event
 //main purpose is state management and abstraction of code
-
-class UserLocation {
+class MapLocation {
   double lat;
   double long;
   double initLat;
   double initLong;
   Marker marker;
 
-  UserLocation({
+  MapLocation({
     required this.lat,
     required this.long,
     required this.initLat,

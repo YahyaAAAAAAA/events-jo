@@ -77,6 +77,7 @@ class SelectEventMeals extends StatelessWidget {
                   controller: mealNameController,
                   hintText: 'Meal Name',
                   obscureText: false,
+                  maxLength: 14,
                 ),
               ),
             ),
