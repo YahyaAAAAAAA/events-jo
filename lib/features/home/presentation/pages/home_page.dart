@@ -78,18 +78,18 @@ class _HomePageState extends State<HomePage> {
 
                 //todo work on icons (maybe add it in OwnerPage ?)
                 //temp
-                Icon(
-                  IconForString.get(c.text),
-                  color: Colors.black,
-                ),
-                TextField(
-                  controller: c,
-                  onChanged: (value) {
-                    setState(() {
-                      c.text = value;
-                    });
-                  },
-                ),
+                // Icon(
+                //   IconForString.get(c.text),
+                //   color: Colors.black,
+                // ),
+                // TextField(
+                //   controller: c,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       c.text = value;
+                //     });
+                //   },
+                // ),
 
                 Text(
                   "Browse a category",

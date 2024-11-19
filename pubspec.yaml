@@ -46,7 +46,8 @@ dependencies:
   #for environmental variables
   flutter_dotenv: ^5.2.1
   #for location
-  geolocator: ^13.0.1
+  # geolocator: ^13.0.1
+  geolocator: ^11.0.0
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
   #for image upload
@@ -66,6 +67,9 @@ dependencies:
   flutter_lazy_indexed_stack: ^0.0.6
   carousel_slider: ^4.2.1
   string_similarity: ^2.1.1
+
+dependency_overrides:
+  geolocator_android: 4.5.4
 
 dev_dependencies:
   flutter_test:

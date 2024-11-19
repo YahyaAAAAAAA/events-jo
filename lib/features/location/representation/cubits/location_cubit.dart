@@ -35,7 +35,7 @@ class LocationCubit extends Cubit<LocationStates> {
 
   //this shows map for the user/event location (CAN BE CHANGED)
   Future<void> showMapDialog(BuildContext context,
-      {required MapLocation userLocation}) async {
+      {required MapLocation userLocation, bool isOnce = false}) async {
     //wait for user input
     await showGeneralDialog(
       context: context,
@@ -44,6 +44,7 @@ class LocationCubit extends Cubit<LocationStates> {
           latitude: userLocation.lat,
           longitude: userLocation.long,
           marker: userLocation.marker,
+          zoom: isOnce ? 3 : 15,
           onTap: (tapPoint, point) {
             setState(() {
               //update coords
@@ -93,6 +94,10 @@ class LocationCubit extends Cubit<LocationStates> {
                 );
               },
             );
+
+            if (isOnce) {
+              emit(LocationLoaded());
+            }
           },
         ),
       ),

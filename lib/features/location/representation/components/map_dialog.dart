@@ -7,6 +7,7 @@ import 'package:latlong2/latlong.dart';
 class MapDialog extends StatelessWidget {
   final double latitude;
   final double longitude;
+  final double zoom;
   final Marker marker;
   final void Function(TapPosition, LatLng)? onTap;
   final void Function()? onCancel;
@@ -20,6 +21,7 @@ class MapDialog extends StatelessWidget {
     required this.onTap,
     required this.onCancel,
     required this.onConfirm,
+    this.zoom = 15,
   });
 
   @override
@@ -48,7 +50,7 @@ class MapDialog extends StatelessWidget {
               child: FlutterMap(
                 options: MapOptions(
                   initialCenter: LatLng(latitude, longitude),
-                  initialZoom: 15,
+                  initialZoom: zoom,
                   interactionOptions: const InteractionOptions(
                     flags: ~InteractiveFlag.doubleTapZoom,
                   ),

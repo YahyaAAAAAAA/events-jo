@@ -151,7 +151,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   @override
   void dispose() {
     super.dispose();
-    locationCubit.close();
+    // locationCubit.close();
     scrollController.dispose();
   }
 

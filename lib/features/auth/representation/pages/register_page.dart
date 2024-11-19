@@ -1,6 +1,7 @@
 import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/representation/components/change_user_type_row.dart';
+import 'package:events_jo/features/auth/representation/components/choose_location_method.dart';
 import 'package:events_jo/features/auth/representation/components/events_jo_logo_auth.dart';
 import 'package:events_jo/features/location/representation/components/location_loading_dialog.dart';
 import 'package:events_jo/features/location/representation/components/location_provided_button.dart';
@@ -200,30 +201,56 @@ class _RegisterPageState extends State<RegisterPage> {
                       //location not provided
                       if (state is LocationInitial) {
                         return AuthButton(
-                          onTap: () async {
-                            //get location from cubit
-                            location = await locationCubit.getUserLocation();
+                          onTap: () async => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ChooseLocationMethod(
+                                //pick location manually
+                                //if the user confirms (state is -> Loaded)
+                                onPressedManual: () async =>
+                                    await locationCubit.showMapDialog(
+                                  context,
+                                  userLocation: userLocation,
+                                  //used only here, to emit the state
+                                  isOnce: true,
+                                ),
+                                //pick location automatically
+                                onPressedAuto: () async {
+                                  //pop the current dialog
+                                  Navigator.of(context).pop();
 
-                            //save location
-                            userLocation.lat = location!.latitude;
-                            userLocation.long = location!.longitude;
+                                  //get location (state is -> Loading)
+                                  //when done (state is -> Loaded)
+                                  location =
+                                      await locationCubit.getUserLocation();
 
-                            //save initial location
-                            userLocation.initLat = location!.latitude;
-                            userLocation.initLong = location!.longitude;
+                                  if (location == null) {
+                                    return;
+                                  }
 
-                            //set marker to user location
-                            userLocation.marker = Marker(
-                              point: LatLng(
-                                userLocation.lat,
-                                userLocation.long,
-                              ),
-                              child: Icon(
-                                Icons.location_pin,
-                                color: GColors.black,
-                              ),
-                            );
-                          },
+                                  //save location
+                                  userLocation.lat = location!.latitude;
+                                  userLocation.long = location!.longitude;
+
+                                  //save initial location
+                                  userLocation.initLat = location!.latitude;
+                                  userLocation.initLong = location!.longitude;
+
+                                  //set marker to user location
+                                  userLocation.marker = Marker(
+                                    point: LatLng(
+                                      userLocation.lat,
+                                      userLocation.long,
+                                    ),
+                                    child: Icon(
+                                      Icons.location_pin,
+                                      color: GColors.black,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
                           text: 'Provide your location',
                           icon: Icons.location_on_outlined,
                         );
