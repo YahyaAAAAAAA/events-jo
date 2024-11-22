@@ -199,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   BlocConsumer<LocationCubit, LocationStates>(
                     builder: (context, state) {
                       //location not provided
-                      if (state is LocationInitial) {
+                      if (state is LocationInitial || state is LocationError) {
                         return AuthButton(
                           onTap: () async => showDialog(
                             context: context,
@@ -266,11 +266,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       }
 
                       //error
-                      if (state is LocationError) {
-                        return const Center(
-                          child: Text('Error getting location!'),
-                        );
-                      }
+                      // if (state is LocationError) {
+                      //   return const Center(
+                      //     child: Text('Error getting location!'),
+                      //   );
+                      // }
 
                       //loading...
                       return Container(
@@ -301,6 +301,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                       //error
                       if (state is LocationError) {
+                        Navigator.of(context).pop();
                         GSnackBar.show(context: context, text: state.message);
                       }
                     },

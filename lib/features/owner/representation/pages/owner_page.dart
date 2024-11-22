@@ -28,6 +28,8 @@ import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
+//note check if platform is web
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 //* This page lets owners create an event
 class OwnerPage extends StatefulWidget {
@@ -485,7 +487,7 @@ class _OwnerPageState extends State<OwnerPage> {
             showMap: () => locationCubit.showMapDialogPreview(context,
                 userLocation: userLocation),
             showImages: () =>
-                ownerCubit.showImagesDialogPreview(context, images),
+                ownerCubit.showImagesDialogPreview(context, images, kIsWeb),
             onPressed: () async {
               List<String> urls = [];
               urls.clear();

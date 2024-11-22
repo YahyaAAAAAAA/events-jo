@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageOnTapDialog extends StatelessWidget {
+  final List<XFile> images;
+  final int index;
+  final bool isWeb;
+
   const ImageOnTapDialog({
     super.key,
     required this.images,
     required this.index,
+    required this.isWeb,
   });
-
-  final List<XFile> images;
-  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +63,17 @@ class ImageOnTapDialog extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             child: InteractiveViewer(
-              child: Image.file(
-                File(
-                  images[index].path,
-                ),
-                fit: BoxFit.contain,
-              ),
+              child: isWeb
+                  ? Image.network(
+                      images[index].path,
+                      // fit: BoxFit.cover,
+                    )
+                  : Image.file(
+                      File(
+                        images[index].path,
+                      ),
+                      fit: BoxFit.contain,
+                    ),
             ),
           ),
         ),

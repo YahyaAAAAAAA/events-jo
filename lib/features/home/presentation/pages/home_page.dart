@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
 
                 //display button if user is an owner
                 currentUser!.type == 'owner'

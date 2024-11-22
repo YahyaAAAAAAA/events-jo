@@ -7,10 +7,13 @@ import 'package:image_picker/image_picker.dart';
 class ImageCard extends StatelessWidget {
   final List<XFile> images;
   final int index;
+  final bool isWeb;
+
   const ImageCard({
     super.key,
     required this.images,
     required this.index,
+    required this.isWeb,
   });
 
   @override
@@ -40,12 +43,18 @@ class ImageCard extends StatelessWidget {
           onTap: () => showDialog(
             context: context,
             builder: (context) =>
-                ImageOnTapDialog(images: images, index: index),
+                ImageOnTapDialog(images: images, index: index, isWeb: isWeb),
           ),
-          child: Image.file(
-            File(images[index].path),
-            fit: BoxFit.cover,
-          ),
+          //* image.file not supported on the web
+          child: isWeb
+              ? Image.network(
+                  images[index].path,
+                  fit: BoxFit.cover,
+                )
+              : Image.file(
+                  File(images[index].path),
+                  fit: BoxFit.cover,
+                ),
         ),
       ),
     );

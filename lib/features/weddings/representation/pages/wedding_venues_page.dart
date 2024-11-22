@@ -1,3 +1,4 @@
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
@@ -75,8 +76,9 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
               );
             },
             child: Icon(
-              Icons.sort_by_alpha_rounded,
+              CustomIcons.sort,
               color: GColors.black,
+              size: 20,
             ),
           )
         ],
@@ -91,7 +93,6 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
         ),
         backgroundColor: Colors.transparent,
       ),
-
       //states
       body: Center(
         child: ConstrainedBox(

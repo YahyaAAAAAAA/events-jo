@@ -42,8 +42,8 @@ class Haversine {
       double myLat, double myLon, List<Map<String, dynamic>> locations) {
     // Add a distance key to each location map
     for (var location in locations) {
-      double locLat = double.parse(location['latitude']);
-      double locLon = double.parse(location['longitude']);
+      double locLat = location['latitude'];
+      double locLon = location['longitude'];
       double distance = haversine(myLat, myLon, locLat, locLon);
       location['distance'] = distance;
     }

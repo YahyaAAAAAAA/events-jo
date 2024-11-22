@@ -4,6 +4,7 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient_text.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/image_card.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:image_picker/image_picker.dart';
@@ -76,7 +77,7 @@ class SelectImagesPage extends StatelessWidget {
             ? CarouselSlider.builder(
                 itemCount: images.length,
                 itemBuilder: (context, index, realIndex) => images.isNotEmpty
-                    ? ImageCard(images: images, index: index)
+                    ? ImageCard(images: images, index: index, isWeb: kIsWeb)
                     : const SizedBox(),
                 //responsive height
                 options: CarouselOptions(
@@ -90,7 +91,7 @@ class SelectImagesPage extends StatelessWidget {
                   enlargeFactor: 1,
                   enlargeCenterPage: true,
                   enlargeStrategy: CenterPageEnlargeStrategy.height,
-                  autoPlay: true,
+                  autoPlay: false,
                 ),
               )
             : const SizedBox(),

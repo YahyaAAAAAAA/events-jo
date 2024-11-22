@@ -158,7 +158,7 @@ class VenueCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(15),
                     //navigate to details page
-                    child: TextButton(
+                    child: IconButton(
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -169,17 +169,33 @@ class VenueCard extends StatelessWidget {
                         ),
                       ),
                       style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(GColors.white),
+                        shadowColor: WidgetStatePropertyAll(
+                          GColors.black.withOpacity(0.5),
+                        ),
                         shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        backgroundColor:
-                            WidgetStatePropertyAll(GColors.royalBlue),
+                        padding: const WidgetStatePropertyAll(EdgeInsets.zero),
                       ),
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        color: GColors.white,
+                      icon: Ink(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            colors: GColors.logoGradient,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 15),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: GColors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),

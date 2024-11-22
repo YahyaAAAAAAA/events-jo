@@ -81,11 +81,11 @@ class OwnerCubit extends Cubit<OwnerStates> {
 
   //this shows user's images
   Future<Object?> showImagesDialogPreview(
-      BuildContext context, List<XFile> images) {
+      BuildContext context, List<XFile> images, bool isWeb) {
     return showGeneralDialog(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) =>
-          ImagesDialogPreview(images: imagesFilesToWidgets(images)),
+          ImagesDialogPreview(images: imagesFilesToWidgets(images, isWeb)),
     );
   }
 
@@ -110,15 +110,19 @@ class OwnerCubit extends Cubit<OwnerStates> {
   }
 
   //convert files -> images
-  List<Widget> imagesFilesToWidgets(List<XFile> images) {
+  List<Widget> imagesFilesToWidgets(List<XFile> images, bool isWeb) {
     List<Widget> imagesWidgets = [];
     imagesWidgets.clear();
     for (int i = 0; i < images.length; i++) {
       imagesWidgets.add(
-        Image.file(
-          File(images[i].path),
-          fit: BoxFit.cover,
-        ),
+        isWeb
+            ? Image.network(
+                images[i].path,
+              )
+            : Image.file(
+                File(images[i].path),
+                fit: BoxFit.cover,
+              ),
       );
     }
 
