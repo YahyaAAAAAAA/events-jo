@@ -29,7 +29,6 @@ class WeddingVenuesPage extends StatefulWidget {
 }
 
 class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
-  late List<WeddingVenue> weddingVenuList = [];
   late List<WeddingVenue> filterdWeddingVenuList = [];
   late final WeddingVenueCubit weddingVenueCubit;
   final TextEditingController searchController = TextEditingController();
@@ -41,12 +40,14 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
     //get cubit
     weddingVenueCubit = context.read<WeddingVenueCubit>();
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async {
-        //get original list
-        weddingVenuList = await weddingVenueCubit.getAllVenues();
-      },
-    );
+    //listen to venues stream
+    weddingVenueCubit.getWeddingVenuesStream();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
   }
 
   @override
@@ -70,7 +71,8 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
           TextButton(
             onPressed: () {
               weddingVenueCubit.sortFromClosest(
-                weddingVenuList,
+                //todo weddingVenueList,
+                [],
                 widget.appUser!.latitude,
                 widget.appUser!.longitude,
               );
@@ -101,29 +103,33 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
             builder: (context, state) {
               //list ready
               if (state is WeddingVenueLoaded) {
+                //get venues from stream
+                final venues = state.venues;
+
                 return Column(
                   children: [
-                    //search bar
+                    //* search bar
                     VenueSearchBar(
                       controller: searchController,
                       onPressed: () => setState(() => searchController.clear()),
                       onChanged: (venue) => weddingVenueCubit.searchList(
-                          weddingVenuList, filterdWeddingVenuList, venue),
+                        venues,
+                        filterdWeddingVenuList,
+                        venue,
+                      ),
                     ),
 
-                    //venues list
+                    //* venues list
                     Expanded(
                       child: ListView.builder(
                         itemCount: searchController.text.isEmpty
-                            ? weddingVenuList.length
+                            ? venues.length
                             : filterdWeddingVenuList.length,
-                        itemBuilder: (context, index) {
-                          return VenueCard(
-                            weddingVenue: searchController.text.isEmpty
-                                ? weddingVenuList[index]
-                                : filterdWeddingVenuList[index],
-                          );
-                        },
+                        itemBuilder: (context, index) => VenueCard(
+                          weddingVenue: searchController.text.isEmpty
+                              ? venues[index]
+                              : filterdWeddingVenuList[index],
+                        ),
                       ),
                     ),
                   ],
@@ -147,6 +153,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
             listener: (context, state) {
               //listens for errors
               if (state is WeddingVenueError) {
+                //todo add counter to make bar show only once
                 GSnackBar.show(context: context, text: state.message);
               }
             },

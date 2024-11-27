@@ -7,8 +7,6 @@ class HomeCard extends StatelessWidget {
   final List<Color> colors;
   final IconData icon;
   final String text;
-  final String subText;
-  final int index;
   final void Function()? onPressed;
   const HomeCard({
     super.key,
@@ -16,8 +14,6 @@ class HomeCard extends StatelessWidget {
     required this.colors,
     required this.icon,
     required this.text,
-    required this.subText,
-    required this.index,
     required this.onPressed,
   });
 

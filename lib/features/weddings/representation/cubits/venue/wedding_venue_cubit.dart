@@ -11,13 +11,32 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
   WeddingVenueCubit({required this.weddingVenueRepo})
       : super(WeddingVenueInit());
 
+  //listen to venues stream (in real time)
+  void getWeddingVenuesStream() {
+    //loading...
+    emit(WeddingVenueLoading());
+
+    //start listening
+    weddingVenueRepo.getWeddingVenuesStream().listen(
+      (venues) {
+        //done
+        emit(WeddingVenueLoaded(venues));
+      },
+      onError: (error) {
+        //error
+        emit(WeddingVenueError(error.toString()));
+      },
+    );
+  }
+
+  //! DEPRECATED
   //get all venues from database
   Future<List<WeddingVenue>> getAllVenues() async {
     emit(WeddingVenueLoading());
 
     final weddingVenuesList = await weddingVenueRepo.getAllVenues();
 
-    emit(WeddingVenueLoaded());
+    emit(WeddingVenueLoaded(weddingVenuesList));
 
     return weddingVenuesList;
   }
@@ -38,8 +57,9 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
         )
         .toList());
 
+    //team: pass original list because we only update state (the filtered list handled in wedding page)
     //done
-    emit(WeddingVenueLoaded());
+    emit(WeddingVenueLoaded(weddingVenueList));
 
     return weddingVenueList;
   }
@@ -55,7 +75,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
     );
 
     //done
-    emit(WeddingVenueLoaded());
+    emit(WeddingVenueLoaded(weddingVenuList));
 
     return weddingVenuList;
   }
@@ -78,7 +98,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
         .addAll(sortedList.map((e) => WeddingVenue.fromJson(e)).toList());
 
     //done
-    emit(WeddingVenueLoaded());
+    emit(WeddingVenueLoaded(weddingVenuList));
 
     return weddingVenuList;
   }

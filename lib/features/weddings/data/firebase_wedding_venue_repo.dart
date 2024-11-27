@@ -6,6 +6,18 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   @override
+  Stream<List<WeddingVenue>> getWeddingVenuesStream() {
+    //notifies of query results at this 'venues' collection
+    return firebaseFirestore.collection('venues').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        //get venue obj from json then as list
+        return WeddingVenue.fromJson(doc.data());
+      }).toList();
+    });
+  }
+
+  //! DEPRECATED
+  @override
   Future<List<WeddingVenue>> getAllVenues() async {
     //gets a reference for the specified path in firebase
     final collectionRef = firebaseFirestore.collection('venues');

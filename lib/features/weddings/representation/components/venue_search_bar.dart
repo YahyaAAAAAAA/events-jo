@@ -20,7 +20,9 @@ class VenueSearchBar extends StatelessWidget {
             child: SearchBar(
               controller: controller,
               hintText: 'Search Venues...',
-
+              shadowColor: WidgetStatePropertyAll(
+                GColors.black.withOpacity(0.5),
+              ),
               shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -31,7 +33,7 @@ class VenueSearchBar extends StatelessWidget {
                   color: GColors.black,
                 ),
               ),
-              elevation: const WidgetStatePropertyAll(2),
+              elevation: const WidgetStatePropertyAll(3),
               backgroundColor: WidgetStatePropertyAll(GColors.white),
               trailing: [
                 //clear search

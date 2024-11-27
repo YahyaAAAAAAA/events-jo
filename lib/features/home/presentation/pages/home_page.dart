@@ -76,6 +76,7 @@ class _HomePageState extends State<HomePage> {
 
                 const SizedBox(height: 20),
 
+                //TODO TEST STREAM ON WEB AND WINDOWS FIRST
                 //todo work on icons (maybe add it in OwnerPage ?)
                 //temp
                 // Icon(
@@ -116,19 +117,16 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         controller: animatedController,
+                        //todo add s after deleting personal event card
                         text: 'Wedding Venue',
-                        subText: 'See wedding venues in Jordan',
                         icon: CustomIcons.wedding,
-                        index: 1,
                         colors: GColors.weddingCardGradient,
                       ),
                       HomeCard(
                         onPressed: () {},
                         controller: animatedController,
                         text: 'Personal Event',
-                        subText: 'Book your own event',
                         icon: Icons.person,
-                        index: 2,
                         colors: GColors.personalCardGradient,
                       ),
                     ],
@@ -147,18 +145,14 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {},
                         controller: animatedController,
                         text: 'Book Farms',
-                        subText: 'See farms in Jordan',
                         icon: CustomIcons.farm,
-                        index: 3,
                         colors: GColors.farmCardGradient,
                       ),
                       HomeCard(
                         onPressed: () {},
                         controller: animatedController,
                         text: 'Football Courts',
-                        subText: 'See football courts in Jordan',
                         icon: CustomIcons.football,
-                        index: 4,
                         colors: GColors.footballCardGradient,
                       ),
                     ],
