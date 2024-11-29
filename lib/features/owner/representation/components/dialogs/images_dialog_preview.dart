@@ -53,10 +53,10 @@ class ImagesDialogPreview extends StatelessWidget {
           content: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2,
+              width: 300,
+              height: 300,
               child: ImageSlideshow(
-                width: double.infinity,
+                width: 300,
                 height: 300,
                 initialPage: 0,
                 indicatorPadding: 10,

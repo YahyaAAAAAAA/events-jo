@@ -7,7 +7,7 @@ import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_time_page.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';

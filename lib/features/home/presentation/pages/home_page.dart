@@ -7,6 +7,7 @@ import 'package:events_jo/features/home/presentation/components/appbar_button.da
 import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
+import 'package:events_jo/features/home/presentation/pages/t.dart';
 import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,6 @@ class _HomePageState extends State<HomePage> {
 
                 const SizedBox(height: 20),
 
-                //TODO TEST STREAM ON WEB AND WINDOWS FIRST
                 //todo work on icons (maybe add it in OwnerPage ?)
                 //temp
                 // Icon(
@@ -123,7 +123,11 @@ class _HomePageState extends State<HomePage> {
                         colors: GColors.weddingCardGradient,
                       ),
                       HomeCard(
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const TTTTT(),
+                          ),
+                        ),
                         controller: animatedController,
                         text: 'Personal Event',
                         icon: Icons.person,

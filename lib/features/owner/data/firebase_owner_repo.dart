@@ -1,17 +1,21 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:cloudinary_api/src/request/model/uploader_params.dart';
-import 'package:cloudinary_api/uploader/cloudinary_uploader.dart';
-import 'package:cloudinary_url_gen/cloudinary.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FirebaseOwnerRepo implements OwnerRepo {
+  //setup cloudinary server (for image upload & removal)
+  final cloudinary = Cloudinary.full(
+    apiKey: dotenv.get('IMG_API_KEY'),
+    apiSecret: dotenv.get('IMG_API_SECRET'),
+    cloudName: dotenv.get('IMG_CLOUD_NAME'),
+  );
+
   @override
   Future<void> addVenueToDatabase({
     required String name,
@@ -41,6 +45,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
       endDate: endDate,
       time: time,
       isOpen: true,
+      isApproved: false,
       peopleMax: peopleMax,
       peopleMin: peopleMin,
       peoplePrice: peoplePrice,
@@ -123,26 +128,21 @@ class FirebaseOwnerRepo implements OwnerRepo {
 
   @override
   Future<List<String>> addImagesToServer(List<XFile> images) async {
-    //setup Cloudinary server
-    var cloudinary = await Cloudinary.fromStringUrl(
-        'cloudinary://${dotenv.get('IMG_API_KEY')}:${dotenv.get('IMG_API_SECRET')}@${dotenv.get('IMG_CLOUD_NAME')}');
-
-    //server config
-    cloudinary.config.urlConfig.secure = true;
-
     List<String> urls = [];
     urls.clear();
 
     // request upload to server
     for (int i = 0; i < images.length; i++) {
-      var response = await cloudinary.uploader().upload(
-            File(images[i].path),
-            params: UploadParams(
-              uniqueFilename: true,
-              overwrite: true,
-            ),
-          );
-      urls.add(response!.data!.secureUrl ?? '');
+      var response = await cloudinary.uploadResource(
+        CloudinaryUploadResource(
+          filePath: images[i].path,
+          resourceType: CloudinaryResourceType.image,
+        ),
+      );
+
+      if (response.isSuccessful) {
+        urls.add(response.secureUrl ?? '');
+      }
     }
 
     return urls;

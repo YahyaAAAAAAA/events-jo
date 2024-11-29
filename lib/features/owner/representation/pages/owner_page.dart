@@ -6,18 +6,19 @@ import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/owner/representation/components/owner_drink_card.dart';
 import 'package:events_jo/features/owner/representation/components/owner_meal_card.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/confirm_and_add_event_to_database_page.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/event_added_successfully_page.dart';
+import 'package:events_jo/features/owner/representation/components/owner_page_bar_handler.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/confirm_and_add_event_to_database_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/event_added_successfully_page.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_navigation_bar.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_drinks.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_location_page.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_meals.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_name_page.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_event_type_page.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_images_page.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_people_range.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_date_page.dart';
-import 'package:events_jo/features/owner/representation/components/sub%20pages/select_range_time_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_drinks.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_location_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_meals.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_name_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_type_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_images_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_people_range.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_date_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_time_page.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_states.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
@@ -28,7 +29,7 @@ import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
-//note check if platform is web
+//note: check if platform is web
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 //* This page lets owners create an event
@@ -89,7 +90,7 @@ class _OwnerPageState extends State<OwnerPage> {
   TextEditingController drinkAmountController = TextEditingController();
   TextEditingController drinkPriceController = TextEditingController();
 
-  //note for cubit ->
+  //note: for cubit ->
   //    (pass by reference)
   //1- create a non-primitive type (eg: an Entity)
   //    (to reflect changes to UI)
@@ -363,7 +364,9 @@ class _OwnerPageState extends State<OwnerPage> {
             ),
           ),
         ),
-
+        floatingActionButton:
+            OwnerPageBarHandler(index: index, isImagesEmpty: images.isEmpty),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
         //watch the state here to hide the bar when loading
         bottomNavigationBar: BlocConsumer<OwnerCubit, OwnerStates>(
           builder: (context, state) {
@@ -475,7 +478,7 @@ class _OwnerPageState extends State<OwnerPage> {
         if (state is OwnerInitial) {
           return ConfirmAndAddEventToDatabasePage(
             selectedEventType: selectedEventType,
-            nameController: nameController,
+            name: nameController.text,
             range: range,
             time: time,
             peopleMax: int.parse(peopleMaxController.text),
@@ -489,6 +492,7 @@ class _OwnerPageState extends State<OwnerPage> {
             showImages: () =>
                 ownerCubit.showImagesDialogPreview(context, images, kIsWeb),
             onPressed: () async {
+              //reset urls for images
               List<String> urls = [];
               urls.clear();
 

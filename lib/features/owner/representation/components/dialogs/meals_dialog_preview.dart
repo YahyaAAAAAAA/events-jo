@@ -49,8 +49,8 @@ class MealsDialogPreview extends StatelessWidget {
             ],
           ),
           content: Container(
-            height: 300.0,
-            width: MediaQuery.of(context).size.width,
+            height: 300,
+            width: 300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: GColors.white,

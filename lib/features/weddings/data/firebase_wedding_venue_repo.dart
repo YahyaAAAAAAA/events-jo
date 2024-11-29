@@ -8,7 +8,11 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
   @override
   Stream<List<WeddingVenue>> getWeddingVenuesStream() {
     //notifies of query results at this 'venues' collection
-    return firebaseFirestore.collection('venues').snapshots().map((snapshot) {
+    return firebaseFirestore
+        .collection('venues')
+        .where('isApproved', isEqualTo: true) // listen only to approved venues
+        .snapshots()
+        .map((snapshot) {
       return snapshot.docs.map((doc) {
         //get venue obj from json then as list
         return WeddingVenue.fromJson(doc.data());

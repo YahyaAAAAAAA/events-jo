@@ -24,6 +24,9 @@ class GColors {
   //highlighted text when on royalBlue bg (used for price mostly)
   static Color black = const Color.fromARGB(255, 0, 0, 0);
 
+  static Color cyan = Colors.cyan;
+  static Color cyanShade6 = Colors.cyan.shade600;
+
   //main logo gradient
   static List<Color> logoGradient = [
     const Color(0xFF4430DD),
@@ -31,6 +34,20 @@ class GColors {
     const Color(0xFF308CDD),
     const Color(0xFF30B2DD)
   ];
+
+  //gradient for admin page
+  static LinearGradient adminGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Colors.cyan,
+      Colors.cyan.shade600,
+    ],
+  );
+  // static List<Color> adminGradient = [
+  //   const Color(0xFF330867),
+  //   const Color.fromARGB(255, 37, 155, 155),
+  // ];
 
   static List<Color> weddingCardGradient = const [
     Color(0xFFff758c),

@@ -1,42 +1,53 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/admin/presentation/pages/admin_page.dart';
+import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-class MyNavigationBar extends StatefulWidget {
-  const MyNavigationBar({super.key});
+class GlobalNavigationBar extends StatefulWidget {
+  const GlobalNavigationBar({super.key});
 
   @override
-  State<MyNavigationBar> createState() => _MyNavigationBarState();
+  State<GlobalNavigationBar> createState() => _GlobalNavigationBarState();
 }
 
-class _MyNavigationBarState extends State<MyNavigationBar> {
+class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
   int selecetedPage = 1;
 
-  final screens = [
-    Center(
-      child: Text(
-        'List of the user orders',
-        style: TextStyle(
-          color: GColors.black,
-        ),
-      ),
-    ),
-    const HomePage(),
-    Center(
-      child: Text(
-        'Settings page',
-        style: TextStyle(
-          color: GColors.black,
-        ),
-      ),
-    ),
-  ];
+  late AppUser? currentUser;
+
+  late final List<Widget> screens;
 
   @override
   void initState() {
     super.initState();
+
+    //get user
+    currentUser = context.read<AuthCubit>().currentUser!;
+
+    screens = [
+      Center(
+        child: Text(
+          'List of the user orders',
+          style: TextStyle(
+            color: GColors.black,
+          ),
+        ),
+      ),
+      currentUser!.type == 'admin' ? const AdminPage() : const HomePage(),
+      Center(
+        child: Text(
+          'Settings page',
+          style: TextStyle(
+            color: GColors.black,
+          ),
+        ),
+      ),
+    ];
   }
 
   @override

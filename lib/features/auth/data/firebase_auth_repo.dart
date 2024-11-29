@@ -135,6 +135,7 @@ class FirebaseAuthRepo implements AuthRepo {
 
     final usersCollection = FirebaseFirestore.instance.collection('users');
     final ownersCollection = FirebaseFirestore.instance.collection('owners');
+    final adminsCollection = FirebaseFirestore.instance.collection('admins');
 
     // Check if the document exists in the "users" collection
     final userDoc = await usersCollection.doc(firebaseUser.uid).get();
@@ -148,6 +149,13 @@ class FirebaseAuthRepo implements AuthRepo {
 
     if (ownerDoc.exists) {
       return 'owner';
+    }
+
+    // Check if the document exists in the "owners" collection
+    final adminDoc = await adminsCollection.doc(firebaseUser.uid).get();
+
+    if (adminDoc.exists) {
+      return 'admin';
     }
 
     // If the document doesn't exist in either collection

@@ -1,5 +1,7 @@
 import 'package:events_jo/config/utils/loading_indicator.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
+import 'package:events_jo/features/admin/data/firebase_admin_repo.dart';
+import 'package:events_jo/features/admin/presentation/cubits/admin_cubit.dart';
 import 'package:events_jo/features/auth/data/firebase_auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
   final weddingVenueDrinksRepo = FirebaseWeddingVenueDrinksRepo();
   final locationRepo = GeolocatorLocationRepo();
   final ownerRepo = FirebaseOwnerRepo();
+  final adminRepo = FirebaseAdminRepo();
 
   MyApp({super.key});
 
@@ -78,6 +81,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => OwnerCubit(ownerRepo: ownerRepo),
         ),
+        //admin cubit
+        BlocProvider(
+          create: (context) => AdminCubit(adminRepo: adminRepo),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -102,7 +109,7 @@ class MyApp extends StatelessWidget {
               return const AuthPage();
             }
             if (authState is Authenticated) {
-              return const MyNavigationBar();
+              return const GlobalNavigationBar();
             } else {
               return const Scaffold(
                 body: Center(

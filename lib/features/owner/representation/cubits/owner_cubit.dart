@@ -79,7 +79,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
     }
   }
 
-  //this shows user's images
+  //shows venue's images
   Future<Object?> showImagesDialogPreview(
       BuildContext context, List<XFile> images, bool isWeb) {
     return showGeneralDialog(
@@ -89,7 +89,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
     );
   }
 
-  //this shows user's meals
+  //shows venue's meals
   Future<Object?> showMealsDialogPreview(
       BuildContext context, List<WeddingVenueMeal> meals) {
     return showGeneralDialog(
@@ -99,7 +99,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
     );
   }
 
-  //this shows user's drinks
+  //shows venue's drinks
   Future<Object?> showDrinksDialogPreview(
       BuildContext context, List<WeddingVenueDrink> drinks) {
     return showGeneralDialog(
