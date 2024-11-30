@@ -2,22 +2,20 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading_admin.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_card.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_events_card.dart';
 import 'package:events_jo/features/admin/presentation/components/no_requests_left.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20unapprove/admin_unapprove_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20unapprove/admin_unapprove_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_states.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venue_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminUnapprovedVenues extends StatefulWidget {
   final AdminUnapproveCubit adminUnapproveCubit;
-  final TabController tabController;
 
   const AdminUnapprovedVenues({
     super.key,
     required this.adminUnapproveCubit,
-    required this.tabController,
   });
 
   @override
@@ -52,7 +50,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
             itemCount: venues.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return AdminCard(
+              return AdminEventsCard(
                 name: venues[index].name,
                 owner: venues[index].ownerName,
                 index: index,
@@ -62,7 +60,6 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
                   MaterialPageRoute(
                     builder: (context) => AdminUnapprovedVenueDetails(
                       adminUnapproveCubit: widget.adminUnapproveCubit,
-                      tabController: widget.tabController,
                       weddingVenue: venues[index],
                     ),
                   ),

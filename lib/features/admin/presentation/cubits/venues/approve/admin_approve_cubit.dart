@@ -6,74 +6,56 @@ import 'package:events_jo/features/admin/presentation/components/dialogs/admin_a
 import 'package:events_jo/features/admin/presentation/components/dialogs/admin_drinks_dialog_preview.dart';
 import 'package:events_jo/features/admin/presentation/components/dialogs/admin_images_dialog_preview.dart';
 import 'package:events_jo/features/admin/presentation/components/dialogs/admin_meals_dialog_preview.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20unapprove/admin_unapprove_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_states.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
+class AdminApproveCubit extends Cubit<AdminApproveStates> {
   final AdminRepo adminRepo;
 
-  AdminUnapproveCubit({required this.adminRepo}) : super(AdminUnapproveInit());
+  AdminApproveCubit({required this.adminRepo}) : super(AdminApproveInit());
 
-  //listen to unapproved venues stream (in real time)
-  List<WeddingVenue> getUnapprovedWeddingVenuesStream() {
+  //listen to approved venues stream (in real time)
+  List<WeddingVenue> getApprovedWeddingVenuesStream() {
     //loading...
-    emit(AdminUnapproveLoading());
+    emit(AdminApproveLoading());
 
     List<WeddingVenue> weddingVenues = [];
 
     //start listening
-    adminRepo.getUnapprovedWeddingVenuesStream().listen(
+    adminRepo.getApprovedWeddingVenuesStream().listen(
       (venues) async {
         weddingVenues = venues;
 
         //done
-        emit(AdminUnapproveLoaded(venues));
+        emit(AdminApproveLoaded(venues));
       },
       onError: (error) {
         //error
-        emit(AdminUnapproveError(error.toString()));
+        emit(AdminApproveError(error.toString()));
       },
     );
     return weddingVenues;
   }
 
-  Future<void> approveVenue(String id) async {
-    //approve loading...
-    emit(AdminApproveActionLoading());
+  Future<void> suspendVenue(String id) async {
+    //suspend loading...
+    emit(AdminSuspendActionLoading());
     try {
-      //approving
-      await adminRepo.approveVenue(id);
+      //suspending
+      await adminRepo.suspendVenue(id);
 
-      //approve done
-      emit(AdminApproveActionLoaded());
+      //suspend done
+      emit(AdminSuspendActionLoaded());
 
       //pass state back to stream
-      emit(AdminUnapproveLoaded(getUnapprovedWeddingVenuesStream()));
+      emit(AdminApproveLoaded(getApprovedWeddingVenuesStream()));
     } catch (e) {
       //error
-      emit(AdminUnapproveError(e.toString()));
-    }
-  }
-
-  Future<void> denyVenue(String id, List<dynamic> urls) async {
-    //deny loading...
-    emit(AdminDenyActionLoading());
-    try {
-      //denying
-      await adminRepo.denyVenue(id, urls);
-
-      //deny done
-      emit(AdminDenyActionLoaded());
-
-      //pass state back to stream
-      emit(AdminUnapproveLoaded(getUnapprovedWeddingVenuesStream()));
-    } catch (e) {
-      //error
-      emit(AdminUnapproveError(e.toString()));
+      emit(AdminApproveError(e.toString()));
     }
   }
 
@@ -95,12 +77,11 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
 
   //shows venue's images
   Future<Object?> showImagesDialogPreview(
-      BuildContext context, List<dynamic> images, bool isWeb) {
+      BuildContext context, List<dynamic> images) {
     return showGeneralDialog(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) =>
-          AdminImagesDialogPreview(
-              images: imagesStringsToWidgets(images, isWeb)),
+          AdminImagesDialogPreview(images: imagesStringsToWidgets(images)),
     );
   }
 
@@ -125,7 +106,7 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
   }
 
   //convert strings -> images
-  List<Widget> imagesStringsToWidgets(List<dynamic> images, bool isWeb) {
+  List<Widget> imagesStringsToWidgets(List<dynamic> images) {
     List<Widget> imagesWidgets = [];
     imagesWidgets.clear();
     for (int i = 0; i < images.length; i++) {

@@ -1,13 +1,14 @@
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class TabItem extends StatelessWidget {
   final String title;
-  // final int count;
+  final int count;
 
   const TabItem({
     super.key,
     required this.title,
-    // required this.count,
+    required this.count,
   });
 
   @override
@@ -24,26 +25,26 @@ class TabItem extends StatelessWidget {
               fontWeight: FontWeight.normal,
             ),
           ),
-          //todo comment for now
-          // count > 0
-          //     ? Container(
-          //         margin: const EdgeInsetsDirectional.only(start: 5),
-          //         padding: const EdgeInsets.all(3),
-          //         decoration: BoxDecoration(
-          //           color: Colors.grey.shade200,
-          //           shape: BoxShape.circle,
-          //         ),
-          //         child: Center(
-          //           child: Text(
-          //             count > 9 ? "9+" : count.toString(),
-          //             style: const TextStyle(
-          //               color: Colors.black54,
-          //               fontSize: 10,
-          //             ),
-          //           ),
-          //         ),
-          //       )
-          //     : const SizedBox(width: 0, height: 0),
+          count > 0
+              ? Container(
+                  margin: const EdgeInsetsDirectional.only(start: 10),
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: GColors.whiteShade3,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Text(
+                      count > 9 ? "9+" : count.toString(),
+                      style: TextStyle(
+                        color: GColors.black,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );

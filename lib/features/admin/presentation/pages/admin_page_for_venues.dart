@@ -1,8 +1,8 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/menu_tab_bar.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20approve/admin_approve_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20unapprove/admin_unapprove_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venues.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -23,12 +23,9 @@ class AdminPageForVenues extends StatefulWidget {
   State<AdminPageForVenues> createState() => _AdminPageForVenuesState();
 }
 
-class _AdminPageForVenuesState extends State<AdminPageForVenues>
-    with TickerProviderStateMixin {
-  late final AppUser? user;
+class _AdminPageForVenuesState extends State<AdminPageForVenues> {
   late final AdminUnapproveCubit adminUnapproveCubit;
   late final AdminApproveCubit adminApproveCubit;
-  late final TabController tabController;
 
   @override
   void initState() {
@@ -37,19 +34,6 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
     //get cubit
     adminUnapproveCubit = context.read<AdminUnapproveCubit>();
     adminApproveCubit = context.read<AdminApproveCubit>();
-    user = widget.user;
-
-    tabController = TabController(
-      length: 2,
-      vsync: this,
-      animationDuration: const Duration(milliseconds: 300),
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    tabController.dispose();
   }
 
   @override
@@ -66,14 +50,14 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
             icon: Icons.person,
             size: 25,
           ),
-          bottom: PreferredSize(
+          bottom: const PreferredSize(
             //? I dont like this widget
-            preferredSize: const Size.fromHeight(40),
-            child: MenuTabBar(tabController: tabController),
+            preferredSize: Size.fromHeight(40),
+            child: MenuTabBar(),
           ),
           actions: [
             AppBarButton(
-              onPressed: () {},
+              onPressed: () async {},
               icon: CustomIcons.menu,
               size: 20,
             ),
@@ -82,17 +66,14 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
           toolbarHeight: 70,
         ),
         body: TabBarView(
-          controller: tabController,
           //note: make tab bar unswappable
           // physics: const NeverScrollableScrollPhysics(),
           children: [
             AdminUnapprovedVenues(
               adminUnapproveCubit: adminUnapproveCubit,
-              tabController: tabController,
             ),
             AdminApprovedVenues(
               adminApproveCubit: adminApproveCubit,
-              tabController: tabController,
             ),
           ],
         ),

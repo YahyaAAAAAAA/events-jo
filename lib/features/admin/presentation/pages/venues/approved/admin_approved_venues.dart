@@ -2,22 +2,20 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading_admin.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_card.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_events_card.dart';
 import 'package:events_jo/features/admin/presentation/components/no_requests_left.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20approve/admin_approve_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20approve/admin_approve_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_states.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venue_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminApprovedVenues extends StatefulWidget {
   final AdminApproveCubit adminApproveCubit;
-  final TabController tabController;
 
   const AdminApprovedVenues({
     super.key,
     required this.adminApproveCubit,
-    required this.tabController,
   });
 
   @override
@@ -52,7 +50,7 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
             itemCount: venues.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return AdminCard(
+              return AdminEventsCard(
                 name: venues[index].name,
                 owner: venues[index].ownerName,
                 index: index,
@@ -62,7 +60,6 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
                   MaterialPageRoute(
                     builder: (context) => AdminApprovedVenueDetails(
                       adminApproveCubit: widget.adminApproveCubit,
-                      tabController: widget.tabController,
                       weddingVenue: venues[index],
                     ),
                   ),

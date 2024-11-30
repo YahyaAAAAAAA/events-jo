@@ -3,100 +3,78 @@ import 'package:events_jo/features/admin/presentation/components/admin_button.da
 import 'package:flutter/material.dart';
 
 class AdminCard extends StatelessWidget {
-  final String name;
-  final String owner;
-  final int index;
-  final bool isApproved;
+  final String count;
+  final String text;
+  final IconData icon;
   final void Function()? onPressed;
 
   const AdminCard({
     super.key,
-    required this.name,
-    required this.index,
-    required this.owner,
-    required this.isApproved,
+    required this.count,
+    required this.text,
+    required this.icon,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Container(
+    return Container(
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: GColors.white,
+          border: Border(
+            left: BorderSide(
+              color: GColors.cyanShade6,
+              width: 10,
+            ),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: GColors.cyan.withOpacity(0.2),
+              blurRadius: 7,
+              offset: const Offset(0, 0),
+            ),
+          ],
           borderRadius: BorderRadius.circular(12),
+          color: GColors.white,
         ),
-        //note: to display vertical divider
         child: IntrinsicHeight(
           child: Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  name,
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Icon(
+                icon,
+                size: 40,
+                color: GColors.cyanShade6,
+              ),
+              VerticalDivider(color: GColors.cyanShade6),
+              Icon(
+                Icons.circle,
+                color: GColors.cyanShade6,
+                size: 12,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                text,
+                style: TextStyle(
+                  color: GColors.cyanShade6,
+                  fontSize: 20,
                 ),
               ),
-              VerticalDivider(
-                color: GColors.whiteShade3,
-                thickness: 7,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person_4_rounded,
-                          color: GColors.black,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          owner,
-                          style: TextStyle(
-                            color: GColors.black,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.circle,
-                          color: isApproved
-                              ? GColors.greenShade3
-                              : GColors.redShade3,
-                          size: 18,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          isApproved ? 'Approved' : 'Not Approved',
-                          style: TextStyle(
-                            color: GColors.black,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+              Text(
+                count,
+                style: TextStyle(
+                  color: GColors.cyanShade6,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              const Spacer(),
               AdminButton(
                 onPressed: onPressed,
+                padding: 0,
+                icon: Icons.arrow_forward_ios_rounded,
               ),
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

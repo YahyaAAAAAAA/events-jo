@@ -1,6 +1,6 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/approved%20venues/admin_approved_venue_summary.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20approve/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
@@ -11,20 +11,17 @@ import 'package:events_jo/features/weddings/representation/cubits/drinks/wedding
 import 'package:events_jo/features/weddings/representation/cubits/meals/wedding_venue_meals_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class AdminApprovedVenueDetails extends StatefulWidget {
   final WeddingVenue weddingVenue;
   final AdminApproveCubit adminApproveCubit;
-  final TabController tabController;
 
   const AdminApprovedVenueDetails({
     super.key,
     required this.weddingVenue,
     required this.adminApproveCubit,
-    required this.tabController,
   });
 
   @override
@@ -130,7 +127,7 @@ class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
         showDrinks: () =>
             adminApproveCubit.showDrinksDialogPreview(context, drinks),
         showImages: () => adminApproveCubit.showImagesDialogPreview(
-            context, weddingVenue.pics, kIsWeb),
+            context, weddingVenue.pics),
         range: DateTimeRange(
           start: DateTime(
             weddingVenue.startDate[0],

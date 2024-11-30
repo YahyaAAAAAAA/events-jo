@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
+import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -41,6 +42,28 @@ class FirebaseAdminRepo implements AdminRepo {
       return snapshot.docs.map((doc) {
         //get venue obj from json then as list
         return WeddingVenue.fromJson(doc.data());
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<AppUser>> getAllUsersStream() {
+    //notifies of query results at this 'venues' collection
+    return firebaseFirestore.collection('users').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        //get venue obj from json then as list
+        return AppUser.fromJson(doc.data());
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<AppUser>> getAllOwnersStream() {
+    //notifies of query results at this 'venues' collection
+    return firebaseFirestore.collection('owners').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        //get venue obj from json then as list
+        return AppUser.fromJson(doc.data());
       }).toList();
     });
   }

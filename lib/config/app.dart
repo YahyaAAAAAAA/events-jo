@@ -2,8 +2,10 @@ import 'package:events_jo/config/enums/user%20type/user_type_gate.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/data/firebase_admin_repo.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20approve/admin_approve_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin%20unapprove/admin_unapprove_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/users%20count/admin_users_count_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/auth/data/firebase_auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
@@ -82,13 +84,21 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => OwnerCubit(ownerRepo: ownerRepo),
         ),
-        //admin cubit
+        //approved venues cubit
         BlocProvider(
           create: (context) => AdminApproveCubit(adminRepo: adminRepo),
         ),
-        //admin cubit
+        //unapproved venues cubit
         BlocProvider(
           create: (context) => AdminUnapproveCubit(adminRepo: adminRepo),
+        ),
+        //users count cubit
+        BlocProvider(
+          create: (context) => AdminUsersCountCubit(adminRepo: adminRepo),
+        ),
+        //owners count cubit
+        BlocProvider(
+          create: (context) => AdminOwnersCountCubit(adminRepo: adminRepo),
         ),
       ],
       child: MaterialApp(
