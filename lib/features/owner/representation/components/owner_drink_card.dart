@@ -7,12 +7,15 @@ class OwnerDrinkCard extends StatelessWidget {
   final List<WeddingVenueDrink> drinks;
   final void Function()? onPressed;
   final bool withButton;
+  final Color textColor;
 
   const OwnerDrinkCard({
     super.key,
     required this.drinks,
     required this.index,
     required this.onPressed,
+    //normal color here because optional parameters must be constants
+    this.textColor = const Color(0xFF306BDD),
     this.withButton = true,
   });
 
@@ -39,7 +42,7 @@ class OwnerDrinkCard extends StatelessWidget {
                   drinks[index].price.toString(),
               style: TextStyle(
                 fontSize: 17,
-                color: GColors.royalBlue,
+                color: textColor,
                 fontWeight: FontWeight.bold,
               ),
             ),

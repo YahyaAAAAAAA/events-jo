@@ -25,7 +25,7 @@ class GColors {
   static Color black = const Color.fromARGB(255, 0, 0, 0);
 
   static Color cyan = Colors.cyan;
-  static Color cyanShade6 = Colors.cyan.shade600;
+  static Color cyanShade6 = const Color(0xFF00ACC1);
 
   //main logo gradient
   static List<Color> logoGradient = [

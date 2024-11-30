@@ -1,4 +1,5 @@
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
 import 'package:events_jo/features/auth/domain/repos/auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +53,7 @@ class AuthCubit extends Cubit<AuthStates> {
     String pw,
     double latitude,
     double longitude,
-    bool isOwner,
+    UserType type,
   ) async {
     try {
       //show loading state
@@ -60,7 +61,7 @@ class AuthCubit extends Cubit<AuthStates> {
 
       //get user
       final user = await authRepo.registerWithEmailPassword(
-          name, email, pw, latitude, longitude, isOwner);
+          name, email, pw, latitude, longitude, type);
 
       if (user != null) {
         _currentUser = user;

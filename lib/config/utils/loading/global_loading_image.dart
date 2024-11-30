@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class ImageLoadingIndicator extends StatelessWidget {
-  const ImageLoadingIndicator({super.key});
+class GlobalLoadingImage extends StatelessWidget {
+  const GlobalLoadingImage({super.key});
 
   @override
   Widget build(BuildContext context) {

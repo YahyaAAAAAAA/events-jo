@@ -10,12 +10,14 @@ class MapDialogPreview extends StatelessWidget {
   final double latitude;
   final double longitude;
   final Marker marker;
+  final LinearGradient? gradient;
 
   const MapDialogPreview({
     super.key,
     required this.latitude,
     required this.longitude,
     required this.marker,
+    this.gradient,
   });
 
   @override
@@ -41,10 +43,11 @@ class MapDialogPreview extends StatelessWidget {
                 icon: Ink(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      colors: GColors.logoGradient,
-                    ),
+                    gradient: gradient ??
+                        LinearGradient(
+                          begin: Alignment.topLeft,
+                          colors: GColors.logoGradient,
+                        ),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

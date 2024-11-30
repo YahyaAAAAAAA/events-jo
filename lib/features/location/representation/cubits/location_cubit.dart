@@ -106,13 +106,14 @@ class LocationCubit extends Cubit<LocationStates> {
 
   //this shows map for the user/event location (CANNOT BE CHANGED)
   Future<void> showMapDialogPreview(BuildContext context,
-      {required MapLocation userLocation}) async {
+      {required MapLocation userLocation, LinearGradient? gradient}) async {
     await showGeneralDialog(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) => MapDialogPreview(
         latitude: userLocation.lat,
         longitude: userLocation.long,
         marker: userLocation.marker,
+        gradient: gradient,
       ),
     );
   }

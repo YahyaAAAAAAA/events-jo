@@ -1,35 +1,38 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/admin/presentation/pages/admin_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class GlobalNavigationBar extends StatefulWidget {
-  const GlobalNavigationBar({super.key});
+  final AppUser? user;
+  const GlobalNavigationBar({
+    super.key,
+    required this.user,
+  });
 
   @override
   State<GlobalNavigationBar> createState() => _GlobalNavigationBarState();
 }
 
 class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
+  late final AppUser? user;
+
+  //current nav bar page
   int selecetedPage = 1;
 
-  late AppUser? currentUser;
-
+  //nav bar items
   late final List<Widget> screens;
 
   @override
   void initState() {
     super.initState();
 
-    //get user
-    currentUser = context.read<AuthCubit>().currentUser!;
+    user = widget.user;
 
     screens = [
+      //first nav item
       Center(
         child: Text(
           'List of the user orders',
@@ -38,7 +41,9 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
           ),
         ),
       ),
-      currentUser!.type == 'admin' ? const AdminPage() : const HomePage(),
+      //middle nav item
+      HomePage(user: user),
+      //last nav item
       Center(
         child: Text(
           'Settings page',

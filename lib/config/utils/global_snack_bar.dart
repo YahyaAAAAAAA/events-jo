@@ -7,11 +7,13 @@ class GSnackBar {
     required BuildContext context,
     required String text,
     Duration? duration,
+    Color? color,
+    Color? textColor,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: duration ?? const Duration(seconds: 4),
-        backgroundColor: GColors.poloBlue,
+        duration: duration ?? const Duration(seconds: 2),
+        backgroundColor: color ?? GColors.poloBlue,
         padding: const EdgeInsets.all(18),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -23,7 +25,7 @@ class GSnackBar {
           text,
           style: TextStyle(
             fontSize: 22,
-            color: GColors.white,
+            color: textColor ?? GColors.white,
           ),
         ),
       ),

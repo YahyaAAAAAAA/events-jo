@@ -1,4 +1,3 @@
-import 'package:events_jo/config/algorithms/icon_for_string.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -6,27 +5,30 @@ import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
-import 'package:events_jo/features/home/presentation/components/owner_button.dart';
-import 'package:events_jo/features/home/presentation/pages/t.dart';
-import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final AppUser? user;
+  const HomePage({
+    super.key,
+    required this.user,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late final AppUser? user;
+
+  //controls cards animation
   final AnimatedMeshGradientController animatedController =
       AnimatedMeshGradientController();
-  late AppUser? currentUser;
 
-  TextEditingController c = TextEditingController();
+  TextEditingController c = TextEditingController(); //temp
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     animatedController.start();
 
     //get user
-    currentUser = context.read<AuthCubit>().currentUser!;
+    user = widget.user;
   }
 
   @override
@@ -112,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => WeddingVenuesPage(
-                              appUser: currentUser,
+                              appUser: user,
                             ),
                           ),
                         ),
@@ -123,11 +125,7 @@ class _HomePageState extends State<HomePage> {
                         colors: GColors.weddingCardGradient,
                       ),
                       HomeCard(
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const TTTTT(),
-                          ),
-                        ),
+                        onPressed: () {},
                         controller: animatedController,
                         text: 'Personal Event',
                         icon: Icons.person,
@@ -162,30 +160,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 20),
-
-                //display button if user is an owner
-                currentUser!.type == 'owner'
-                    ? FittedBox(
-                        child: OwnerButton(
-                          text: 'Add Your Venue, Farm or Court',
-                          fontSize: 17,
-                          fontWeight: FontWeight.normal,
-                          icon: Icons.add,
-                          iconSize: 50,
-                          padding: 8,
-                          onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => OwnerPage(
-                                user: currentUser,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    //else display nothing
-                    : const SizedBox(),
               ],
             ),
           ),

@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
-import 'package:events_jo/config/utils/loading_indicator.dart';
+import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_time_page.dart';
@@ -344,7 +344,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                               ),
                               //build meals
                               itemBuilder: (context, index) {
-                                //todo needs ui testing
                                 return meals.isNotEmpty
                                     ? MealCard(
                                         isChecked: meals[index].isChecked,
@@ -373,7 +372,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                           }
                           //loading...
                           else {
-                            return const LoadingIndicator(withImage: false);
+                            return const GlobalLoadingBar(withImage: false);
                           }
                         },
                         listener: (context, state) {
@@ -411,7 +410,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                               ),
                               //build meals
                               itemBuilder: (context, index) {
-                                //todo needs ui testing
                                 return drinks.isNotEmpty
                                     ? DrinkCard(
                                         isChecked: drinks[index].isChecked,
@@ -440,7 +438,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                           }
                           //loading...
                           else {
-                            return const LoadingIndicator(withImage: false);
+                            return const GlobalLoadingBar(withImage: false);
                           }
                         },
                         listener: (context, state) {
@@ -451,10 +449,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                           }
                         },
                       ),
-
-                      //todo pricing for people and meals, drinks then some UI checks
-                      //then a CHECKPOINT.
-
                       //payment
 
                       //back and checkout

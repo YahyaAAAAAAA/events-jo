@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:lottie/lottie.dart';
 
-class LoadingIndicator extends StatelessWidget {
+class GlobalLoadingAdminBar extends StatelessWidget {
   final bool? withImage;
-  const LoadingIndicator({
+  const GlobalLoadingAdminBar({
     super.key,
     this.withImage = true,
   });
@@ -21,16 +21,13 @@ class LoadingIndicator extends StatelessWidget {
           withImage!
               ? GradientIcon(
                   icon: CustomIcons.eventsjo,
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    colors: GColors.logoGradient,
-                  ),
+                  gradient: GColors.adminGradient,
                   size: 100,
                 )
               : const SizedBox(),
           withImage! ? const SizedBox(height: 20) : const SizedBox(),
           Lottie.asset(
-            'assets/animations/loading.json',
+            'assets/animations/loading_admin.json',
             frameRate: const FrameRate(60),
             fit: BoxFit.contain,
           ),

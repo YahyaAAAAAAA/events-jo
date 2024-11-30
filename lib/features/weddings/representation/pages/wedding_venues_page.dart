@@ -1,6 +1,6 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/loading_indicator.dart';
+import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
@@ -10,10 +10,6 @@ import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_
 import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// 11/8/2024 lil break for midterm.
-//TODO: BACK TRACK THE PROJECT , CHECK UI RESPONSIVENESS , MEMORY LEAK ,
-// DOCUMENT THE PROJECT , MAYBE RENAME FILES AND THEN VENUE DETAILS.
 
 class WeddingVenuesPage extends StatefulWidget {
   //get user
@@ -146,7 +142,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
               //loading...
               else {
                 return const Center(
-                  child: LoadingIndicator(),
+                  child: GlobalLoadingBar(),
                 );
               }
             },

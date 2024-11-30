@@ -3,7 +3,8 @@ class WeddingVenue {
   late String name;
   late double latitude;
   late double longitude;
-  late String owner;
+  late String ownerId;
+  late String ownerName;
   late int rate;
   late bool isOpen;
   late bool isApproved;
@@ -24,7 +25,8 @@ class WeddingVenue {
     required this.isOpen,
     required this.isApproved,
     required this.pics,
-    required this.owner,
+    required this.ownerId,
+    required this.ownerName,
     required this.startDate,
     required this.endDate,
     required this.time,
@@ -44,7 +46,8 @@ class WeddingVenue {
       'isOpen': isOpen,
       'isApproved': isApproved,
       'pics': pics,
-      'owner': owner,
+      'ownerId': ownerId,
+      'ownerName': ownerName,
       'startDate': startDate,
       'endDate': endDate,
       'time': time,
@@ -64,7 +67,8 @@ class WeddingVenue {
     isOpen = jsonVenue['isOpen'];
     isApproved = jsonVenue['isApproved'];
     pics = jsonVenue['pics'];
-    owner = jsonVenue['owner'];
+    ownerId = jsonVenue['ownerId'];
+    ownerName = jsonVenue['ownerName'];
     startDate = jsonVenue['startDate'];
     endDate = jsonVenue['endDate'];
     time = jsonVenue['time'];

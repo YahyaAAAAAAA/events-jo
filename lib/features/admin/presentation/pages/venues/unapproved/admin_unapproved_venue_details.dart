@@ -1,6 +1,7 @@
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/admin/presentation/components/unapproved%20venues/admin_venue_summary.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin_cubit.dart';
+import 'package:events_jo/features/admin/presentation/components/unapproved%20venues/admin_unapproved_venue_summary.dart';
+import 'package:events_jo/features/admin/presentation/cubits/admin%20unapprove/admin_unapprove_cubit.dart';
+import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
@@ -14,21 +15,16 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-//todo admin pages struct
-//admin page-> venues,foot,farms
-//-> approved, unapproved (for each)
-// -> details (for each)
-
 class AdminUnapprovedVenueDetails extends StatefulWidget {
   final WeddingVenue weddingVenue;
-  final AdminCubit adminCubit;
-  final String ownerName;
+  final AdminUnapproveCubit adminUnapproveCubit;
+  final TabController tabController;
 
   const AdminUnapprovedVenueDetails({
     super.key,
     required this.weddingVenue,
-    required this.adminCubit,
-    required this.ownerName,
+    required this.adminUnapproveCubit,
+    required this.tabController,
   });
 
   @override
@@ -39,7 +35,7 @@ class AdminUnapprovedVenueDetails extends StatefulWidget {
 class _AdminUnapprovedVenueDetailsState
     extends State<AdminUnapprovedVenueDetails> {
   late final WeddingVenue weddingVenue;
-  late final AdminCubit adminCubit;
+  late final AdminUnapproveCubit adminApproveCubit;
 
   //location cubit instance
   late final LocationCubit locationCubit;
@@ -61,7 +57,7 @@ class _AdminUnapprovedVenueDetailsState
 
     weddingVenue = widget.weddingVenue;
 
-    adminCubit = widget.adminCubit;
+    adminApproveCubit = widget.adminUnapproveCubit;
 
     weddingVenueMealsCubit = context.read<WeddingVenueMealsCubit>();
     weddingVenueDrinksCubit = context.read<WeddingVenueDrinksCubit>();
@@ -109,18 +105,37 @@ class _AdminUnapprovedVenueDetailsState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: AdminVenueSummary(
+      appBar: AppBar(
+        //note: appbar button
+        leading: AppBarButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icons.arrow_back_ios_new,
+          size: 25,
+        ),
+        leadingWidth: 90,
+        toolbarHeight: 70,
+      ),
+      body: UnapprovedAdminVenueSummary(
         venueName: weddingVenue.name,
         peopleMax: weddingVenue.peopleMax,
         peopleMin: weddingVenue.peopleMin,
         peoplePrice: weddingVenue.peoplePrice,
-        ownerName: widget.ownerName,
+        ownerName: weddingVenue.ownerName,
+        onApprovePressed: () async {
+          await adminApproveCubit.approveVenue(weddingVenue.id);
+          Navigator.of(context).pop();
+        },
+        onDenyPressed: () async {
+          await adminApproveCubit.denyVenue(weddingVenue.id, weddingVenue.pics);
+          Navigator.of(context).pop();
+        },
         showMap: () => locationCubit.showMapDialogPreview(context,
-            userLocation: userLocation),
-        showMeals: () => adminCubit.showMealsDialogPreview(context, meals),
-        showDrinks: () => adminCubit.showDrinksDialogPreview(context, drinks),
-        showImages: () => adminCubit.showImagesDialogPreview(
+            userLocation: userLocation, gradient: GColors.adminGradient),
+        showMeals: () =>
+            adminApproveCubit.showMealsDialogPreview(context, meals),
+        showDrinks: () =>
+            adminApproveCubit.showDrinksDialogPreview(context, drinks),
+        showImages: () => adminApproveCubit.showImagesDialogPreview(
             context, weddingVenue.pics, kIsWeb),
         range: DateTimeRange(
           start: DateTime(

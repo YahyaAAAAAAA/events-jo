@@ -1,5 +1,6 @@
-import 'package:events_jo/config/utils/loading_indicator.dart';
+import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
+import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
 import 'package:events_jo/features/auth/representation/components/change_user_type_row.dart';
 import 'package:events_jo/features/auth/representation/components/choose_location_method.dart';
 import 'package:events_jo/features/auth/representation/components/events_jo_logo_auth.dart';
@@ -110,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
           pw,
           userLocation.lat,
           userLocation.long,
-          isOwner,
+          isOwner ? UserType.owner : UserType.user,
         );
       } else {
         GSnackBar.show(
@@ -282,7 +283,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            LoadingIndicator(withImage: false),
+                            GlobalLoadingBar(withImage: false),
                           ],
                         ),
                       );

@@ -22,6 +22,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
     required double lat,
     required double lon,
     required String ownerId,
+    required String ownerName,
     required int peopleMax,
     required int peopleMin,
     required double peoplePrice,
@@ -48,6 +49,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
         peopleMin: peopleMin,
         peoplePrice: peoplePrice,
         ownerId: ownerId,
+        ownerName: ownerName,
         pics: pics,
         meals: meals,
         drinks: drinks,
@@ -62,13 +64,14 @@ class OwnerCubit extends Cubit<OwnerStates> {
   }
 
   //add images
-  Future<List<String>> addImagesToServer(List<XFile> images) async {
+  Future<List<String>> addImagesToServer(
+      List<XFile> images, String name) async {
     try {
       //loading...
       emit(OwnerLoading('Uploading Images, Please Wait...'));
 
       //add images
-      List<String> urls = await ownerRepo.addImagesToServer(images);
+      List<String> urls = await ownerRepo.addImagesToServer(images, name);
 
       return urls;
     } catch (e) {
@@ -78,6 +81,8 @@ class OwnerCubit extends Cubit<OwnerStates> {
       return [];
     }
   }
+
+  //--Dialogs Below---
 
   //shows venue's images
   Future<Object?> showImagesDialogPreview(

@@ -22,6 +22,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
     required double lat,
     required double lon,
     required String ownerId,
+    required String ownerName,
     required int peopleMax,
     required int peopleMin,
     required double peoplePrice,
@@ -49,7 +50,8 @@ class FirebaseOwnerRepo implements OwnerRepo {
       peopleMax: peopleMax,
       peopleMin: peopleMin,
       peoplePrice: peoplePrice,
-      owner: ownerId,
+      ownerId: ownerId,
+      ownerName: ownerName,
       pics: pics ??
           [
             'https://i.ibb.co/ZVf53hB/placeholder.png',
@@ -127,15 +129,19 @@ class FirebaseOwnerRepo implements OwnerRepo {
   }
 
   @override
-  Future<List<String>> addImagesToServer(List<XFile> images) async {
+  Future<List<String>> addImagesToServer(
+      List<XFile> images, String name) async {
     List<String> urls = [];
     urls.clear();
+
+    final time = DateTime.now().millisecond;
 
     // request upload to server
     for (int i = 0; i < images.length; i++) {
       var response = await cloudinary.uploadResource(
         CloudinaryUploadResource(
           filePath: images[i].path,
+          folder: '$name-$time',
           resourceType: CloudinaryResourceType.image,
         ),
       );

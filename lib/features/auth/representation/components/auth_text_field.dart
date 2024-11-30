@@ -28,8 +28,6 @@ class AuthTextField extends StatelessWidget {
     this.maxLength = null,
   });
 
-  //todo focus node
-
   @override
   Widget build(BuildContext context) {
     return TextField(

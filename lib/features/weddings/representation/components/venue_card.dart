@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:events_jo/config/utils/image_loading_indicator.dart';
+import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_rating.dart';
@@ -17,24 +17,26 @@ class VenueCard extends StatelessWidget {
   List<CachedNetworkImage> addPicsToList() {
     List<CachedNetworkImage> picsList = [];
     for (int i = 0; i < weddingVenue.pics.length; i++) {
-      picsList.add(CachedNetworkImage(
-        imageUrl: weddingVenue.pics[i],
-        //waiting for image
-        placeholder: (context, url) => const SizedBox(
-          width: 100,
-          child: ImageLoadingIndicator(),
-        ),
-        //error getting image
-        errorWidget: (context, url, error) => SizedBox(
-          width: 100,
-          child: Icon(
-            Icons.error_outline,
-            color: GColors.black,
-            size: 40,
+      picsList.add(
+        CachedNetworkImage(
+          imageUrl: weddingVenue.pics[i],
+          //waiting for image
+          placeholder: (context, url) => const SizedBox(
+            width: 100,
+            child: GlobalLoadingImage(),
           ),
+          //error getting image
+          errorWidget: (context, url, error) => SizedBox(
+            width: 100,
+            child: Icon(
+              Icons.error_outline,
+              color: GColors.black,
+              size: 40,
+            ),
+          ),
+          fit: BoxFit.fill,
         ),
-        fit: BoxFit.fill,
-      ));
+      );
     }
     return picsList;
   }
@@ -70,7 +72,7 @@ class VenueCard extends StatelessWidget {
                       //waiting for image
                       placeholder: (context, url) => const SizedBox(
                         width: 100,
-                        child: ImageLoadingIndicator(),
+                        child: GlobalLoadingImage(),
                       ),
                       //error getting image
                       errorWidget: (context, url, error) => SizedBox(

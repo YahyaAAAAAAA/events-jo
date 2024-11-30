@@ -16,7 +16,7 @@ class FirebaseAdminRepo implements AdminRepo {
   );
 
   @override
-  Stream<List<WeddingVenue>> getWeddingVenuesRequestsStream() {
+  Stream<List<WeddingVenue>> getUnapprovedWeddingVenuesStream() {
     //notifies of query results at this 'venues' collection
     return firebaseFirestore
         .collection('venues')
@@ -31,9 +31,71 @@ class FirebaseAdminRepo implements AdminRepo {
   }
 
   @override
-  Future<void> deleteImagesFromServer(List<String> urls) async {
+  Stream<List<WeddingVenue>> getApprovedWeddingVenuesStream() {
+    //notifies of query results at this 'venues' collection
+    return firebaseFirestore
+        .collection('venues')
+        .where('isApproved', isEqualTo: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        //get venue obj from json then as list
+        return WeddingVenue.fromJson(doc.data());
+      }).toList();
+    });
+  }
+
+  @override
+  Future<void> approveVenue(String id) async {
+    await firebaseFirestore.collection('venues').doc(id).update(
+      {'isApproved': true},
+    );
+  }
+
+  @override
+  Future<void> suspendVenue(String id) async {
+    await firebaseFirestore.collection('venues').doc(id).update(
+      {'isApproved': false},
+    );
+  }
+
+  @override
+  Future<void> denyVenue(String id, List<dynamic> urls) async {
+    try {
+      //delete images from server if denied
+      await deleteImagesFromServer(urls);
+
+      final venueDocRef =
+          FirebaseFirestore.instance.collection('venues').doc(id);
+
+      //delete the 'meals' subcollection
+      final mealsSnapshot = await venueDocRef.collection('meals').get();
+      for (var mealDoc in mealsSnapshot.docs) {
+        await mealDoc.reference.delete();
+      }
+
+      //delete the 'drinks' subcollection
+      final drinksSnapshot = await venueDocRef.collection('drinks').get();
+      for (var drinkDoc in drinksSnapshot.docs) {
+        await drinkDoc.reference.delete();
+      }
+
+      //delete the main document
+      await venueDocRef.delete();
+    } catch (e) {
+      Future.error("Error deleting venue: $e");
+    }
+  }
+
+  @override
+  Future<void> deleteImagesFromServer(List<dynamic> urls) async {
     //no images to delete
     if (urls.isEmpty) {
+      return;
+    }
+
+    //placeholder image (don't delete)
+    if (urls[0] == "https://i.ibb.co/ZVf53hB/placeholder.png") {
       return;
     }
 
@@ -47,6 +109,7 @@ class FirebaseAdminRepo implements AdminRepo {
     }
   }
 
+  //! DEPRECATED
   @override
   Future<String> getWeddingOwnerName(String uid) async {
     final data =

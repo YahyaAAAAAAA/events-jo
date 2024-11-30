@@ -92,7 +92,7 @@ class AdminCard extends StatelessWidget {
               ),
               AdminButton(
                 onPressed: onPressed,
-              ), //todo add on pressed
+              ),
             ],
           ),
         ),

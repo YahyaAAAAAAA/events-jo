@@ -7,12 +7,15 @@ class OwnerMealCard extends StatelessWidget {
   final List<WeddingVenueMeal> meals;
   final void Function()? onPressed;
   final bool withButton;
+  final Color textColor;
 
   const OwnerMealCard({
     super.key,
     required this.meals,
     required this.index,
     required this.onPressed,
+    //normal color here because optional parameters must be constants
+    this.textColor = const Color(0xFF306BDD),
     this.withButton = true,
   });
 
@@ -39,7 +42,7 @@ class OwnerMealCard extends StatelessWidget {
                   meals[index].price.toString(),
               style: TextStyle(
                 fontSize: 17,
-                color: GColors.royalBlue,
+                color: textColor,
                 fontWeight: FontWeight.bold,
               ),
             ),

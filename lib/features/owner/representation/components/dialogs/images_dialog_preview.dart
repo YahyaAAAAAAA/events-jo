@@ -77,7 +77,7 @@ class ImagesDialogPreview extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: Text(
-                                  'You haven\'t selected any images',
+                                  'There are not any images',
                                   style: TextStyle(
                                     color: GColors.poloBlue,
                                     fontSize: 20,

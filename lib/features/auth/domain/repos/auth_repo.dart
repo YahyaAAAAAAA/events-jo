@@ -1,12 +1,13 @@
 // Outlines the auth operations
 
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
 
 abstract class AuthRepo {
   Future<AppUser?> loginWithEmailPassword(String email, String password);
 
   Future<AppUser?> registerWithEmailPassword(String name, String email,
-      String password, double latitude, double longitude, bool isOwner);
+      String password, double latitude, double longitude, UserType type);
 
   Future<void> logout();
 
@@ -15,11 +16,11 @@ abstract class AuthRepo {
   //the following methods are helper methods
   //only called withing the data layer
 
-  Future<String?> getUserType();
+  Future<UserType?> getUserType();
 
   Future<String?> getCurrentUserName();
 
-  Future<double?> getCurrentUserLatitude(String? type);
+  Future<double?> getCurrentUserLatitude(UserType? type);
 
-  Future<double?> getCurrentUserLongitude(String? type);
+  Future<double?> getCurrentUserLongitude(UserType? type);
 }

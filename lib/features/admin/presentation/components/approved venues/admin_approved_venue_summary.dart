@@ -1,17 +1,18 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/admin/presentation/components/unapproved%20venues/admin_confirmation_display_row.dart';
-import 'package:events_jo/features/admin/presentation/components/unapproved%20venues/admin_upapproved_venues_bar.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_confirmation_display_row.dart';
+import 'package:events_jo/features/admin/presentation/components/approved%20venues/admin_approved_venues_bar.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_time_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
 //* This page displays info for the user's even
-class AdminVenueSummary extends StatelessWidget {
+class AdminApprovedVenueSummary extends StatelessWidget {
   final void Function()? showMeals;
   final void Function()? showDrinks;
   final void Function()? showMap;
   final void Function()? showImages;
+  final void Function()? onSuspendPressed;
   final String venueName;
   final String ownerName;
   final DateTimeRange? range;
@@ -20,7 +21,7 @@ class AdminVenueSummary extends StatelessWidget {
   final int peopleMax;
   final int peopleMin;
 
-  const AdminVenueSummary({
+  const AdminApprovedVenueSummary({
     super.key,
     required this.venueName,
     required this.ownerName,
@@ -33,6 +34,7 @@ class AdminVenueSummary extends StatelessWidget {
     this.showImages,
     this.showMeals,
     this.showDrinks,
+    this.onSuspendPressed,
   });
 
   @override
@@ -171,9 +173,8 @@ class AdminVenueSummary extends StatelessWidget {
           ),
 
           //* bottom bar
-          AdminUnapprovedVenuesBar(
-            onApprovePressed: () {},
-            onDenyPressed: () {},
+          AdminApprovedVenuesBar(
+            onSuspendPressed: onSuspendPressed,
           ),
         ],
       ),

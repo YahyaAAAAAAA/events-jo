@@ -1,8 +1,10 @@
+import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
+
 class AppUser {
   final String uid;
   final String email;
   final String name;
-  final String type;
+  final UserType type;
   final double latitude;
   final double longitude;
 
@@ -22,7 +24,7 @@ class AppUser {
       'uid': uid,
       'email': email,
       'name': name,
-      'type': type,
+      'type': userTypeToString(type),
       'latitude': latitude,
       'longitude': longitude,
     };
@@ -35,7 +37,7 @@ class AppUser {
       uid: jsonUser['uid'],
       email: jsonUser['email'],
       name: jsonUser['name'],
-      type: jsonUser['type'],
+      type: userTypeFromString(jsonUser['type']),
       latitude: jsonUser['latitude'],
       longitude: jsonUser['longitude'],
     );

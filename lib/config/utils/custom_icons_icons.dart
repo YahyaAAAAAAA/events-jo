@@ -36,4 +36,10 @@ class CustomIcons {
       IconData(0xe84a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData star =
       IconData(0xe84b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData sad =
+      IconData(0xe84c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData grin_beam =
+      IconData(0xe84d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData hammer_crash =
+      IconData(0xe84e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/gradient_slider.dart';
+import 'package:events_jo/config/utils/gradient/gradient_slider.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_details_page.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +85,6 @@ class VenuePeopleSlider extends StatelessWidget {
           ),
           VenueDetailsButton(
             onPressed: () {
-              //todo this should be a pop up
               showDialog(
                 context: context,
                 builder: (context) {

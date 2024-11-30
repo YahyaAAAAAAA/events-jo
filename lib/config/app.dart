@@ -1,14 +1,15 @@
-import 'package:events_jo/config/utils/loading_indicator.dart';
+import 'package:events_jo/config/enums/user%20type/user_type_gate.dart';
+import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/data/firebase_admin_repo.dart';
-import 'package:events_jo/features/admin/presentation/cubits/admin_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/admin%20approve/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/admin%20unapprove/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/auth/data/firebase_auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:events_jo/features/auth/representation/pages/auth_page.dart';
 import 'package:events_jo/features/location/data/geolocator_location_repo.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
-import 'package:events_jo/features/navigation/presentation/navigation_bar.dart';
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_drinks_repo.dart';
@@ -83,7 +84,11 @@ class MyApp extends StatelessWidget {
         ),
         //admin cubit
         BlocProvider(
-          create: (context) => AdminCubit(adminRepo: adminRepo),
+          create: (context) => AdminApproveCubit(adminRepo: adminRepo),
+        ),
+        //admin cubit
+        BlocProvider(
+          create: (context) => AdminUnapproveCubit(adminRepo: adminRepo),
         ),
       ],
       child: MaterialApp(
@@ -109,11 +114,12 @@ class MyApp extends StatelessWidget {
               return const AuthPage();
             }
             if (authState is Authenticated) {
-              return const GlobalNavigationBar();
+              //user authenticated now check type (user,owner,admin)
+              return const UserTypeGate();
             } else {
               return const Scaffold(
                 body: Center(
-                  child: LoadingIndicator(),
+                  child: GlobalLoadingBar(),
                 ),
               );
             }

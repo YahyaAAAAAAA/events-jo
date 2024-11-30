@@ -1,4 +1,5 @@
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
 import 'package:events_jo/features/auth/domain/repos/auth_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,7 +35,7 @@ class FirebaseAuthRepo implements AuthRepo {
       uid: firebaseUser.uid,
       email: firebaseUser.email!,
       name: name ?? '',
-      type: type ?? '',
+      type: type!,
       latitude: latitude ?? 0,
       longitude: longitude ?? 0,
     );
@@ -64,7 +65,7 @@ class FirebaseAuthRepo implements AuthRepo {
         uid: userCredential.user!.uid,
         email: email,
         name: name ?? '',
-        type: type ?? '',
+        type: type!,
         latitude: latitude ?? 0,
         longitude: longitude ?? 0,
       );
@@ -86,7 +87,7 @@ class FirebaseAuthRepo implements AuthRepo {
     String password,
     double latitude,
     double longitude,
-    bool isOwner,
+    UserType type,
   ) async {
     try {
       //attempt sign up
@@ -98,18 +99,21 @@ class FirebaseAuthRepo implements AuthRepo {
         uid: userCredential.user!.uid,
         email: email,
         name: name,
-        type: isOwner ? 'owner' : 'user',
+        type: type,
         latitude: latitude,
         longitude: longitude,
       );
 
       //save user data in firestore
-      if (isOwner) {
+      //if owner
+      if (type == UserType.owner) {
         await firebaseFirestore
             .collection("owners")
             .doc(user.uid)
             .set(user.toJson());
-      } else {
+      }
+      //if user
+      else if (type == UserType.user) {
         await firebaseFirestore
             .collection("users")
             .doc(user.uid)
@@ -124,13 +128,13 @@ class FirebaseAuthRepo implements AuthRepo {
 
   //get user type
   @override
-  Future<String?> getUserType() async {
+  Future<UserType?> getUserType() async {
     //current user
     final firebaseUser = firebaseAuth.currentUser;
 
     //user doesn't exist
     if (firebaseUser == null) {
-      return '';
+      return null;
     }
 
     final usersCollection = FirebaseFirestore.instance.collection('users');
@@ -141,25 +145,25 @@ class FirebaseAuthRepo implements AuthRepo {
     final userDoc = await usersCollection.doc(firebaseUser.uid).get();
 
     if (userDoc.exists) {
-      return 'user';
+      return UserType.user;
     }
 
     // Check if the document exists in the "owners" collection
     final ownerDoc = await ownersCollection.doc(firebaseUser.uid).get();
 
     if (ownerDoc.exists) {
-      return 'owner';
+      return UserType.owner;
     }
 
     // Check if the document exists in the "owners" collection
     final adminDoc = await adminsCollection.doc(firebaseUser.uid).get();
 
     if (adminDoc.exists) {
-      return 'admin';
+      return UserType.admin;
     }
 
     // If the document doesn't exist in either collection
-    return '';
+    return null;
   }
 
   //the following methods are helper methods
@@ -177,15 +181,29 @@ class FirebaseAuthRepo implements AuthRepo {
     }
 
     //access users
-    final collection = FirebaseFirestore.instance.collection('users');
+    final usersCollection = FirebaseFirestore.instance.collection('users');
+    final ownersCollection = FirebaseFirestore.instance.collection('owners');
+    final adminsCollection = FirebaseFirestore.instance.collection('admins');
 
-    //get data fields as json
-    final docSnapshot = await collection.doc(firebaseUser.uid).get();
+    // Check if the document exists in the "users" collection
+    final userDoc = await usersCollection.doc(firebaseUser.uid).get();
 
-    if (docSnapshot.exists) {
-      Map<String, dynamic> data = docSnapshot.data()!;
+    if (userDoc.exists) {
+      return userDoc['name'];
+    }
 
-      return data['name'];
+    // Check if the document exists in the "owners" collection
+    final ownerDoc = await ownersCollection.doc(firebaseUser.uid).get();
+
+    if (ownerDoc.exists) {
+      return ownerDoc['name'];
+    }
+
+    // Check if the document exists in the "owners" collection
+    final adminDoc = await adminsCollection.doc(firebaseUser.uid).get();
+
+    if (adminDoc.exists) {
+      return adminDoc['name'];
     }
 
     return '';
@@ -193,7 +211,7 @@ class FirebaseAuthRepo implements AuthRepo {
 
   //get user latitude
   @override
-  Future<double?> getCurrentUserLatitude(String? type) async {
+  Future<double?> getCurrentUserLatitude(UserType? type) async {
     //current user
     final firebaseUser = firebaseAuth.currentUser;
 
@@ -202,12 +220,13 @@ class FirebaseAuthRepo implements AuthRepo {
       return 0;
     }
 
-    if (type!.isEmpty) {
+    if (type == null) {
       return 0;
     }
 
     //access users or owners
-    final collection = FirebaseFirestore.instance.collection('${type}s');
+    final collection =
+        FirebaseFirestore.instance.collection('${userTypeToString(type)}s');
 
     //get data fields as json
     final docSnapshot = await collection.doc(firebaseUser.uid).get();
@@ -223,7 +242,7 @@ class FirebaseAuthRepo implements AuthRepo {
 
   //get user longitude
   @override
-  Future<double?> getCurrentUserLongitude(String? type) async {
+  Future<double?> getCurrentUserLongitude(UserType? type) async {
     //current user
     final firebaseUser = firebaseAuth.currentUser;
 
@@ -232,12 +251,13 @@ class FirebaseAuthRepo implements AuthRepo {
       return 0;
     }
 
-    if (type!.isEmpty) {
+    if (type == null) {
       return 0;
     }
 
     //access users or owners
-    final collection = FirebaseFirestore.instance.collection('${type}s');
+    final collection =
+        FirebaseFirestore.instance.collection('${userTypeToString(type)}s');
 
     //get data fields as json
     final docSnapshot = await collection.doc(firebaseUser.uid).get();

@@ -1,6 +1,6 @@
 import 'package:events_jo/config/algorithms/icon_for_string.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/gradient_slider.dart';
+import 'package:events_jo/config/utils/gradient/gradient_slider.dart';
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:flutter/material.dart';
 

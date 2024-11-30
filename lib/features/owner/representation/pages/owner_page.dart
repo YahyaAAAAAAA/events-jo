@@ -1,6 +1,6 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
-import 'package:events_jo/config/utils/loading_indicator.dart';
+import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
@@ -143,9 +143,7 @@ class _OwnerPageState extends State<OwnerPage> {
     peopleMinController.dispose();
     peopleMaxController.dispose();
     peoplePriceController.dispose();
-
     ownerCubit.emit(OwnerInitial());
-    //todo location cubit
   }
 
   @override
@@ -498,7 +496,8 @@ class _OwnerPageState extends State<OwnerPage> {
 
               //if user selected images
               if (images.isNotEmpty) {
-                urls = await ownerCubit.addImagesToServer(images);
+                urls = await ownerCubit.addImagesToServer(
+                    images, nameController.text);
               }
 
               //call cubit
@@ -527,6 +526,7 @@ class _OwnerPageState extends State<OwnerPage> {
                   time[1],
                 ],
                 ownerId: widget.user!.uid,
+                ownerName: widget.user!.name,
               );
             },
           );
@@ -549,7 +549,7 @@ class _OwnerPageState extends State<OwnerPage> {
 
         //loading...
         else {
-          return const LoadingIndicator();
+          return const GlobalLoadingBar(withImage: false);
         }
       },
       listener: (context, state) {
