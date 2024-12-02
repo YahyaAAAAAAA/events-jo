@@ -21,56 +21,57 @@ class OwnerDrinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: GColors.whiteShade3,
-      ),
-      padding: const EdgeInsets.all(12),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              (index + 1).toString() +
-                  '.  Name: ' +
-                  drinks[index].name +
-                  ' | Amount: ' +
-                  drinks[index].amount.toString() +
-                  ' | Price: ' +
-                  drinks[index].price.toString(),
-              style: TextStyle(
-                fontSize: 17,
-                color: textColor,
-                fontWeight: FontWeight.bold,
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: GColors.whiteShade3,
+          ),
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  (index + 1).toString() +
+                      '.  Name: ' +
+                      drinks[index].name +
+                      ' | Amount: ' +
+                      drinks[index].amount.toString() +
+                      ' | Price: ' +
+                      drinks[index].price.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
 
-            const SizedBox(width: 10),
-
-            //remove meal
-            withButton
-                ? IconButton(
-                    onPressed: onPressed,
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(GColors.white),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+              //remove meal
+              withButton
+                  ? IconButton(
+                      onPressed: onPressed,
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(GColors.white),
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
-                    ),
-                    icon: Icon(
-                      Icons.clear,
-                      size: 20,
-                      color: GColors.redShade3,
-                    ),
-                  )
-                : const SizedBox(),
-          ],
+                      icon: Icon(
+                        Icons.clear,
+                        size: 20,
+                        color: GColors.redShade3,
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
+          ),
         ),
-      ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }

@@ -46,7 +46,9 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues> {
           surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.transparent,
           leading: AppBarButton(
-            onPressed: () => context.read<AuthCubit>().logout(),
+            onPressed: () => context
+                .read<AuthCubit>()
+                .logout(widget.user!.uid, widget.user!.type),
             icon: Icons.person,
             size: 25,
           ),
@@ -57,7 +59,7 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues> {
           ),
           actions: [
             AppBarButton(
-              onPressed: () async {},
+              onPressed: () {},
               icon: CustomIcons.menu,
               size: 20,
             ),

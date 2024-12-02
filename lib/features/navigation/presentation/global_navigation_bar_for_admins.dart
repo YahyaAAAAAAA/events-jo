@@ -40,7 +40,7 @@ class _GlobalNavigationBarForAdminsState
 
     screens = [
       //first nav item
-      const HomePageForAdmins(),
+      HomePageForAdmins(user: user),
       //second nav item
       AdminPageForVenues(user: user),
       //third nav item

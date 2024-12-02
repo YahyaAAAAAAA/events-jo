@@ -1,14 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 
 abstract class AdminRepo {
-  Stream<List<WeddingVenue>> getUnapprovedWeddingVenuesStream();
+  Stream<QuerySnapshot<Map<String, dynamic>>>
+      getUnapprovedWeddingVenuesStream();
 
-  Stream<List<WeddingVenue>> getApprovedWeddingVenuesStream();
+  Stream<QuerySnapshot<Map<String, dynamic>>> getApprovedWeddingVenuesStream();
 
   Stream<List<AppUser>> getAllUsersStream();
 
   Stream<List<AppUser>> getAllOwnersStream();
+
+  Stream<List<AppUser>> getAllOnlineUsersStream();
+
+  Stream<List<AppUser>> getAllOnlineOwnersStream();
 
   Future<void> approveVenue(String id);
 
@@ -17,6 +22,8 @@ abstract class AdminRepo {
   Future<void> denyVenue(String id, List<dynamic> urls);
 
   Future<void> deleteImagesFromServer(List<dynamic> urls);
+
+  String generateUniqueId();
 
   //! DEPRECATED
   Future<String> getWeddingOwnerName(String uid);

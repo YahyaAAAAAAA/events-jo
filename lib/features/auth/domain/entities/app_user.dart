@@ -7,12 +7,14 @@ class AppUser {
   final UserType type;
   final double latitude;
   final double longitude;
+  final bool isOnline;
 
   AppUser({
     required this.uid,
     required this.email,
     required this.name,
     required this.type,
+    required this.isOnline,
     required this.latitude,
     required this.longitude,
   });
@@ -27,6 +29,7 @@ class AppUser {
       'type': userTypeToString(type),
       'latitude': latitude,
       'longitude': longitude,
+      'isOnline': isOnline,
     };
   }
 
@@ -40,6 +43,7 @@ class AppUser {
       type: userTypeFromString(jsonUser['type']),
       latitude: jsonUser['latitude'],
       longitude: jsonUser['longitude'],
+      isOnline: jsonUser['isOnline'],
     );
   }
 }

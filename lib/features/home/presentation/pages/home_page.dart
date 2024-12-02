@@ -22,8 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final AppUser? user;
-
   //controls cards animation
   final AnimatedMeshGradientController animatedController =
       AnimatedMeshGradientController();
@@ -35,9 +33,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     animatedController.start();
-
-    //get user
-    user = widget.user;
   }
 
   @override
@@ -53,7 +48,9 @@ class _HomePageState extends State<HomePage> {
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         leading: AppBarButton(
-          onPressed: () => context.read<AuthCubit>().logout(),
+          onPressed: () => context
+              .read<AuthCubit>()
+              .logout(widget.user!.uid, widget.user!.type),
           icon: Icons.person,
           size: 25,
         ),
@@ -114,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => WeddingVenuesPage(
-                              appUser: user,
+                              appUser: widget.user,
                             ),
                           ),
                         ),

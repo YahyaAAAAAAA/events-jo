@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
@@ -27,11 +28,37 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
 
     //start listening
     adminRepo.getUnapprovedWeddingVenuesStream().listen(
-      (venues) async {
-        weddingVenues = venues;
+      (snapshot) async {
+        final currentState = state;
+        List<WeddingVenue> currentVenues = [];
 
-        //done
-        emit(AdminUnapproveLoaded(venues));
+        if (currentState is AdminUnapproveLoaded) {
+          currentVenues = List.from(currentState.venues);
+        }
+
+        for (var change in snapshot.docChanges) {
+          final data = change.doc.data();
+          if (data == null) continue;
+
+          final venue = WeddingVenue.fromJson(data);
+
+          if (change.type == DocumentChangeType.added) {
+            // Check if the venue already exists before adding
+            final exists = currentVenues.any((v) => v.id == venue.id);
+            if (!exists) {
+              currentVenues.add(venue);
+            }
+          } else if (change.type == DocumentChangeType.modified) {
+            final index = currentVenues.indexWhere((v) => v.id == venue.id);
+            if (index != -1) {
+              currentVenues[index] = venue; // Update the modified venue
+            }
+          } else if (change.type == DocumentChangeType.removed) {
+            currentVenues.removeWhere((v) => v.id == venue.id);
+          }
+        }
+
+        emit(AdminUnapproveLoaded(currentVenues));
       },
       onError: (error) {
         //error
@@ -45,8 +72,14 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
     //approve loading...
     emit(AdminApproveActionLoading());
     try {
-      //approving
-      await adminRepo.approveVenue(id);
+      //one second delay for animation
+      await Future.delayed(
+        const Duration(seconds: 1),
+        () async {
+          //approving
+          await adminRepo.approveVenue(id);
+        },
+      );
 
       //approve done
       emit(AdminApproveActionLoaded());
@@ -63,8 +96,14 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
     //deny loading...
     emit(AdminDenyActionLoading());
     try {
-      //denying
-      await adminRepo.denyVenue(id, urls);
+      //one second delay for animation
+      await Future.delayed(
+        const Duration(seconds: 1),
+        () async {
+          //denying
+          await adminRepo.denyVenue(id, urls);
+        },
+      );
 
       //deny done
       emit(AdminDenyActionLoaded());
@@ -77,18 +116,26 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
     }
   }
 
+  String generateUniqueId() {
+    return adminRepo.generateUniqueId();
+  }
+
   //---Dialog Methods Below---
 
   //shows admin's actions (approve,deny,suspend)
-  Future<Object?> showAdminActionsDialog(BuildContext context,
-      {required String text, required IconData icon}) {
+  Future<Object?> showAdminActionsDialog(
+    BuildContext context, {
+    required String text,
+    required String animation,
+    required Color color,
+  }) {
     return showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          AdminActionsDialog(
-        icon: icon,
+      pageBuilder: (context, a, secondaryAnimation) => AdminActionsDialog(
         text: text,
+        animation: animation,
+        color: color,
       ),
     );
   }

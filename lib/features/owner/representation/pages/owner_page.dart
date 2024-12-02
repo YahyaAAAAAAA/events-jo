@@ -258,6 +258,7 @@ class _OwnerPageState extends State<OwnerPage> {
                     return OwnerMealCard(
                       meals: meals,
                       index: index,
+                      key: Key(ownerCubit.generateUniqueId()),
                       onPressed: () => setState(() => meals.removeAt(index)),
                     );
                   },
@@ -312,6 +313,7 @@ class _OwnerPageState extends State<OwnerPage> {
                     return OwnerDrinkCard(
                       drinks: drinks,
                       index: index,
+                      key: Key(ownerCubit.generateUniqueId()),
                       onPressed: () => setState(() => drinks.removeAt(index)),
                     );
                   },

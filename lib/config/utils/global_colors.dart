@@ -24,8 +24,12 @@ class GColors {
   //highlighted text when on royalBlue bg (used for price mostly)
   static Color black = const Color.fromARGB(255, 0, 0, 0);
 
-  static Color cyan = Colors.cyan;
+  static Color cyan = const Color(0xFF00BCD4);
   static Color cyanShade6 = const Color(0xFF00ACC1);
+
+  static Color approveColor = const Color(0xFF3dbe96);
+  static Color denyColor = const Color(0xFF007afa);
+  static Color suspendColor = const Color(0xFFffb630);
 
   //main logo gradient
   static List<Color> logoGradient = [
@@ -44,10 +48,6 @@ class GColors {
       Colors.cyan.shade600,
     ],
   );
-  // static List<Color> adminGradient = [
-  //   const Color(0xFF330867),
-  //   const Color.fromARGB(255, 37, 155, 155),
-  // ];
 
   static List<Color> weddingCardGradient = const [
     Color(0xFFff758c),

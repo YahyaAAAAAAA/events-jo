@@ -19,6 +19,23 @@ class AdminUnapprovedVenuesBar extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: GColors.white,
+          border: Border(
+            left: BorderSide(
+              color: GColors.cyanShade6,
+              width: 10,
+            ),
+            right: BorderSide(
+              color: GColors.cyanShade6,
+              width: 10,
+            ),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: GColors.cyan.withOpacity(0.2),
+              blurRadius: 7,
+              offset: const Offset(0, 0),
+            ),
+          ],
         ),
         padding: const EdgeInsets.all(20),
         child: Row(

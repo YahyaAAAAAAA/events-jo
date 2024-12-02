@@ -82,6 +82,11 @@ class OwnerCubit extends Cubit<OwnerStates> {
     }
   }
 
+  //used for meals & drinks lists locally (new ids generated on submit)
+  String generateUniqueId() {
+    return ownerRepo.generateUniqueId();
+  }
+
   //--Dialogs Below---
 
   //shows venue's images

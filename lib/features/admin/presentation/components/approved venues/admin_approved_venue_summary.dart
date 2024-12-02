@@ -81,93 +81,100 @@ class AdminApprovedVenueSummary extends StatelessWidget {
           //* summary list
           Padding(
             padding: const EdgeInsets.all(8),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: ColoredBox(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
                 color: GColors.white,
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    //type
-                    const AdminConfirmationDisplayRow(
-                      mainText: 'Type: ',
-                      subText: 'Wedding Venue',
-                    ),
+                boxShadow: [
+                  BoxShadow(
+                    color: GColors.cyan.withOpacity(0.2),
+                    blurRadius: 7,
+                    offset: const Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  //type
+                  const AdminConfirmationDisplayRow(
+                    mainText: 'Type: ',
+                    subText: 'Wedding Venue',
+                  ),
 
-                    localDivider(),
+                  localDivider(),
 
-                    //name
-                    AdminConfirmationDisplayRow(
-                        mainText: 'Name: ', subText: venueName),
+                  //name
+                  AdminConfirmationDisplayRow(
+                      mainText: 'Name: ', subText: venueName),
 
-                    localDivider(),
+                  localDivider(),
 
-                    //date
-                    AdminConfirmationDisplayRow(
-                        mainText: 'Date: ',
-                        subText:
-                            'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'),
+                  //date
+                  AdminConfirmationDisplayRow(
+                      mainText: 'Date: ',
+                      subText:
+                          'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'),
 
-                    localDivider(),
+                  localDivider(),
 
-                    //time
-                    AdminConfirmationDisplayRow(
-                        mainText: 'Open Hours: ',
-                        subText:
-                            'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
+                  //time
+                  AdminConfirmationDisplayRow(
+                      mainText: 'Open Hours: ',
+                      subText:
+                          'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
 
-                    localDivider(),
+                  localDivider(),
 
-                    //people
-                    AdminConfirmationDisplayRow(
-                        mainText: 'People Range: ',
-                        subText:
-                            'Between ${peopleMin.toString()} Person To ${peopleMax.toString()}'),
+                  //people
+                  AdminConfirmationDisplayRow(
+                      mainText: 'People Range: ',
+                      subText:
+                          'Between ${peopleMin.toString()} Person To ${peopleMax.toString()}'),
 
-                    localDivider(),
+                  localDivider(),
 
-                    //people
-                    AdminConfirmationDisplayRow(
-                      mainText: 'Price Per Person: ',
-                      subText: '${peoplePrice.toString()}JD',
-                    ),
+                  //people
+                  AdminConfirmationDisplayRow(
+                    mainText: 'Price Per Person: ',
+                    subText: '${peoplePrice.toString()}JD',
+                  ),
 
-                    localDivider(),
+                  localDivider(),
 
-                    //images
-                    AdminConfirmationDisplayRow(
-                      mainText: 'Meals & Drinks: ',
-                      isText: false,
-                      subText: '',
-                      icon: Icons.cake_rounded,
-                      withSecondIcon: true,
-                      secondIcon: Icons.free_breakfast,
-                      onPressed: showMeals,
-                      onPressedSecondIcon: showDrinks,
-                    ),
+                  //images
+                  AdminConfirmationDisplayRow(
+                    mainText: 'Meals & Drinks: ',
+                    isText: false,
+                    subText: '',
+                    icon: Icons.cake_rounded,
+                    withSecondIcon: true,
+                    secondIcon: Icons.free_breakfast,
+                    onPressed: showMeals,
+                    onPressedSecondIcon: showDrinks,
+                  ),
 
-                    localDivider(),
+                  localDivider(),
 
-                    //images
-                    AdminConfirmationDisplayRow(
-                      mainText: 'Images:   ',
-                      isText: false,
-                      subText: '',
-                      icon: Icons.image,
-                      onPressed: showImages,
-                    ),
+                  //images
+                  AdminConfirmationDisplayRow(
+                    mainText: 'Images:   ',
+                    isText: false,
+                    subText: '',
+                    icon: Icons.image,
+                    onPressed: showImages,
+                  ),
 
-                    localDivider(),
+                  localDivider(),
 
-                    //location
-                    AdminConfirmationDisplayRow(
-                      mainText: 'Location: ',
-                      isText: false,
-                      subText: '',
-                      onPressed: showMap,
-                    ),
-                  ],
-                ),
+                  //location
+                  AdminConfirmationDisplayRow(
+                    mainText: 'Location: ',
+                    isText: false,
+                    subText: '',
+                    onPressed: showMap,
+                  ),
+                ],
               ),
             ),
           ),

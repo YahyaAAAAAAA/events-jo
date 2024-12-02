@@ -36,6 +36,7 @@ class FirebaseAuthRepo implements AuthRepo {
       email: firebaseUser.email!,
       name: name ?? '',
       type: type!,
+      isOnline: true,
       latitude: latitude ?? 0,
       longitude: longitude ?? 0,
     );
@@ -66,9 +67,19 @@ class FirebaseAuthRepo implements AuthRepo {
         email: email,
         name: name ?? '',
         type: type!,
+        isOnline: true,
         latitude: latitude ?? 0,
         longitude: longitude ?? 0,
       );
+
+      //make user online on login
+      await firebaseFirestore
+          .collection('${userTypeToString(type)}s')
+          .doc(userCredential.user!.uid)
+          .update(
+        {'isOnline': true},
+      );
+
       return user;
     } catch (e) {
       throw Exception('Login Failed $e');
@@ -76,7 +87,16 @@ class FirebaseAuthRepo implements AuthRepo {
   }
 
   @override
-  Future<void> logout() async {
+  Future<void> logout(String id, UserType userType) async {
+    //make user offline
+    await firebaseFirestore
+        .collection('${userTypeToString(userType)}s')
+        .doc(id)
+        .update(
+      {'isOnline': false},
+    );
+
+    //logout user
     await firebaseAuth.signOut();
   }
 
@@ -88,6 +108,7 @@ class FirebaseAuthRepo implements AuthRepo {
     double latitude,
     double longitude,
     UserType type,
+    bool isOnline,
   ) async {
     try {
       //attempt sign up
@@ -102,6 +123,7 @@ class FirebaseAuthRepo implements AuthRepo {
         type: type,
         latitude: latitude,
         longitude: longitude,
+        isOnline: isOnline,
       );
 
       //save user data in firestore

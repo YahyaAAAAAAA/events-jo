@@ -1,3 +1,4 @@
+import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
@@ -46,14 +47,19 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
             );
           }
 
-          return ListView.builder(
-            itemCount: venues.length,
+          return AnimatedListView(
+            items: venues,
             shrinkWrap: true,
+            enterTransition: [SlideInRight()],
+            exitTransition: [SlideInRight()],
+            insertDuration: const Duration(milliseconds: 300),
+            removeDuration: const Duration(milliseconds: 300),
             itemBuilder: (context, index) {
               return AdminEventsCard(
                 name: venues[index].name,
                 owner: venues[index].ownerName,
                 index: index,
+                key: Key(widget.adminUnapproveCubit.generateUniqueId()),
                 isApproved: venues[index].isApproved,
                 //navigate to venue details
                 onPressed: () => Navigator.of(context).push(
@@ -85,8 +91,12 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
 
         //approval loading dialog
         if (state is AdminApproveActionLoading) {
-          widget.adminUnapproveCubit.showAdminActionsDialog(context,
-              text: 'Approving the venue please wait...', icon: Icons.check);
+          widget.adminUnapproveCubit.showAdminActionsDialog(
+            context,
+            text: 'Approving the venue please wait...',
+            animation: 'assets/animations/approve.json',
+            color: GColors.approveColor,
+          );
         }
 
         if (state is AdminApproveActionLoaded) {
@@ -100,8 +110,12 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
 
         //denial loading dialog
         if (state is AdminDenyActionLoading) {
-          widget.adminUnapproveCubit.showAdminActionsDialog(context,
-              text: 'Denying the venue please wait...', icon: Icons.clear);
+          widget.adminUnapproveCubit.showAdminActionsDialog(
+            context,
+            text: 'Denying the venue please wait...',
+            animation: 'assets/animations/delete.json',
+            color: GColors.denyColor,
+          );
         }
 
         if (state is AdminDenyActionLoaded) {

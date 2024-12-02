@@ -55,7 +55,9 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         leading: AppBarButton(
-          onPressed: () => context.read<AuthCubit>().logout(),
+          onPressed: () => context
+              .read<AuthCubit>()
+              .logout(widget.user!.uid, widget.user!.type),
           icon: Icons.person,
           size: 25,
         ),

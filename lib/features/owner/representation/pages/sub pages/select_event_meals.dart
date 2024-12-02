@@ -1,3 +1,4 @@
+import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
@@ -12,7 +13,7 @@ class SelectEventMeals extends StatelessWidget {
   final List<WeddingVenueMeal> meals;
   final void Function()? onAddPressed;
 
-  final Widget? Function(BuildContext, int) itemBuilder;
+  final Widget Function(BuildContext, int) itemBuilder;
 
   const SelectEventMeals({
     super.key,
@@ -68,6 +69,7 @@ class SelectEventMeals extends StatelessWidget {
                   padding: const EdgeInsets.all(12),
                   child: AuthTextField(
                     controller: mealAmountController,
+                    maxLength: 6,
                     hintText: 'Meal Amount',
                     isOnlyInt: true,
                     obscureText: false,
@@ -80,6 +82,7 @@ class SelectEventMeals extends StatelessWidget {
                   child: AuthTextField(
                     controller: mealPriceController,
                     hintText: 'Meal Price',
+                    maxLength: 6,
                     isOnlyDouble: true,
                     obscureText: false,
                   ),
@@ -126,12 +129,14 @@ class SelectEventMeals extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: meals.isNotEmpty
-                  ? ListView.separated(
-                      itemCount: meals.length,
+                  ? AnimatedListView(
+                      items: meals,
                       padding: const EdgeInsets.all(12),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 10),
                       itemBuilder: itemBuilder,
+                      enterTransition: [SlideInRight()],
+                      exitTransition: [SlideInLeft()],
+                      insertDuration: const Duration(milliseconds: 300),
+                      removeDuration: const Duration(milliseconds: 300),
                     )
                   : Center(
                       child: Text(

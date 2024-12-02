@@ -1,28 +1,52 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_card_dashboard.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_card.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_card_events.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_divider.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_error_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_loading_card.dart';
 import 'package:events_jo/features/admin/presentation/components/events_jo_admin.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/owners%20online/admin_owners_online_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/owners%20online/admin_owners_online_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/users%20count/admin_users_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/users%20count/admin_users_count_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/users%20online/admin_users_online_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/users%20online/admin_users_online_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_states.dart';
+import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageForAdmins extends StatefulWidget {
-  const HomePageForAdmins({super.key});
+  final AppUser? user;
+  const HomePageForAdmins({
+    super.key,
+    required this.user,
+  });
 
   @override
   State<HomePageForAdmins> createState() => _HomePageForAdminsState();
 }
 
 class _HomePageForAdminsState extends State<HomePageForAdmins> {
+  //counts
   late final AdminUsersCountCubit adminUsersCountCubit;
   late final AdminOwnersCountCubit adminOwnersCountCubit;
+
+  //online
+  late final AdminUsersOnlineCubit adminUsersOnlineCubit;
+  late final AdminOwnersOnlineCubit adminOwnersOnlineCubit;
+
+  late final AdminUnapproveCubit adminUnapproveCubit;
+  late final AdminApproveCubit adminApproveCubit;
 
   @override
   void initState() {
@@ -32,8 +56,21 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
     adminUsersCountCubit = context.read<AdminUsersCountCubit>();
     adminOwnersCountCubit = context.read<AdminOwnersCountCubit>();
 
+    //get online cubit
+    adminUsersOnlineCubit = context.read<AdminUsersOnlineCubit>();
+    adminOwnersOnlineCubit = context.read<AdminOwnersOnlineCubit>();
+
+    //get venues cubits
+    adminUnapproveCubit = context.read<AdminUnapproveCubit>();
+    adminApproveCubit = context.read<AdminApproveCubit>();
+
+    //listen to streams
     adminUsersCountCubit.getAllUsersStream();
     adminOwnersCountCubit.getAllOwnersStream();
+    adminUsersOnlineCubit.getAllOnlineUsersStream();
+    adminOwnersOnlineCubit.getAllOnlineOwnersStream();
+    adminUnapproveCubit.getUnapprovedWeddingVenuesStream();
+    adminApproveCubit.getApprovedWeddingVenuesStream();
   }
 
   @override
@@ -43,7 +80,9 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         leading: AppBarButton(
-          onPressed: () => context.read<AuthCubit>().logout(),
+          onPressed: () => context
+              .read<AuthCubit>()
+              .logout(widget.user!.uid, widget.user!.type),
           icon: Icons.person,
           size: 25,
         ),
@@ -61,12 +100,13 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
-            //AdminSingedInUsersCubit, Counts of approved & unapproved venues.
-            //isOnline property for users (logout method needs to change)
-            //buttons methods
             const EventsJoLogoAdmin(),
 
             const SizedBox(height: 20),
+
+            const AdminDivider(text: 'Users and Owners for EventsJo'),
+
+            const SizedBox(height: 5),
 
             //* users count
             BlocBuilder<AdminUsersCountCubit, AdminUsersCountStates>(
@@ -79,6 +119,8 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                     icon: Icons.person,
                     text: 'Users Count : ',
                     onPressed: null,
+                    //todo user page row(icon/name/online/spacer/button)
+                    //maybe same as venues card ?
                   );
                 }
                 //error
@@ -116,7 +158,118 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                   return const AdminLoadingCard();
                 }
               },
-            )
+            ),
+
+            const SizedBox(height: 20),
+
+            const AdminDivider(text: 'Online Statistics'),
+
+            const SizedBox(height: 5),
+
+            //* online users count
+            BlocBuilder<AdminUsersOnlineCubit, AdminUsersOnlineStates>(
+              builder: (context, state) {
+                //done
+                if (state is AdminUsersOnlineLoaded) {
+                  final users = state.users;
+
+                  return AdminCardDashboard(
+                    count: users.length.toString(),
+                    icon: Icons.circle,
+                    text: 'Online Users   ',
+                    animation: 'assets/animations/dashboard_1.json',
+                  );
+                }
+                //error
+                if (state is AdminUsersOnlineError) {
+                  return AdminErrorCard(messege: state.messege);
+                }
+                //loading
+                else {
+                  return const AdminLoadingCard();
+                }
+              },
+            ),
+
+            const SizedBox(height: 20),
+
+            //* online owners count
+            BlocBuilder<AdminOwnersOnlineCubit, AdminOwnersOnlineStates>(
+              builder: (context, state) {
+                //done
+                if (state is AdminOwnersOnlineLoaded) {
+                  final owners = state.owners;
+                  return AdminCardDashboard(
+                    count: owners.length.toString(),
+                    icon: Icons.circle,
+                    text: 'Online Owners',
+                    animation: 'assets/animations/dashboard_2.json',
+                  );
+                }
+                //error
+                if (state is AdminOwnersOnlineError) {
+                  return AdminErrorCard(messege: state.messege);
+                }
+                //loading
+                else {
+                  return const AdminLoadingCard();
+                }
+              },
+            ),
+
+            const SizedBox(height: 20),
+
+            const AdminDivider(text: 'Venues Statistics'),
+
+            const SizedBox(height: 5),
+
+            //* approved venues count
+            BlocBuilder<AdminApproveCubit, AdminApproveStates>(
+              builder: (context, state) {
+                //done
+                if (state is AdminApproveLoaded) {
+                  final venues = state.venues;
+                  return AdminCardEvents(
+                    count: venues.length.toString(),
+                    icon: CustomIcons.wedding,
+                    text: 'Approved Venues     ',
+                  );
+                }
+                //error
+                if (state is AdminApproveError) {
+                  return AdminErrorCard(messege: state.message);
+                }
+                //loading
+                else {
+                  return const AdminLoadingCard();
+                }
+              },
+            ),
+
+            const SizedBox(height: 20),
+
+            //* unapproved venues count
+            BlocBuilder<AdminUnapproveCubit, AdminUnapproveStates>(
+              builder: (context, state) {
+                //done
+                if (state is AdminUnapproveLoaded) {
+                  final venues = state.venues;
+                  return AdminCardEvents(
+                    count: venues.length.toString(),
+                    icon: CustomIcons.rings_wedding,
+                    text: 'Unapproved Venues ',
+                  );
+                }
+                //error
+                if (state is AdminUnapproveError) {
+                  return AdminErrorCard(messege: state.message);
+                }
+                //loading
+                else {
+                  return const AdminLoadingCard();
+                }
+              },
+            ),
           ],
         ),
       ),

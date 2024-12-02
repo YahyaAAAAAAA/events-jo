@@ -1,3 +1,4 @@
+import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
@@ -12,7 +13,7 @@ class SelectEventDrinks extends StatelessWidget {
   final List<WeddingVenueDrink> drinks;
   final void Function()? onAddPressed;
 
-  final Widget? Function(BuildContext, int) itemBuilder;
+  final Widget Function(BuildContext, int) itemBuilder;
 
   const SelectEventDrinks({
     super.key,
@@ -125,12 +126,14 @@ class SelectEventDrinks extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: drinks.isNotEmpty
-                  ? ListView.separated(
-                      itemCount: drinks.length,
+                  ? AnimatedListView(
+                      items: drinks,
                       padding: const EdgeInsets.all(12),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 10),
                       itemBuilder: itemBuilder,
+                      enterTransition: [SlideInRight()],
+                      exitTransition: [SlideInLeft()],
+                      insertDuration: const Duration(milliseconds: 300),
+                      removeDuration: const Duration(milliseconds: 300),
                     )
                   : Center(
                       child: Text(

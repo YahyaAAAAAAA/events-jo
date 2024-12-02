@@ -1,3 +1,4 @@
+import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminApprovedVenues extends StatefulWidget {
   final AdminApproveCubit adminApproveCubit;
-
   const AdminApprovedVenues({
     super.key,
     required this.adminApproveCubit,
@@ -46,14 +46,19 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
             );
           }
 
-          return ListView.builder(
-            itemCount: venues.length,
+          return AnimatedListView(
+            items: venues,
             shrinkWrap: true,
+            enterTransition: [SlideInLeft()],
+            exitTransition: [SlideInLeft()],
+            insertDuration: const Duration(milliseconds: 300),
+            removeDuration: const Duration(milliseconds: 300),
             itemBuilder: (context, index) {
               return AdminEventsCard(
                 name: venues[index].name,
                 owner: venues[index].ownerName,
                 index: index,
+                key: Key(widget.adminApproveCubit.generateUniqueId()),
                 isApproved: venues[index].isApproved,
                 //navigate to venue details
                 onPressed: () => Navigator.of(context).push(
@@ -88,8 +93,12 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
         }
         //approval loading dialog
         if (state is AdminSuspendActionLoading) {
-          widget.adminApproveCubit.showAdminActionsDialog(context,
-              text: 'Suspending the venue please wait...', icon: Icons.check);
+          widget.adminApproveCubit.showAdminActionsDialog(
+            context,
+            text: 'Suspending the venue please wait...',
+            animation: 'assets/animations/ban.json',
+            color: GColors.suspendColor,
+          );
         }
         if (state is AdminSuspendActionLoaded) {
           Navigator.of(context).pop();

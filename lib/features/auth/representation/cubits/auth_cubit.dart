@@ -54,6 +54,7 @@ class AuthCubit extends Cubit<AuthStates> {
     double latitude,
     double longitude,
     UserType type,
+    bool isOnline,
   ) async {
     try {
       //show loading state
@@ -61,7 +62,7 @@ class AuthCubit extends Cubit<AuthStates> {
 
       //get user
       final user = await authRepo.registerWithEmailPassword(
-          name, email, pw, latitude, longitude, type);
+          name, email, pw, latitude, longitude, type, isOnline);
 
       if (user != null) {
         _currentUser = user;
@@ -76,8 +77,8 @@ class AuthCubit extends Cubit<AuthStates> {
   }
 
   //logout
-  Future<void> logout() async {
-    await authRepo.logout();
+  Future<void> logout(String id, UserType userType) async {
+    await authRepo.logout(id, userType);
     emit(Unauthenticated());
   }
 }

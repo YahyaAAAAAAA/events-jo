@@ -21,56 +21,57 @@ class OwnerMealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: GColors.whiteShade3,
-      ),
-      padding: const EdgeInsets.all(12),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              (index + 1).toString() +
-                  '.  Name: ' +
-                  meals[index].name +
-                  ' | Amount: ' +
-                  meals[index].amount.toString() +
-                  ' | Price: ' +
-                  meals[index].price.toString(),
-              style: TextStyle(
-                fontSize: 17,
-                color: textColor,
-                fontWeight: FontWeight.bold,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: GColors.whiteShade3,
+          ),
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              //note: expand text makes it wrap
+              Expanded(
+                child: Text(
+                  (index + 1).toString() +
+                      '.  Name: ' +
+                      meals[index].name +
+                      ' | Amount: ' +
+                      meals[index].amount.toString() +
+                      ' | Price: ' +
+                      meals[index].price.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
-
-            const SizedBox(width: 10),
-
-            //remove meal
-            withButton
-                ? IconButton(
-                    onPressed: onPressed,
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(GColors.white),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+              withButton
+                  ? IconButton(
+                      onPressed: onPressed,
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(GColors.white),
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
-                    ),
-                    icon: Icon(
-                      Icons.clear,
-                      size: 20,
-                      color: GColors.redShade3,
-                    ),
-                  )
-                : const SizedBox(),
-          ],
+                      icon: Icon(
+                        Icons.clear,
+                        size: 20,
+                        color: GColors.redShade3,
+                      ),
+                    )
+                  : const SizedBox()
+            ],
+          ),
         ),
-      ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }

@@ -26,6 +26,19 @@ class AdminEventsCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: GColors.white,
           borderRadius: BorderRadius.circular(12),
+          border: Border(
+            left: BorderSide(
+              color: GColors.cyanShade6,
+              width: 10,
+            ),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: GColors.cyan.withOpacity(0.2),
+              blurRadius: 7,
+              offset: const Offset(0, 0),
+            ),
+          ],
         ),
         //note: to display vertical divider
         child: IntrinsicHeight(

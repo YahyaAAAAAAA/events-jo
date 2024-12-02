@@ -64,6 +64,8 @@ class AuthTextField extends StatelessWidget {
                   : null,
       decoration: InputDecoration(
         hintText: hintText,
+        //note: hides maxLength counter
+        counterText: "",
         hintStyle: TextStyle(
           color: GColors.black,
           fontSize: 17,

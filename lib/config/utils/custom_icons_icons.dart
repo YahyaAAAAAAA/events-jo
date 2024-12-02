@@ -8,6 +8,8 @@ class CustomIcons {
 
   static const IconData sort =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData rings_wedding =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData settings =
       IconData(0xe82f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData farm =
@@ -42,4 +44,8 @@ class CustomIcons {
       IconData(0xe84d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData hammer_crash =
       IconData(0xe84e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData tools =
+      IconData(0xe851, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData basket_shopping_minus =
+      IconData(0xe852, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -105,14 +105,9 @@ class _RegisterPageState extends State<RegisterPage> {
         name.isNotEmpty &&
         confirmPw.isNotEmpty) {
       if (pw == confirmPw) {
-        authCubit.regitser(
-          name,
-          email,
-          pw,
-          userLocation.lat,
-          userLocation.long,
-          isOwner ? UserType.owner : UserType.user,
-        );
+        authCubit.regitser(name, email, pw, userLocation.lat, userLocation.long,
+            isOwner ? UserType.owner : UserType.user, true //makes user online
+            );
       } else {
         GSnackBar.show(
           context: context,

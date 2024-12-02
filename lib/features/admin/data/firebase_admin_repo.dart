@@ -1,8 +1,8 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FirebaseAdminRepo implements AdminRepo {
@@ -17,33 +17,22 @@ class FirebaseAdminRepo implements AdminRepo {
   );
 
   @override
-  Stream<List<WeddingVenue>> getUnapprovedWeddingVenuesStream() {
+  Stream<QuerySnapshot<Map<String, dynamic>>>
+      getUnapprovedWeddingVenuesStream() {
     //notifies of query results at this 'venues' collection
     return firebaseFirestore
         .collection('venues')
         .where('isApproved', isEqualTo: false)
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        //get venue obj from json then as list
-        return WeddingVenue.fromJson(doc.data());
-      }).toList();
-    });
+        .snapshots();
   }
 
   @override
-  Stream<List<WeddingVenue>> getApprovedWeddingVenuesStream() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getApprovedWeddingVenuesStream() {
     //notifies of query results at this 'venues' collection
     return firebaseFirestore
         .collection('venues')
         .where('isApproved', isEqualTo: true)
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        //get venue obj from json then as list
-        return WeddingVenue.fromJson(doc.data());
-      }).toList();
-    });
+        .snapshots();
   }
 
   @override
@@ -61,6 +50,36 @@ class FirebaseAdminRepo implements AdminRepo {
   Stream<List<AppUser>> getAllOwnersStream() {
     //notifies of query results at this 'venues' collection
     return firebaseFirestore.collection('owners').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        //get venue obj from json then as list
+        return AppUser.fromJson(doc.data());
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<AppUser>> getAllOnlineUsersStream() {
+    //notifies of query results at this 'venues' collection
+    return firebaseFirestore
+        .collection('users')
+        .where('isOnline', isEqualTo: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        //get venue obj from json then as list
+        return AppUser.fromJson(doc.data());
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<AppUser>> getAllOnlineOwnersStream() {
+    //notifies of query results at this 'venues' collection
+    return firebaseFirestore
+        .collection('owners')
+        .where('isOnline', isEqualTo: true)
+        .snapshots()
+        .map((snapshot) {
       return snapshot.docs.map((doc) {
         //get venue obj from json then as list
         return AppUser.fromJson(doc.data());
@@ -130,6 +149,17 @@ class FirebaseAdminRepo implements AdminRepo {
         invalidate: false,
       );
     }
+  }
+
+  @override
+  String generateUniqueId() {
+    //current time (from year to microsecond)
+    final now = DateTime.now();
+    //get random number between 0 and 99999
+    int randomValue = Random().nextInt(100000);
+
+    //id example -> 2024111609413072511999
+    return "${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}${now.microsecond}$randomValue";
   }
 
   //! DEPRECATED
