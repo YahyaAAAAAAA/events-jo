@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 
 abstract class AdminRepo {
   Stream<QuerySnapshot<Map<String, dynamic>>>
@@ -7,13 +8,19 @@ abstract class AdminRepo {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getApprovedWeddingVenuesStream();
 
-  Stream<List<AppUser>> getAllUsersStream();
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsersStream();
 
-  Stream<List<AppUser>> getAllOwnersStream();
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllOwnersStream();
 
   Stream<List<AppUser>> getAllOnlineUsersStream();
 
   Stream<List<AppUser>> getAllOnlineOwnersStream();
+
+  Stream<WeddingVenue?> getVenueStream(String id);
+
+  Stream<AppUser?> getUserStream(String id);
+
+  Stream<AppUser?> getOwnerStream(String id);
 
   Future<void> approveVenue(String id);
 

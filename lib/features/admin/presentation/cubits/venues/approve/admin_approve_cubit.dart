@@ -19,7 +19,7 @@ class AdminApproveCubit extends Cubit<AdminApproveStates> {
 
   AdminApproveCubit({required this.adminRepo}) : super(AdminApproveInit());
 
-  //listen to approved venues stream (in real time)
+  //listen to approved venues stream
   List<WeddingVenue> getApprovedWeddingVenuesStream() {
     //loading...
     emit(AdminApproveLoading());
@@ -32,28 +32,40 @@ class AdminApproveCubit extends Cubit<AdminApproveStates> {
         final currentState = state;
         List<WeddingVenue> currentVenues = [];
 
+        //get current venues
         if (currentState is AdminApproveLoaded) {
           currentVenues = List.from(currentState.venues);
         }
 
         for (var change in snapshot.docChanges) {
+          //get change data
           final data = change.doc.data();
+
+          //ignore if change is null
           if (data == null) continue;
 
+          //current venue for the change
           final venue = WeddingVenue.fromJson(data);
 
+          //add
           if (change.type == DocumentChangeType.added) {
-            // Check if the venue already exists before adding
+            //check if the venue already exists before adding
             final exists = currentVenues.any((v) => v.id == venue.id);
             if (!exists) {
               currentVenues.add(venue);
             }
-          } else if (change.type == DocumentChangeType.modified) {
+          }
+          //update
+          else if (change.type == DocumentChangeType.modified) {
+            //get updated venue index
             final index = currentVenues.indexWhere((v) => v.id == venue.id);
+
             if (index != -1) {
-              currentVenues[index] = venue; // Update the modified venue
+              currentVenues[index] = venue;
             }
-          } else if (change.type == DocumentChangeType.removed) {
+          }
+          //remove
+          else if (change.type == DocumentChangeType.removed) {
             currentVenues.removeWhere((v) => v.id == venue.id);
           }
         }

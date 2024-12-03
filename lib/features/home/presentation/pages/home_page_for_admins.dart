@@ -1,5 +1,6 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_app_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_card_dashboard.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_card_events.dart';
@@ -19,9 +20,9 @@ import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admi
 import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_states.dart';
+import 'package:events_jo/features/admin/presentation/pages/owners/admin_owners_list_page.dart';
+import 'package:events_jo/features/admin/presentation/pages/users/admin_users_list_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -76,25 +77,8 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        leading: AppBarButton(
-          onPressed: () => context
-              .read<AuthCubit>()
-              .logout(widget.user!.uid, widget.user!.type),
-          icon: Icons.person,
-          size: 25,
-        ),
-        actions: [
-          AppBarButton(
-            onPressed: () {},
-            icon: CustomIcons.menu,
-            size: 20,
-          ),
-        ],
-        leadingWidth: 90,
-        toolbarHeight: 70,
+      appBar: AdminAppBar(
+        user: widget.user,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -118,9 +102,12 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                     count: users.length.toString(),
                     icon: Icons.person,
                     text: 'Users Count : ',
-                    onPressed: null,
-                    //todo user page row(icon/name/online/spacer/button)
-                    //maybe same as venues card ?
+                    onPressed: () =>
+                        Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AdminUsersListPage(
+                        adminUsersCountCubit: adminUsersCountCubit,
+                      ),
+                    )),
                   );
                 }
                 //error
@@ -146,7 +133,12 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                     count: owners.length.toString(),
                     icon: Icons.person_4,
                     text: 'Owners Count : ',
-                    onPressed: null,
+                    onPressed: () =>
+                        Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AdminOwnersListPage(
+                        adminOwnersCountCubit: adminOwnersCountCubit,
+                      ),
+                    )),
                   );
                 }
                 //error

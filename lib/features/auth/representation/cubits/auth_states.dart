@@ -8,7 +8,10 @@ abstract class AuthStates {}
 class AuthInitial extends AuthStates {}
 
 // loading..
-class AuthLoading extends AuthStates {}
+class AuthLoading extends AuthStates {
+  final String? message;
+  AuthLoading({this.message});
+}
 
 // authenticated
 class Authenticated extends AuthStates {

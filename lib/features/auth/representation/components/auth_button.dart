@@ -49,10 +49,7 @@ class AuthButton extends StatelessWidget {
                   ),
                   icon: Ink(
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        colors: GColors.logoGradient,
-                      ),
+                      gradient: GColors.logoGradient,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(

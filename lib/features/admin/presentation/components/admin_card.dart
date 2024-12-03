@@ -70,7 +70,9 @@ class AdminCard extends StatelessWidget {
               const Spacer(),
               AdminButton(
                 onPressed: onPressed,
-                padding: 0,
+                padding: EdgeInsets.zero,
+                buttonPadding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 icon: Icons.arrow_forward_ios_rounded,
               ),
             ],

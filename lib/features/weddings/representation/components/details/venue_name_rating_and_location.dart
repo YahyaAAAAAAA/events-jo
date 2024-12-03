@@ -44,9 +44,7 @@ class VenueNameRatingAndLocation extends StatelessWidget {
               //venue name
               GradientText(
                 weddingVenue.name,
-                gradient: LinearGradient(
-                  colors: GColors.logoGradient,
-                ),
+                gradient: GColors.logoGradient,
                 style: TextStyle(
                   color: GColors.royalBlue,
                   fontSize: 28,

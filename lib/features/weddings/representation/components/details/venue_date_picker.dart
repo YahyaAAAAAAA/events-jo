@@ -38,9 +38,7 @@ class VenueDatePicker extends StatelessWidget {
         highlightColor: GColors.royalBlue.withOpacity(0.2),
         splashColor: GColors.royalBlue.withOpacity(0.2),
         selectedCellDecoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: GColors.logoGradient,
-          ),
+          gradient: GColors.logoGradient,
           borderRadius: BorderRadius.circular(100),
         ),
         daysOfTheWeekTextStyle: TextStyle(

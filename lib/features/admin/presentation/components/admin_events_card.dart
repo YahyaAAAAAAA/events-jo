@@ -57,7 +57,7 @@ class AdminEventsCard extends StatelessWidget {
               ),
               VerticalDivider(
                 color: GColors.whiteShade3,
-                thickness: 7,
+                thickness: 5,
               ),
               Expanded(
                 child: Column(
@@ -105,7 +105,9 @@ class AdminEventsCard extends StatelessWidget {
               ),
               AdminButton(
                 onPressed: onPressed,
-                padding: 15,
+                padding: const EdgeInsets.all(15),
+                buttonPadding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 icon: Icons.info_outline_rounded,
               ),
             ],

@@ -33,10 +33,7 @@ class ImagesDialogPreview extends StatelessWidget {
                 icon: Ink(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      colors: GColors.logoGradient,
-                    ),
+                    gradient: GColors.logoGradient,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

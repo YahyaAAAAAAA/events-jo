@@ -54,6 +54,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
             exitTransition: [SlideInRight()],
             insertDuration: const Duration(milliseconds: 300),
             removeDuration: const Duration(milliseconds: 300),
+            isSameItem: (a, b) => a.id == b.id,
             itemBuilder: (context, index) {
               return AdminEventsCard(
                 name: venues[index].name,

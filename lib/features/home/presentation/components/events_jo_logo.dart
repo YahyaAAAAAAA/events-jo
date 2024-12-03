@@ -41,20 +41,14 @@ class EventsJoLogo extends StatelessWidget {
             const SizedBox(width: 90),
             GradientIcon(
               icon: CustomIcons.eventsjo,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                colors: GColors.logoGradient,
-              ),
+              gradient: GColors.logoGradient,
               size: 80,
             ),
             GradientText(
               'EventsJo',
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                colors: GColors.logoGradient.reversed.toList(),
-              ),
+              gradient: GColors.logoGradientReversed,
               style: TextStyle(
-                color: GColors.black,
+                color: GColors.royalBlue,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),

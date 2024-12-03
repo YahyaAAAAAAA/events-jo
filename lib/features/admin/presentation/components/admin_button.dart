@@ -3,20 +3,22 @@ import 'package:flutter/material.dart';
 
 class AdminButton extends StatelessWidget {
   final IconData icon;
-  final double padding;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry buttonPadding;
   final void Function()? onPressed;
 
-  const AdminButton(
-      {super.key,
-      required this.onPressed,
-      required this.icon,
-      required this.padding});
+  const AdminButton({
+    super.key,
+    required this.onPressed,
+    required this.icon,
+    required this.padding,
+    required this.buttonPadding,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return //* button
-        Padding(
-      padding: EdgeInsets.all(padding),
+    return Padding(
+      padding: padding,
       //navigate to details page
       child: IconButton(
         onPressed: onPressed,
@@ -38,7 +40,7 @@ class AdminButton extends StatelessWidget {
             gradient: GColors.adminGradient,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            padding: buttonPadding,
             child: Icon(
               icon,
               color: GColors.white,

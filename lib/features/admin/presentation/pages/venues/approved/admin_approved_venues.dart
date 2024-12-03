@@ -53,6 +53,7 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
             exitTransition: [SlideInLeft()],
             insertDuration: const Duration(milliseconds: 300),
             removeDuration: const Duration(milliseconds: 300),
+            isSameItem: (a, b) => a.id == b.id,
             itemBuilder: (context, index) {
               return AdminEventsCard(
                 name: venues[index].name,
@@ -60,6 +61,7 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
                 index: index,
                 key: Key(widget.adminApproveCubit.generateUniqueId()),
                 isApproved: venues[index].isApproved,
+
                 //navigate to venue details
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(

@@ -31,23 +31,47 @@ class GColors {
   static Color denyColor = const Color(0xFF007afa);
   static Color suspendColor = const Color(0xFFffb630);
 
+  //----------------------------------------------------------------
+
   //main logo gradient
-  static List<Color> logoGradient = [
+  static List<Color> logoGradientColors = [
     const Color(0xFF4430DD),
     const Color(0xFF306BDD),
     const Color(0xFF308CDD),
     const Color(0xFF30B2DD)
   ];
 
+  static LinearGradient logoGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    colors: logoGradientColors,
+  );
+
+  static LinearGradient logoGradientReversed = LinearGradient(
+    begin: Alignment.topLeft,
+    colors: logoGradientColors.reversed.toList(),
+  );
+
+  //----------------------------------------------------------------
+
   //gradient for admin page
+  static List<Color> adminGradientColors = [
+    Colors.cyan,
+    Colors.cyan.shade600,
+  ];
+
   static LinearGradient adminGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
-      Colors.cyan,
-      Colors.cyan.shade600,
-    ],
+    colors: adminGradientColors,
   );
+
+  static LinearGradient adminGradientReversed = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: adminGradientColors.reversed.toList(),
+  );
+
+  //----------------------------------------------------------------
 
   static List<Color> weddingCardGradient = const [
     Color(0xFFff758c),

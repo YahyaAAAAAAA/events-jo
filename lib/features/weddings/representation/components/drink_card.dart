@@ -72,9 +72,7 @@ class DrinkCard extends StatelessWidget {
                   child: SliderTheme(
                     data: SliderThemeData(
                       trackShape: GradientRectSliderTrackShape(
-                        gradient: LinearGradient(
-                          colors: GColors.logoGradient,
-                        ),
+                        gradient: GColors.logoGradient,
                         darkenInactive: true,
                       ),
                     ),
@@ -98,10 +96,7 @@ class DrinkCard extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      colors: GColors.logoGradient,
-                    ),
+                    gradient: GColors.logoGradient,
                   ),
                   width: 50,
                   height: 50,

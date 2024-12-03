@@ -22,18 +22,12 @@ class EventsJoLogoAuth extends StatelessWidget {
           children: [
             GradientIcon(
               icon: CustomIcons.eventsjo,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                colors: GColors.logoGradient,
-              ),
+              gradient: GColors.logoGradient,
               size: 80,
             ),
             GradientText(
               'EventsJo',
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                colors: GColors.logoGradient,
-              ),
+              gradient: GColors.logoGradient,
               style: TextStyle(
                 color: GColors.black,
                 fontSize: 30,

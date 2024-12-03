@@ -12,6 +12,9 @@ class AuthCubit extends Cubit<AuthStates> {
 
   // check if auth
   void checkAuth() async {
+    //loading...
+    emit(AuthLoading(message: "Welcome to EventsJo"));
+
     final AppUser? user = await authRepo.getCurrentUser();
 
     if (user != null) {
@@ -29,7 +32,7 @@ class AuthCubit extends Cubit<AuthStates> {
   Future<void> login(String email, String pw) async {
     try {
       //show loading state
-      emit(AuthLoading());
+      emit(AuthLoading(message: "Welcome to EventsJo"));
 
       //get user
       final user = await authRepo.loginWithEmailPassword(email, pw);
@@ -58,7 +61,7 @@ class AuthCubit extends Cubit<AuthStates> {
   ) async {
     try {
       //show loading state
-      emit(AuthLoading());
+      emit(AuthLoading(message: "Welcome to EventsJo"));
 
       //get user
       final user = await authRepo.registerWithEmailPassword(
@@ -78,7 +81,10 @@ class AuthCubit extends Cubit<AuthStates> {
 
   //logout
   Future<void> logout(String id, UserType userType) async {
+    emit(AuthLoading(message: "Logging Out"));
+
     await authRepo.logout(id, userType);
+
     emit(Unauthenticated());
   }
 }

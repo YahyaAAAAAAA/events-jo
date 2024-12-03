@@ -1,7 +1,11 @@
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
+import 'package:events_jo/config/utils/loading/global_loading_admin.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_sub_app_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/unapproved%20venues/admin_unapproved_venue_summary.dart';
+import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
@@ -32,7 +36,9 @@ class AdminUnapprovedVenueDetails extends StatefulWidget {
 class _AdminUnapprovedVenueDetailsState
     extends State<AdminUnapprovedVenueDetails> {
   late final WeddingVenue weddingVenue;
-  late final AdminUnapproveCubit adminApproveCubit;
+
+  //cubits
+  late final AdminSingleVenueCubit adminSingleVenueCubit;
 
   //location cubit instance
   late final LocationCubit locationCubit;
@@ -54,10 +60,10 @@ class _AdminUnapprovedVenueDetailsState
 
     weddingVenue = widget.weddingVenue;
 
-    adminApproveCubit = widget.adminUnapproveCubit;
-
+    //cubits
     weddingVenueMealsCubit = context.read<WeddingVenueMealsCubit>();
     weddingVenueDrinksCubit = context.read<WeddingVenueDrinksCubit>();
+    adminSingleVenueCubit = context.read<AdminSingleVenueCubit>();
 
     locationCubit = context.read<LocationCubit>();
 
@@ -78,6 +84,8 @@ class _AdminUnapprovedVenueDetailsState
         ),
       ),
     );
+
+    adminSingleVenueCubit.getVenueStream(weddingVenue.id);
 
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
@@ -102,54 +110,79 @@ class _AdminUnapprovedVenueDetailsState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        //note: appbar button
-        leading: AppBarButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: Icons.arrow_back_ios_new,
-          size: 25,
-        ),
-        leadingWidth: 90,
-        toolbarHeight: 70,
-      ),
-      body: UnapprovedAdminVenueSummary(
-        venueName: weddingVenue.name,
-        peopleMax: weddingVenue.peopleMax,
-        peopleMin: weddingVenue.peopleMin,
-        peoplePrice: weddingVenue.peoplePrice,
-        ownerName: weddingVenue.ownerName,
-        onApprovePressed: () async {
-          await adminApproveCubit.approveVenue(weddingVenue.id);
-          Navigator.of(context).pop();
+      appBar: const AdminSubAppBar(),
+      body: BlocConsumer<AdminSingleVenueCubit, AdminSingleVenueStates>(
+        builder: (context, state) {
+          if (state is AdminSingleVenueLoaded) {
+            //get state venue
+            final venue = state.venue!;
+            return UnapprovedAdminVenueSummary(
+              venueName: venue.name,
+              peopleMax: venue.peopleMax,
+              peopleMin: venue.peopleMin,
+              peoplePrice: venue.peoplePrice,
+              ownerName: venue.ownerName,
+              onApprovePressed: () async {
+                await widget.adminUnapproveCubit.approveVenue(venue.id);
+                Navigator.of(context).pop();
+              },
+              onDenyPressed: () async {
+                await widget.adminUnapproveCubit
+                    .denyVenue(venue.id, venue.pics);
+                Navigator.of(context).pop();
+              },
+              //todo should update location object
+              showMap: () => locationCubit.showMapDialogPreview(
+                context,
+                userLocation: userLocation,
+                gradient: GColors.adminGradient,
+              ),
+              showMeals: () => widget.adminUnapproveCubit
+                  .showMealsDialogPreview(context, meals),
+              showDrinks: () => widget.adminUnapproveCubit
+                  .showDrinksDialogPreview(context, drinks),
+              showImages: () => widget.adminUnapproveCubit
+                  .showImagesDialogPreview(context, venue.pics),
+              range: DateTimeRange(
+                start: DateTime(
+                  venue.startDate[0],
+                  venue.startDate[1],
+                  venue.startDate[2],
+                ),
+                end: DateTime(
+                  venue.endDate[0],
+                  venue.endDate[1],
+                  venue.endDate[2],
+                ),
+              ),
+              time: [
+                venue.time[0],
+                venue.time[1],
+              ],
+            );
+          }
+          //error
+          if (state is AdminSingleVenueError) {
+            return Text(state.messege);
+          }
+          //loading...
+          return const GlobalLoadingAdminBar();
         },
-        onDenyPressed: () async {
-          await adminApproveCubit.denyVenue(weddingVenue.id, weddingVenue.pics);
-          Navigator.of(context).pop();
+        listener: (context, state) {
+          //change
+          if (state is AdminSingleVenueChanged) {
+            GSnackBar.show(
+              context: context,
+              text: 'A change has occurred',
+              color: GColors.cyanShade6,
+            );
+          }
+
+          //error
+          if (state is AdminSingleVenueError) {
+            GSnackBar.show(context: context, text: state.messege);
+          }
         },
-        showMap: () => locationCubit.showMapDialogPreview(context,
-            userLocation: userLocation, gradient: GColors.adminGradient),
-        showMeals: () =>
-            adminApproveCubit.showMealsDialogPreview(context, meals),
-        showDrinks: () =>
-            adminApproveCubit.showDrinksDialogPreview(context, drinks),
-        showImages: () => adminApproveCubit.showImagesDialogPreview(
-            context, weddingVenue.pics),
-        range: DateTimeRange(
-          start: DateTime(
-            weddingVenue.startDate[0],
-            weddingVenue.startDate[1],
-            weddingVenue.startDate[2],
-          ),
-          end: DateTime(
-            weddingVenue.endDate[0],
-            weddingVenue.endDate[1],
-            weddingVenue.endDate[2],
-          ),
-        ),
-        time: [
-          weddingVenue.time[0],
-          weddingVenue.time[1],
-        ],
       ),
     );
   }

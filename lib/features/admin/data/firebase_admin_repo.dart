@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FirebaseAdminRepo implements AdminRepo {
@@ -36,30 +37,21 @@ class FirebaseAdminRepo implements AdminRepo {
   }
 
   @override
-  Stream<List<AppUser>> getAllUsersStream() {
-    //notifies of query results at this 'venues' collection
-    return firebaseFirestore.collection('users').snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        //get venue obj from json then as list
-        return AppUser.fromJson(doc.data());
-      }).toList();
-    });
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsersStream() {
+    //notifies of query results at this 'users' collection
+    return firebaseFirestore.collection('users').snapshots();
   }
 
   @override
-  Stream<List<AppUser>> getAllOwnersStream() {
-    //notifies of query results at this 'venues' collection
-    return firebaseFirestore.collection('owners').snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        //get venue obj from json then as list
-        return AppUser.fromJson(doc.data());
-      }).toList();
-    });
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllOwnersStream() {
+    //notifies of query results at this 'owners' collection
+
+    return firebaseFirestore.collection('owners').snapshots();
   }
 
   @override
   Stream<List<AppUser>> getAllOnlineUsersStream() {
-    //notifies of query results at this 'venues' collection
+    //notifies of query results at this 'users' collection
     return firebaseFirestore
         .collection('users')
         .where('isOnline', isEqualTo: true)
@@ -74,7 +66,7 @@ class FirebaseAdminRepo implements AdminRepo {
 
   @override
   Stream<List<AppUser>> getAllOnlineOwnersStream() {
-    //notifies of query results at this 'venues' collection
+    //notifies of query results at this 'owners' collection
     return firebaseFirestore
         .collection('owners')
         .where('isOnline', isEqualTo: true)
@@ -84,6 +76,65 @@ class FirebaseAdminRepo implements AdminRepo {
         //get venue obj from json then as list
         return AppUser.fromJson(doc.data());
       }).toList();
+    });
+  }
+
+  //listen to single a venue document change (for approved and unapproved)
+  @override
+  Stream<WeddingVenue?> getVenueStream(String id) {
+    //notifies of document results at this 'owners' collection doc 'id'
+    firebaseFirestore
+        .collection('venues')
+        .doc(id)
+        .collection('drinks')
+        .snapshots();
+
+    return firebaseFirestore
+        .collection('venues')
+        .doc(id)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.data() == null) {
+        return null;
+      }
+
+      return WeddingVenue.fromJson(snapshot.data()!);
+    });
+  }
+  //todo make streams for meals,drinks and merge them
+  //copyWith method for wedding venue to include meals and drinks lists
+
+  //listen to a single user document change
+  @override
+  Stream<AppUser?> getUserStream(String id) {
+    //notifies of document results at this 'owners' collection doc 'id'
+    return firebaseFirestore
+        .collection('users')
+        .doc(id)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.data() == null) {
+        return null;
+      }
+
+      return AppUser.fromJson(snapshot.data()!);
+    });
+  }
+
+  //listen to a single owner document change
+  @override
+  Stream<AppUser?> getOwnerStream(String id) {
+    //notifies of document results at this 'owners' collection doc 'id'
+    return firebaseFirestore
+        .collection('owners')
+        .doc(id)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.data() == null) {
+        return null;
+      }
+
+      return AppUser.fromJson(snapshot.data()!);
     });
   }
 

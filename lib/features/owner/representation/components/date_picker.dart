@@ -35,9 +35,7 @@ class DatePicker extends StatelessWidget {
         highlightColor: GColors.royalBlue.withOpacity(0.2),
         splashColor: GColors.royalBlue.withOpacity(0.2),
         singleSelectedCellDecoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: GColors.logoGradient,
-          ),
+          gradient: GColors.logoGradient,
           borderRadius: BorderRadius.circular(100),
         ),
         daysOfTheWeekTextStyle: TextStyle(

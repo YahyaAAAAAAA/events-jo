@@ -1,13 +1,11 @@
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_app_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/menu_tab_bar.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venues.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,31 +39,12 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        //todo make appbar global
-        appBar: AppBar(
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: Colors.transparent,
-          leading: AppBarButton(
-            onPressed: () => context
-                .read<AuthCubit>()
-                .logout(widget.user!.uid, widget.user!.type),
-            icon: Icons.person,
-            size: 25,
-          ),
+        appBar: AdminAppBar(
+          user: widget.user,
           bottom: const PreferredSize(
-            //? I dont like this widget
             preferredSize: Size.fromHeight(40),
             child: MenuTabBar(),
           ),
-          actions: [
-            AppBarButton(
-              onPressed: () {},
-              icon: CustomIcons.menu,
-              size: 20,
-            ),
-          ],
-          leadingWidth: 90,
-          toolbarHeight: 70,
         ),
         body: TabBarView(
           //note: make tab bar unswappable

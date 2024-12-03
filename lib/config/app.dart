@@ -4,11 +4,15 @@ import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/data/firebase_admin_repo.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20online/admin_owners_online_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/single%20owner/admin_single_owner_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/single%20user/admin_single_user_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/users%20count/admin_users_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/users%20online/admin_users_online_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/auth/data/firebase_auth_repo.dart';
+import 'package:events_jo/features/auth/representation/components/auth_error_card.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:events_jo/features/auth/representation/pages/auth_page.dart';
@@ -110,6 +114,18 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AdminOwnersOnlineCubit(adminRepo: adminRepo),
         ),
+        //single user cubit
+        BlocProvider(
+          create: (context) => AdminSingleUserCubit(adminRepo: adminRepo),
+        ),
+        //single owner cubit
+        BlocProvider(
+          create: (context) => AdminSingleOwnerCubit(adminRepo: adminRepo),
+        ),
+        //single venue cubit
+        BlocProvider(
+          create: (context) => AdminSingleVenueCubit(adminRepo: adminRepo),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -127,21 +143,25 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: BlocConsumer<AuthCubit, AuthStates>(
-          builder: (context, authState) {
-            debugPrint(authState.toString());
+          builder: (context, state) {
+            debugPrint(state.toString());
 
-            if (authState is Unauthenticated) {
+            //not logged-in
+            if (state is Unauthenticated) {
               return const AuthPage();
             }
-            if (authState is Authenticated) {
+            //logged-in
+            if (state is Authenticated) {
               //user authenticated now check type (user,owner,admin)
               return const UserTypeGate();
-            } else {
-              return const Scaffold(
-                body: Center(
-                  child: GlobalLoadingBar(),
-                ),
-              );
+            }
+            //loading...
+            else if (state is AuthLoading) {
+              return GlobalLoadingBar(text: state.message);
+            }
+            //error
+            else {
+              return const AuthErrorCard();
             }
           },
           listener: (context, state) {

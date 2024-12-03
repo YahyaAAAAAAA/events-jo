@@ -22,20 +22,14 @@ class OwnerPageBar extends StatelessWidget {
             //* logo icon
             GradientIcon(
               icon: CustomIcons.eventsjo,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                colors: GColors.logoGradient,
-              ),
+              gradient: GColors.logoGradient,
               size: 100,
             ),
 
             //* logo text
             GradientText(
               'EventsJo for Owners',
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                colors: GColors.logoGradient,
-              ),
+              gradient: GColors.logoGradient,
               style: TextStyle(
                 color: GColors.black,
                 fontSize: 30,

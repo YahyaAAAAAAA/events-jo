@@ -6,7 +6,7 @@ import 'package:events_jo/features/owner/representation/pages/sub%20pages/select
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-//* This page displays info for the user's even
+//* This page displays info for the user's event
 class AdminApprovedVenueSummary extends StatelessWidget {
   final void Function()? showMeals;
   final void Function()? showDrinks;
