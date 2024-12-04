@@ -144,6 +144,9 @@ flutter:
     - family: Bask
       fonts:
         - asset: assets/fonts/Baskervville-Regular.ttf
+    - family: Gugi
+      fonts:
+        - asset: assets/fonts/Gugi-Regular.ttf
     - family: CustomIcons
       fonts:
         - asset: assets/fonts/CustomIcons.ttf

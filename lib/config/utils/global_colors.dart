@@ -55,19 +55,20 @@ class GColors {
 
   //gradient for admin page
   static List<Color> adminGradientColors = [
+    const Color.fromARGB(255, 79, 234, 255),
     Colors.cyan,
     Colors.cyan.shade600,
   ];
 
   static LinearGradient adminGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
+    begin: Alignment.bottomRight,
+    end: Alignment.topLeft,
     colors: adminGradientColors,
   );
 
   static LinearGradient adminGradientReversed = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
+    begin: Alignment.bottomRight,
+    end: Alignment.topLeft,
     colors: adminGradientColors.reversed.toList(),
   );
 

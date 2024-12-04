@@ -18,7 +18,6 @@ class AdminSingleVenueCubit extends Cubit<AdminSingleVenueStates> {
       (venue) {
         if (venue == null) {
           //error
-          emit(AdminSingleVenueError('User doesn\'t exist'));
           return;
         }
 

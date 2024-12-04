@@ -278,7 +278,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            GlobalLoadingBar(withImage: false),
+                            GlobalLoadingBar(mainText: false),
                           ],
                         ),
                       );

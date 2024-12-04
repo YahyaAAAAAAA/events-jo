@@ -1,14 +1,13 @@
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 import 'package:lottie/lottie.dart';
 
 class GlobalLoadingAdminBar extends StatelessWidget {
-  final bool? withImage;
+  final bool? mainText;
   const GlobalLoadingAdminBar({
     super.key,
-    this.withImage = true,
+    this.mainText = true,
   });
 
   @override
@@ -18,14 +17,18 @@ class GlobalLoadingAdminBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          withImage!
-              ? GradientIcon(
-                  icon: CustomIcons.eventsjo,
+          mainText!
+              ? GradientText(
+                  'Ej',
                   gradient: GColors.adminGradient,
-                  size: 100,
+                  style: TextStyle(
+                    color: GColors.royalBlue,
+                    fontSize: 80,
+                    fontFamily: 'Gugi',
+                    fontWeight: FontWeight.bold,
+                  ),
                 )
               : const SizedBox(),
-          withImage! ? const SizedBox(height: 20) : const SizedBox(),
           Lottie.asset(
             'assets/animations/loading_admin.json',
             frameRate: const FrameRate(60),

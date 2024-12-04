@@ -73,7 +73,7 @@ class FirebaseAdminRepo implements AdminRepo {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map((doc) {
-        //get venue obj from json then as list
+        //get venue obj from json then as lis
         return AppUser.fromJson(doc.data());
       }).toList();
     });
@@ -83,12 +83,6 @@ class FirebaseAdminRepo implements AdminRepo {
   @override
   Stream<WeddingVenue?> getVenueStream(String id) {
     //notifies of document results at this 'owners' collection doc 'id'
-    firebaseFirestore
-        .collection('venues')
-        .doc(id)
-        .collection('drinks')
-        .snapshots();
-
     return firebaseFirestore
         .collection('venues')
         .doc(id)

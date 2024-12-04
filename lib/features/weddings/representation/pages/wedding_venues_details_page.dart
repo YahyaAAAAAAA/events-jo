@@ -372,7 +372,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                           }
                           //loading...
                           else {
-                            return const GlobalLoadingBar(withImage: false);
+                            return const GlobalLoadingBar(mainText: false);
                           }
                         },
                         listener: (context, state) {
@@ -438,7 +438,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                           }
                           //loading...
                           else {
-                            return const GlobalLoadingBar(withImage: false);
+                            return const GlobalLoadingBar(mainText: false);
                           }
                         },
                         listener: (context, state) {

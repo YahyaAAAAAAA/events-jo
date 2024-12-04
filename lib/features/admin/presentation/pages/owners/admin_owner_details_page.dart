@@ -100,7 +100,7 @@ class _AdminOwnerDetailsPageState extends State<AdminOwnerDetailsPage> {
             return Text(state.messege);
           }
           //loading...
-          return const GlobalLoadingAdminBar();
+          return const GlobalLoadingAdminBar(mainText: false);
         },
         listener: (context, state) {
           //change

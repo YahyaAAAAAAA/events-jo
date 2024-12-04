@@ -1,8 +1,6 @@
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 
 class OwnerPageBar extends StatelessWidget {
   const OwnerPageBar({
@@ -19,11 +17,16 @@ class OwnerPageBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            //* logo icon
-            GradientIcon(
-              icon: CustomIcons.eventsjo,
+            //* logo text
+            GradientText(
+              'Ej',
               gradient: GColors.logoGradient,
-              size: 100,
+              style: TextStyle(
+                color: GColors.royalBlue,
+                fontSize: 80,
+                fontFamily: 'Gugi',
+                fontWeight: FontWeight.bold,
+              ),
             ),
 
             //* logo text
@@ -32,7 +35,7 @@ class OwnerPageBar extends StatelessWidget {
               gradient: GColors.logoGradient,
               style: TextStyle(
                 color: GColors.black,
-                fontSize: 30,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -99,7 +99,7 @@ class _AdminUserDetailsPageState extends State<AdminUserDetailsPage> {
             return Text(state.messege);
           }
           //loading...
-          return const GlobalLoadingAdminBar();
+          return const GlobalLoadingAdminBar(mainText: false);
         },
         listener: (context, state) {
           //change

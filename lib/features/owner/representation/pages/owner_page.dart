@@ -551,7 +551,7 @@ class _OwnerPageState extends State<OwnerPage> {
 
         //loading...
         else {
-          return const GlobalLoadingBar(withImage: false);
+          return const GlobalLoadingBar(mainText: false);
         }
       },
       listener: (context, state) {

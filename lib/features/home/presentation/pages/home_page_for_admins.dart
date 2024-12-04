@@ -7,7 +7,7 @@ import 'package:events_jo/features/admin/presentation/components/admin_card_even
 import 'package:events_jo/features/admin/presentation/components/admin_divider.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_error_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_loading_card.dart';
-import 'package:events_jo/features/admin/presentation/components/events_jo_admin.dart';
+import 'package:events_jo/features/admin/presentation/components/events_jo_logo_admin.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20online/admin_owners_online_cubit.dart';

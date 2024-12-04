@@ -1,17 +1,15 @@
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 import 'package:lottie/lottie.dart';
 
 class GlobalLoadingBar extends StatelessWidget {
-  final bool? withImage;
-  final String? text;
+  final bool? mainText;
+  final String? subText;
   const GlobalLoadingBar({
     super.key,
-    this.withImage = true,
-    this.text,
+    this.mainText = true,
+    this.subText,
   });
 
   @override
@@ -22,17 +20,21 @@ class GlobalLoadingBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            withImage!
-                ? GradientIcon(
-                    icon: CustomIcons.eventsjo,
+            mainText!
+                ? GradientText(
+                    'Ej',
                     gradient: GColors.logoGradient,
-                    size: 100,
+                    style: TextStyle(
+                      color: GColors.royalBlue,
+                      fontSize: 80,
+                      fontFamily: 'Gugi',
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 : const SizedBox(),
-            withImage! ? const SizedBox(height: 20) : const SizedBox(),
-            text != null
+            subText != null
                 ? GradientText(
-                    text ?? '',
+                    subText ?? '',
                     gradient: GColors.logoGradient,
                     style: const TextStyle(
                       fontSize: 30,
@@ -40,7 +42,7 @@ class GlobalLoadingBar extends StatelessWidget {
                     ),
                   )
                 : const SizedBox(),
-            text != null ? const SizedBox(height: 20) : const SizedBox(),
+            subText != null ? const SizedBox(height: 20) : const SizedBox(),
             Lottie.asset(
               'assets/animations/loading.json',
               frameRate: FrameRate.max,

@@ -166,7 +166,7 @@ class _AdminUnapprovedVenueDetailsState
             return Text(state.messege);
           }
           //loading...
-          return const GlobalLoadingAdminBar();
+          return const GlobalLoadingAdminBar(mainText: false);
         },
         listener: (context, state) {
           //change

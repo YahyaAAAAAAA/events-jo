@@ -24,7 +24,7 @@ class AdminLoadingCard extends StatelessWidget {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GlobalLoadingAdminBar(withImage: false),
+            GlobalLoadingAdminBar(mainText: false),
           ],
         ));
   }

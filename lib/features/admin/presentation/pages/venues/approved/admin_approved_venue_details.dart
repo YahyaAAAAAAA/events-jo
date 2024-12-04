@@ -158,7 +158,7 @@ class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
             return Text(state.messege);
           }
           //loading...
-          return const GlobalLoadingAdminBar();
+          return const GlobalLoadingAdminBar(mainText: false);
         },
         listener: (context, state) {
           //change

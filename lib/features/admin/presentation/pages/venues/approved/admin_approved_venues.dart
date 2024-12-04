@@ -81,7 +81,7 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
         }
         //loading...
         else {
-          return const GlobalLoadingAdminBar();
+          return const GlobalLoadingAdminBar(mainText: false);
         }
       },
       listener: (context, state) {

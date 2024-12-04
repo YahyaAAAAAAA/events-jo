@@ -81,7 +81,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
         }
         //loading...
         else {
-          return const GlobalLoadingAdminBar();
+          return const GlobalLoadingAdminBar(mainText: false);
         }
       },
       listener: (context, state) {

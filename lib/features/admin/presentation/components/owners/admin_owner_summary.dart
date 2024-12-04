@@ -1,8 +1,8 @@
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_confirmation_display_row.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_icon/gradient_icon.dart';
+
+import '../../../../../config/utils/gradient/gradient_text.dart';
 
 //* This page displays info for the user's event
 class AdminOwnerSummary extends StatelessWidget {
@@ -26,11 +26,18 @@ class AdminOwnerSummary extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          //* logo icon
-          GradientIcon(
-            icon: CustomIcons.eventsjo,
-            gradient: GColors.adminGradient,
-            size: 100,
+          //* logo text
+          Center(
+            child: GradientText(
+              'Ej',
+              gradient: GColors.adminGradient,
+              style: TextStyle(
+                color: GColors.royalBlue,
+                fontSize: 70,
+                fontFamily: 'Gugi',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
 
           //* users name
@@ -39,13 +46,11 @@ class AdminOwnerSummary extends StatelessWidget {
               '$name\'s User Info',
               style: TextStyle(
                 color: GColors.cyanShade6,
-                fontSize: 30,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-
-          const SizedBox(height: 10),
 
           //* summary list
           Padding(
