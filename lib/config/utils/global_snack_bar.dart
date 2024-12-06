@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 //global snackbar, shows error message
 class GSnackBar {
+  static get toastification => null;
   static show({
     required BuildContext context,
     required String text,
@@ -13,19 +14,34 @@ class GSnackBar {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: duration ?? const Duration(seconds: 2),
-        backgroundColor: color ?? GColors.poloBlue,
-        padding: const EdgeInsets.all(18),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
-        ),
-        content: Text(
-          text,
-          style: TextStyle(
-            fontSize: 22,
-            color: textColor ?? GColors.white,
+        backgroundColor: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+        elevation: 0,
+        content: Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: color ?? GColors.royalBlue,
+              boxShadow: [
+                BoxShadow(
+                  color: color != null
+                      ? color.withOpacity(0.3)
+                      : GColors.royalBlue.withOpacity(0.3),
+                  blurRadius: 7,
+                  offset: const Offset(4, 4),
+                )
+              ]),
+          child: Wrap(
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  fontSize: 22,
+                  color: textColor ?? GColors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
         ),
       ),

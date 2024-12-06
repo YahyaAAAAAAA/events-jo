@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //global colors
 class GColors {
   //main bg color
-  static Color whiteShade3 = const Color.fromRGBO(241, 246, 255, 1);
+  static Color whiteShade3 = const Color(0xFFF1F6FF);
 
   //for buttons and exposed texts mostly
   static Color royalBlue = const Color(0xFF306BDD);
@@ -12,7 +12,7 @@ class GColors {
   static Color poloBlue = const Color(0xFF88a1c8);
 
   //for stand alone buttons
-  static Color white = const Color.fromARGB(255, 253, 253, 253);
+  static Color white = const Color(0xFFFDFDFD);
 
   //navigation bar
   static Color navBar = whiteShade3;

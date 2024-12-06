@@ -61,7 +61,7 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
                 index: index,
                 key: Key(widget.adminApproveCubit.generateUniqueId()),
                 isApproved: venues[index].isApproved,
-
+                isBeingApproved: venues[index].isBeingApproved,
                 //navigate to venue details
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(

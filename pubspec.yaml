@@ -46,17 +46,18 @@ dependencies:
   #for environmental variables
   flutter_dotenv: ^5.2.1
   #for location
-  # geolocator: ^13.0.1
   geolocator: ^11.0.0
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
   #for image upload
   image_picker: ^1.1.2
   cloudinary_sdk: ^5.0.0+1
-  # cloudinary_url_gen: ^1.0.0
-  # cloudinary_api: ^1.0.2
+  #for streams merging
+  rxdart: ^0.28.0
   #for animations
   lottie: ^3.1.3
+  #algo
+  string_similarity: ^2.1.1
   #enhance UI
   mesh_gradient: ^1.3.8
   google_nav_bar: ^5.0.6
@@ -67,9 +68,9 @@ dependencies:
   from_to_time_picker: ^1.2.2
   flutter_lazy_indexed_stack: ^0.0.6
   carousel_slider: ^4.2.1
-  string_similarity: ^2.1.1
   animated_reorderable_list: ^1.1.1
-  rxdart: ^0.28.0
+
+
 
 dependency_overrides:
   geolocator_android: 4.5.4
@@ -78,33 +79,44 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  flutter_native_splash: ^2.4.1
+  flutter_lints: ^4.0.0
 
 #app icon
 flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/images/icon.png"
+  image_path: "assets/images/icon_2.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground_inset: 0
   # min_sdk_android: 21 
   web:
     generate: true
-    image_path: "assets/images/icon.png"
+    image_path: "assets/images/icon_2.png"
     background_color: "#F1F6FF"
     theme_color: "#F1F6FF"
   windows:
     generate: true
-    image_path: "assets/images/icon.png"
+    image_path: "assets/images/icon_2.png"
     icon_size: 48 
   macos:
     generate: true
-    image_path: "assets/images/icon.png"
+    image_path: "assets/images/icon_2.png"
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: true
+
+  color: "#f1f6ff"
+  image: "assets/images/icon_2.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -121,7 +133,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/images/icon.png
+    - assets/images/icon_2.png
     - assets/animations/
     - .env
   #   - images/a_dot_ham.jpeg

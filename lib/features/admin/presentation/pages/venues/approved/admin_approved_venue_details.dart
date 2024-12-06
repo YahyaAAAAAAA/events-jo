@@ -9,10 +9,6 @@ import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admi
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
-import 'package:events_jo/features/weddings/representation/cubits/drinks/wedding_venue_meals_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/meals/wedding_venue_meals_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -43,28 +39,16 @@ class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
   //location instance
   late final MapLocation userLocation;
 
-  //venue meals cubit & list
-  late final WeddingVenueMealsCubit weddingVenueMealsCubit;
-  late List<WeddingVenueMeal> meals = [];
-
-  //venue meals cubit & list
-  late final WeddingVenueDrinksCubit weddingVenueDrinksCubit;
-  late List<WeddingVenueDrink> drinks = [];
-
   @override
   void initState() {
     super.initState();
 
     weddingVenue = widget.weddingVenue;
 
-    //cubits
-    weddingVenueMealsCubit = context.read<WeddingVenueMealsCubit>();
-    weddingVenueDrinksCubit = context.read<WeddingVenueDrinksCubit>();
+    //cubit
     adminSingleVenueCubit = context.read<AdminSingleVenueCubit>();
 
     locationCubit = context.read<LocationCubit>();
-
-    adminSingleVenueCubit.getVenueStream(weddingVenue.id);
 
     //setup user location values
     userLocation = MapLocation(
@@ -84,24 +68,17 @@ class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
       ),
     );
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async {
-        //get meals list
-        meals = await weddingVenueMealsCubit.getAllMeals(weddingVenue.id);
+    //lock venue
+    widget.adminApproveCubit.lockVenue(weddingVenue.id);
+    //get stream for venue
+    adminSingleVenueCubit.getVenueStream(weddingVenue.id);
+  }
 
-        //get drinks list
-        drinks = await weddingVenueDrinksCubit.getAllDrinks(weddingVenue.id);
-
-        //initialize meals & drinks price
-        for (int i = 0; i < meals.length; i++) {
-          meals[i].calculatedPrice = meals[i].price;
-        }
-
-        for (int i = 0; i < drinks.length; i++) {
-          drinks[i].calculatedPrice = drinks[i].price;
-        }
-      },
-    );
+  @override
+  void dispose() {
+    super.dispose();
+    //unlock venue
+    widget.adminApproveCubit.unlockVenue(weddingVenue.id);
   }
 
   @override
@@ -111,8 +88,11 @@ class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
       body: BlocConsumer<AdminSingleVenueCubit, AdminSingleVenueStates>(
         builder: (context, state) {
           if (state is AdminSingleVenueLoaded) {
-            //get state venue
-            final venue = state.venue!;
+            //get state data
+            final venue = state.data.venue;
+            final meals = state.data.meals;
+            final drinks = state.data.drinks;
+
             return AdminApprovedVenueSummary(
               venueName: venue.name,
               peopleMax: venue.peopleMax,
@@ -165,7 +145,7 @@ class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
           if (state is AdminSingleVenueChanged) {
             GSnackBar.show(
               context: context,
-              text: 'A change has occurred',
+              text: state.change,
               color: GColors.cyanShade6,
             );
           }

@@ -13,7 +13,7 @@ class AuthCubit extends Cubit<AuthStates> {
   // check if auth
   void checkAuth() async {
     //loading...
-    emit(AuthLoading(message: "Welcome to EventsJo"));
+    emit(AuthLoading(message: "Welcome Back"));
 
     final AppUser? user = await authRepo.getCurrentUser();
 
@@ -32,7 +32,7 @@ class AuthCubit extends Cubit<AuthStates> {
   Future<void> login(String email, String pw) async {
     try {
       //show loading state
-      emit(AuthLoading(message: "Welcome to EventsJo"));
+      emit(AuthLoading(message: "Welcome Back"));
 
       //get user
       final user = await authRepo.loginWithEmailPassword(email, pw);

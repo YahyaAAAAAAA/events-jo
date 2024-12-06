@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class LocationLoadingDialog {
-  static showLocationLoadingDialog(BuildContext context) {
+  static show(BuildContext context) {
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return PopScope(
-          canPop: false,
+      pageBuilder: (context, animation, secondaryAnimation) => PopScope(
+        canPop: false,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 100,
+            maxHeight: 100,
+          ),
           child: ClipRRect(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -51,8 +55,12 @@ class LocationLoadingDialog {
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
+  }
+
+  static close(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }

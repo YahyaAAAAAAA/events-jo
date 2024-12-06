@@ -1,4 +1,4 @@
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 
 abstract class AdminSingleVenueStates {}
 
@@ -10,12 +10,17 @@ class AdminSingleVenueLoading extends AdminSingleVenueStates {}
 
 // loaded
 class AdminSingleVenueLoaded extends AdminSingleVenueStates {
-  final WeddingVenue? venue;
+  final WeddingVenueDetailed data;
 
-  AdminSingleVenueLoaded(this.venue);
+  AdminSingleVenueLoaded(this.data);
 }
 
-class AdminSingleVenueChanged extends AdminSingleVenueStates {}
+//change
+class AdminSingleVenueChanged extends AdminSingleVenueStates {
+  final String change;
+
+  AdminSingleVenueChanged(this.change);
+}
 
 //error
 class AdminSingleVenueError extends AdminSingleVenueStates {

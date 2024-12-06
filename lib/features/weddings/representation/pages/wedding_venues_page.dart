@@ -142,7 +142,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
               //loading...
               else {
                 return const Center(
-                  child: GlobalLoadingBar(),
+                  child: GlobalLoadingBar(mainText: false),
                 );
               }
             },

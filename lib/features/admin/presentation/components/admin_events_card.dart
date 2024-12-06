@@ -1,4 +1,5 @@
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_button.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ class AdminEventsCard extends StatelessWidget {
   final String owner;
   final int index;
   final bool isApproved;
+  final bool isBeingApproved;
   final void Function()? onPressed;
 
   const AdminEventsCard({
@@ -15,6 +17,7 @@ class AdminEventsCard extends StatelessWidget {
     required this.index,
     required this.owner,
     required this.isApproved,
+    required this.isBeingApproved,
     required this.onPressed,
   });
 
@@ -103,13 +106,28 @@ class AdminEventsCard extends StatelessWidget {
                   ],
                 ),
               ),
-              AdminButton(
-                onPressed: onPressed,
-                padding: const EdgeInsets.all(15),
-                buttonPadding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                icon: Icons.info_outline_rounded,
-              ),
+              !isBeingApproved
+                  ?
+                  //venue is open to review
+                  AdminButton(
+                      onPressed: onPressed,
+                      padding: const EdgeInsets.all(15),
+                      buttonPadding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20),
+                      icon: Icons.info_outline_rounded,
+                    )
+                  //venue is being reviewed
+                  : AdminButton(
+                      onPressed: () => GSnackBar.show(
+                        context: context,
+                        text: 'The venue is being approved by another admin',
+                        color: GColors.cyanShade6,
+                      ),
+                      padding: const EdgeInsets.all(15),
+                      buttonPadding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20),
+                      icon: Icons.lock_person_outlined,
+                    ),
             ],
           ),
         ),

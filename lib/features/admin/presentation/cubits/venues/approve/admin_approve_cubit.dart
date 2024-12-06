@@ -104,6 +104,26 @@ class AdminApproveCubit extends Cubit<AdminApproveStates> {
     }
   }
 
+  //lock
+  Future<void> lockVenue(String id) async {
+    try {
+      await adminRepo.lockVenue(id);
+    } catch (e) {
+      //error
+      emit(AdminApproveError(e.toString()));
+    }
+  }
+
+  //unlock
+  Future<void> unlockVenue(String id) async {
+    try {
+      await adminRepo.unlockVenue(id);
+    } catch (e) {
+      //error
+      emit(AdminApproveError(e.toString()));
+    }
+  }
+
   String generateUniqueId() {
     return adminRepo.generateUniqueId();
   }

@@ -1,4 +1,5 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
@@ -31,7 +32,9 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
         bottom: bottom,
         actions: [
           AppBarButton(
-            onPressed: () {}, //todo
+            onPressed: () {
+              GSnackBar.show(context: context, text: 'YYYYYY fwasad jhiojo');
+            }, //todo
             icon: CustomIcons.menu,
             size: 20,
           ),

@@ -20,7 +20,7 @@ class HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
+      // width: 210,
       height: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -43,23 +43,26 @@ class HomeCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
+                    DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          width: 3,
+                          width: 1,
                           color: GColors.white,
                         ),
                       ),
-                      child: Icon(
-                        icon,
-                        color: GColors.white,
-                        size: 25,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Icon(
+                          icon,
+                          color: GColors.white,
+                          size: 25,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 5),
@@ -67,23 +70,18 @@ class HomeCard extends StatelessWidget {
                       text,
                       style: TextStyle(
                         color: GColors.white,
-                        fontSize: 17,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: onPressed,
-                      icon: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: GColors.white,
-                      ),
-                    ),
-                  ],
+                IconButton(
+                  onPressed: onPressed,
+                  icon: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: GColors.white,
+                  ),
                 ),
               ],
             ),

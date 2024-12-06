@@ -4,6 +4,8 @@ import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FirebaseAdminRepo implements AdminRepo {
@@ -73,7 +75,7 @@ class FirebaseAdminRepo implements AdminRepo {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map((doc) {
-        //get venue obj from json then as lis
+        //get venue obj from json then as list
         return AppUser.fromJson(doc.data());
       }).toList();
     });
@@ -95,8 +97,30 @@ class FirebaseAdminRepo implements AdminRepo {
       return WeddingVenue.fromJson(snapshot.data()!);
     });
   }
-  //todo make streams for meals,drinks and merge them
-  //copyWith method for wedding venue to include meals and drinks lists
+
+  //listen to the meals subcollection
+  Stream<List<WeddingVenueMeal>> getMealsStream(String id) {
+    return firebaseFirestore
+        .collection('venues')
+        .doc(id)
+        .collection('meals')
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => WeddingVenueMeal.fromJson(doc.data()))
+            .toList());
+  }
+
+  //listen to the drinks subcollection
+  Stream<List<WeddingVenueDrink>> getDrinksStream(String id) {
+    return firebaseFirestore
+        .collection('venues')
+        .doc(id)
+        .collection('drinks')
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => WeddingVenueDrink.fromJson(doc.data()))
+            .toList());
+  }
 
   //listen to a single user document change
   @override
@@ -172,6 +196,20 @@ class FirebaseAdminRepo implements AdminRepo {
     } catch (e) {
       Future.error("Error deleting venue: $e");
     }
+  }
+
+  @override
+  Future<void> lockVenue(String id) async {
+    await firebaseFirestore.collection('venues').doc(id).update(
+      {'isBeingApproved': true},
+    );
+  }
+
+  @override
+  Future<void> unlockVenue(String id) async {
+    await firebaseFirestore.collection('venues').doc(id).update(
+      {'isBeingApproved': false},
+    );
   }
 
   @override

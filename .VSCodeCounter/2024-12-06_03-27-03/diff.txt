@@ -1,0 +1,202 @@
+Date : 2024-12-06 03:27:03
+Directory : d:\Flutterrrr\FlutterProjects\events_jo\lib
+Total : 107 files,  2361 codes, 160 comments, 344 blanks, all 2865 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |        107 |      2,361 |        160 |        344 |      2,865 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                     | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                        |        107 |      2,361 |        160 |        344 |      2,865 |
+| config                                                                                                                                   |          6 |         85 |         10 |          8 |        103 |
+| config (Files)                                                                                                                           |          1 |         29 |         11 |          0 |         40 |
+| config\utils                                                                                                                             |          5 |         56 |         -1 |          8 |         63 |
+| config\utils (Files)                                                                                                                     |          3 |         40 |         -1 |          8 |         47 |
+| config\utils\loading                                                                                                                     |          2 |         16 |          0 |          0 |         16 |
+| features                                                                                                                                 |        101 |      2,276 |        150 |        336 |      2,762 |
+| features\admin                                                                                                                           |         55 |      2,012 |        128 |        292 |      2,432 |
+| features\admin\data                                                                                                                      |          1 |        104 |         15 |         17 |        136 |
+| features\admin\domain                                                                                                                    |          1 |         17 |          0 |         12 |         29 |
+| features\admin\domain\repos                                                                                                              |          1 |         17 |          0 |         12 |         29 |
+| features\admin\presentation                                                                                                              |         53 |      1,891 |        113 |        263 |      2,267 |
+| features\admin\presentation\components                                                                                                   |         22 |        971 |        -46 |         63 |        988 |
+| features\admin\presentation\components (Files)                                                                                           |         15 |        719 |        -62 |         41 |        698 |
+| features\admin\presentation\components\approved venues                                                                                   |          2 |         29 |          0 |         -1 |         28 |
+| features\admin\presentation\components\dialogs                                                                                           |          1 |          6 |          0 |          0 |          6 |
+| features\admin\presentation\components\owners                                                                                            |          1 |         94 |          8 |         13 |        115 |
+| features\admin\presentation\components\unapproved venues                                                                                 |          2 |         29 |          0 |         -2 |         27 |
+| features\admin\presentation\components\users                                                                                             |          1 |         94 |          8 |         12 |        114 |
+| features\admin\presentation\cubits                                                                                                       |         22 |        549 |        116 |        159 |        824 |
+| features\admin\presentation\cubits\admin approve                                                                                         |          2 |       -118 |        -22 |        -26 |       -166 |
+| features\admin\presentation\cubits\admin unapprove                                                                                       |          2 |       -130 |        -27 |        -31 |       -188 |
+| features\admin\presentation\cubits\owners count                                                                                          |          2 |         63 |         17 |         22 |        102 |
+| features\admin\presentation\cubits\owners online                                                                                         |          2 |         35 |          9 |         15 |         59 |
+| features\admin\presentation\cubits\single owner                                                                                          |          2 |         45 |         10 |         18 |         73 |
+| features\admin\presentation\cubits\single user                                                                                           |          2 |         45 |         10 |         18 |         73 |
+| features\admin\presentation\cubits\single venue                                                                                          |          2 |        158 |         16 |         31 |        205 |
+| features\admin\presentation\cubits\users count                                                                                           |          2 |         63 |         17 |         22 |        102 |
+| features\admin\presentation\cubits\users online                                                                                          |          2 |         35 |          9 |         15 |         59 |
+| features\admin\presentation\cubits\venues                                                                                                |          4 |        353 |         77 |         75 |        505 |
+| features\admin\presentation\cubits\venues\approve                                                                                        |          2 |        168 |         35 |         35 |        238 |
+| features\admin\presentation\cubits\venues\unapprove                                                                                      |          2 |        185 |         42 |         40 |        267 |
+| features\admin\presentation\pages                                                                                                        |          9 |        371 |         43 |         41 |        455 |
+| features\admin\presentation\pages (Files)                                                                                                |          1 |        -34 |         -2 |         -2 |        -38 |
+| features\admin\presentation\pages\owners                                                                                                 |          2 |        185 |         18 |         25 |        228 |
+| features\admin\presentation\pages\users                                                                                                  |          2 |        185 |         17 |         25 |        227 |
+| features\admin\presentation\pages\venues                                                                                                 |          4 |         35 |         10 |         -7 |         38 |
+| features\admin\presentation\pages\venues\approved                                                                                        |          2 |         15 |          5 |         -4 |         16 |
+| features\admin\presentation\pages\venues\unapproved                                                                                      |          2 |         20 |          5 |         -3 |         22 |
+| features\auth                                                                                                                            |         11 |         48 |         -4 |          8 |         52 |
+| features\auth\data                                                                                                                       |          1 |         16 |          3 |          3 |         22 |
+| features\auth\domain                                                                                                                     |          2 |         10 |          0 |          0 |         10 |
+| features\auth\domain\entities                                                                                                            |          1 |          4 |          0 |          0 |          4 |
+| features\auth\domain\repos                                                                                                               |          1 |          6 |          0 |          0 |          6 |
+| features\auth\representation                                                                                                             |          8 |         22 |         -7 |          5 |         20 |
+| features\auth\representation\components                                                                                                  |          4 |         30 |          1 |          3 |         34 |
+| features\auth\representation\cubits                                                                                                      |          2 |          6 |          1 |          3 |         10 |
+| features\auth\representation\pages                                                                                                       |          2 |        -14 |         -9 |         -1 |        -24 |
+| features\home                                                                                                                            |          6 |        163 |         22 |         23 |        208 |
+| features\home\presentation                                                                                                               |          6 |        163 |         22 |         23 |        208 |
+| features\home\presentation\components                                                                                                    |          3 |         -6 |          0 |          0 |         -6 |
+| features\home\presentation\pages                                                                                                         |          3 |        169 |         22 |         23 |        214 |
+| features\location                                                                                                                        |          2 |          3 |          0 |          1 |          4 |
+| features\location\representation                                                                                                         |          2 |          3 |          0 |          1 |          4 |
+| features\location\representation\components                                                                                              |          2 |          3 |          0 |          1 |          4 |
+| features\owner                                                                                                                           |         16 |         56 |          4 |          7 |         67 |
+| features\owner\data                                                                                                                      |          1 |          1 |          0 |          0 |          1 |
+| features\owner\representation                                                                                                            |         15 |         55 |          4 |          7 |         66 |
+| features\owner\representation\components                                                                                                 |         11 |         46 |          3 |          7 |         56 |
+| features\owner\representation\components (Files)                                                                                         |          7 |         58 |          3 |          7 |         68 |
+| features\owner\representation\components\dialogs                                                                                         |          4 |        -12 |          0 |          0 |        -12 |
+| features\owner\representation\cubits                                                                                                     |          1 |          3 |          1 |          1 |          5 |
+| features\owner\representation\pages                                                                                                      |          3 |          6 |          0 |         -1 |          5 |
+| features\owner\representation\pages (Files)                                                                                              |          1 |         -2 |          0 |         -1 |         -3 |
+| features\owner\representation\pages\sub pages                                                                                            |          2 |          8 |          0 |          0 |          8 |
+| features\weddings                                                                                                                        |         11 |         -6 |          0 |          5 |         -1 |
+| features\weddings\domain                                                                                                                 |          4 |         19 |          0 |          5 |         24 |
+| features\weddings\domain\entities                                                                                                        |          4 |         19 |          0 |          5 |         24 |
+| features\weddings\representation                                                                                                         |          7 |        -25 |          0 |          0 |        -25 |
+| features\weddings\representation\components                                                                                              |          7 |        -25 |          0 |          0 |        -25 |
+| features\weddings\representation\components (Files)                                                                                      |          4 |        -16 |          0 |          0 |        -16 |
+| features\weddings\representation\components\details                                                                                      |          3 |         -9 |          0 |          0 |         -9 |
++------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                                 | language | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\config\app.dart                                                                              | Dart     |         29 |         11 |          0 |         40 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\config\utils\custom_icons_icons.dart                                                         | Dart     |          6 |          0 |          0 |          6 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\config\utils\global_colors.dart                                                              | Dart     |         18 |         -1 |          8 |         25 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\config\utils\global_snack_bar.dart                                                           | Dart     |         16 |          0 |          0 |         16 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\config\utils\loading\global_loading.dart                                                     | Dart     |         13 |          0 |          0 |         13 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\config\utils\loading\global_loading_admin.dart                                               | Dart     |          3 |          0 |          0 |          3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\data\firebase_admin_repo.dart                                                 | Dart     |        104 |         15 |         17 |        136 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\domain\repos\admin_repo.dart                                                  | Dart     |         17 |          0 |         12 |         29 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_app_bar.dart                                    | Dart     |         47 |          0 |          5 |         52 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_button.dart                                     | Dart     |         39 |        -45 |          1 |         -5 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_card.dart                                       | Dart     |        -19 |         -1 |          0 |        -20 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_card_dashboard.dart                             | Dart     |         80 |          0 |          4 |         84 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_card_events.dart                                | Dart     |         80 |          0 |          4 |         84 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_divider.dart                                    | Dart     |         36 |          0 |          3 |         39 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_error_card.dart                                 | Dart     |         42 |          0 |          4 |         46 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_events_card.dart                                | Dart     |        131 |          3 |          4 |        138 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_loading_card.dart                               | Dart     |         29 |          0 |          3 |         32 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_sub_app_bar.dart                                | Dart     |         35 |          0 |          5 |         40 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\admin_users_card.dart                                 | Dart     |         96 |          1 |          4 |        101 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\approved venues\admin_approved_venue_summary.dart     | Dart     |         12 |          0 |         -1 |         11 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\approved venues\admin_approved_venues_bar.dart        | Dart     |         17 |          0 |          0 |         17 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\dialogs\admin_actions_dialog.dart                     | Dart     |          6 |          0 |          0 |          6 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\events_jo_logo_admin.dart                             | Dart     |         65 |          0 |          3 |         68 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\menu_tab_bar.dart                                     | Dart     |         31 |          2 |          0 |         33 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\no_requests_left.dart                                 | Dart     |          4 |          0 |          1 |          5 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\owners\admin_owner_summary.dart                       | Dart     |         94 |          8 |         13 |        115 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\tab_item.dart                                         | Dart     |         23 |        -22 |          0 |          1 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\unapproved venues\admin_unapproved_venue_summary.dart | Dart     |         12 |          0 |         -2 |         10 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\unapproved venues\admin_upapproved_venues_bar.dart    | Dart     |         17 |          0 |          0 |         17 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\components\users\admin_user_summary.dart                         | Dart     |         94 |          8 |         12 |        114 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\admin approve\admin_approve_cubit.dart                    | Dart     |       -104 |        -18 |        -17 |       -139 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\admin approve\admin_approve_states.dart                   | Dart     |        -14 |         -4 |         -9 |        -27 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\admin unapprove\admin_unapprove_cubit.dart                | Dart     |       -114 |        -23 |        -20 |       -157 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\admin unapprove\admin_unapprove_states.dart               | Dart     |        -16 |         -4 |        -11 |        -31 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\owners count\admin_owners_count_cubit.dart                | Dart     |         51 |         13 |         14 |         78 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\owners count\admin_owners_count_states.dart               | Dart     |         12 |          4 |          8 |         24 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\owners online\admin_owners_online_cubit.dart              | Dart     |         23 |          5 |          7 |         35 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\owners online\admin_owners_online_states.dart             | Dart     |         12 |          4 |          8 |         24 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\single owner\admin_single_owner_cubit.dart                | Dart     |         32 |          6 |          9 |         47 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\single owner\admin_single_owner_states.dart               | Dart     |         13 |          4 |          9 |         26 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\single user\admin_single_user_cubit.dart                  | Dart     |         32 |          6 |          9 |         47 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\single user\admin_single_user_states.dart                 | Dart     |         13 |          4 |          9 |         26 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\single venue\admin_single_venue_cubit.dart                | Dart     |        142 |         11 |         21 |        174 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\single venue\admin_single_venue_states.dart               | Dart     |         16 |          5 |         10 |         31 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\users count\admin_users_count_cubit.dart                  | Dart     |         51 |         13 |         14 |         78 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\users count\admin_users_count_states.dart                 | Dart     |         12 |          4 |          8 |         24 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\users online\admin_users_online_cubit.dart                | Dart     |         23 |          5 |          7 |         35 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\users online\admin_users_online_states.dart               | Dart     |         12 |          4 |          8 |         24 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\venues\approve\admin_approve_cubit.dart                   | Dart     |        154 |         31 |         26 |        211 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\venues\approve\admin_approve_states.dart                  | Dart     |         14 |          4 |          9 |         27 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\venues\unapprove\admin_unapprove_cubit.dart               | Dart     |        169 |         38 |         29 |        236 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\cubits\venues\unapprove\admin_unapprove_states.dart              | Dart     |         16 |          4 |         11 |         31 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\admin_page_for_venues.dart                                 | Dart     |        -34 |         -2 |         -2 |        -38 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\owners\admin_owner_details_page.dart                       | Dart     |         96 |         12 |         16 |        124 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\owners\admin_owners_list_page.dart                         | Dart     |         89 |          6 |          9 |        104 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\users\admin_user_details_page.dart                         | Dart     |         96 |         11 |         16 |        123 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\users\admin_users_list_page.dart                           | Dart     |         89 |          6 |          9 |        104 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\venues\approved\admin_approved_venue_details.dart          | Dart     |          6 |          5 |         -3 |          8 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\venues\approved\admin_approved_venues.dart                 | Dart     |          9 |          0 |         -1 |          8 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\venues\unapproved\admin_unapproved_venue_details.dart      | Dart     |          7 |          5 |         -3 |          9 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\admin\presentation\pages\venues\unapproved\admin_unapproved_venues.dart             | Dart     |         13 |          0 |          0 |         13 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\data\firebase_auth_repo.dart                                                   | Dart     |         16 |          3 |          3 |         22 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\domain\entities\app_user.dart                                                  | Dart     |          4 |          0 |          0 |          4 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\domain\repos\auth_repo.dart                                                    | Dart     |          6 |          0 |          0 |          6 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\representation\components\auth_button.dart                                     | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\representation\components\auth_error_card.dart                                 | Dart     |         35 |          0 |          3 |         38 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\representation\components\auth_text_field.dart                                 | Dart     |          1 |          1 |          0 |          2 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\representation\components\choose_location_method.dart                          | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\representation\cubits\auth_cubit.dart                                          | Dart     |          3 |          1 |          3 |          7 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\representation\cubits\auth_states.dart                                         | Dart     |          3 |          0 |          0 |          3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\representation\pages\login_page.dart                                           | Dart     |         -6 |          0 |          0 |         -6 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\auth\representation\pages\register_page.dart                                        | Dart     |         -8 |         -9 |         -1 |        -18 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\home\presentation\components\events_jo_logo.dart                                    | Dart     |          0 |         -1 |          0 |         -1 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\home\presentation\components\home_card.dart                                         | Dart     |         -3 |          1 |          0 |         -2 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\home\presentation\components\owner_button.dart                                      | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\home\presentation\pages\home_page.dart                                              | Dart     |          1 |        -11 |         -2 |        -12 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\home\presentation\pages\home_page_for_admins.dart                                   | Dart     |        173 |         30 |         27 |        230 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\home\presentation\pages\home_page_for_owners.dart                                   | Dart     |         -5 |          3 |         -2 |         -4 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\location\representation\components\location_loading_dialog.dart                     | Dart     |          7 |          0 |          1 |          8 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\location\representation\components\map_dialog_preview.dart                          | Dart     |         -4 |          0 |          0 |         -4 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\data\firebase_owner_repo.dart                                                 | Dart     |          1 |          0 |          0 |          1 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\date_picker.dart                                    | Dart     |         -2 |          0 |          0 |         -2 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\dialogs\drinks_dialog_preview.dart                  | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\dialogs\image_on_tap_dialog.dart                    | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\dialogs\images_dialog_preview.dart                  | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\dialogs\meals_dialog_preview.dart                   | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\owner_app_bar.dart                                  | Dart     |         73 |          3 |         10 |         86 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\owner_confirmation_display_row.dart                 | Dart     |         -6 |          0 |          0 |         -6 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\owner_drink_card.dart                               | Dart     |          2 |          0 |         -1 |          1 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\owner_meal_card.dart                                | Dart     |          3 |          0 |         -2 |          1 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\owner_page_bar.dart                                 | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\components\owner_page_navigation_bar.dart                      | Dart     |         -9 |          0 |          0 |         -9 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\cubits\owner_cubit.dart                                        | Dart     |          3 |          1 |          1 |          5 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\pages\owner_page.dart                                          | Dart     |         -2 |          0 |         -1 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\pages\sub pages\select_event_drinks.dart                       | Dart     |          3 |          0 |          0 |          3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\owner\representation\pages\sub pages\select_event_meals.dart                        | Dart     |          5 |          0 |          0 |          5 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\domain\entities\wedding_venue.dart                                         | Dart     |          4 |          0 |          0 |          4 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\domain\entities\wedding_venue_detailed.dart                                | Dart     |         13 |          0 |          3 |         16 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\domain\entities\wedding_venue_drink.dart                                   | Dart     |          1 |          0 |          1 |          2 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\domain\entities\wedding_venue_meal.dart                                    | Dart     |          1 |          0 |          1 |          2 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\representation\components\details\venue_date_picker.dart                   | Dart     |         -2 |          0 |          0 |         -2 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\representation\components\details\venue_name_rating_and_location.dart      | Dart     |         -2 |          0 |          0 |         -2 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\representation\components\details\venue_people_slider.dart                 | Dart     |         -5 |          0 |          0 |         -5 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\representation\components\drink_card.dart                                  | Dart     |         -5 |          0 |          0 |         -5 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\representation\components\meal_card.dart                                   | Dart     |         -5 |          0 |          0 |         -5 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\representation\components\venue_card.dart                                  | Dart     |         -3 |          0 |          0 |         -3 |
+| d:\Flutterrrr\FlutterProjects\events_jo\lib\features\weddings\representation\components\venue_details_button.dart                        | Dart     |         -3 |          0 |          0 |         -3 |
+| Total                                                                                                                                    |          |      2,361 |        160 |        344 |      2,865 |
++------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

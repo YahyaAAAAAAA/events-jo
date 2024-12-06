@@ -1,20 +1,21 @@
 class WeddingVenue {
   late String id;
   late String name;
-  late double latitude;
-  late double longitude;
   late String ownerId;
   late String ownerName;
   late int rate;
+  late int peopleMax;
+  late int peopleMin;
+  late double latitude;
+  late double longitude;
+  late double peoplePrice;
   late bool isOpen;
   late bool isApproved;
+  late bool isBeingApproved;
   late List<dynamic> pics;
   late List<dynamic> startDate;
   late List<dynamic> endDate;
   late List<dynamic> time;
-  late int peopleMax;
-  late int peopleMin;
-  late double peoplePrice;
 
   WeddingVenue({
     required this.id,
@@ -24,6 +25,7 @@ class WeddingVenue {
     required this.rate,
     required this.isOpen,
     required this.isApproved,
+    required this.isBeingApproved,
     required this.pics,
     required this.ownerId,
     required this.ownerName,
@@ -45,6 +47,7 @@ class WeddingVenue {
       'rate': rate,
       'isOpen': isOpen,
       'isApproved': isApproved,
+      'isBeingApproved': isBeingApproved,
       'pics': pics,
       'ownerId': ownerId,
       'ownerName': ownerName,
@@ -66,6 +69,7 @@ class WeddingVenue {
     rate = jsonVenue['rate'];
     isOpen = jsonVenue['isOpen'];
     isApproved = jsonVenue['isApproved'];
+    isBeingApproved = jsonVenue['isBeingApproved'];
     pics = jsonVenue['pics'];
     ownerId = jsonVenue['ownerId'];
     ownerName = jsonVenue['ownerName'];

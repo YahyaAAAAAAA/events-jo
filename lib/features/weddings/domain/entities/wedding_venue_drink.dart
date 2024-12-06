@@ -1,3 +1,5 @@
+import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
+
 class WeddingVenueDrink {
   late String id;
   late String name;
@@ -31,7 +33,7 @@ class WeddingVenueDrink {
   //convert json to wedding venue
   WeddingVenueDrink.fromJson(Map<String, dynamic> jsonVenue) {
     id = jsonVenue['id'];
-    name = jsonVenue['name'];
+    name = jsonVenue['name'].toString().toCapitalized;
     amount = jsonVenue['amount'];
     price = jsonVenue['price'].toDouble();
   }

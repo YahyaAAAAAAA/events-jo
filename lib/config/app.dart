@@ -157,7 +157,7 @@ class MyApp extends StatelessWidget {
             }
             //loading...
             else if (state is AuthLoading) {
-              return GlobalLoadingBar(subText: state.message);
+              return Scaffold(body: GlobalLoadingBar(subText: state.message));
             }
             //error
             else {

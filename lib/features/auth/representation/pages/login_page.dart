@@ -50,86 +50,80 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              // logo
+              const Center(child: EventsJoLogoAuth()),
+
+              const SizedBox(height: 10),
+
+              //welcome back message
+              Text(
+                "Login to EventsJo",
+                style: TextStyle(
+                  color: GColors.black,
+                  fontSize: 22,
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              //email textField
+              AuthTextField(
+                controller: emailController,
+                hintText: "Email",
+                obscureText: false,
+              ),
+
+              const SizedBox(height: 10),
+
+              //pw textField
+              AuthTextField(
+                controller: pwController,
+                hintText: "Password",
+                obscureText: true,
+              ),
+
+              const SizedBox(height: 25),
+
+              //login button
+              AuthButton(
+                onTap: login,
+                text: 'Login',
+                icon: Icons.arrow_forward_ios,
+              ),
+
+              const SizedBox(height: 50),
+
+              //not a member ? register now
+              Wrap(
+                alignment: WrapAlignment.center,
                 children: [
-                  // logo
-                  const EventsJoLogoAuth(),
-
-                  const SizedBox(height: 25),
-
-                  //welcome back message
-                  FittedBox(
+                  Text(
+                    'Don\'t have an account ?',
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: 17,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: widget.onTap,
                     child: Text(
-                      "Login to EventsJo",
+                      ' Register now!',
                       style: TextStyle(
-                        color: GColors.black,
-                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: GColors.royalBlue,
+                        fontSize: 17,
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 25),
-
-                  //email textField
-                  AuthTextField(
-                    controller: emailController,
-                    hintText: "Email",
-                    obscureText: false,
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  //pw textField
-                  AuthTextField(
-                    controller: pwController,
-                    hintText: "Password",
-                    obscureText: true,
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  //login button
-                  AuthButton(
-                    onTap: login,
-                    text: 'Login',
-                    icon: Icons.arrow_forward_ios,
-                  ),
-
-                  const SizedBox(height: 50),
-
-                  //not a member ? register now
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    children: [
-                      Text(
-                        'Don\'t have an account ?',
-                        style: TextStyle(
-                          color: GColors.black,
-                          fontSize: 17,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: widget.onTap,
-                        child: Text(
-                          ' Register now!',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: GColors.royalBlue,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
-            ),
+            ],
           ),
         ),
       ),

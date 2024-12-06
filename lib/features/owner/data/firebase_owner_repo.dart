@@ -47,6 +47,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
       time: time,
       isOpen: true,
       isApproved: false,
+      isBeingApproved: false,
       peopleMax: peopleMax,
       peopleMin: peopleMin,
       peoplePrice: peoplePrice,

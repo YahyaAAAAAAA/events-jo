@@ -4,6 +4,7 @@ import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
+import 'package:events_jo/features/owner/representation/components/owner_app_bar.dart';
 import 'package:events_jo/features/owner/representation/components/owner_drink_card.dart';
 import 'package:events_jo/features/owner/representation/components/owner_meal_card.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_bar_handler.dart';
@@ -155,16 +156,11 @@ class _OwnerPageState extends State<OwnerPage> {
         appBar: AppBar(
           //hides back button
           leading: const SizedBox(),
+          leadingWidth: 0,
           //note: remove appbar color when scrolling
           surfaceTintColor: Colors.transparent,
           centerTitle: true,
-          title: Text(
-            '( ${(index + 1).toString()}/10 )',
-            style: TextStyle(
-              color: GColors.poloBlue,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          title: OwnerAppBar(index: index),
         ),
         //loads children only when needed
         body: Center(
@@ -176,7 +172,6 @@ class _OwnerPageState extends State<OwnerPage> {
               index: index,
               children: [
                 //* owner sub pages
-
                 //type
                 SelectEventType(
                   selectedEventType: selectedEventType,
