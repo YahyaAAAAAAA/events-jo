@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
@@ -6,18 +8,12 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   @override
-  Stream<List<WeddingVenue>> getWeddingVenuesStream() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getWeddingVenuesStream() {
     //notifies of query results at this 'venues' collection
     return firebaseFirestore
         .collection('venues')
         .where('isApproved', isEqualTo: true) // listen only to approved venues
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        //get venue obj from json then as list
-        return WeddingVenue.fromJson(doc.data());
-      }).toList();
-    });
+        .snapshots();
   }
 
   //! DEPRECATED
@@ -40,5 +36,16 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
           (venue) => WeddingVenue.fromJson(venue),
         )
         .toList();
+  }
+
+  @override
+  String generateUniqueId() {
+    //current time (from year to microsecond)
+    final now = DateTime.now();
+    //get random number between 0 and 99999
+    int randomValue = Random().nextInt(100000);
+
+    //id example -> 2024111609413072511999
+    return "${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}${now.microsecond}$randomValue";
   }
 }

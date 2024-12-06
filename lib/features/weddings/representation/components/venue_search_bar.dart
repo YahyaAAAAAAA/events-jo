@@ -2,7 +2,7 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class VenueSearchBar extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final void Function()? onPressed;
   final void Function(String)? onChanged;
   const VenueSearchBar({
@@ -18,6 +18,7 @@ class VenueSearchBar extends StatelessWidget {
         ? Padding(
             padding: const EdgeInsets.all(10),
             child: SearchBar(
+              constraints: const BoxConstraints(maxWidth: 320),
               controller: controller,
               hintText: 'Search Venues...',
               shadowColor: WidgetStatePropertyAll(

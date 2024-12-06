@@ -6,6 +6,7 @@ class AdminButton extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry buttonPadding;
   final void Function()? onPressed;
+  final bool isLoading;
 
   const AdminButton({
     super.key,
@@ -13,6 +14,7 @@ class AdminButton extends StatelessWidget {
     required this.icon,
     required this.padding,
     required this.buttonPadding,
+    required this.isLoading,
   });
 
   @override
@@ -37,7 +39,7 @@ class AdminButton extends StatelessWidget {
         icon: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            gradient: GColors.adminGradient,
+            gradient: !isLoading ? GColors.adminGradient : null,
           ),
           child: Padding(
             padding: buttonPadding,

@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => WeddingVenuesPage(
-                          appUser: widget.user,
+                          user: widget.user,
                         ),
                       ),
                     ),

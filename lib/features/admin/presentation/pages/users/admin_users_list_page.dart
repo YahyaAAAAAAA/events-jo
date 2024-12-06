@@ -2,7 +2,7 @@ import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
-import 'package:events_jo/config/utils/loading/global_loading_admin.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_loading_users_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_sub_app_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_users_card.dart';
 import 'package:events_jo/features/admin/presentation/components/no_requests_left.dart';
@@ -65,6 +65,7 @@ class _AdminUsersListPageState extends State<AdminUsersListPage> {
                   name: users[index].name,
                   index: index,
                   isOnline: users[index].isOnline,
+                  isLoading: false,
                   key: Key(widget.adminUsersCountCubit.generateUniqueId()),
                   //navigate to users details
                   onPressed: () => Navigator.of(context).push(
@@ -84,7 +85,7 @@ class _AdminUsersListPageState extends State<AdminUsersListPage> {
           }
           //loading...
           else {
-            return const GlobalLoadingAdminBar(mainText: false);
+            return const AdminLoadingUsersCard();
           }
         },
         listener: (context, state) {
@@ -94,6 +95,7 @@ class _AdminUsersListPageState extends State<AdminUsersListPage> {
               context: context,
               text: state.messege,
               color: GColors.cyanShade6,
+              gradient: GColors.adminGradient,
             );
           }
         },

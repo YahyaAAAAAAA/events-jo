@@ -71,6 +71,7 @@ class AdminCard extends StatelessWidget {
               AdminButton(
                 onPressed: onPressed,
                 padding: EdgeInsets.zero,
+                isLoading: false,
                 buttonPadding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 icon: Icons.arrow_forward_ios_rounded,

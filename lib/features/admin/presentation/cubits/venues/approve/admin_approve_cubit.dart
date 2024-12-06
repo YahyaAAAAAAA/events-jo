@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
@@ -32,6 +33,8 @@ class AdminApproveCubit extends Cubit<AdminApproveStates> {
         final currentState = state;
         List<WeddingVenue> currentVenues = [];
 
+        await Delay.oneSecond();
+
         //get current venues
         if (currentState is AdminApproveLoaded) {
           currentVenues = List.from(currentState.venues);
@@ -55,6 +58,7 @@ class AdminApproveCubit extends Cubit<AdminApproveStates> {
               currentVenues.add(venue);
             }
           }
+
           //update
           else if (change.type == DocumentChangeType.modified) {
             //get updated venue index
@@ -64,6 +68,7 @@ class AdminApproveCubit extends Cubit<AdminApproveStates> {
               currentVenues[index] = venue;
             }
           }
+
           //remove
           else if (change.type == DocumentChangeType.removed) {
             currentVenues.removeWhere((v) => v.id == venue.id);
@@ -75,6 +80,8 @@ class AdminApproveCubit extends Cubit<AdminApproveStates> {
       onError: (error) {
         //error
         emit(AdminApproveError(error.toString()));
+
+        return [];
       },
     );
     return weddingVenues;

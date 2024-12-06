@@ -1,15 +1,14 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
+class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppUser? user;
   final PreferredSize? bottom;
 
-  const AdminAppBar({
+  const VenuesAppBar({
     super.key,
     required this.user,
     this.bottom,
@@ -23,10 +22,17 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         leading: AppBarButton(
-          onPressed: () =>
-              context.read<AuthCubit>().logout(user!.uid, user!.type),
-          icon: Icons.person,
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icons.arrow_back_ios_new_rounded,
           size: 25,
+        ),
+        centerTitle: true,
+        title: Text(
+          'Wedding Venues in Jordan',
+          style: TextStyle(
+            color: GColors.black,
+            fontSize: 20,
+          ),
         ),
         bottom: bottom,
         actions: [

@@ -1,12 +1,12 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_app_bar.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_card_dashboard.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_loading_card.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_dashboard_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_card.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_card_events.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_home_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_divider.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_error_card.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_loading_card.dart';
 import 'package:events_jo/features/admin/presentation/components/events_jo_logo_admin.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_states.dart';
@@ -165,7 +165,7 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                 if (state is AdminUsersOnlineLoaded) {
                   final users = state.users;
 
-                  return AdminCardDashboard(
+                  return AdminDashboardCard(
                     count: users.length.toString(),
                     icon: Icons.circle,
                     text: 'Online Users   ',
@@ -191,7 +191,7 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                 //done
                 if (state is AdminOwnersOnlineLoaded) {
                   final owners = state.owners;
-                  return AdminCardDashboard(
+                  return AdminDashboardCard(
                     count: owners.length.toString(),
                     icon: Icons.circle,
                     text: 'Online Owners',
@@ -221,7 +221,7 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                 //done
                 if (state is AdminApproveLoaded) {
                   final venues = state.venues;
-                  return AdminCardEvents(
+                  return AdminHomeCard(
                     count: venues.length.toString(),
                     icon: CustomIcons.wedding,
                     text: 'Approved Venues     ',
@@ -246,7 +246,7 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                 //done
                 if (state is AdminUnapproveLoaded) {
                   final venues = state.venues;
-                  return AdminCardEvents(
+                  return AdminHomeCard(
                     count: venues.length.toString(),
                     icon: CustomIcons.rings_wedding,
                     text: 'Unapproved Venues ',

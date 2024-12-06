@@ -1,6 +1,7 @@
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
-import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/loading/global_loading.dart';
+import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_search_bar_button.dart';
+import 'package:events_jo/features/weddings/representation/components/venues_app_bar.dart';
+import 'package:events_jo/features/weddings/representation/components/venues_list_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
@@ -13,11 +14,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WeddingVenuesPage extends StatefulWidget {
   //get user
-  final AppUser? appUser;
+  final AppUser? user;
 
   const WeddingVenuesPage({
     super.key,
-    required this.appUser,
+    required this.user,
   });
 
   @override
@@ -25,6 +26,7 @@ class WeddingVenuesPage extends StatefulWidget {
 }
 
 class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
+  late final AppUser user;
   late List<WeddingVenue> filterdWeddingVenuList = [];
   late final WeddingVenueCubit weddingVenueCubit;
   final TextEditingController searchController = TextEditingController();
@@ -32,6 +34,9 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   @override
   void initState() {
     super.initState();
+
+    //get user
+    user = widget.user!;
 
     //get cubit
     weddingVenueCubit = context.read<WeddingVenueCubit>();
@@ -49,52 +54,11 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: FittedBox(
-          child: Text(
-            'Wedding Venues in Jordan',
-            style: TextStyle(
-              color: GColors.black,
-            ),
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          //todo make sort menu
-          //sort by closest,rating and availability
-
-          //sort
-          TextButton(
-            onPressed: () {
-              weddingVenueCubit.sortFromClosest(
-                //todo weddingVenueList,
-                [],
-                widget.appUser!.latitude,
-                widget.appUser!.longitude,
-              );
-            },
-            child: Icon(
-              CustomIcons.sort,
-              color: GColors.black,
-              size: 20,
-            ),
-          )
-        ],
-
-        //back button
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: GColors.black,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: VenuesAppBar(user: widget.user),
       //states
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 400),
+          constraints: const BoxConstraints(maxWidth: 450),
           child: BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
             builder: (context, state) {
               //list ready
@@ -105,23 +69,56 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                 return Column(
                   children: [
                     //* search bar
-                    VenueSearchBar(
-                      controller: searchController,
-                      onPressed: () => setState(() => searchController.clear()),
-                      onChanged: (venue) => weddingVenueCubit.searchList(
-                        venues,
-                        filterdWeddingVenuList,
-                        venue,
-                      ),
+                    Row(
+                      children: [
+                        FittedBox(
+                          child: VenueSearchBar(
+                            controller: searchController,
+                            onPressed: () =>
+                                setState(() => searchController.clear()),
+                            onChanged: (venue) => weddingVenueCubit.searchList(
+                              venues,
+                              filterdWeddingVenuList,
+                              venue,
+                            ),
+                          ),
+                        ),
+
+                        //sort menu
+                        VenueSearchBarButton(
+                          onOpened: () =>
+                              setState(() => searchController.clear()),
+                          //todo sort alpha (deleted later)
+                          onTapAlpha: () => weddingVenueCubit.sortAlpha(venues),
+                          //sort from closest
+                          onTapNearest: () => weddingVenueCubit.sortFromClosest(
+                            venues,
+                            user.latitude,
+                            user.longitude,
+                          ),
+                          //sort by rate
+                          onTapRate: () => GSnackBar.show(
+                            context: context,
+                            text: 'Coming Soon',
+                          ),
+                        ),
+                      ],
                     ),
 
                     //* venues list
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: searchController.text.isEmpty
-                            ? venues.length
-                            : filterdWeddingVenuList.length,
+                      child: AnimatedListView(
+                        items: searchController.text.isEmpty
+                            ? venues
+                            : filterdWeddingVenuList,
+                        enterTransition: [SlideInLeft()],
+                        exitTransition: [SlideInLeft()],
+                        insertDuration: const Duration(milliseconds: 300),
+                        removeDuration: const Duration(milliseconds: 300),
+                        isSameItem: (a, b) => a.id == b.id,
                         itemBuilder: (context, index) => VenueCard(
+                          isLoading: false,
+                          key: Key(weddingVenueCubit.generateUniqueId()),
                           weddingVenue: searchController.text.isEmpty
                               ? venues[index]
                               : filterdWeddingVenuList[index],
@@ -141,9 +138,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
 
               //loading...
               else {
-                return const Center(
-                  child: GlobalLoadingBar(mainText: false),
-                );
+                return const VenuesListLoading();
               }
             },
             listener: (context, state) {

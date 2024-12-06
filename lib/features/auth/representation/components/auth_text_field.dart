@@ -13,6 +13,7 @@ class AuthTextField extends StatelessWidget {
   final bool isOnlyDouble;
   final bool isOnlyInt;
   final int? maxLength;
+  final BorderRadius? borderRadius;
 
   const AuthTextField({
     super.key,
@@ -26,6 +27,7 @@ class AuthTextField extends StatelessWidget {
     this.isOnlyDouble = false,
     this.isOnlyInt = false,
     this.maxLength = null,
+    this.borderRadius,
   });
 
   @override
@@ -76,7 +78,7 @@ class AuthTextField extends StatelessWidget {
           borderSide: BorderSide(
             color: GColors.whiteShade3,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: borderRadius ?? BorderRadius.circular(12),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: GColors.royalBlue, width: 1),

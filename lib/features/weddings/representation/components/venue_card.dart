@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
@@ -8,9 +9,11 @@ import 'package:flutter/material.dart';
 
 class VenueCard extends StatelessWidget {
   final WeddingVenue weddingVenue;
+  final bool isLoading;
   const VenueCard({
     super.key,
     required this.weddingVenue,
+    required this.isLoading,
   });
 
   //todo move this to the cubit
@@ -161,15 +164,22 @@ class VenueCard extends StatelessWidget {
                     padding: const EdgeInsets.all(15),
                     //navigate to details page
                     child: IconButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WeddingVenuesDetailsPage(
-                            weddingVenue: weddingVenue,
-                            picsList: addPicsToList(),
-                          ),
-                        ),
-                      ),
+                      onPressed: !weddingVenue.isBeingApproved
+                          ? () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      WeddingVenuesDetailsPage(
+                                    weddingVenue: weddingVenue,
+                                    picsList: addPicsToList(),
+                                  ),
+                                ),
+                              )
+                          : () => GSnackBar.show(
+                                context: context,
+                                text:
+                                    'The venue is being inspected by our team',
+                              ),
                       style: ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(GColors.white),
                         shadowColor: WidgetStatePropertyAll(
@@ -185,13 +195,17 @@ class VenueCard extends StatelessWidget {
                       icon: Ink(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          gradient: GColors.logoGradient,
+                          gradient: !isLoading ? GColors.logoGradient : null,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 15),
+                            vertical: 20,
+                            horizontal: 15,
+                          ),
                           child: Icon(
-                            Icons.arrow_forward_ios,
+                            !weddingVenue.isBeingApproved
+                                ? Icons.arrow_forward_ios
+                                : Icons.lock_person_outlined,
                             color: GColors.white,
                           ),
                         ),

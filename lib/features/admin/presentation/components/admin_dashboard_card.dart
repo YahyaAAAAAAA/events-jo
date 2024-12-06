@@ -2,13 +2,13 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class AdminCardDashboard extends StatelessWidget {
+class AdminDashboardCard extends StatelessWidget {
   final String count;
   final String text;
   final String animation;
   final IconData icon;
 
-  const AdminCardDashboard({
+  const AdminDashboardCard({
     super.key,
     required this.count,
     required this.text,

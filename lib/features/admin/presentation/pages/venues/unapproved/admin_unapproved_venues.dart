@@ -2,8 +2,8 @@ import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
-import 'package:events_jo/config/utils/loading/global_loading_admin.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_events_card.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_event_list_loading_card.dart';
 import 'package:events_jo/features/admin/presentation/components/no_requests_left.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_states.dart';
@@ -63,6 +63,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
                 key: Key(widget.adminUnapproveCubit.generateUniqueId()),
                 isApproved: venues[index].isApproved,
                 isBeingApproved: venues[index].isBeingApproved,
+                isLoading: false,
                 //navigate to venue details
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(
@@ -82,13 +83,17 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
         }
         //loading...
         else {
-          return const GlobalLoadingAdminBar(mainText: false);
+          return const AdminEventListLoadingCard();
         }
       },
       listener: (context, state) {
         //error
         if (state is AdminUnapproveError) {
-          GSnackBar.show(context: context, text: state.message);
+          GSnackBar.show(
+            context: context,
+            text: state.message,
+            gradient: GColors.adminGradient,
+          );
         }
 
         //approval loading dialog
@@ -107,6 +112,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
             context: context,
             text: 'Venue Approved Successfully',
             color: GColors.cyanShade6,
+            gradient: GColors.adminGradient,
           );
         }
 
@@ -126,6 +132,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
             context: context,
             text: 'Venue Denyed Successfully',
             color: GColors.cyanShade6,
+            gradient: GColors.adminGradient,
           );
         }
       },

@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/config/algorithms/haversine.dart';
+import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_states.dart';
@@ -11,22 +13,70 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
   WeddingVenueCubit({required this.weddingVenueRepo})
       : super(WeddingVenueInit());
 
-  //listen to venues stream (in real time)
-  void getWeddingVenuesStream() {
+  //listen to venues stream
+  List<WeddingVenue> getWeddingVenuesStream() {
     //loading...
     emit(WeddingVenueLoading());
 
+    List<WeddingVenue> weddingVenues = [];
+
     //start listening
     weddingVenueRepo.getWeddingVenuesStream().listen(
-      (venues) {
+      (snapshot) async {
+        final currentState = state;
+        List<WeddingVenue> currentVenues = [];
+
+        await Delay.oneSecond();
+
+        //get current venues
+        if (currentState is WeddingVenueLoaded) {
+          currentVenues = List.from(currentState.venues);
+        }
+
+        for (var change in snapshot.docChanges) {
+          //get change data
+          final data = change.doc.data();
+
+          //ignore if change is null
+          if (data == null) continue;
+
+          //current venue for the change
+          final venue = WeddingVenue.fromJson(data);
+
+          //add
+          if (change.type == DocumentChangeType.added) {
+            //check if the venue already exists before adding
+            final exists = currentVenues.any((v) => v.id == venue.id);
+            if (!exists) {
+              currentVenues.add(venue);
+            }
+          }
+          //update
+          else if (change.type == DocumentChangeType.modified) {
+            //get updated venue index
+            final index = currentVenues.indexWhere((v) => v.id == venue.id);
+
+            if (index != -1) {
+              currentVenues[index] = venue;
+            }
+          }
+          //remove
+          else if (change.type == DocumentChangeType.removed) {
+            currentVenues.removeWhere((v) => v.id == venue.id);
+          }
+        }
+
         //done
-        emit(WeddingVenueLoaded(venues));
+        emit(WeddingVenueLoaded(currentVenues));
       },
       onError: (error) {
         //error
         emit(WeddingVenueError(error.toString()));
+
+        return [];
       },
     );
+    return weddingVenues;
   }
 
   //! DEPRECATED
@@ -39,6 +89,10 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
     emit(WeddingVenueLoaded(weddingVenuesList));
 
     return weddingVenuesList;
+  }
+
+  String generateUniqueId() {
+    return weddingVenueRepo.generateUniqueId();
   }
 
   //search given list
@@ -65,41 +119,41 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
   }
 
   //sort given list alphabetically
-  List<WeddingVenue> sortAlpha(List<WeddingVenue> weddingVenuList) {
+  List<WeddingVenue> sortAlpha(List<WeddingVenue> weddingVenueList) {
     //loading..
     emit(WeddingVenueLoading());
 
     //start sorting
-    weddingVenuList.sort(
+    weddingVenueList.sort(
       (a, b) => a.name.trim()[0].compareTo(b.name.trim()[0]),
     );
 
     //done
-    emit(WeddingVenueLoaded(weddingVenuList));
+    emit(WeddingVenueLoaded(weddingVenueList));
 
-    return weddingVenuList;
+    return weddingVenueList;
   }
 
   //sort given list based on the user's location
   List<WeddingVenue> sortFromClosest(
-      List<WeddingVenue> weddingVenuList, double lat, double long) {
+      List<WeddingVenue> weddingVenueList, double lat, double long) {
     //loading..
     emit(WeddingVenueLoading());
 
-    //same list but sorted from closest to furthest from the user (as json)
+    //sort from closest to furthest from the user (as json)
     List sortedList = haversine.getSortedLocations(
-        lat, long, weddingVenuList.map((venue) => venue.toJson()).toList());
+        lat, long, weddingVenueList.map((venue) => venue.toJson()).toList());
 
     //ensure list clear
-    weddingVenuList.clear();
+    weddingVenueList.clear();
 
     //convert sorted list to wedding venue and add it
-    weddingVenuList
+    weddingVenueList
         .addAll(sortedList.map((e) => WeddingVenue.fromJson(e)).toList());
 
     //done
-    emit(WeddingVenueLoaded(weddingVenuList));
+    emit(WeddingVenueLoaded(weddingVenueList));
 
-    return weddingVenuList;
+    return weddingVenueList;
   }
 }

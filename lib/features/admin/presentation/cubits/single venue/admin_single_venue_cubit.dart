@@ -13,8 +13,6 @@ class AdminSingleVenueCubit extends Cubit<AdminSingleVenueStates> {
   AdminSingleVenueCubit({required this.adminRepo})
       : super(AdminSingleVenueInit());
 
-  //todo skeletonizer, check for performance, venues page animation,
-  //merged streams for venue details, image for string algo
   void getVenueStream(String id) {
     emit(AdminSingleVenueLoading());
 

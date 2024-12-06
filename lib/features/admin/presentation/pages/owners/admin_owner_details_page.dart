@@ -109,12 +109,17 @@ class _AdminOwnerDetailsPageState extends State<AdminOwnerDetailsPage> {
               context: context,
               text: 'A change has occurred',
               color: GColors.cyanShade6,
+              gradient: GColors.adminGradient,
             );
           }
 
           //error
           if (state is AdminSingleOwnerError) {
-            GSnackBar.show(context: context, text: state.messege);
+            GSnackBar.show(
+              context: context,
+              text: state.messege,
+              gradient: GColors.adminGradient,
+            );
           }
         },
       ),

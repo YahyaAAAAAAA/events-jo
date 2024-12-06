@@ -147,12 +147,17 @@ class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
               context: context,
               text: state.change,
               color: GColors.cyanShade6,
+              gradient: GColors.adminGradient,
             );
           }
 
           //error
           if (state is AdminSingleVenueError) {
-            GSnackBar.show(context: context, text: state.messege);
+            GSnackBar.show(
+              context: context,
+              text: state.messege,
+              gradient: GColors.adminGradient,
+            );
           }
         },
       ),

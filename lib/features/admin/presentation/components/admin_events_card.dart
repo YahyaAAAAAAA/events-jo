@@ -9,6 +9,7 @@ class AdminEventsCard extends StatelessWidget {
   final int index;
   final bool isApproved;
   final bool isBeingApproved;
+  final bool isLoading;
   final void Function()? onPressed;
 
   const AdminEventsCard({
@@ -18,6 +19,7 @@ class AdminEventsCard extends StatelessWidget {
     required this.owner,
     required this.isApproved,
     required this.isBeingApproved,
+    required this.isLoading,
     required this.onPressed,
   });
 
@@ -111,6 +113,7 @@ class AdminEventsCard extends StatelessWidget {
                   //venue is open to review
                   AdminButton(
                       onPressed: onPressed,
+                      isLoading: isLoading,
                       padding: const EdgeInsets.all(15),
                       buttonPadding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 20),
@@ -122,7 +125,9 @@ class AdminEventsCard extends StatelessWidget {
                         context: context,
                         text: 'The venue is being approved by another admin',
                         color: GColors.cyanShade6,
+                        gradient: GColors.adminGradient,
                       ),
+                      isLoading: isLoading,
                       padding: const EdgeInsets.all(15),
                       buttonPadding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 20),

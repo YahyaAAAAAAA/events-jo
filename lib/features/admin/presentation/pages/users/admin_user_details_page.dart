@@ -108,12 +108,17 @@ class _AdminUserDetailsPageState extends State<AdminUserDetailsPage> {
               context: context,
               text: 'A change has occurred',
               color: GColors.cyanShade6,
+              gradient: GColors.adminGradient,
             );
           }
 
           //error
           if (state is AdminSingleUserError) {
-            GSnackBar.show(context: context, text: state.messege);
+            GSnackBar.show(
+              context: context,
+              text: state.messege,
+              gradient: GColors.adminGradient,
+            );
           }
         },
       ),

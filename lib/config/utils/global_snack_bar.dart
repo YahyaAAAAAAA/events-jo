@@ -10,6 +10,7 @@ class GSnackBar {
     Duration? duration,
     Color? color,
     Color? textColor,
+    Gradient? gradient,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -22,6 +23,7 @@ class GSnackBar {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: color ?? GColors.royalBlue,
+              gradient: gradient ?? GColors.logoGradient,
               boxShadow: [
                 BoxShadow(
                   color: color != null
@@ -32,7 +34,14 @@ class GSnackBar {
                 )
               ]),
           child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 5,
             children: [
+              Icon(
+                Icons.notifications_active_rounded,
+                color: GColors.white,
+                size: 30,
+              ),
               Text(
                 text,
                 style: TextStyle(

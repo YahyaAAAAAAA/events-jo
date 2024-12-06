@@ -6,6 +6,7 @@ class AdminUsersCard extends StatelessWidget {
   final String name;
   final int index;
   final bool isOnline;
+  final bool isLoading;
   final void Function()? onPressed;
 
   const AdminUsersCard({
@@ -13,6 +14,7 @@ class AdminUsersCard extends StatelessWidget {
     required this.name,
     required this.index,
     required this.isOnline,
+    required this.isLoading,
     required this.onPressed,
   });
 
@@ -86,6 +88,7 @@ class AdminUsersCard extends StatelessWidget {
               ),
               AdminButton(
                 onPressed: onPressed,
+                isLoading: isLoading,
                 padding: const EdgeInsets.all(10),
                 buttonPadding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

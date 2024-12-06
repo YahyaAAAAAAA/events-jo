@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
@@ -31,6 +32,8 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
       (snapshot) async {
         final currentState = state;
         List<WeddingVenue> currentVenues = [];
+
+        await Delay.oneSecond();
 
         //get current venues
         if (currentState is AdminUnapproveLoaded) {
