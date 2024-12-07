@@ -40,156 +40,158 @@ class UnapprovedAdminVenueSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 450), //todo comeback
-      child: ListView(
-        children: [
-          //* logo text
-          Center(
-            child: GradientText(
-              'Ej',
-              gradient: GColors.adminGradient,
-              style: TextStyle(
-                color: GColors.royalBlue,
-                fontSize: 70,
-                fontFamily: 'Gugi',
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          //* owner's name
-          Center(
-            child: Text(
-              '$ownerName\'s Venue Info',
-              style: TextStyle(
-                color: GColors.cyanShade6,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-
-          //* confirm the information
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                'Please check the Wedding Venue information',
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 450),
+        child: ListView(
+          children: [
+            //* logo text
+            Center(
+              child: GradientText(
+                'Ej',
+                gradient: GColors.adminGradient,
                 style: TextStyle(
-                  color: GColors.poloBlue,
+                  color: GColors.royalBlue,
+                  fontSize: 70,
+                  fontFamily: 'Gugi',
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-          ),
-
-          //* summary list
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Container(
-              decoration: BoxDecoration(
-                color: GColors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: GColors.cyan.withOpacity(0.2),
-                    blurRadius: 7,
-                    offset: const Offset(0, 0),
-                  ),
-                ],
-              ),
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  //type
-                  const AdminConfirmationDisplayRow(
-                    mainText: 'Type: ',
-                    subText: 'Wedding Venue',
-                  ),
-
-                  localDivider(),
-
-                  //name
-                  AdminConfirmationDisplayRow(
-                      mainText: 'Name: ', subText: venueName),
-
-                  localDivider(),
-
-                  //date
-                  AdminConfirmationDisplayRow(
-                      mainText: 'Date: ',
-                      subText:
-                          'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'),
-
-                  localDivider(),
-
-                  //time
-                  AdminConfirmationDisplayRow(
-                      mainText: 'Open Hours: ',
-                      subText:
-                          'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
-
-                  localDivider(),
-
-                  //people
-                  AdminConfirmationDisplayRow(
-                      mainText: 'People Range: ',
-                      subText:
-                          'Between ${peopleMin.toString()} Person To ${peopleMax.toString()}'),
-
-                  localDivider(),
-
-                  //people
-                  AdminConfirmationDisplayRow(
-                    mainText: 'Price Per Person: ',
-                    subText: '${peoplePrice.toString()}JD',
-                  ),
-
-                  localDivider(),
-
-                  //images
-                  AdminConfirmationDisplayRow(
-                    mainText: 'Meals & Drinks: ',
-                    isText: false,
-                    subText: '',
-                    icon: Icons.cake_rounded,
-                    withSecondIcon: true,
-                    secondIcon: Icons.free_breakfast,
-                    onPressed: showMeals,
-                    onPressedSecondIcon: showDrinks,
-                  ),
-
-                  localDivider(),
-
-                  //images
-                  AdminConfirmationDisplayRow(
-                    mainText: 'Images:   ',
-                    isText: false,
-                    subText: '',
-                    icon: Icons.image,
-                    onPressed: showImages,
-                  ),
-
-                  localDivider(),
-
-                  //location
-                  AdminConfirmationDisplayRow(
-                    mainText: 'Location: ',
-                    isText: false,
-                    subText: '',
-                    onPressed: showMap,
-                  ),
-                ],
+            //* owner's name
+            Center(
+              child: Text(
+                '$ownerName\'s Venue Info',
+                style: TextStyle(
+                  color: GColors.cyanShade6,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
 
-          //* bottom bar
-          AdminUnapprovedVenuesBar(
-            onApprovePressed: onApprovePressed,
-            onDenyPressed: onDenyPressed,
-          ),
-        ],
+            //* confirm the information
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  'Please check the Wedding Venue information',
+                  style: TextStyle(
+                    color: GColors.poloBlue,
+                  ),
+                ),
+              ),
+            ),
+
+            //* summary list
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: GColors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: GColors.cyan.withOpacity(0.2),
+                      blurRadius: 7,
+                      offset: const Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    //type
+                    const AdminConfirmationDisplayRow(
+                      mainText: 'Type: ',
+                      subText: 'Wedding Venue',
+                    ),
+
+                    localDivider(),
+
+                    //name
+                    AdminConfirmationDisplayRow(
+                        mainText: 'Name: ', subText: venueName),
+
+                    localDivider(),
+
+                    //date
+                    AdminConfirmationDisplayRow(
+                        mainText: 'Date: ',
+                        subText:
+                            'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'),
+
+                    localDivider(),
+
+                    //time
+                    AdminConfirmationDisplayRow(
+                        mainText: 'Open Hours: ',
+                        subText:
+                            'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
+
+                    localDivider(),
+
+                    //people
+                    AdminConfirmationDisplayRow(
+                        mainText: 'People Range: ',
+                        subText:
+                            'Between ${peopleMin.toString()} Person To ${peopleMax.toString()}'),
+
+                    localDivider(),
+
+                    //people
+                    AdminConfirmationDisplayRow(
+                      mainText: 'Price Per Person: ',
+                      subText: '${peoplePrice.toString()}JD',
+                    ),
+
+                    localDivider(),
+
+                    //images
+                    AdminConfirmationDisplayRow(
+                      mainText: 'Meals & Drinks: ',
+                      isText: false,
+                      subText: '',
+                      icon: Icons.cake_rounded,
+                      withSecondIcon: true,
+                      secondIcon: Icons.free_breakfast,
+                      onPressed: showMeals,
+                      onPressedSecondIcon: showDrinks,
+                    ),
+
+                    localDivider(),
+
+                    //images
+                    AdminConfirmationDisplayRow(
+                      mainText: 'Images:   ',
+                      isText: false,
+                      subText: '',
+                      icon: Icons.image,
+                      onPressed: showImages,
+                    ),
+
+                    localDivider(),
+
+                    //location
+                    AdminConfirmationDisplayRow(
+                      mainText: 'Location: ',
+                      isText: false,
+                      subText: '',
+                      onPressed: showMap,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            //* bottom bar
+            AdminUnapprovedVenuesBar(
+              onApprovePressed: onApprovePressed,
+              onDenyPressed: onDenyPressed,
+            ),
+          ],
+        ),
       ),
     );
   }

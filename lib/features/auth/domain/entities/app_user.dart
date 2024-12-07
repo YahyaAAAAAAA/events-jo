@@ -40,7 +40,7 @@ class AppUser {
       uid: jsonUser['uid'],
       email: jsonUser['email'],
       name: jsonUser['name'],
-      type: userTypeFromString(jsonUser['type']),
+      type: userTypeFromString(jsonUser['type'].toString()),
       latitude: jsonUser['latitude'],
       longitude: jsonUser['longitude'],
       isOnline: jsonUser['isOnline'],

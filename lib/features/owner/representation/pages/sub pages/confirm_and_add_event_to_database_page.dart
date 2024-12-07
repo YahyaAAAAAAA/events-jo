@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/owner_confirmation_display_row.dart';
@@ -11,7 +12,7 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
   final void Function()? showDrinks;
   final void Function()? showMap;
   final void Function()? showImages;
-  final int selectedEventType;
+  final EventType eventType;
   final String name;
   final DateTimeRange? range;
   final List<int> time;
@@ -22,7 +23,7 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
   const ConfirmAndAddEventToDatabasePage({
     super.key,
     required this.onPressed,
-    required this.selectedEventType,
+    required this.eventType,
     required this.name,
     required this.range,
     required this.time,
@@ -54,9 +55,9 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
                 icon: Icons.done,
                 iconSize: 50,
                 padding: 8,
-                text: selectedEventType == 0
+                text: eventType == EventType.venue
                     ? 'Add Your Wedding Venue To EventsJo'
-                    : selectedEventType == 1
+                    : eventType == EventType.farm
                         ? 'Add Your Farm To EventsJo'
                         : 'Add Your Football Court To EventsJo',
                 onPressed: onPressed,
@@ -70,9 +71,9 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
-                    selectedEventType == 0
+                    eventType == EventType.venue
                         ? 'Please confirm your Wedding Venue information'
-                        : selectedEventType == 1
+                        : eventType == EventType.farm
                             ? 'Please confirm your Farm information'
                             : 'Please confirm your Football Court information',
                     style: TextStyle(
@@ -96,9 +97,9 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
                           //type
                           OwnerConfirmationDisplayRow(
                             mainText: 'Type: ',
-                            subText: selectedEventType == 0
+                            subText: eventType == EventType.venue
                                 ? 'Wedding Venue'
-                                : selectedEventType == 1
+                                : eventType == EventType.farm
                                     ? 'Farm'
                                     : 'Football Court',
                           ),

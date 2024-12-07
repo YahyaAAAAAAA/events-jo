@@ -49,7 +49,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
 
           return AnimatedListView(
             items: venues,
-            shrinkWrap: true,
+            shrinkWrap: false,
             enterTransition: [SlideInRight()],
             exitTransition: [SlideInRight()],
             insertDuration: const Duration(milliseconds: 300),

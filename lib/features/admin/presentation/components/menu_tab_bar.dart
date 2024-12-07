@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MenuTabBar extends StatelessWidget {
+  final TabController controller;
   const MenuTabBar({
     super.key,
+    required this.controller,
   });
 
   @override
@@ -24,11 +26,15 @@ class MenuTabBar extends StatelessWidget {
           color: GColors.white,
         ),
         child: TabBar(
+          controller: controller,
+          tabAlignment: TabAlignment.center,
           indicatorSize: TabBarIndicatorSize.tab,
           dividerColor: Colors.transparent,
           indicator: BoxDecoration(
             color: GColors.cyanShade6,
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(12),
+            ),
           ),
           labelColor: Colors.white,
           unselectedLabelColor: GColors.cyanShade6,

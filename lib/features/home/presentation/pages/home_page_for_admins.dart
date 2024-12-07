@@ -80,189 +80,194 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
       appBar: AdminAppBar(
         user: widget.user,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView(
-          children: [
-            const EventsJoLogoAdmin(),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 450),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: ListView(
+              children: [
+                const EventsJoLogoAdmin(),
 
-            const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-            const AdminDivider(text: 'Users and Owners for EventsJo'),
+                const AdminDivider(text: 'Users and Owners for EventsJo'),
 
-            const SizedBox(height: 5),
+                const SizedBox(height: 5),
 
-            //* users count
-            BlocBuilder<AdminUsersCountCubit, AdminUsersCountStates>(
-              builder: (context, state) {
-                //done
-                if (state is AdminUsersCountLoaded) {
-                  final users = state.users;
-                  return AdminCard(
-                    count: users.length.toString(),
-                    icon: Icons.person,
-                    text: 'Users Count : ',
-                    onPressed: () =>
-                        Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AdminUsersListPage(
-                        adminUsersCountCubit: adminUsersCountCubit,
-                      ),
-                    )),
-                  );
-                }
-                //error
-                if (state is AdminUsersCountError) {
-                  return AdminErrorCard(messege: state.messege);
-                }
-                //loading
-                else {
-                  return const AdminLoadingCard();
-                }
-              },
+                //* users count
+                BlocBuilder<AdminUsersCountCubit, AdminUsersCountStates>(
+                  builder: (context, state) {
+                    //done
+                    if (state is AdminUsersCountLoaded) {
+                      final users = state.users;
+                      return AdminCard(
+                        count: users.length.toString(),
+                        icon: Icons.person,
+                        text: 'Users Count : ',
+                        onPressed: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AdminUsersListPage(
+                            adminUsersCountCubit: adminUsersCountCubit,
+                          ),
+                        )),
+                      );
+                    }
+                    //error
+                    if (state is AdminUsersCountError) {
+                      return AdminErrorCard(messege: state.messege);
+                    }
+                    //loading
+                    else {
+                      return const AdminLoadingCard();
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 20),
+
+                //* owners count
+                BlocBuilder<AdminOwnersCountCubit, AdminOwnersCountStates>(
+                  builder: (context, state) {
+                    //done
+                    if (state is AdminOwnersCountLoaded) {
+                      final owners = state.owners;
+                      return AdminCard(
+                        count: owners.length.toString(),
+                        icon: Icons.person_4,
+                        text: 'Owners Count : ',
+                        onPressed: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AdminOwnersListPage(
+                            adminOwnersCountCubit: adminOwnersCountCubit,
+                          ),
+                        )),
+                      );
+                    }
+                    //error
+                    if (state is AdminOwnersCountError) {
+                      return AdminErrorCard(messege: state.messege);
+                    }
+                    //loading
+                    else {
+                      return const AdminLoadingCard();
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 20),
+
+                const AdminDivider(text: 'Online Statistics'),
+
+                const SizedBox(height: 5),
+
+                //* online users count
+                BlocBuilder<AdminUsersOnlineCubit, AdminUsersOnlineStates>(
+                  builder: (context, state) {
+                    //done
+                    if (state is AdminUsersOnlineLoaded) {
+                      final users = state.users;
+
+                      return AdminDashboardCard(
+                        count: users.length.toString(),
+                        icon: Icons.circle,
+                        text: 'Online Users   ',
+                        animation: 'assets/animations/dashboard_1.json',
+                      );
+                    }
+                    //error
+                    if (state is AdminUsersOnlineError) {
+                      return AdminErrorCard(messege: state.messege);
+                    }
+                    //loading
+                    else {
+                      return const AdminLoadingCard();
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 20),
+
+                //* online owners count
+                BlocBuilder<AdminOwnersOnlineCubit, AdminOwnersOnlineStates>(
+                  builder: (context, state) {
+                    //done
+                    if (state is AdminOwnersOnlineLoaded) {
+                      final owners = state.owners;
+                      return AdminDashboardCard(
+                        count: owners.length.toString(),
+                        icon: Icons.circle,
+                        text: 'Online Owners',
+                        animation: 'assets/animations/dashboard_2.json',
+                      );
+                    }
+                    //error
+                    if (state is AdminOwnersOnlineError) {
+                      return AdminErrorCard(messege: state.messege);
+                    }
+                    //loading
+                    else {
+                      return const AdminLoadingCard();
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 20),
+
+                const AdminDivider(text: 'Venues Statistics'),
+
+                const SizedBox(height: 5),
+
+                //* approved venues count
+                BlocBuilder<AdminApproveCubit, AdminApproveStates>(
+                  builder: (context, state) {
+                    //done
+                    if (state is AdminApproveLoaded) {
+                      final venues = state.venues;
+                      return AdminHomeCard(
+                        count: venues.length.toString(),
+                        icon: CustomIcons.wedding,
+                        text: 'Approved Venues     ',
+                      );
+                    }
+                    //error
+                    if (state is AdminApproveError) {
+                      return AdminErrorCard(messege: state.message);
+                    }
+                    //loading
+                    else {
+                      return const AdminLoadingCard();
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 20),
+
+                //* unapproved venues count
+                BlocBuilder<AdminUnapproveCubit, AdminUnapproveStates>(
+                  builder: (context, state) {
+                    //done
+                    if (state is AdminUnapproveLoaded) {
+                      final venues = state.venues;
+                      return AdminHomeCard(
+                        count: venues.length.toString(),
+                        icon: CustomIcons.rings_wedding,
+                        text: 'Unapproved Venues ',
+                      );
+                    }
+                    //error
+                    if (state is AdminUnapproveError) {
+                      return AdminErrorCard(messege: state.message);
+                    }
+                    //loading
+                    else {
+                      return const AdminLoadingCard();
+                    }
+                  },
+                ),
+              ],
             ),
-
-            const SizedBox(height: 20),
-
-            //* owners count
-            BlocBuilder<AdminOwnersCountCubit, AdminOwnersCountStates>(
-              builder: (context, state) {
-                //done
-                if (state is AdminOwnersCountLoaded) {
-                  final owners = state.owners;
-                  return AdminCard(
-                    count: owners.length.toString(),
-                    icon: Icons.person_4,
-                    text: 'Owners Count : ',
-                    onPressed: () =>
-                        Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AdminOwnersListPage(
-                        adminOwnersCountCubit: adminOwnersCountCubit,
-                      ),
-                    )),
-                  );
-                }
-                //error
-                if (state is AdminOwnersCountError) {
-                  return AdminErrorCard(messege: state.messege);
-                }
-                //loading
-                else {
-                  return const AdminLoadingCard();
-                }
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            const AdminDivider(text: 'Online Statistics'),
-
-            const SizedBox(height: 5),
-
-            //* online users count
-            BlocBuilder<AdminUsersOnlineCubit, AdminUsersOnlineStates>(
-              builder: (context, state) {
-                //done
-                if (state is AdminUsersOnlineLoaded) {
-                  final users = state.users;
-
-                  return AdminDashboardCard(
-                    count: users.length.toString(),
-                    icon: Icons.circle,
-                    text: 'Online Users   ',
-                    animation: 'assets/animations/dashboard_1.json',
-                  );
-                }
-                //error
-                if (state is AdminUsersOnlineError) {
-                  return AdminErrorCard(messege: state.messege);
-                }
-                //loading
-                else {
-                  return const AdminLoadingCard();
-                }
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            //* online owners count
-            BlocBuilder<AdminOwnersOnlineCubit, AdminOwnersOnlineStates>(
-              builder: (context, state) {
-                //done
-                if (state is AdminOwnersOnlineLoaded) {
-                  final owners = state.owners;
-                  return AdminDashboardCard(
-                    count: owners.length.toString(),
-                    icon: Icons.circle,
-                    text: 'Online Owners',
-                    animation: 'assets/animations/dashboard_2.json',
-                  );
-                }
-                //error
-                if (state is AdminOwnersOnlineError) {
-                  return AdminErrorCard(messege: state.messege);
-                }
-                //loading
-                else {
-                  return const AdminLoadingCard();
-                }
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            const AdminDivider(text: 'Venues Statistics'),
-
-            const SizedBox(height: 5),
-
-            //* approved venues count
-            BlocBuilder<AdminApproveCubit, AdminApproveStates>(
-              builder: (context, state) {
-                //done
-                if (state is AdminApproveLoaded) {
-                  final venues = state.venues;
-                  return AdminHomeCard(
-                    count: venues.length.toString(),
-                    icon: CustomIcons.wedding,
-                    text: 'Approved Venues     ',
-                  );
-                }
-                //error
-                if (state is AdminApproveError) {
-                  return AdminErrorCard(messege: state.message);
-                }
-                //loading
-                else {
-                  return const AdminLoadingCard();
-                }
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            //* unapproved venues count
-            BlocBuilder<AdminUnapproveCubit, AdminUnapproveStates>(
-              builder: (context, state) {
-                //done
-                if (state is AdminUnapproveLoaded) {
-                  final venues = state.venues;
-                  return AdminHomeCard(
-                    count: venues.length.toString(),
-                    icon: CustomIcons.rings_wedding,
-                    text: 'Unapproved Venues ',
-                  );
-                }
-                //error
-                if (state is AdminUnapproveError) {
-                  return AdminErrorCard(messege: state.message);
-                }
-                //loading
-                else {
-                  return const AdminLoadingCard();
-                }
-              },
-            ),
-          ],
+          ),
         ),
       ),
       bottomNavigationBar: Divider(

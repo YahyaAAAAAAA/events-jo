@@ -1,7 +1,10 @@
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+import 'package:events_jo/config/algorithms/image_for_string.dart';
+import 'package:events_jo/config/enums/food_type.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
+import 'package:events_jo/features/owner/representation/components/food_card.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +14,9 @@ class SelectEventDrinks extends StatelessWidget {
   final TextEditingController drinkPriceController;
 
   final List<WeddingVenueDrink> drinks;
+
   final void Function()? onAddPressed;
+  final void Function(String)? onChanged;
 
   final Widget Function(BuildContext, int) itemBuilder;
 
@@ -22,6 +27,7 @@ class SelectEventDrinks extends StatelessWidget {
     required this.drinkPriceController,
     required this.drinks,
     required this.onAddPressed,
+    required this.onChanged,
     required this.itemBuilder,
   });
 
@@ -48,10 +54,20 @@ class SelectEventDrinks extends StatelessWidget {
           Row(
             children: [
               Flexible(
+                child: FoodCard(
+                  imageUrl: ImageForString.get(
+                    drinkNameController.text,
+                    FoodType.drink,
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 3,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: AuthTextField(
                     controller: drinkNameController,
+                    onChanged: onChanged,
                     hintText: 'Drink Name',
                     obscureText: false,
                     maxLength: 14,

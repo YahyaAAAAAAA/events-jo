@@ -33,7 +33,7 @@ class AdminApproveCubit extends Cubit<AdminApproveStates> {
         final currentState = state;
         List<WeddingVenue> currentVenues = [];
 
-        await Delay.oneSecond();
+        await Delay.halfSecond();
 
         //get current venues
         if (currentState is AdminApproveLoaded) {

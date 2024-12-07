@@ -21,9 +21,11 @@ class AdminPageForVenues extends StatefulWidget {
   State<AdminPageForVenues> createState() => _AdminPageForVenuesState();
 }
 
-class _AdminPageForVenuesState extends State<AdminPageForVenues> {
+class _AdminPageForVenuesState extends State<AdminPageForVenues>
+    with SingleTickerProviderStateMixin {
   late final AdminUnapproveCubit adminUnapproveCubit;
   late final AdminApproveCubit adminApproveCubit;
+  late TabController tabController;
 
   @override
   void initState() {
@@ -32,38 +34,46 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues> {
     //get cubit
     adminUnapproveCubit = context.read<AdminUnapproveCubit>();
     adminApproveCubit = context.read<AdminApproveCubit>();
+
+    tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AdminAppBar(
-          user: widget.user,
-          bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(40),
-            child: MenuTabBar(),
+    return Scaffold(
+      appBar: AdminAppBar(
+        user: widget.user,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(40),
+          child: MenuTabBar(
+            controller: tabController,
           ),
         ),
-        body: TabBarView(
-          //note: make tab bar unswappable
-          // physics: const NeverScrollableScrollPhysics(),
-          children: [
-            AdminUnapprovedVenues(
-              adminUnapproveCubit: adminUnapproveCubit,
-            ),
-            AdminApprovedVenues(
-              adminApproveCubit: adminApproveCubit,
-            ),
-          ],
-        ),
-        bottomNavigationBar: Divider(
-          color: GColors.cyanShade6,
-          thickness: 0.5,
-          indent: 10,
-          endIndent: 10,
-        ),
+      ),
+      body: TabBarView(
+        controller: tabController,
+        //note: make tab bar unswappable
+        // physics: const NeverScrollableScrollPhysics(),
+        children: [
+          AdminUnapprovedVenues(
+            adminUnapproveCubit: adminUnapproveCubit,
+          ),
+          AdminApprovedVenues(
+            adminApproveCubit: adminApproveCubit,
+          ),
+        ],
+      ),
+      bottomNavigationBar: Divider(
+        color: GColors.cyanShade6,
+        thickness: 0.5,
+        indent: 10,
+        endIndent: 10,
       ),
     );
   }

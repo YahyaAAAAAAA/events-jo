@@ -13,6 +13,7 @@ class AdminSubAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      surfaceTintColor: Colors.transparent,
       title: Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Text(

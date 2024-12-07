@@ -1,3 +1,4 @@
+import 'package:events_jo/config/preferences/preferences.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_states.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
@@ -26,11 +27,19 @@ class AdminSingleVenueCubit extends Cubit<AdminSingleVenueStates> {
       mealsStream,
       drinksStream,
       (venue, meals, drinks) {
-        return WeddingVenueDetailed(
-            venue: venue!, meals: meals, drinks: drinks);
+        //venue doesn't exist
+        if (venue == null) {
+          return null;
+        }
+        return WeddingVenueDetailed(venue: venue, meals: meals, drinks: drinks);
       },
     ).listen(
-      (data) {
+      (data) async {
+        //data in stream got deleted (deny action)
+        if (data == null) {
+          return;
+        }
+
         final currentState = state;
         WeddingVenueDetailed currentVenue = data;
 
@@ -40,23 +49,29 @@ class AdminSingleVenueCubit extends Cubit<AdminSingleVenueStates> {
 
         //check if two venues are the same
         if (!identicalVenues(currentVenue, data)) {
-          //notify for change on venue
-          emit(AdminSingleVenueChanged(
-              'A change has occurred on the Venue\'s info'));
+          if (await Preferences.readBool('isAdminDenying') == false) {
+            //notify for change on venue
+            emit(AdminSingleVenueChanged(
+                'A change has occurred on the Venue\'s info'));
+          }
         }
 
         //check if two lists of meals are the same
         if (!identicalMeals(data.meals, currentVenue.meals)) {
-          //notify for change on venue
-          emit(AdminSingleVenueChanged(
-              'A change has occurred on the Venue\'s meals'));
+          if (await Preferences.readBool('isAdminDenying') == false) {
+            //notify for change on venue
+            emit(AdminSingleVenueChanged(
+                'A change has occurred on the Venue\'s meals'));
+          }
         }
 
         //check if two lists of meals are the same
         if (!identicalDrinks(data.drinks, currentVenue.drinks)) {
-          //notify for change on venue
-          emit(AdminSingleVenueChanged(
-              'A change has occurred on the Venue\'s drinks'));
+          if (await Preferences.readBool('isAdminDenying') == false) {
+            //notify for change on venue
+            emit(AdminSingleVenueChanged(
+                'A change has occurred on the Venue\'s drinks'));
+          }
         }
 
         emit(AdminSingleVenueLoaded(data));

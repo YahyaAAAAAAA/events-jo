@@ -1,8 +1,10 @@
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+import 'package:events_jo/config/algorithms/image_for_string.dart';
+import 'package:events_jo/config/enums/food_type.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
-import 'package:events_jo/features/owner/representation/components/image_card_preview.dart';
+import 'package:events_jo/features/owner/representation/components/food_card.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,7 @@ class SelectEventMeals extends StatelessWidget {
 
   final List<WeddingVenueMeal> meals;
   final void Function()? onAddPressed;
+  final void Function(String)? onChanged;
 
   final Widget Function(BuildContext, int) itemBuilder;
 
@@ -23,6 +26,7 @@ class SelectEventMeals extends StatelessWidget {
     required this.mealPriceController,
     required this.meals,
     required this.onAddPressed,
+    required this.onChanged,
     required this.itemBuilder,
   });
 
@@ -48,22 +52,24 @@ class SelectEventMeals extends StatelessWidget {
           //* name field
           Row(
             children: [
-              const Flexible(child: ImageCardPreview()),
+              Flexible(
+                child: FoodCard(
+                  imageUrl: ImageForString.get(
+                    mealNameController.text,
+                    FoodType.meal,
+                  ),
+                ),
+              ),
               Flexible(
                 flex: 3,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 12, top: 12, right: 12),
+                  padding: const EdgeInsets.all(12),
                   child: AuthTextField(
                     controller: mealNameController,
                     hintText: 'Meal Name',
                     obscureText: false,
                     maxLength: 14,
-                    onChanged: (text) {},
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(12),
-                      bottomRight: Radius.circular(12),
-                    ),
+                    onChanged: onChanged,
                   ),
                 ),
               ),
@@ -149,12 +155,13 @@ class SelectEventMeals extends StatelessWidget {
                     )
                   : Center(
                       child: Text(
-                      'No Meals Added',
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: GColors.poloBlue,
+                        'No Meals Added',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: GColors.poloBlue,
+                        ),
                       ),
-                    )),
+                    ),
             ),
           ),
         ],

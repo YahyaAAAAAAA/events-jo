@@ -63,94 +63,99 @@ class _HomePageState extends State<HomePage> {
         leadingWidth: 90,
         toolbarHeight: 70,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView(
-          children: [
-            //logo
-            const EventsJoLogo(),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 450),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: ListView(
+              children: [
+                //logo
+                const EventsJoLogo(),
 
-            const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-            //welcome text
-            Center(
-              child: GradientText(
-                "Welcome ${widget.user!.name}",
-                gradient: GColors.logoGradient,
-                style: TextStyle(
-                  color: GColors.poloBlue,
-                  fontSize: 30,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 80),
-
-            //text
-            Center(
-              child: Text(
-                "Browse a category",
-                style: TextStyle(
-                  color: GColors.poloBlue,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            //venues
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 10,
-                runSpacing: 10,
-                children: [
-                  HomeCard(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => WeddingVenuesPage(
-                          user: widget.user,
-                        ),
-                      ),
+                //welcome text
+                Center(
+                  child: GradientText(
+                    "Welcome ${widget.user!.name}",
+                    gradient: GColors.logoGradient,
+                    style: TextStyle(
+                      color: GColors.poloBlue,
+                      fontSize: 30,
                     ),
-                    controller: animatedController,
-                    text: 'Wedding Venues',
-                    icon: CustomIcons.wedding,
-                    colors: GColors.weddingCardGradient,
                   ),
-                ],
-              ),
-            ),
+                ),
 
-            const SizedBox(height: 10),
+                const SizedBox(height: 80),
 
-            //farms and courts
-            FittedBox(
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 10,
-                runSpacing: 10,
-                children: [
-                  HomeCard(
-                    onPressed: () {},
-                    controller: animatedController,
-                    text: 'Farms',
-                    icon: CustomIcons.farm,
-                    colors: GColors.farmCardGradient,
+                //text
+                Center(
+                  child: Text(
+                    "Browse a category",
+                    style: TextStyle(
+                      color: GColors.poloBlue,
+                      fontSize: 20,
+                    ),
                   ),
-                  HomeCard(
-                    onPressed: () {},
-                    controller: animatedController,
-                    text: 'Football Courts',
-                    icon: CustomIcons.football,
-                    colors: GColors.footballCardGradient,
+                ),
+
+                const SizedBox(height: 10),
+
+                //venues
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      HomeCard(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => WeddingVenuesPage(
+                              user: widget.user,
+                            ),
+                          ),
+                        ),
+                        controller: animatedController,
+                        text: 'Wedding Venues',
+                        icon: CustomIcons.wedding,
+                        colors: GColors.weddingCardGradient,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+
+                const SizedBox(height: 10),
+
+                //farms and courts
+                FittedBox(
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      HomeCard(
+                        onPressed: () {},
+                        controller: animatedController,
+                        text: 'Farms',
+                        icon: CustomIcons.farm,
+                        colors: GColors.farmCardGradient,
+                      ),
+                      HomeCard(
+                        onPressed: () {},
+                        controller: animatedController,
+                        text: 'Football Courts',
+                        icon: CustomIcons.football,
+                        colors: GColors.footballCardGradient,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       bottomNavigationBar: Divider(

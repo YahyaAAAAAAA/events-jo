@@ -46,7 +46,7 @@ auth state
 
 */
 
-class MyApp extends StatelessWidget {
+class EventsJoApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
   final weddingVenueRepo = FirebaseWeddingVenueRepo();
   final weddingVenueMealsRepo = FirebaseWeddingVenueMealsRepo();
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
   final ownerRepo = FirebaseOwnerRepo();
   final adminRepo = FirebaseAdminRepo();
 
-  MyApp({super.key});
+  EventsJoApp({super.key});
 
   @override
   Widget build(BuildContext context) {

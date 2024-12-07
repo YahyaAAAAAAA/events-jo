@@ -82,45 +82,48 @@ class _AdminUserDetailsPageState extends State<AdminUserDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AdminSubAppBar(),
-      body: BlocConsumer<AdminSingleUserCubit, AdminSingleUserStates>(
-        builder: (context, state) {
-          if (state is AdminSingleUserLoaded) {
-            return AdminUserSummary(
-              name: state.user!.name,
-              email: state.user!.email,
-              id: state.user!.uid,
-              //todo should update location object
-              showMap: () => locationCubit.showMapDialogPreview(context,
-                  userLocation: userLocation, gradient: GColors.adminGradient),
-            );
-          }
-          //error
-          if (state is AdminSingleUserError) {
-            return Text(state.messege);
-          }
-          //loading...
-          return const GlobalLoadingAdminBar(mainText: false);
-        },
-        listener: (context, state) {
-          //change
-          if (state is AdminSingleUserChanged) {
-            GSnackBar.show(
-              context: context,
-              text: 'A change has occurred',
-              color: GColors.cyanShade6,
-              gradient: GColors.adminGradient,
-            );
-          }
+      body: Center(
+        child: BlocConsumer<AdminSingleUserCubit, AdminSingleUserStates>(
+          builder: (context, state) {
+            if (state is AdminSingleUserLoaded) {
+              return AdminUserSummary(
+                name: state.user!.name,
+                email: state.user!.email,
+                id: state.user!.uid,
+                //todo should update location object
+                showMap: () => locationCubit.showMapDialogPreview(context,
+                    userLocation: userLocation,
+                    gradient: GColors.adminGradient),
+              );
+            }
+            //error
+            if (state is AdminSingleUserError) {
+              return Text(state.messege);
+            }
+            //loading...
+            return const GlobalLoadingAdminBar(mainText: false);
+          },
+          listener: (context, state) {
+            //change
+            if (state is AdminSingleUserChanged) {
+              GSnackBar.show(
+                context: context,
+                text: 'A change has occurred',
+                color: GColors.cyanShade6,
+                gradient: GColors.adminGradient,
+              );
+            }
 
-          //error
-          if (state is AdminSingleUserError) {
-            GSnackBar.show(
-              context: context,
-              text: state.messege,
-              gradient: GColors.adminGradient,
-            );
-          }
-        },
+            //error
+            if (state is AdminSingleUserError) {
+              GSnackBar.show(
+                context: context,
+                text: state.messege,
+                gradient: GColors.adminGradient,
+              );
+            }
+          },
+        ),
       ),
     );
   }

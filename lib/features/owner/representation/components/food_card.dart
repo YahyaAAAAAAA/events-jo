@@ -1,33 +1,35 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/loading/global_loading_image.dart';
+import 'package:events_jo/features/owner/representation/components/dialogs/food_on_tap_dialog.dart';
 import 'package:flutter/material.dart';
 
-class ImageCardPreview extends StatelessWidget {
-  const ImageCardPreview({
+class FoodCard extends StatelessWidget {
+  final String imageUrl;
+
+  const FoodCard({
     super.key,
+    required this.imageUrl,
   });
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: GColors.white,
-            width: 12,
-          )),
-      //display preview image
+    return GestureDetector(
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) => FoodOnTapDialog(
+          image: imageUrl,
+        ),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(4),
+        padding: const EdgeInsets.only(left: 12),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(5),
           child: CachedNetworkImage(
-            imageUrl: 'https://i.ibb.co/syL2vn2/unnamed.jpg',
+            imageUrl: imageUrl,
             //waiting for image
-            placeholder: (context, url) => const SizedBox(
-              width: 100,
-              child: GlobalLoadingImage(),
+            placeholder: (context, url) => FittedBox(
+              fit: BoxFit.scaleDown,
+              child: CircularProgressIndicator(color: GColors.royalBlue),
             ),
             //error getting image
             errorWidget: (context, url, error) => SizedBox(
@@ -39,8 +41,8 @@ class ImageCardPreview extends StatelessWidget {
               ),
             ),
             fit: BoxFit.cover,
-            width: 100,
-            height: 90,
+            width: 70,
+            height: 70,
           ),
         ),
       ),

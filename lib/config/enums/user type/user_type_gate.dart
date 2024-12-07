@@ -1,3 +1,4 @@
+import 'package:events_jo/config/preferences/preferences.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
@@ -23,12 +24,23 @@ class _UserTypeGateState extends State<UserTypeGate> {
 
     //get user
     currentUser = context.read<AuthCubit>().currentUser!;
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        //data doesn't exists save it
+        if (Preferences.readBool('isAdminDenying') == null) {
+          await Preferences.saveBool('isAdminDenying', false);
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     if (currentUser!.type == UserType.admin) {
-      return GlobalNavigationBarForAdmins(user: currentUser!);
+      return GlobalNavigationBarForAdmins(
+        user: currentUser!,
+      );
     }
     if (currentUser!.type == UserType.owner) {
       return GlobalNavigationBarForOwners(user: currentUser!);

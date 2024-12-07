@@ -39,66 +39,71 @@ class _AdminUsersListPageState extends State<AdminUsersListPage> {
       appBar: const AdminSubAppBar(
         title: 'EventsJo Registerd Users',
       ),
-      body: BlocConsumer<AdminUsersCountCubit, AdminUsersCountStates>(
-        builder: (context, state) {
-          //done
-          if (state is AdminUsersCountLoaded) {
-            final users = state.users;
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 450),
+          child: BlocConsumer<AdminUsersCountCubit, AdminUsersCountStates>(
+            builder: (context, state) {
+              //done
+              if (state is AdminUsersCountLoaded) {
+                final users = state.users;
 
-            if (users.isEmpty) {
-              return const NoRequestsLeft(
-                icon: CustomIcons.sad,
-                text: 'EventsJo have no users',
-              );
-            }
+                if (users.isEmpty) {
+                  return const NoRequestsLeft(
+                    icon: CustomIcons.sad,
+                    text: 'EventsJo have no users',
+                  );
+                }
 
-            return AnimatedListView(
-              items: users,
-              shrinkWrap: true,
-              enterTransition: [SlideInLeft()],
-              exitTransition: [SlideInLeft()],
-              insertDuration: const Duration(milliseconds: 300),
-              removeDuration: const Duration(milliseconds: 300),
-              isSameItem: (a, b) => a.uid == b.uid,
-              itemBuilder: (context, index) {
-                return AdminUsersCard(
-                  name: users[index].name,
-                  index: index,
-                  isOnline: users[index].isOnline,
-                  isLoading: false,
-                  key: Key(widget.adminUsersCountCubit.generateUniqueId()),
-                  //navigate to users details
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => AdminUserDetailsPage(
-                        user: users[index],
+                return AnimatedListView(
+                  items: users,
+                  shrinkWrap: false,
+                  enterTransition: [SlideInLeft()],
+                  exitTransition: [SlideInLeft()],
+                  insertDuration: const Duration(milliseconds: 300),
+                  removeDuration: const Duration(milliseconds: 300),
+                  isSameItem: (a, b) => a.uid == b.uid,
+                  itemBuilder: (context, index) {
+                    return AdminUsersCard(
+                      name: users[index].name,
+                      index: index,
+                      isOnline: users[index].isOnline,
+                      isLoading: false,
+                      key: Key(widget.adminUsersCountCubit.generateUniqueId()),
+                      //navigate to users details
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => AdminUserDetailsPage(
+                            user: users[index],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
-              },
-            );
-          }
-          //error
-          if (state is AdminUsersCountError) {
-            return Text(state.messege);
-          }
-          //loading...
-          else {
-            return const AdminLoadingUsersCard();
-          }
-        },
-        listener: (context, state) {
-          //error
-          if (state is AdminUsersCountError) {
-            GSnackBar.show(
-              context: context,
-              text: state.messege,
-              color: GColors.cyanShade6,
-              gradient: GColors.adminGradient,
-            );
-          }
-        },
+              }
+              //error
+              if (state is AdminUsersCountError) {
+                return Text(state.messege);
+              }
+              //loading...
+              else {
+                return const AdminLoadingUsersCard();
+              }
+            },
+            listener: (context, state) {
+              //error
+              if (state is AdminUsersCountError) {
+                GSnackBar.show(
+                  context: context,
+                  text: state.messege,
+                  color: GColors.cyanShade6,
+                  gradient: GColors.adminGradient,
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }

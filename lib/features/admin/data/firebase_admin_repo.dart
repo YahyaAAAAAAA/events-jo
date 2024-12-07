@@ -98,6 +98,7 @@ class FirebaseAdminRepo implements AdminRepo {
     });
   }
 
+  @override
   //listen to the meals subcollection
   Stream<List<WeddingVenueMeal>> getMealsStream(String id) {
     return firebaseFirestore
@@ -110,6 +111,7 @@ class FirebaseAdminRepo implements AdminRepo {
             .toList());
   }
 
+  @override
   //listen to the drinks subcollection
   Stream<List<WeddingVenueDrink>> getDrinksStream(String id) {
     return firebaseFirestore
@@ -200,16 +202,45 @@ class FirebaseAdminRepo implements AdminRepo {
 
   @override
   Future<void> lockVenue(String id) async {
-    await firebaseFirestore.collection('venues').doc(id).update(
-      {'isBeingApproved': true},
-    );
+    DocumentReference docRef =
+        await firebaseFirestore.collection('venues').doc(id);
+    try {
+      //check if the document exists
+      DocumentSnapshot docSnapshot = await docRef.get();
+
+      if (docSnapshot.exists) {
+        //document exists, proceed to update
+        await docRef.update({'isBeingApproved': true});
+      } else {
+        //document doesn't exist
+        return;
+      }
+    } catch (e) {
+      //error
+      Future.error(e);
+    }
   }
 
   @override
   Future<void> unlockVenue(String id) async {
-    await firebaseFirestore.collection('venues').doc(id).update(
-      {'isBeingApproved': false},
-    );
+    DocumentReference docRef =
+        await firebaseFirestore.collection('venues').doc(id);
+
+    try {
+      //check if the document exists
+      DocumentSnapshot docSnapshot = await docRef.get();
+
+      if (docSnapshot.exists) {
+        //document exists, proceed to update
+        await docRef.update({'isBeingApproved': false});
+      } else {
+        //document doesn't exist
+        return;
+      }
+    } catch (e) {
+      //error
+      Future.error(e);
+    }
   }
 
   @override

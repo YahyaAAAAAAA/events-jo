@@ -127,206 +127,209 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                const Center(child: EventsJoLogoAuth()),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 450),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  const Center(child: EventsJoLogoAuth()),
 
-                //welcome back message
-                Text(
-                  "Create an account",
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: 22,
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                ChangeUserTypeRow(
-                  setUserType: () => setState(() => isOwner = false),
-                  setOwnerType: () => setState(() => isOwner = true),
-                  isOwner: isOwner,
-                ),
-
-                const SizedBox(height: 10),
-
-                //name textField
-                AuthTextField(
-                  controller: nameController,
-                  hintText: "Name",
-                  obscureText: false,
-                ),
-
-                const SizedBox(height: 10),
-
-                //email textField
-                AuthTextField(
-                  controller: emailController,
-                  hintText: "Email",
-                  obscureText: false,
-                ),
-
-                const SizedBox(height: 10),
-
-                //pw textField
-                AuthTextField(
-                  controller: pwController,
-                  hintText: "Password",
-                  obscureText: true,
-                ),
-
-                const SizedBox(height: 10),
-
-                AuthTextField(
-                  controller: confirmPwController,
-                  hintText: "Confirm Password",
-                  obscureText: true,
-                ),
-
-                const SizedBox(height: 10),
-
-                //location bloc
-                BlocConsumer<LocationCubit, LocationStates>(
-                  builder: (context, state) {
-                    //location not provided
-                    if (state is LocationInitial || state is LocationError) {
-                      return AuthButton(
-                        onTap: () async => showDialog(
-                          context: context,
-                          builder: (context) {
-                            return ChooseLocationMethod(
-                              //pick location manually
-                              onPressedManual: () async =>
-                                  await locationCubit.showMapDialog(
-                                context,
-                                userLocation: userLocation,
-                                //used only here, to emit the state
-                                isOnce: true,
-                              ),
-                              //pick location automatically
-                              onPressedAuto: () async {
-                                //pop the current dialog
-                                Navigator.of(context).pop();
-
-                                location =
-                                    await locationCubit.getUserLocation();
-
-                                if (location == null) {
-                                  return;
-                                }
-
-                                //save location
-                                userLocation.lat = location!.latitude;
-                                userLocation.long = location!.longitude;
-
-                                //save initial location
-                                userLocation.initLat = location!.latitude;
-                                userLocation.initLong = location!.longitude;
-
-                                //set marker to user location
-                                userLocation.marker = Marker(
-                                  point: LatLng(
-                                    userLocation.lat,
-                                    userLocation.long,
-                                  ),
-                                  child: Icon(
-                                    Icons.location_pin,
-                                    color: GColors.black,
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                        text: 'Provide your location',
-                        icon: Icons.location_on_outlined,
-                      );
-                    }
-
-                    //location provided
-                    if (state is LocationLoaded) {
-                      //* allow user to change location
-                      return LocationProvided(
-                        onPressed: () => locationCubit.showMapDialog(context,
-                            userLocation: userLocation),
-                      );
-                    }
-
-                    //loading...
-                    return Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: GColors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GlobalLoadingBar(
-                            mainText: false,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  listener: (context, state) {
-                    //open loading dialog
-                    if (state is LocationLoading) {
-                      LocationLoadingDialog.show(context);
-                    }
-
-                    //close loading dialog
-                    if (state is LocationLoaded) {
-                      LocationLoadingDialog.close(context);
-                    }
-
-                    //error
-                    if (state is LocationError) {
-                      Navigator.of(context).pop();
-                      GSnackBar.show(context: context, text: state.message);
-                    }
-                  },
-                ),
-
-                const SizedBox(height: 25),
-
-                //register button
-                AuthButton(
-                  onTap: register,
-                  text: 'Register',
-                  icon: Icons.arrow_forward_ios,
-                ),
-
-                const SizedBox(height: 50),
-
-                //not a member ? register now
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  children: [
-                    Text(
-                      'You have an accout ? ',
-                      style: TextStyle(
-                        color: GColors.black,
-                        fontSize: 17,
-                      ),
+                  //welcome back message
+                  Text(
+                    "Create an account",
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: 22,
                     ),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: Text(
-                        'Login now!',
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  ChangeUserTypeRow(
+                    setUserType: () => setState(() => isOwner = false),
+                    setOwnerType: () => setState(() => isOwner = true),
+                    isOwner: isOwner,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  //name textField
+                  AuthTextField(
+                    controller: nameController,
+                    hintText: "Name",
+                    obscureText: false,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  //email textField
+                  AuthTextField(
+                    controller: emailController,
+                    hintText: "Email",
+                    obscureText: false,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  //pw textField
+                  AuthTextField(
+                    controller: pwController,
+                    hintText: "Password",
+                    obscureText: true,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  AuthTextField(
+                    controller: confirmPwController,
+                    hintText: "Confirm Password",
+                    obscureText: true,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  //location bloc
+                  BlocConsumer<LocationCubit, LocationStates>(
+                    builder: (context, state) {
+                      //location not provided
+                      if (state is LocationInitial || state is LocationError) {
+                        return AuthButton(
+                          onTap: () async => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ChooseLocationMethod(
+                                //pick location manually
+                                onPressedManual: () async =>
+                                    await locationCubit.showMapDialog(
+                                  context,
+                                  userLocation: userLocation,
+                                  //used only here, to emit the state
+                                  isOnce: true,
+                                ),
+                                //pick location automatically
+                                onPressedAuto: () async {
+                                  //pop the current dialog
+                                  Navigator.of(context).pop();
+
+                                  location =
+                                      await locationCubit.getUserLocation();
+
+                                  if (location == null) {
+                                    return;
+                                  }
+
+                                  //save location
+                                  userLocation.lat = location!.latitude;
+                                  userLocation.long = location!.longitude;
+
+                                  //save initial location
+                                  userLocation.initLat = location!.latitude;
+                                  userLocation.initLong = location!.longitude;
+
+                                  //set marker to user location
+                                  userLocation.marker = Marker(
+                                    point: LatLng(
+                                      userLocation.lat,
+                                      userLocation.long,
+                                    ),
+                                    child: Icon(
+                                      Icons.location_pin,
+                                      color: GColors.black,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          text: 'Provide your location',
+                          icon: Icons.location_on_outlined,
+                        );
+                      }
+
+                      //location provided
+                      if (state is LocationLoaded) {
+                        //* allow user to change location
+                        return LocationProvided(
+                          onPressed: () => locationCubit.showMapDialog(context,
+                              userLocation: userLocation),
+                        );
+                      }
+
+                      //loading...
+                      return Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: GColors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GlobalLoadingBar(
+                              mainText: false,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    listener: (context, state) {
+                      //open loading dialog
+                      if (state is LocationLoading) {
+                        LocationLoadingDialog.show(context);
+                      }
+
+                      //close loading dialog
+                      if (state is LocationLoaded) {
+                        LocationLoadingDialog.close(context);
+                      }
+
+                      //error
+                      if (state is LocationError) {
+                        Navigator.of(context).pop();
+                        GSnackBar.show(context: context, text: state.message);
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  //register button
+                  AuthButton(
+                    onTap: register,
+                    text: 'Register',
+                    icon: Icons.arrow_forward_ios,
+                  ),
+
+                  const SizedBox(height: 50),
+
+                  //not a member ? register now
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      Text(
+                        'You have an accout ? ',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: GColors.royalBlue,
+                          color: GColors.black,
                           fontSize: 17,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      GestureDetector(
+                        onTap: widget.onTap,
+                        child: Text(
+                          'Login now!',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: GColors.royalBlue,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

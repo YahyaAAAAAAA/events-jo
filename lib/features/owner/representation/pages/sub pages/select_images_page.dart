@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/image_card.dart';
 import 'package:flutter/foundation.dart';
@@ -9,13 +10,13 @@ import 'package:image_picker/image_picker.dart';
 //if empty a placeholder image will be displayed instead
 class SelectImagesPage extends StatelessWidget {
   final List<XFile> images;
-  final int selectedEventType;
+  final EventType eventType;
   final void Function()? onPressed;
 
   const SelectImagesPage({
     super.key,
     required this.images,
-    required this.selectedEventType,
+    required this.eventType,
     required this.onPressed,
   });
 
@@ -29,9 +30,9 @@ class SelectImagesPage extends StatelessWidget {
 
           //images button
           OwnerButton(
-            text: selectedEventType == 0
+            text: eventType == EventType.venue
                 ? 'Select images for your Venue'
-                : selectedEventType == 1
+                : eventType == EventType.farm
                     ? 'Select images for your Farm'
                     : 'Select images for your Court',
             icon: Icons.image,

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_states.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -23,8 +22,6 @@ class AdminOwnersCountCubit extends Cubit<AdminOwnersCountStates> {
       (snapshot) async {
         final currentState = state;
         List<AppUser> currentOwners = [];
-
-        await Delay.oneSecond();
 
         //get current owners
         if (currentState is AdminOwnersCountLoaded) {

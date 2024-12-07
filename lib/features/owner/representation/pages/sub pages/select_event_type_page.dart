@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
@@ -5,19 +6,18 @@ import 'package:flutter/material.dart';
 //* This page lets the user to pick the event type (NOT REQUIRED)
 //default is a Wedding Venue if empty
 class SelectEventType extends StatelessWidget {
+  final EventType eventType;
   final void Function()? onTap1;
   final void Function()? onTap2;
   final void Function()? onTap3;
 
   const SelectEventType({
     super.key,
-    required this.selectedEventType,
+    required this.eventType,
     required this.onTap1,
     required this.onTap2,
     required this.onTap3,
   });
-
-  final int selectedEventType;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +57,9 @@ class SelectEventType extends StatelessWidget {
                       children: [
                         //type icon
                         Icon(
-                          selectedEventType == 0
+                          eventType == EventType.venue
                               ? CustomIcons.wedding
-                              : selectedEventType == 1
+                              : eventType == EventType.farm
                                   ? CustomIcons.farm
                                   : CustomIcons.football,
                           color: GColors.royalBlue,
@@ -69,9 +69,9 @@ class SelectEventType extends StatelessWidget {
 
                         //type name
                         Text(
-                          selectedEventType == 0
+                          eventType == EventType.venue
                               ? 'Wedding Venue'
-                              : selectedEventType == 1
+                              : eventType == EventType.farm
                                   ? 'Farm'
                                   : 'Football Court',
                           style: TextStyle(

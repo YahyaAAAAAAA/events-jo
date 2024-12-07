@@ -15,6 +15,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: const BoxConstraints(maxWidth: 450),
       decoration: BoxDecoration(
         borderRadius: index != 9
             ? const BorderRadius.only(

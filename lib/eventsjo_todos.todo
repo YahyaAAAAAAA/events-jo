@@ -2,6 +2,14 @@ pending:
     ✔ skeletonizer @done(24-12-06 22:22)
     ✔ check for performance @done(24-12-06 22:23)
     ✔ venues page animation @done(24-12-06 22:52)
-    ✔ merged streams for venue details @done(24-12-06 23:50)
-    ☐ image for string algo
+    //-----------------
+    ✔ image for string algo @started(24-12-07 16:44) @done(24-12-07 22:43) @lasted(5h59m25s)
+    ✔ add event enum @started(24-12-07 22:49) @done(24-12-08 01:51) @lasted(3h2m49s)
+    ✔ check admin page UI and new owner page UI responsiveness @done(24-12-08 01:50)
+    ✔ don't notify change when denying (shared prefs) @done(24-12-08 01:51)
+    //-----------------
+    ☐ check app for web
+    ☐ add images in venue details
+    ☐ merged streams for venue details
+
 

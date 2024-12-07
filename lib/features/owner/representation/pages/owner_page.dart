@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
@@ -62,7 +63,7 @@ class _OwnerPageState extends State<OwnerPage> {
   int index = 0;
 
   //venue, farm or court
-  int selectedEventType = 0;
+  EventType eventType = EventType.venue;
 
   //event date and time
   DateTimeRange? range;
@@ -162,33 +163,31 @@ class _OwnerPageState extends State<OwnerPage> {
           centerTitle: true,
           title: OwnerAppBar(index: index),
         ),
-        //loads children only when needed
         body: Center(
           child: ConstrainedBox(
-            constraints: index != 9
-                ? const BoxConstraints(maxWidth: 400)
-                : BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints: const BoxConstraints(maxWidth: 450),
+            //loads children only when needed
             child: LazyIndexedStack(
               index: index,
               children: [
                 //* owner sub pages
                 //type
                 SelectEventType(
-                  selectedEventType: selectedEventType,
-                  onTap1: () => setState(() => selectedEventType = 0),
-                  onTap2: () => setState(() => selectedEventType = 1),
-                  onTap3: () => setState(() => selectedEventType = 2),
+                  eventType: eventType,
+                  onTap1: () => setState(() => eventType = EventType.venue),
+                  onTap2: () => setState(() => eventType = EventType.farm),
+                  onTap3: () => setState(() => eventType = EventType.court),
                 ),
 
                 //name
                 SelectEventNamePage(
-                  selectedEventType: selectedEventType,
+                  eventType: eventType,
                   nameController: nameController,
                 ),
 
                 //location
                 SelectEventLocationPage(
-                  selectedEventType: selectedEventType,
+                  eventType: eventType,
                   onPressed: () => locationCubit.showMapDialog(context,
                       userLocation: userLocation),
                 ),
@@ -196,7 +195,7 @@ class _OwnerPageState extends State<OwnerPage> {
                 //pics
                 SelectImagesPage(
                   images: images,
-                  selectedEventType: selectedEventType,
+                  eventType: eventType,
                   onPressed: () async {
                     //pick images
                     final selectedImages =
@@ -249,6 +248,8 @@ class _OwnerPageState extends State<OwnerPage> {
                   mealAmountController: mealAmountController,
                   mealPriceController: mealPriceController,
                   meals: meals,
+                  //update image when typing (only update state)
+                  onChanged: (text) => setState(() {}),
                   itemBuilder: (context, index) {
                     return OwnerMealCard(
                       meals: meals,
@@ -304,6 +305,8 @@ class _OwnerPageState extends State<OwnerPage> {
                   drinkAmountController: drinkAmountController,
                   drinkPriceController: drinkPriceController,
                   drinks: drinks,
+                  //update image when typing (only update state)
+                  onChanged: (text) => setState(() {}),
                   itemBuilder: (context, index) {
                     return OwnerDrinkCard(
                       drinks: drinks,
@@ -362,6 +365,7 @@ class _OwnerPageState extends State<OwnerPage> {
         floatingActionButton:
             OwnerPageBarHandler(index: index, isImagesEmpty: images.isEmpty),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
+
         //watch the state here to hide the bar when loading
         bottomNavigationBar: BlocConsumer<OwnerCubit, OwnerStates>(
           builder: (context, state) {
@@ -472,7 +476,7 @@ class _OwnerPageState extends State<OwnerPage> {
         //initial
         if (state is OwnerInitial) {
           return ConfirmAndAddEventToDatabasePage(
-            selectedEventType: selectedEventType,
+            eventType: eventType,
             name: nameController.text,
             range: range,
             time: time,
@@ -532,7 +536,7 @@ class _OwnerPageState extends State<OwnerPage> {
         //done
         if (state is OwnerLoaded) {
           return EventAddedSuccessfullyPage(
-            selectedEventType: selectedEventType,
+            eventType: eventType,
             onPressed: () => Navigator.of(context).pop(),
           );
         }

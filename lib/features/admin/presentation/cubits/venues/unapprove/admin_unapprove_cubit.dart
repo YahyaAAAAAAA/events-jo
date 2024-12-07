@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events_jo/config/preferences/preferences.dart';
 import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
@@ -33,7 +34,7 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
         final currentState = state;
         List<WeddingVenue> currentVenues = [];
 
-        await Delay.oneSecond();
+        await Delay.halfSecond();
 
         //get current venues
         if (currentState is AdminUnapproveLoaded) {
@@ -89,13 +90,10 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
     emit(AdminApproveActionLoading());
     try {
       //one second delay for animation
-      await Future.delayed(
-        const Duration(seconds: 1),
-        () async {
-          //approving
-          await adminRepo.approveVenue(id);
-        },
-      );
+      await Delay.oneSecond();
+
+      //approving
+      await adminRepo.approveVenue(id);
 
       //approve done
       emit(AdminApproveActionLoaded());
@@ -113,13 +111,16 @@ class AdminUnapproveCubit extends Cubit<AdminUnapproveStates> {
     emit(AdminDenyActionLoading());
     try {
       //one second delay for animation
-      await Future.delayed(
-        const Duration(seconds: 1),
-        () async {
-          //denying
-          await adminRepo.denyVenue(id, urls);
-        },
-      );
+      await Delay.oneSecond();
+
+      //admin denying, don't notify listeners
+      await Preferences.saveBool('isAdminDenying', true);
+
+      //denying
+      await adminRepo.denyVenue(id, urls);
+
+      //admin done denying
+      await Preferences.saveBool('isAdminDenying', false);
 
       //deny done
       emit(AdminDenyActionLoaded());

@@ -77,9 +77,13 @@ class _OwnerAppBarState extends State<OwnerAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: list,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 450),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        children: list,
+      ),
     );
   }
 }

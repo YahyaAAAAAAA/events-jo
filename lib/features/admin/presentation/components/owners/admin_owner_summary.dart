@@ -24,7 +24,7 @@ class AdminOwnerSummary extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 450), //todo comeback
       child: ListView(
-        shrinkWrap: true,
+        shrinkWrap: false,
         children: [
           //* logo text
           Center(

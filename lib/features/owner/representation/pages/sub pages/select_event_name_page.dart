@@ -1,17 +1,18 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:flutter/material.dart';
 
 //* This page lets the user to pick a name for their event (REQUIRED)
 class SelectEventNamePage extends StatelessWidget {
+  final EventType eventType;
+  final TextEditingController nameController;
+
   const SelectEventNamePage({
     super.key,
-    required this.selectedEventType,
+    required this.eventType,
     required this.nameController,
   });
-
-  final int selectedEventType;
-  final TextEditingController nameController;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,9 @@ class SelectEventNamePage extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              selectedEventType == 0
+              eventType == EventType.venue
                   ? 'Enter your Wedding Venue name'
-                  : selectedEventType == 1
+                  : eventType == EventType.farm
                       ? 'Enter your Farm name'
                       : 'Enter your Football Court name',
               style: TextStyle(
