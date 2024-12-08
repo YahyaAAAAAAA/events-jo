@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                const SizedBox(height: 80),
+                const SizedBox(height: 60),
 
                 //text
                 Center(

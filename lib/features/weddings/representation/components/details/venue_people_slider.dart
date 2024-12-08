@@ -12,7 +12,6 @@ class VenuePeopleSlider extends StatelessWidget {
   final int max;
   final int numberOfExpectedPeople;
   final double pricePerPerson;
-  final String numberOfExpectedPeopleText;
   final void Function(double)? onChanged;
 
   const VenuePeopleSlider({
@@ -20,7 +19,6 @@ class VenuePeopleSlider extends StatelessWidget {
     required this.onChanged,
     required this.padding,
     required this.numberOfExpectedPeople,
-    required this.numberOfExpectedPeopleText,
     required this.pricePerPerson,
     required this.max,
     required this.min,
@@ -53,7 +51,7 @@ class VenuePeopleSlider extends StatelessWidget {
                     value: numberOfExpectedPeople.toDouble(),
                     activeColor: GColors.royalBlue,
                     inactiveColor: GColors.poloBlue,
-                    label: numberOfExpectedPeopleText,
+                    label: numberOfExpectedPeople.toString(),
                     divisions: 100, //this should be max value
                     onChanged: onChanged,
                   ),
@@ -148,7 +146,7 @@ class VenuePeopleSlider extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          '• The number people expected: $numberOfExpectedPeopleText',
+                                          '• The number people expected: ${numberOfExpectedPeople.toString()}',
                                           style: TextStyle(
                                             color: GColors.royalBlue,
                                             fontSize: 22,

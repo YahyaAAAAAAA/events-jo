@@ -35,12 +35,12 @@ class ImageForString {
       if (type == FoodType.meal) {
         return 'https://i.ibb.co/7NcDCwN/meal-placeholder.png';
       } else {
-        return 'https://i.ibb.co/vD8XJyv/wine-glass-empty.png';
+        return 'https://i.ibb.co/HPXw3h2/wine-glass-empty.png';
       }
     }
 
     //return the matched image if the rating is above a threshold
-    if (bestMatchRating > 0.2) {
+    if (bestMatchRating > 0.3) {
       return map[bestMatchKey]!;
     }
 
@@ -48,7 +48,7 @@ class ImageForString {
     if (type == FoodType.meal) {
       return 'https://i.ibb.co/7NcDCwN/meal-placeholder.png';
     } else {
-      return 'https://i.ibb.co/vD8XJyv/wine-glass-empty.png';
+      return 'https://i.ibb.co/HPXw3h2/wine-glass-empty.png';
     }
   }
 
@@ -99,6 +99,7 @@ class ImageForString {
     "fettuccine alfredo": 'https://i.ibb.co/x6BnvV1/fettuccine-alfredo.jpg',
 
     //deserts
+    //todo add cakes
     "apple crumble pie": 'https://i.ibb.co/nwJfyFJ/apple-crumble-pie.jpg',
     "chocolate gateau": 'https://i.ibb.co/R3cJwYs/chocolate-gateau.jpg',
     "fruit salad": 'https://i.ibb.co/D4gVSKN/fruit-salad.jpg',

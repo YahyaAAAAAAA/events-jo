@@ -7,8 +7,8 @@ import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_card.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venue/all/wedding_venues_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venue/all/wedding_venues_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +28,7 @@ class WeddingVenuesPage extends StatefulWidget {
 class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   late final AppUser user;
   late List<WeddingVenue> filterdWeddingVenuList = [];
-  late final WeddingVenueCubit weddingVenueCubit;
+  late final WeddingVenuesCubit weddingVenueCubit;
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -39,10 +39,10 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
     user = widget.user!;
 
     //get cubit
-    weddingVenueCubit = context.read<WeddingVenueCubit>();
+    weddingVenueCubit = context.read<WeddingVenuesCubit>();
 
     //listen to venues stream
-    weddingVenueCubit.getWeddingVenuesStream();
+    weddingVenueCubit.getVenuesStream();
   }
 
   @override
@@ -54,15 +54,15 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: VenuesAppBar(user: widget.user),
+      appBar: VenuesAppBar(user: user),
       //states
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 450),
-          child: BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
+          child: BlocConsumer<WeddingVenuesCubit, WeddingVenuesStates>(
             builder: (context, state) {
               //list ready
-              if (state is WeddingVenueLoaded) {
+              if (state is WeddingVenuesLoaded) {
                 //get venues from stream
                 final venues = state.venues;
 
@@ -118,6 +118,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                         isSameItem: (a, b) => a.id == b.id,
                         itemBuilder: (context, index) => VenueCard(
                           isLoading: false,
+                          user: user,
                           key: Key(weddingVenueCubit.generateUniqueId()),
                           weddingVenue: searchController.text.isEmpty
                               ? venues[index]

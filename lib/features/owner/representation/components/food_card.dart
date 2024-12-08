@@ -5,10 +5,16 @@ import 'package:flutter/material.dart';
 
 class FoodCard extends StatelessWidget {
   final String imageUrl;
+  final EdgeInsetsGeometry padding;
+  final double width;
+  final double height;
 
   const FoodCard({
     super.key,
     required this.imageUrl,
+    required this.padding,
+    required this.width,
+    required this.height,
   });
 
   @override
@@ -21,28 +27,31 @@ class FoodCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 12),
+        padding: padding,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: CachedNetworkImage(
-            imageUrl: imageUrl,
-            //waiting for image
-            placeholder: (context, url) => FittedBox(
-              fit: BoxFit.scaleDown,
-              child: CircularProgressIndicator(color: GColors.royalBlue),
-            ),
-            //error getting image
-            errorWidget: (context, url, error) => SizedBox(
-              width: 100,
-              child: Icon(
-                Icons.error_outline,
-                color: GColors.black,
-                size: 40,
+          borderRadius: BorderRadius.circular(12),
+          child: ColoredBox(
+            color: GColors.white,
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              //waiting for image
+              placeholder: (context, url) => FittedBox(
+                fit: BoxFit.scaleDown,
+                child: CircularProgressIndicator(color: GColors.royalBlue),
               ),
+              //error getting image
+              errorWidget: (context, url, error) => SizedBox(
+                width: 100,
+                child: Icon(
+                  Icons.error_outline,
+                  color: GColors.black,
+                  size: 40,
+                ),
+              ),
+              fit: BoxFit.cover,
+              width: width,
+              height: height,
             ),
-            fit: BoxFit.cover,
-            width: 70,
-            height: 70,
           ),
         ),
       ),

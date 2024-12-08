@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class VenuesListLoading extends StatelessWidget {
-  const VenuesListLoading({super.key});
+  const VenuesListLoading({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class VenuesListLoading extends StatelessWidget {
             );
           }
           return VenueCard(
+            user: null,
             //disable colors
             isLoading: true,
             //dummy object

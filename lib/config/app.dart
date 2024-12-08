@@ -25,8 +25,9 @@ import 'package:events_jo/features/weddings/data/firebase_wedding_venue_meals_re
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/drinks/wedding_venue_meals_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/meals/wedding_venue_meals_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venue/all/wedding_venues_cubit.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -72,7 +73,12 @@ class EventsJoApp extends StatelessWidget {
         //wedding venue cubit
         BlocProvider(
           create: (context) =>
-              WeddingVenueCubit(weddingVenueRepo: weddingVenueRepo),
+              WeddingVenuesCubit(weddingVenueRepo: weddingVenueRepo),
+        ),
+        //single wedding venue cubit
+        BlocProvider(
+          create: (context) =>
+              SingleWeddingVenueCubit(weddingVenueRepo: weddingVenueRepo),
         ),
         //wedding venue meals cubit
         BlocProvider(

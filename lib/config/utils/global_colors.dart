@@ -46,6 +46,14 @@ class GColors {
     colors: logoGradientColors,
   );
 
+  static LinearGradient disabledLogoGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    colors: [
+      GColors.poloBlue,
+      GColors.poloBlue,
+    ],
+  );
+
   static LinearGradient logoGradientReversed = LinearGradient(
     begin: Alignment.topLeft,
     colors: logoGradientColors.reversed.toList(),

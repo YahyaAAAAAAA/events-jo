@@ -111,7 +111,7 @@ flutter_native_splash:
   web: true
 
   color: "#f1f6ff"
-  image: "assets/images/icon_2.png"
+  image: "assets/images/icon_3.PNG"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -135,6 +135,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/icon_2.png
+    - assets/images/icon_3.PNG
     - assets/animations/
     - .env
   #   - images/a_dot_ham.jpeg

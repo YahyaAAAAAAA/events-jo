@@ -10,6 +10,7 @@ import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 
 class HomePageForOwners extends StatefulWidget {
@@ -28,7 +29,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
   final AnimatedMeshGradientController animatedController =
       AnimatedMeshGradientController();
 
-  TextEditingController c = TextEditingController(); //temp
+  List<XFile> images = [];
 
   @override
   void initState() {
@@ -78,21 +79,6 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
 
                 const SizedBox(height: 10),
 
-                //todo work on icons (maybe add it in OwnerPage ?)
-                //temp
-                // Icon(
-                //   IconForString.get(c.text),
-                //   color: Colors.black,
-                // ),
-                // TextField(
-                //   controller: c,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       c.text = value;
-                //     });
-                //   },
-                // ),
-
                 //welcome text
                 Center(
                   child: GradientText(
@@ -105,7 +91,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                   ),
                 ),
 
-                const SizedBox(height: 80),
+                const SizedBox(height: 60),
 
                 //text
                 Center(

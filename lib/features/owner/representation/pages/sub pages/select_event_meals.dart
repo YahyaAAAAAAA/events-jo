@@ -58,10 +58,13 @@ class SelectEventMeals extends StatelessWidget {
                     mealNameController.text,
                     FoodType.meal,
                   ),
+                  padding: const EdgeInsets.only(left: 12),
+                  width: 70,
+                  height: 70,
                 ),
               ),
               Flexible(
-                flex: 3,
+                flex: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: AuthTextField(

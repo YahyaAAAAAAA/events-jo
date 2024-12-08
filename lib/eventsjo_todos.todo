@@ -8,8 +8,14 @@ pending:
     ✔ check admin page UI and new owner page UI responsiveness @done(24-12-08 01:50)
     ✔ don't notify change when denying (shared prefs) @done(24-12-08 01:51)
     //-----------------
-    ☐ check app for web
-    ☐ add images in venue details
-    ☐ merged streams for venue details
+    ✔ check app for web @started(24-12-08 16:35) @done(24-12-08 17:26) @lasted(51m1s)
+    ✔ add images in venue details @started(24-12-08 17:52) @done(24-12-08 20:40) @lasted(2h48m42s)
+    ✔ merged streams for venue details @started(24-12-08 20:45) @done(24-12-08 22:31) @lasted(1h46m11s)
+    //----------------
+    ☐ venue details change screen
+    ☐ venue details clean up maybe ?
+    ☐ extensions folder
+    ☐ check the code overall
+    ☐ check files names overall
 
 

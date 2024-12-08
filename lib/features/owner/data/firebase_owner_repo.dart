@@ -142,6 +142,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
       var response = await cloudinary.uploadResource(
         CloudinaryUploadResource(
           filePath: images[i].path,
+          fileBytes: await images[i].readAsBytes(),
           folder: '$name-$time',
           resourceType: CloudinaryResourceType.image,
         ),

@@ -2,16 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_rating.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_details_page.dart';
 import 'package:flutter/material.dart';
 
 class VenueCard extends StatelessWidget {
+  final AppUser? user;
   final WeddingVenue weddingVenue;
   final bool isLoading;
+
   const VenueCard({
     super.key,
+    required this.user,
     required this.weddingVenue,
     required this.isLoading,
   });
@@ -171,6 +175,7 @@ class VenueCard extends StatelessWidget {
                                   builder: (context) =>
                                       WeddingVenuesDetailsPage(
                                     weddingVenue: weddingVenue,
+                                    user: user,
                                     picsList: addPicsToList(),
                                   ),
                                 ),

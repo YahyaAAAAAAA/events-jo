@@ -3,25 +3,25 @@ import 'package:events_jo/config/algorithms/haversine.dart';
 import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/wedding_venue_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venue/all/wedding_venues_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
+class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
   final WeddingVenueRepo weddingVenueRepo;
   final Haversine haversine = Haversine();
 
-  WeddingVenueCubit({required this.weddingVenueRepo})
+  WeddingVenuesCubit({required this.weddingVenueRepo})
       : super(WeddingVenueInit());
 
   //listen to venues stream
-  List<WeddingVenue> getWeddingVenuesStream() {
+  List<WeddingVenue> getVenuesStream() {
     //loading...
     emit(WeddingVenueLoading());
 
     List<WeddingVenue> weddingVenues = [];
 
     //start listening
-    weddingVenueRepo.getWeddingVenuesStream().listen(
+    weddingVenueRepo.getVenuesStream().listen(
       (snapshot) async {
         final currentState = state;
         List<WeddingVenue> currentVenues = [];
@@ -29,7 +29,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
         await Delay.oneSecond();
 
         //get current venues
-        if (currentState is WeddingVenueLoaded) {
+        if (currentState is WeddingVenuesLoaded) {
           currentVenues = List.from(currentState.venues);
         }
 
@@ -67,7 +67,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
         }
 
         //done
-        emit(WeddingVenueLoaded(currentVenues));
+        emit(WeddingVenuesLoaded(currentVenues));
       },
       onError: (error) {
         //error
@@ -86,7 +86,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
 
     final weddingVenuesList = await weddingVenueRepo.getAllVenues();
 
-    emit(WeddingVenueLoaded(weddingVenuesList));
+    emit(WeddingVenuesLoaded(weddingVenuesList));
 
     return weddingVenuesList;
   }
@@ -113,7 +113,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
 
     //team: pass original list because we only update state (the filtered list handled in wedding page)
     //done
-    emit(WeddingVenueLoaded(weddingVenueList));
+    emit(WeddingVenuesLoaded(weddingVenueList));
 
     return weddingVenueList;
   }
@@ -129,7 +129,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
     );
 
     //done
-    emit(WeddingVenueLoaded(weddingVenueList));
+    emit(WeddingVenuesLoaded(weddingVenueList));
 
     return weddingVenueList;
   }
@@ -152,7 +152,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
         .addAll(sortedList.map((e) => WeddingVenue.fromJson(e)).toList());
 
     //done
-    emit(WeddingVenueLoaded(weddingVenueList));
+    emit(WeddingVenuesLoaded(weddingVenueList));
 
     return weddingVenueList;
   }

@@ -66,10 +66,9 @@ class OwnerCubit extends Cubit<OwnerStates> {
   //add images
   Future<List<String>> addImagesToServer(
       List<XFile> images, String name) async {
+    //loading...
+    emit(OwnerLoading('Uploading Images, Please Wait...'));
     try {
-      //loading...
-      emit(OwnerLoading('Uploading Images, Please Wait...'));
-
       //add images
       List<String> urls = await ownerRepo.addImagesToServer(images, name);
 

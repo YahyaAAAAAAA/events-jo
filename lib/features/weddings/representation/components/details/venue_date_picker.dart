@@ -26,6 +26,7 @@ class VenueDatePicker extends StatelessWidget {
       child: DatePicker(
         minDate: minDate,
         maxDate: maxDate,
+        initialDate: minDate,
         selectedDate: minDate,
         onDateSelected: onDateSelected,
         currentDateDecoration: BoxDecoration(
