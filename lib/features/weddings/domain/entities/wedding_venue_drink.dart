@@ -1,4 +1,4 @@
-import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 
 class WeddingVenueDrink {
   late String id;

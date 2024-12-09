@@ -101,6 +101,8 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     //loading...
     emit(WeddingVenueLoading());
 
+    weddingVenueList = sortAlpha(weddingVenueList);
+
     //ensure list clear
     filterdWeddingVenuList.clear();
 

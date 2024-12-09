@@ -12,10 +12,16 @@ pending:
     ✔ add images in venue details @started(24-12-08 17:52) @done(24-12-08 20:40) @lasted(2h48m42s)
     ✔ merged streams for venue details @started(24-12-08 20:45) @done(24-12-08 22:31) @lasted(1h46m11s)
     //----------------
-    ☐ venue details change screen
-    ☐ venue details clean up maybe ?
-    ☐ extensions folder
+    ✔ venue details change screen @done(24-12-09 22:37)
+    ✔ venue details clean up maybe ? @done(24-12-09 20:15)
+    ✔ extensions folder @started(24-12-09 20:14) @done(24-12-09 20:14) @lasted(21s)
+    ✔ venues search with sort bug @started(24-12-09 20:15) @done(24-12-09 21:41) @lasted(1h26m41s)
+    ☐ stream cancel on venue change
     ☐ check the code overall
     ☐ check files names overall
+
+vulnerabilities:
+    ☐ animated list search needs testing
+    ☐ animated list with spam searching will crash the app
 
 

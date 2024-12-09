@@ -1,3 +1,4 @@
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/owner/representation/components/time_picker.dart';
 import 'package:flutter/material.dart';
@@ -53,42 +54,5 @@ class SelectRangeTimePage extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-//extends string class to converts time from 24hr system to 12hr system
-extension StringCasingExtension on String {
-  String get toTime {
-    if (int.parse(this) > 12) {
-      return '${int.parse(this) - 12} PM';
-    }
-
-    if (int.parse(this) == 12) {
-      return '12 PM';
-    }
-
-    if (int.parse(this) == 0) {
-      return '12 AM';
-    }
-    return '$this AM';
-  }
-
-  String toTimeWithMinutes(String minutes) {
-    if (int.parse(minutes) == 0) {
-      minutes = '00';
-    }
-
-    if (int.parse(this) > 12) {
-      return '${int.parse(this) - 12}:$minutes PM';
-    }
-
-    if (int.parse(this) == 12) {
-      return '12:$minutes PM';
-    }
-
-    if (int.parse(this) == 0) {
-      return '12:$minutes AM';
-    }
-    return '$this:$minutes AM';
   }
 }

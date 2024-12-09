@@ -13,14 +13,14 @@ class VenueNameRatingAndLocation extends StatelessWidget {
     super.key,
     required this.padding,
     required this.weddingVenue,
-    required this.locationCubit,
-    required this.venueLocation,
+    this.locationCubit,
+    this.venueLocation,
   });
 
   final double padding;
   final WeddingVenue weddingVenue;
-  final LocationCubit locationCubit;
-  final MapLocation venueLocation;
+  final LocationCubit? locationCubit;
+  final MapLocation? venueLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +58,8 @@ class VenueNameRatingAndLocation extends StatelessWidget {
 
           //location
           VenueDetailsButton(
-            onPressed: () => locationCubit.showMapDialogPreview(context,
-                userLocation: venueLocation),
+            onPressed: () => locationCubit!
+                .showMapDialogPreview(context, userLocation: venueLocation!),
             icon: CustomIcons.map_marker,
             iconSize: 30,
             padding: 18,

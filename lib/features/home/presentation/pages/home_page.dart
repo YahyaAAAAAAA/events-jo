@@ -1,3 +1,4 @@
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                 //welcome text
                 Center(
                   child: GradientText(
-                    "Welcome ${widget.user!.name}",
+                    "Welcome ${widget.user!.name.toCapitalized}",
                     gradient: GColors.logoGradient,
                     style: TextStyle(
                       color: GColors.poloBlue,

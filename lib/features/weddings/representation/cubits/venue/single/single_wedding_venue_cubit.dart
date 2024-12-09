@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:events_jo/config/utils/identical_objects.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
@@ -10,6 +12,7 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
 
   SingleWeddingVenueCubit({required this.weddingVenueRepo})
       : super(SingleWeddingVenueInit());
+  StreamSubscription? subscription;
 
   void getSingleVenueStream(String id) {
     emit(SingleWeddingVenueLoading());
@@ -19,7 +22,7 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
     final drinksStream = weddingVenueRepo.getDrinksStream(id);
 
     //combine 3 streams in one stream
-    CombineLatestStream.combine3(
+    subscription = CombineLatestStream.combine3(
       venueStream,
       mealsStream,
       drinksStream,
@@ -49,6 +52,7 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
           //notify for change on venue
           emit(SingleWeddingVenueChanged(
               'A change has occurred on the Venue\'s info'));
+          subscription!.cancel();
         }
 
         //check if two lists of meals are the same

@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/global_snack_bar.dart';
+import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
-import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_time_page.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
@@ -18,12 +18,14 @@ import 'package:events_jo/features/weddings/representation/components/details/ve
 import 'package:events_jo/features/weddings/representation/components/details/venue_date_picker.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_people_slider.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_time_picker.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
 import 'package:events_jo/features/weddings/representation/components/venues_app_bar.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:gradient_icon/gradient_icon.dart';
 import 'package:latlong2/latlong.dart';
 
 class WeddingVenuesDetailsPage extends StatefulWidget {
@@ -57,8 +59,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
   //date
   late DateTime selectedDate;
-  late DateTime minDate;
-  late DateTime maxDate;
 
   //time
   late DateTime selectedTime;
@@ -96,18 +96,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
       weddingVenue.startDate[0],
       weddingVenue.startDate[1],
       weddingVenue.startDate[2],
-    );
-
-    minDate = DateTime(
-      weddingVenue.startDate[0],
-      weddingVenue.startDate[1],
-      weddingVenue.startDate[2],
-    );
-
-    maxDate = DateTime(
-      weddingVenue.endDate[0],
-      weddingVenue.endDate[1],
-      weddingVenue.endDate[2],
     );
 
     //setup people range
@@ -179,18 +167,36 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 450),
-          //scroll bar
-          child:
-              BlocConsumer<SingleWeddingVenueCubit, SingleWeddingVenueStates>(
-            listener: (context, state) {
-              if (state is SingleWeddingVenueChanged) {
-                // Navigator.of(context).pop();
-                GSnackBar.show(context: context, text: state.change);
-              }
-            },
+          child: BlocBuilder<SingleWeddingVenueCubit, SingleWeddingVenueStates>(
             builder: (context, state) {
               if (state is SingleWeddingVenueChanged) {
-                return const Text('dddddddd');
+                return ListView(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(12),
+                  children: [
+                    Center(
+                      child: VenueDetailsButton(
+                        icon: Icons.restart_alt_rounded,
+                        iconSize: 40,
+                        padding: 20,
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: GradientText(
+                          'Something has changed, please rejoin',
+                          gradient: GColors.logoGradient,
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                );
               }
               if (state is SingleWeddingVenueLoaded) {
                 final venue = state.data.venue;
@@ -225,8 +231,16 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
                       //* date
                       VenueDatePicker(
-                        minDate: minDate,
-                        maxDate: maxDate,
+                        minDate: DateTime(
+                          venue.startDate[0],
+                          venue.startDate[1],
+                          venue.startDate[2],
+                        ),
+                        maxDate: DateTime(
+                          venue.endDate[0],
+                          venue.endDate[1],
+                          venue.endDate[2],
+                        ),
                         //save date
                         onDateSelected: (date) =>
                             setState(() => selectedDate = date),
@@ -369,7 +383,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                   ),
                 );
               } else {
-                return const GlobalLoadingBar();
+                return const GlobalLoadingBar(mainText: false);
               }
             },
           ),

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
@@ -166,14 +167,4 @@ class FirebaseOwnerRepo implements OwnerRepo {
     //id example -> 2024111609413072511999
     return "${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}${now.microsecond}$randomValue";
   }
-}
-
-//extend string class -> capitalize the beginning of every word
-extension StringCasingExtension on String {
-  String get toCapitalized =>
-      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
-  String get toTitleCase => replaceAll(RegExp(' +'), ' ')
-      .split(' ')
-      .map((str) => str.toCapitalized)
-      .join(' ');
 }

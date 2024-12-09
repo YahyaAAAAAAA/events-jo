@@ -1,11 +1,11 @@
 import 'package:events_jo/config/enums/event_type.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/owner_confirmation_display_row.dart';
-import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_time_page.dart';
 import 'package:flutter/material.dart';
 
-//* This page displays info for the user's even
+//* This page displays info for the user's event
 class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
   final void Function()? onPressed;
   final void Function()? showMeals;

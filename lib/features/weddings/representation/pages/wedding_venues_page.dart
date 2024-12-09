@@ -115,7 +115,8 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                         exitTransition: [SlideInLeft()],
                         insertDuration: const Duration(milliseconds: 300),
                         removeDuration: const Duration(milliseconds: 300),
-                        isSameItem: (a, b) => a.id == b.id,
+                        //todo test this
+                        // isSameItem: (a, b) => a.id == b.id,
                         itemBuilder: (context, index) => VenueCard(
                           isLoading: false,
                           user: user,
