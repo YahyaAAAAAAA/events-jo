@@ -1,8 +1,7 @@
-import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/extensions/double_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/user_location.dart';
@@ -18,14 +17,13 @@ import 'package:events_jo/features/weddings/representation/components/details/ve
 import 'package:events_jo/features/weddings/representation/components/details/venue_date_picker.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_people_slider.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_time_picker.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_changed.dart';
 import 'package:events_jo/features/weddings/representation/components/venues_app_bar.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 import 'package:latlong2/latlong.dart';
 
 class WeddingVenuesDetailsPage extends StatefulWidget {
@@ -167,37 +165,18 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 450),
-          child: BlocBuilder<SingleWeddingVenueCubit, SingleWeddingVenueStates>(
-            builder: (context, state) {
+          child:
+              BlocConsumer<SingleWeddingVenueCubit, SingleWeddingVenueStates>(
+            listener: (context, state) {
               if (state is SingleWeddingVenueChanged) {
-                return ListView(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(12),
-                  children: [
-                    Center(
-                      child: VenueDetailsButton(
-                        icon: Icons.restart_alt_rounded,
-                        iconSize: 40,
-                        padding: 20,
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: GradientText(
-                          'Something has changed, please rejoin',
-                          gradient: GColors.logoGradient,
-                          style: const TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const VenueChanged(),
+                  ),
                 );
               }
+            },
+            builder: (context, state) {
               if (state is SingleWeddingVenueLoaded) {
                 final venue = state.data.venue;
                 final meals = state.data.meals;
@@ -400,12 +379,5 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
         color: GColors.poloBlue,
       ),
     );
-  }
-}
-
-extension Precision on double {
-  double toPrecision(int fractionDigits) {
-    num mod = pow(10, fractionDigits.toDouble());
-    return ((this * mod).round().toDouble() / mod);
   }
 }

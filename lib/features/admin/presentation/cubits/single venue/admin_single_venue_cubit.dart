@@ -1,4 +1,4 @@
-import 'package:events_jo/config/preferences/preferences.dart';
+import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/utils/identical_objects.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_states.dart';
@@ -8,6 +8,7 @@ import 'package:rxdart/rxdart.dart';
 
 class AdminSingleVenueCubit extends Cubit<AdminSingleVenueStates> {
   final AdminRepo adminRepo;
+  bool isDenying = false;
 
   AdminSingleVenueCubit({required this.adminRepo})
       : super(AdminSingleVenueInit());
@@ -39,15 +40,19 @@ class AdminSingleVenueCubit extends Cubit<AdminSingleVenueStates> {
         }
 
         final currentState = state;
-        WeddingVenueDetailed currentVenue = data;
+        WeddingVenueDetailed currentData = data;
 
         if (currentState is AdminSingleVenueLoaded) {
-          currentVenue = currentState.data;
+          currentData = currentState.data;
         }
 
         //check if two venues are the same
-        if (!identicalVenues(currentVenue, data)) {
-          if (await Preferences.readBool('isAdminDenying') == false) {
+        if (!identicalVenues(
+          currentData,
+          data,
+          UserType.admin,
+        )) {
+          if (!isDenying) {
             //notify for change on venue
             emit(AdminSingleVenueChanged(
                 'A change has occurred on the Venue\'s info'));
@@ -55,8 +60,8 @@ class AdminSingleVenueCubit extends Cubit<AdminSingleVenueStates> {
         }
 
         //check if two lists of meals are the same
-        if (!identicalMeals(data.meals, currentVenue.meals)) {
-          if (await Preferences.readBool('isAdminDenying') == false) {
+        if (!identicalMeals(data.meals, currentData.meals)) {
+          if (!isDenying) {
             //notify for change on venue
             emit(AdminSingleVenueChanged(
                 'A change has occurred on the Venue\'s meals'));
@@ -64,8 +69,8 @@ class AdminSingleVenueCubit extends Cubit<AdminSingleVenueStates> {
         }
 
         //check if two lists of meals are the same
-        if (!identicalDrinks(data.drinks, currentVenue.drinks)) {
-          if (await Preferences.readBool('isAdminDenying') == false) {
+        if (!identicalDrinks(data.drinks, currentData.drinks)) {
+          if (!isDenying) {
             //notify for change on venue
             emit(AdminSingleVenueChanged(
                 'A change has occurred on the Venue\'s drinks'));

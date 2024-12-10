@@ -83,103 +83,106 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
                 ),
               ),
               //summary list
-              ConstrainedBox(
+              Container(
+                padding: const EdgeInsets.all(8.0),
                 constraints: const BoxConstraints(maxHeight: 400),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: ColoredBox(
-                      color: GColors.white,
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: [
-                          //type
-                          OwnerConfirmationDisplayRow(
-                            mainText: 'Type: ',
-                            subText: eventType == EventType.venue
-                                ? 'Wedding Venue'
-                                : eventType == EventType.farm
-                                    ? 'Farm'
-                                    : 'Football Court',
-                          ),
-
-                          localDivider(),
-
-                          //name
-                          OwnerConfirmationDisplayRow(
-                              mainText: 'Name: ', subText: name),
-
-                          localDivider(),
-
-                          //date
-                          OwnerConfirmationDisplayRow(
-                              mainText: 'Date: ',
-                              subText:
-                                  'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'),
-
-                          localDivider(),
-
-                          //time
-                          OwnerConfirmationDisplayRow(
-                              mainText: 'Open Hours: ',
-                              subText:
-                                  'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
-
-                          localDivider(),
-
-                          //people
-                          OwnerConfirmationDisplayRow(
-                              mainText: 'People Range: ',
-                              subText:
-                                  'Between ${peopleMin.toString()} Person To ${peopleMax.toString()}'),
-
-                          localDivider(),
-
-                          //people
-                          OwnerConfirmationDisplayRow(
-                            mainText: 'Price Per Person: ',
-                            subText: '${peoplePrice.toString()}JD',
-                          ),
-
-                          localDivider(),
-
-                          //images
-                          OwnerConfirmationDisplayRow(
-                            mainText: 'Meals & Drinks: ',
-                            isText: false,
-                            subText: '',
-                            icon: Icons.cake_rounded,
-                            withSecondIcon: true,
-                            secondIcon: Icons.free_breakfast,
-                            onPressed: showMeals,
-                            onPressedSecondIcon: showDrinks,
-                          ),
-
-                          localDivider(),
-
-                          //images
-                          OwnerConfirmationDisplayRow(
-                            mainText: 'Images:   ',
-                            isText: false,
-                            subText: '',
-                            icon: Icons.image,
-                            onPressed: showImages,
-                          ),
-
-                          localDivider(),
-
-                          //location
-                          OwnerConfirmationDisplayRow(
-                            mainText: 'Location: ',
-                            isText: false,
-                            subText: '',
-                            onPressed: showMap,
-                          ),
-                        ],
-                      ),
+                decoration: BoxDecoration(
+                  color: GColors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: GColors.black.withOpacity(0.1),
+                      offset: const Offset(0, 2),
+                      blurRadius: 1,
                     ),
-                  ),
+                  ],
+                ),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    //type
+                    OwnerConfirmationDisplayRow(
+                      mainText: 'Type: ',
+                      subText: eventType == EventType.venue
+                          ? 'Wedding Venue'
+                          : eventType == EventType.farm
+                              ? 'Farm'
+                              : 'Football Court',
+                    ),
+
+                    localDivider(),
+
+                    //name
+                    OwnerConfirmationDisplayRow(
+                        mainText: 'Name: ', subText: name),
+
+                    localDivider(),
+
+                    //date
+                    OwnerConfirmationDisplayRow(
+                        mainText: 'Date: ',
+                        subText:
+                            'From ${range!.start.month}/${range!.start.day}/${range!.start.year} - To ${range!.end.month}/${range!.end.day}/${range!.end.year}'),
+
+                    localDivider(),
+
+                    //time
+                    OwnerConfirmationDisplayRow(
+                        mainText: 'Open Hours: ',
+                        subText:
+                            'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'),
+
+                    localDivider(),
+
+                    //people
+                    OwnerConfirmationDisplayRow(
+                        mainText: 'People Range: ',
+                        subText:
+                            'Between ${peopleMin.toString()} Person To ${peopleMax.toString()}'),
+
+                    localDivider(),
+
+                    //people
+                    OwnerConfirmationDisplayRow(
+                      mainText: 'Price Per Person: ',
+                      subText: '${peoplePrice.toString()}JD',
+                    ),
+
+                    localDivider(),
+
+                    //images
+                    OwnerConfirmationDisplayRow(
+                      mainText: 'Meals & Drinks: ',
+                      isText: false,
+                      subText: '',
+                      icon: Icons.cake_rounded,
+                      withSecondIcon: true,
+                      secondIcon: Icons.free_breakfast,
+                      onPressed: showMeals,
+                      onPressedSecondIcon: showDrinks,
+                    ),
+
+                    localDivider(),
+
+                    //images
+                    OwnerConfirmationDisplayRow(
+                      mainText: 'Images:   ',
+                      isText: false,
+                      subText: '',
+                      icon: Icons.image,
+                      onPressed: showImages,
+                    ),
+
+                    localDivider(),
+
+                    //location
+                    OwnerConfirmationDisplayRow(
+                      mainText: 'Location: ',
+                      isText: false,
+                      subText: '',
+                      onPressed: showMap,
+                    ),
+                  ],
                 ),
               ),
             ],

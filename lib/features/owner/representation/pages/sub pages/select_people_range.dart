@@ -42,6 +42,7 @@ class SelectPeopleRange extends StatelessWidget {
                   child: AuthTextField(
                     controller: peoplePriceController,
                     hintText: 'Price per person',
+                    elevation: 3,
                     obscureText: false,
                     isOnlyDouble: true,
                   ),
@@ -75,6 +76,7 @@ class SelectPeopleRange extends StatelessWidget {
                   child: AuthTextField(
                     controller: peopleMinController,
                     hintText: 'Minimum Amount',
+                    elevation: 3,
                     isOnlyInt: true,
                     obscureText: false,
                   ),
@@ -86,6 +88,7 @@ class SelectPeopleRange extends StatelessWidget {
                   child: AuthTextField(
                     controller: peopleMaxController,
                     hintText: 'Maximum Amount',
+                    elevation: 3,
                     isOnlyInt: true,
                     obscureText: false,
                   ),

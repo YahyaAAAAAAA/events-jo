@@ -41,6 +41,7 @@ class SelectEventNamePage extends StatelessWidget {
             child: AuthTextField(
               controller: nameController,
               hintText: '',
+              elevation: 3,
               textColor: GColors.royalBlue,
               fontWeight: FontWeight.bold,
               obscureText: false,

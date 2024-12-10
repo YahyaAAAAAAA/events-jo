@@ -1,4 +1,4 @@
-import 'package:events_jo/config/enums/user%20type/user_type_gate.dart';
+import 'package:events_jo/features/auth/representation/pages/user_type_gate.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/data/firebase_admin_repo.dart';
@@ -20,11 +20,7 @@ import 'package:events_jo/features/location/data/geolocator_location_repo.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
-import 'package:events_jo/features/weddings/data/firebase_wedding_venue_drinks_repo.dart';
-import 'package:events_jo/features/weddings/data/firebase_wedding_venue_meals_repo.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
-import 'package:events_jo/features/weddings/representation/cubits/drinks/wedding_venue_meals_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/meals/wedding_venue_meals_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venue/all/wedding_venues_cubit.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_cubit.dart';
@@ -50,8 +46,6 @@ auth state
 class EventsJoApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
   final weddingVenueRepo = FirebaseWeddingVenueRepo();
-  final weddingVenueMealsRepo = FirebaseWeddingVenueMealsRepo();
-  final weddingVenueDrinksRepo = FirebaseWeddingVenueDrinksRepo();
   final locationRepo = GeolocatorLocationRepo();
   final ownerRepo = FirebaseOwnerRepo();
   final adminRepo = FirebaseAdminRepo();
@@ -79,18 +73,6 @@ class EventsJoApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               SingleWeddingVenueCubit(weddingVenueRepo: weddingVenueRepo),
-        ),
-        //wedding venue meals cubit
-        BlocProvider(
-          create: (context) => WeddingVenueMealsCubit(
-            weddingVenueMealsRepo: weddingVenueMealsRepo,
-          ),
-        ),
-        //wedding venue drinks cubit
-        BlocProvider(
-          create: (context) => WeddingVenueDrinksCubit(
-            weddingVenueDrinksRepo: weddingVenueDrinksRepo,
-          ),
         ),
         //owner cubit
         BlocProvider(

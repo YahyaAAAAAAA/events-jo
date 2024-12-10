@@ -37,7 +37,7 @@ class VenuesListLoading extends StatelessWidget {
               isOpen: true,
               isApproved: true,
               isBeingApproved: false,
-              pics: ["https://i.ibb.co/ZVf53hB/placeholder.png"],
+              pics: ["x"],
               ownerId: 'x',
               ownerName: 'x',
               startDate: [],

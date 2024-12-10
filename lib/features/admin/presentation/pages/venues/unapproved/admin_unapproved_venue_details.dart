@@ -102,12 +102,22 @@ class _AdminUnapprovedVenueDetailsState
               peoplePrice: venue.peoplePrice,
               ownerName: venue.ownerName,
               onApprovePressed: () async {
+                //approve action
                 await widget.adminUnapproveCubit.approveVenue(venue.id);
+
                 Navigator.of(context).pop();
               },
               onDenyPressed: () async {
+                //admin denying, don't notify
+                adminSingleVenueCubit.isDenying = true;
+
+                //deny action
                 await widget.adminUnapproveCubit
                     .denyVenue(venue.id, venue.pics);
+
+                //admin done denying
+                adminSingleVenueCubit.isDenying = false;
+
                 Navigator.of(context).pop();
               },
               //todo should update location object

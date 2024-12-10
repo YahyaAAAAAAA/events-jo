@@ -1,7 +1,7 @@
 // Outlines the auth operations
 
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
+import 'package:events_jo/config/enums/user_type_enum.dart';
 
 abstract class AuthRepo {
   Future<AppUser?> loginWithEmailPassword(String email, String password);

@@ -2,10 +2,11 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-class NoRequestsLeft extends StatelessWidget {
+class ErrorVenues extends StatelessWidget {
   final String text;
   final IconData icon;
-  const NoRequestsLeft({
+
+  const ErrorVenues({
     super.key,
     required this.icon,
     required this.text,
@@ -19,7 +20,7 @@ class NoRequestsLeft extends StatelessWidget {
         children: [
           GradientIcon(
             icon: icon,
-            gradient: GColors.adminGradient,
+            gradient: GColors.logoGradient,
             size: 60,
           ),
           const SizedBox(height: 20),
@@ -27,7 +28,7 @@ class NoRequestsLeft extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                color: GColors.cyanShade6,
+                color: GColors.royalBlue,
                 fontSize: 20,
               ),
             ),

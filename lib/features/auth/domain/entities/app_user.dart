@@ -1,4 +1,4 @@
-import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
+import 'package:events_jo/config/enums/user_type_enum.dart';
 
 class AppUser {
   final String uid;

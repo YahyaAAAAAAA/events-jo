@@ -45,8 +45,6 @@ dependencies:
   flutter_bloc: ^7.0.0
   #for environmental variables
   flutter_dotenv: ^5.2.1
-  #local database
-  shared_preferences: ^2.3.3
   #for location
   geolocator: ^11.0.0
   flutter_map: ^7.0.2

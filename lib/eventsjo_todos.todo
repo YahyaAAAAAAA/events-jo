@@ -16,9 +16,22 @@ pending:
     ✔ venue details clean up maybe ? @done(24-12-09 20:15)
     ✔ extensions folder @started(24-12-09 20:14) @done(24-12-09 20:14) @lasted(21s)
     ✔ venues search with sort bug @started(24-12-09 20:15) @done(24-12-09 21:41) @lasted(1h26m41s)
-    ☐ stream cancel on venue change
+    //----------------
+    ✔ push replacement on venue change @started(24-12-10 16:54) @done(24-12-10 17:05) @lasted(11m54s)
+    ✔ different solution to deletion beside prefs ? @started(24-12-10 19:45) @done(24-12-10 19:45) @lasted(28s)
+    ✔ moved user type gate to auth feature @done(24-12-10 19:47)
+    ✔ deleted meals & drinks cubits and repo files @done(24-12-10 20:16)
+    ✔ shadow color for owner page and auth text @done(24-12-10 23:00)
+    ✔ menu button for meals and drinks @done(24-12-10 23:00)
+    ✔ empty venue list @started(24-12-10 23:03) @done(24-12-10 23:16) @lasted(13m54s)
+    ✔ error venue list @done(24-12-10 23:16)
+    //-----------------
     ☐ check the code overall
     ☐ check files names overall
+    //-----------------
+    ☐ settings feature (account,venues,problem,contact)
+    ☐ owner venues feature (venues by owner id,details,update)
+
 
 vulnerabilities:
     ☐ animated list search needs testing

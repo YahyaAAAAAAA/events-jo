@@ -1,5 +1,5 @@
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/config/enums/user%20type/user_type_enum.dart';
+import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/features/auth/domain/repos/auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

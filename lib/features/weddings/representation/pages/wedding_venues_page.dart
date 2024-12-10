@@ -1,4 +1,7 @@
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/features/weddings/representation/components/error_venues.dart';
+import 'package:events_jo/features/weddings/representation/components/no_venues.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_search_bar_button.dart';
 import 'package:events_jo/features/weddings/representation/components/venues_app_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/venues_list_loading.dart';
@@ -66,6 +69,13 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                 //get venues from stream
                 final venues = state.venues;
 
+                if (venues.isEmpty) {
+                  return const NoVenues(
+                    icon: CustomIcons.sad,
+                    text: 'No Wedding Venues Available',
+                  );
+                }
+
                 return Column(
                   children: [
                     //* search bar
@@ -116,7 +126,7 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                         insertDuration: const Duration(milliseconds: 300),
                         removeDuration: const Duration(milliseconds: 300),
                         //todo test this
-                        // isSameItem: (a, b) => a.id == b.id,
+                        isSameItem: (a, b) => a.id == b.id,
                         itemBuilder: (context, index) => VenueCard(
                           isLoading: false,
                           user: user,
@@ -133,8 +143,9 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
 
               //error
               if (state is WeddingVenueError) {
-                return const Center(
-                  child: Text('Error getting venues list'),
+                return const ErrorVenues(
+                  icon: CustomIcons.sad,
+                  text: 'Error getting Wedding Venues',
                 );
               }
 

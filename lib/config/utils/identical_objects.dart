@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
@@ -6,7 +7,11 @@ import 'package:flutter/foundation.dart';
 //todo comeback if venues, meals or drinks fields have changed
 
 //check if two venues are identical
-bool identicalVenues(WeddingVenueDetailed v1, WeddingVenueDetailed v2) {
+bool identicalVenues(
+  WeddingVenueDetailed v1,
+  WeddingVenueDetailed v2,
+  UserType type,
+) {
   if (v1.venue.id != v2.venue.id) {
     return false;
   }
@@ -45,6 +50,19 @@ bool identicalVenues(WeddingVenueDetailed v1, WeddingVenueDetailed v2) {
   }
   if (!listEquals(v1.venue.pics, v2.venue.pics)) {
     return false;
+  }
+
+  //checks for owners and users only
+  if (type == UserType.user) {
+    if (v1.venue.isBeingApproved != v2.venue.isBeingApproved) {
+      return false;
+    }
+    if (v1.venue.isOpen != v2.venue.isOpen) {
+      return false;
+    }
+    if (v1.venue.rate != v2.venue.rate) {
+      return false;
+    }
   }
 
   return true;

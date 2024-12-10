@@ -1,6 +1,7 @@
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/algorithms/image_for_string.dart';
 import 'package:events_jo/config/enums/food_type.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
@@ -19,6 +20,7 @@ class SelectEventDrinks extends StatelessWidget {
   final void Function(String)? onChanged;
 
   final Widget Function(BuildContext, int) itemBuilder;
+  final void Function(dynamic)? onDrinkSelected;
 
   const SelectEventDrinks({
     super.key,
@@ -29,6 +31,7 @@ class SelectEventDrinks extends StatelessWidget {
     required this.onAddPressed,
     required this.onChanged,
     required this.itemBuilder,
+    required this.onDrinkSelected,
   });
 
   @override
@@ -65,18 +68,63 @@ class SelectEventDrinks extends StatelessWidget {
                 ),
               ),
               Flexible(
-                flex: 4,
+                flex: 3,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: AuthTextField(
                     controller: drinkNameController,
                     onChanged: onChanged,
                     hintText: 'Drink Name',
+                    elevation: 3,
                     obscureText: false,
-                    maxLength: 14,
+                    maxLength: 25,
                   ),
                 ),
               ),
+              PopupMenuButton(
+                icon: Icon(
+                  Icons.menu_open_rounded,
+                  color: GColors.royalBlue,
+                  size: 35,
+                ),
+                color: GColors.white,
+                constraints: const BoxConstraints(maxHeight: 200),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(GColors.white),
+                  padding: const WidgetStatePropertyAll(EdgeInsets.all(9)),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  shadowColor: WidgetStatePropertyAll(
+                    GColors.black.withOpacity(0.5),
+                  ),
+                  elevation: const WidgetStatePropertyAll(3),
+                ),
+                onSelected: onDrinkSelected,
+                tooltip: '',
+                enableFeedback: false,
+                position: PopupMenuPosition.under,
+                itemBuilder: (context) {
+                  final drinksList =
+                      ImageForString.stringToImageDrinksMap.keys.toList();
+                  return List.generate(
+                    drinksList.length,
+                    (index) {
+                      return PopupMenuItem(
+                        value: drinksList[index].toString().toTitleCase,
+                        child: Text(
+                          drinksList[index].toString().toTitleCase,
+                          style: TextStyle(
+                            color: GColors.royalBlue,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              )
             ],
           ),
 
@@ -89,6 +137,7 @@ class SelectEventDrinks extends StatelessWidget {
                   child: AuthTextField(
                     controller: drinkAmountController,
                     hintText: 'Drink Amount',
+                    elevation: 3,
                     isOnlyInt: true,
                     obscureText: false,
                   ),
@@ -100,6 +149,7 @@ class SelectEventDrinks extends StatelessWidget {
                   child: AuthTextField(
                     controller: drinkPriceController,
                     hintText: 'Drink Price',
+                    elevation: 3,
                     isOnlyDouble: true,
                     obscureText: false,
                   ),
@@ -141,9 +191,15 @@ class SelectEventDrinks extends StatelessWidget {
             child: Container(
               constraints: const BoxConstraints(maxHeight: 200),
               decoration: BoxDecoration(
-                color: GColors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
+                  color: GColors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: GColors.black.withOpacity(0.1),
+                      offset: const Offset(0, 2),
+                      blurRadius: 1,
+                    ),
+                  ]),
               child: drinks.isNotEmpty
                   ? AnimatedListView(
                       items: drinks,

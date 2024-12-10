@@ -45,44 +45,48 @@ class SelectEventType extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //note: no need to use container (heavy widget) if only (color and border) is required
-              //-instead use ColoredBox and ClipRRect
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: ColoredBox(
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
                   color: GColors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: [
-                        //type icon
-                        Icon(
-                          eventType == EventType.venue
-                              ? CustomIcons.wedding
-                              : eventType == EventType.farm
-                                  ? CustomIcons.farm
-                                  : CustomIcons.football,
-                          color: GColors.royalBlue,
-                        ),
-
-                        const SizedBox(width: 15),
-
-                        //type name
-                        Text(
-                          eventType == EventType.venue
-                              ? 'Wedding Venue'
-                              : eventType == EventType.farm
-                                  ? 'Farm'
-                                  : 'Football Court',
-                          style: TextStyle(
-                            color: GColors.royalBlue,
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    //note: soft shadow
+                    BoxShadow(
+                      color: GColors.black.withOpacity(0.1),
+                      offset: const Offset(0, 2),
+                      blurRadius: 1,
                     ),
-                  ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    //type icon
+                    Icon(
+                      eventType == EventType.venue
+                          ? CustomIcons.wedding
+                          : eventType == EventType.farm
+                              ? CustomIcons.farm
+                              : CustomIcons.football,
+                      color: GColors.royalBlue,
+                    ),
+
+                    const SizedBox(width: 15),
+
+                    //type name
+                    Text(
+                      eventType == EventType.venue
+                          ? 'Wedding Venue'
+                          : eventType == EventType.farm
+                              ? 'Farm'
+                              : 'Football Court',
+                      style: TextStyle(
+                        color: GColors.royalBlue,
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
@@ -96,6 +100,9 @@ class SelectEventType extends StatelessWidget {
                   color: GColors.royalBlue,
                 ),
                 style: ButtonStyle(
+                    elevation: const WidgetStatePropertyAll(3),
+                    shadowColor:
+                        WidgetStatePropertyAll(GColors.white.withOpacity(0.5)),
                     backgroundColor: WidgetStatePropertyAll(GColors.white),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(

@@ -1,6 +1,7 @@
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/algorithms/image_for_string.dart';
 import 'package:events_jo/config/enums/food_type.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/home/presentation/components/owner_button.dart';
@@ -15,9 +16,10 @@ class SelectEventMeals extends StatelessWidget {
 
   final List<WeddingVenueMeal> meals;
   final void Function()? onAddPressed;
-  final void Function(String)? onChanged;
+  final void Function(String)? onTextFieldChanged;
 
   final Widget Function(BuildContext, int) itemBuilder;
+  final void Function(dynamic)? onMealSelected;
 
   const SelectEventMeals({
     super.key,
@@ -26,8 +28,9 @@ class SelectEventMeals extends StatelessWidget {
     required this.mealPriceController,
     required this.meals,
     required this.onAddPressed,
-    required this.onChanged,
+    required this.onTextFieldChanged,
     required this.itemBuilder,
+    required this.onMealSelected,
   });
 
   @override
@@ -64,18 +67,63 @@ class SelectEventMeals extends StatelessWidget {
                 ),
               ),
               Flexible(
-                flex: 4,
+                flex: 3,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: AuthTextField(
                     controller: mealNameController,
                     hintText: 'Meal Name',
+                    elevation: 3,
                     obscureText: false,
-                    maxLength: 14,
-                    onChanged: onChanged,
+                    maxLength: 25,
+                    onChanged: onTextFieldChanged,
                   ),
                 ),
               ),
+              PopupMenuButton(
+                icon: Icon(
+                  Icons.menu_open_rounded,
+                  color: GColors.royalBlue,
+                  size: 35,
+                ),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(GColors.white),
+                  padding: const WidgetStatePropertyAll(EdgeInsets.all(9)),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  elevation: const WidgetStatePropertyAll(3),
+                  shadowColor: WidgetStatePropertyAll(
+                    GColors.black.withOpacity(0.5),
+                  ),
+                ),
+                color: GColors.white,
+                constraints: const BoxConstraints(maxHeight: 200),
+                onSelected: onMealSelected,
+                tooltip: '',
+                enableFeedback: false,
+                position: PopupMenuPosition.under,
+                itemBuilder: (context) {
+                  final mealsList =
+                      ImageForString.stringToImageMealsMap.keys.toList();
+                  return List.generate(
+                    mealsList.length,
+                    (index) {
+                      return PopupMenuItem(
+                        value: mealsList[index].toString().toTitleCase,
+                        child: Text(
+                          mealsList[index].toString().toTitleCase,
+                          style: TextStyle(
+                            color: GColors.royalBlue,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              )
             ],
           ),
 
@@ -89,6 +137,7 @@ class SelectEventMeals extends StatelessWidget {
                     controller: mealAmountController,
                     maxLength: 6,
                     hintText: 'Meal Amount',
+                    elevation: 3,
                     isOnlyInt: true,
                     obscureText: false,
                   ),
@@ -101,6 +150,7 @@ class SelectEventMeals extends StatelessWidget {
                     controller: mealPriceController,
                     hintText: 'Meal Price',
                     maxLength: 6,
+                    elevation: 3,
                     isOnlyDouble: true,
                     obscureText: false,
                   ),
@@ -145,6 +195,13 @@ class SelectEventMeals extends StatelessWidget {
               decoration: BoxDecoration(
                 color: GColors.white,
                 borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: GColors.black.withOpacity(0.1),
+                    offset: const Offset(0, 2),
+                    blurRadius: 1,
+                  ),
+                ],
               ),
               child: meals.isNotEmpty
                   ? AnimatedListView(

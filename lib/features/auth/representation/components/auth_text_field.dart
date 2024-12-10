@@ -6,14 +6,18 @@ class AuthTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
-  final TextAlign textAlign;
+
   final void Function(String)? onChanged;
-  final Color textColor;
-  final FontWeight fontWeight;
-  final bool isOnlyDouble;
-  final bool isOnlyInt;
+
+  final TextAlign? textAlign;
+  final Color? textColor;
+  final FontWeight? fontWeight;
   final int? maxLength;
   final BorderRadius? borderRadius;
+  final double? elevation;
+
+  final bool isOnlyDouble;
+  final bool isOnlyInt;
 
   const AuthTextField({
     super.key,
@@ -21,71 +25,78 @@ class AuthTextField extends StatelessWidget {
     required this.hintText,
     required this.obscureText,
     this.onChanged,
-    this.textAlign = TextAlign.start,
-    this.textColor = Colors.black,
-    this.fontWeight = FontWeight.normal,
+    this.borderRadius,
+    this.elevation,
+    this.textAlign,
+    this.textColor,
+    this.fontWeight,
+    this.maxLength,
     this.isOnlyDouble = false,
     this.isOnlyInt = false,
-    this.maxLength = null,
-    this.borderRadius,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      onChanged: onChanged,
-      maxLength: maxLength,
-      style: TextStyle(
-        color: textColor,
-        fontSize: 17,
-        fontWeight: fontWeight,
-      ),
-      textAlign: textAlign,
-      keyboardType:
-          // accepts only integers
-          isOnlyInt
-              ? TextInputType.number
-              //accepts only doubles
-              : isOnlyDouble
-                  ? const TextInputType.numberWithOptions(decimal: true)
-                  //accepts anything
-                  : null,
-      inputFormatters:
-          // accepts only integers
-          isOnlyInt
-              ? [FilteringTextInputFormatter.digitsOnly]
-              //accepts only doubles
-              : isOnlyDouble
-                  ? [
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^(\d+)?\.?\d{0,2}'))
-                    ]
-                  //accepts anything
-                  : null,
-      decoration: InputDecoration(
-        hintText: hintText,
-        //note: hides maxLength counter
-        counterText: "",
-        hintStyle: TextStyle(
-          color: GColors.black,
+    return Material(
+      shadowColor: GColors.black.withOpacity(0.2),
+      elevation: elevation ?? 0,
+      borderRadius: BorderRadius.circular(12),
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        onChanged: onChanged,
+        maxLength: maxLength ?? null,
+        style: TextStyle(
+          color: textColor ?? GColors.black,
           fontSize: 17,
+          fontWeight: fontWeight ?? FontWeight.normal,
         ),
-        fillColor: GColors.white,
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: GColors.whiteShade3,
+        textAlign: textAlign ?? TextAlign.start,
+        keyboardType:
+            // accepts only integers
+            isOnlyInt
+                ? TextInputType.number
+                //accepts only doubles
+                : isOnlyDouble
+                    ? const TextInputType.numberWithOptions(decimal: true)
+                    //accepts anything
+                    : null,
+        inputFormatters:
+            // accepts only integers
+            isOnlyInt
+                ? [FilteringTextInputFormatter.digitsOnly]
+                //accepts only doubles
+                : isOnlyDouble
+                    ? [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^(\d+)?\.?\d{0,2}'))
+                      ]
+                    //accepts anything
+                    : null,
+        decoration: InputDecoration(
+          hintText: hintText,
+          //note: hides maxLength counter
+          counterText: "",
+          hintStyle: TextStyle(
+            color: GColors.black,
+            fontSize: 17,
           ),
-          borderRadius: borderRadius ?? BorderRadius.circular(12),
+          fillColor: GColors.white,
+          filled: true,
+
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: GColors.whiteShade3,
+            ),
+            borderRadius: borderRadius ?? BorderRadius.circular(12),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: GColors.royalBlue, width: 1),
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: GColors.royalBlue, width: 1),
-          borderRadius: BorderRadius.circular(12),
-        ),
+        cursorColor: GColors.royalBlue,
       ),
-      cursorColor: GColors.royalBlue,
     );
   }
 }

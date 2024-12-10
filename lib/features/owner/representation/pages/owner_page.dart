@@ -154,6 +154,7 @@ class _OwnerPageState extends State<OwnerPage> {
       //disables native back button
       canPop: false,
       child: Scaffold(
+        //todo fix this
         appBar: AppBar(
           //hides back button
           leading: const SizedBox(),
@@ -249,7 +250,10 @@ class _OwnerPageState extends State<OwnerPage> {
                   mealPriceController: mealPriceController,
                   meals: meals,
                   //update image when typing (only update state)
-                  onChanged: (text) => setState(() {}),
+                  onTextFieldChanged: (text) => setState(() {}),
+                  //update field on menu select
+                  onMealSelected: (meal) =>
+                      setState(() => mealNameController.text = meal.toString()),
                   itemBuilder: (context, index) {
                     return OwnerMealCard(
                       meals: meals,
@@ -307,6 +311,9 @@ class _OwnerPageState extends State<OwnerPage> {
                   drinks: drinks,
                   //update image when typing (only update state)
                   onChanged: (text) => setState(() {}),
+                  //update field on menu select
+                  onDrinkSelected: (drink) => setState(
+                      () => drinkNameController.text = drink.toString()),
                   itemBuilder: (context, index) {
                     return OwnerDrinkCard(
                       drinks: drinks,
@@ -374,83 +381,87 @@ class _OwnerPageState extends State<OwnerPage> {
               return OwnerPageNavigationBar(
                 index: index,
                 //this method checks user input and control current page
-                onPressedNext: () => setState(() {
-                  //if no name provided
-                  if (index == 1) {
-                    if (nameController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context, text: 'Please enter a name');
-                      return;
+                onPressedNext: () => setState(
+                  () {
+                    //if no name provided
+                    if (index == 1) {
+                      if (nameController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context, text: 'Please enter a name');
+                        return;
+                      }
                     }
-                  }
-                  //if no date range provided
-                  if (index == 4) {
-                    if (range == null) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please enter a range of date');
-                      return;
+                    //if no date range provided
+                    if (index == 4) {
+                      if (range == null) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please enter a range of date');
+                        return;
+                      }
                     }
-                  }
 
-                  //if no time range provided
-                  if (index == 5) {
-                    if (tempValueForTime == 0) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please enter a range of time');
-                      return;
+                    //if no time range provided
+                    if (index == 5) {
+                      if (tempValueForTime == 0) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please enter a range of time');
+                        return;
+                      }
                     }
-                  }
 
-                  //if no people price or range provided
-                  if (index == 6) {
-                    //checks if fields are empty
-                    if (peoplePriceController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context, text: 'Please add a price');
-                      return;
+                    //if no people price or range provided
+                    if (index == 6) {
+                      //checks if fields are empty
+                      if (peoplePriceController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context, text: 'Please add a price');
+                        return;
+                      }
+                      if (peopleMinController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add a minimum amount');
+                        return;
+                      }
+                      if (peopleMaxController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add a maximum amount');
+                        return;
+                      }
+                      //checks if valid range
+                      if (int.parse(peopleMinController.text) >=
+                          int.parse(peopleMaxController.text)) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add a valid range of people');
+                        return;
+                      }
                     }
-                    if (peopleMinController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add a minimum amount');
-                      return;
-                    }
-                    if (peopleMaxController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add a maximum amount');
-                      return;
-                    }
-                    //checks if valid range
-                    if (int.parse(peopleMinController.text) >=
-                        int.parse(peopleMaxController.text)) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add a valid range of people');
-                      return;
-                    }
-                  }
 
-                  //last page
-                  if (index == 9) {
-                    return;
-                  }
+                    //last page
+                    if (index == 9) {
+                      return;
+                    }
 
-                  //next page
-                  index += 1;
-                }),
-                onPressedBack: () => setState(() {
-                  //if no more pages (go home)
-                  if (index == 0) {
-                    Navigator.of(context).pop();
-                    return;
-                  }
+                    //next page
+                    index += 1;
+                  },
+                ),
+                onPressedBack: () => setState(
+                  () {
+                    //if no more pages (go home)
+                    if (index == 0) {
+                      Navigator.of(context).pop();
+                      return;
+                    }
 
-                  //previous page
-                  index -= 1;
-                }),
+                    //previous page
+                    index -= 1;
+                  },
+                ),
               );
             }
             //loading...

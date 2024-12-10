@@ -30,7 +30,7 @@ class FoodCard extends StatelessWidget {
         padding: padding,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: ColoredBox(
+          child: Container(
             color: GColors.white,
             child: CachedNetworkImage(
               imageUrl: imageUrl,

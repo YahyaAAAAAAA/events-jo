@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/utils/identical_objects.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
@@ -12,7 +11,6 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
 
   SingleWeddingVenueCubit({required this.weddingVenueRepo})
       : super(SingleWeddingVenueInit());
-  StreamSubscription? subscription;
 
   void getSingleVenueStream(String id) {
     emit(SingleWeddingVenueLoading());
@@ -22,7 +20,7 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
     final drinksStream = weddingVenueRepo.getDrinksStream(id);
 
     //combine 3 streams in one stream
-    subscription = CombineLatestStream.combine3(
+    CombineLatestStream.combine3(
       venueStream,
       mealsStream,
       drinksStream,
@@ -41,29 +39,32 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
         }
 
         final currentState = state;
-        WeddingVenueDetailed currentVenue = data;
+        WeddingVenueDetailed currentData = data;
 
         if (currentState is SingleWeddingVenueLoaded) {
-          currentVenue = currentState.data;
+          currentData = currentState.data;
         }
 
         //check if two venues are the same
-        if (!identicalVenues(currentVenue, data)) {
+        if (!identicalVenues(
+          currentData,
+          data,
+          UserType.user,
+        )) {
           //notify for change on venue
           emit(SingleWeddingVenueChanged(
               'A change has occurred on the Venue\'s info'));
-          subscription!.cancel();
         }
 
         //check if two lists of meals are the same
-        else if (!identicalMeals(data.meals, currentVenue.meals)) {
+        else if (!identicalMeals(data.meals, currentData.meals)) {
           //notify for change on venue
           emit(SingleWeddingVenueChanged(
               'A change has occurred on the Venue\'s meals'));
         }
 
         //check if two lists of meals are the same
-        else if (!identicalDrinks(data.drinks, currentVenue.drinks)) {
+        else if (!identicalDrinks(data.drinks, currentData.drinks)) {
           //notify for change on venue
           emit(SingleWeddingVenueChanged(
               'A change has occurred on the Venue\'s drinks'));
