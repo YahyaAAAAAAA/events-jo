@@ -36,7 +36,7 @@
 ###
 
 <div align="center">
-  <img  src="assets/git_images/banner.PNG"  />
+  <img  src="assets/git_images/banner.png"  />
 </div>
 
 ###
