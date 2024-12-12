@@ -25,6 +25,7 @@ import 'package:events_jo/features/weddings/representation/cubits/venue/all/wedd
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /*
@@ -54,6 +55,12 @@ class EventsJoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //set orientations
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
+
     return MultiBlocProvider(
       providers: [
         //auth cubit
@@ -78,6 +85,7 @@ class EventsJoApp extends StatelessWidget {
         BlocProvider(
           create: (context) => OwnerCubit(ownerRepo: ownerRepo),
         ),
+        //* -------------------Admin cubits below-------------------
         //approved venues cubit
         BlocProvider(
           create: (context) => AdminApproveCubit(adminRepo: adminRepo),

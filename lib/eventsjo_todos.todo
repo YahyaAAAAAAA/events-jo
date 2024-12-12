@@ -26,8 +26,15 @@ pending:
     ✔ empty venue list @started(24-12-10 23:03) @done(24-12-10 23:16) @lasted(13m54s)
     ✔ error venue list @done(24-12-10 23:16)
     //-----------------
+    ✔ add delay to venue unlock @done(24-12-11 21:04)
+    ✔ set orientations @done(24-12-11 23:12)
+    ✔ try higher quality logo @started(24-12-12 17:00) @done(24-12-12 19:13) @lasted(2h13m39s)
+    ☐ update background with the new logo (for mobile, desktop & github icon) @started(24-12-12 19:13)
+    ☐ title in venues page and venues details needs FittedBox
+    ☐ sub list in admin summaries unscrollable
+    ☐ some sub pages in owner page needs fix
     ☐ check the code overall
-    ☐ check files names overall
+    ☐ check files names overall 
     //-----------------
     ☐ settings feature (account,venues,problem,contact)
     ☐ owner venues feature (venues by owner id,details,update)
@@ -36,5 +43,3 @@ pending:
 vulnerabilities:
     ☐ animated list search needs testing
     ☐ animated list with spam searching will crash the app
-
-

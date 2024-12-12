@@ -1,3 +1,4 @@
+import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading_admin.dart';
@@ -79,8 +80,17 @@ class _AdminUnapprovedVenueDetailsState
   @override
   void dispose() {
     super.dispose();
+
     //unlock venue
-    widget.adminUnapproveCubit.unlockVenue(weddingVenue.id);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        //team: without this delay for some reason the approved venue appears
+        //in the venues page and then disappears (delay solves it)
+        await Delay.twoSeconds();
+
+        widget.adminUnapproveCubit.unlockVenue(weddingVenue.id);
+      },
+    );
   }
 
   @override
@@ -150,10 +160,12 @@ class _AdminUnapprovedVenueDetailsState
               ],
             );
           }
+
           //error
           if (state is AdminSingleVenueError) {
             return Text(state.messege);
           }
+
           //loading...
           return const GlobalLoadingAdminBar(mainText: false);
         },
