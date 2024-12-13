@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/text_field_input_type.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_bar.dart';
@@ -48,7 +49,7 @@ class SelectPeopleRange extends StatelessWidget {
                     hintText: 'Price per person',
                     elevation: 3,
                     obscureText: false,
-                    isOnlyDouble: true,
+                    inputType: TextFieldInputType.doubles,
                     maxLength: 7,
                   ),
                 ),
@@ -82,7 +83,7 @@ class SelectPeopleRange extends StatelessWidget {
                     controller: peopleMinController,
                     hintText: 'Minimum Amount',
                     elevation: 3,
-                    isOnlyInt: true,
+                    inputType: TextFieldInputType.integers,
                     obscureText: false,
                     maxLength: 7,
                   ),
@@ -95,7 +96,7 @@ class SelectPeopleRange extends StatelessWidget {
                     controller: peopleMaxController,
                     hintText: 'Maximum Amount',
                     elevation: 3,
-                    isOnlyInt: true,
+                    inputType: TextFieldInputType.integers,
                     obscureText: false,
                     maxLength: 7,
                   ),

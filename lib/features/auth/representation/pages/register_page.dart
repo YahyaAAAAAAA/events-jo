@@ -152,11 +152,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           return ChooseLocationMethod(
                             //pick location manually
                             onPressedManual: () async =>
-                                await locationCubit.showMapDialog(
+                                await locationCubit.showMapDialogRegisterPage(
                               context,
                               userLocation: userLocation,
-                              //used only here, to emit the state
-                              isInRegisterPage: true,
                             ),
                             //pick location automatically
                             onPressedAuto: () async {
@@ -258,7 +256,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: WrapAlignment.center,
                 children: [
                   Text(
-                    'You have account ? ',
+                    'You have an account ? ',
                     style: TextStyle(
                       color: GColors.black,
                       fontSize: 17,

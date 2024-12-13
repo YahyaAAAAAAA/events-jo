@@ -6,15 +6,13 @@ import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/ad
 import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venues.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminPageForVenues extends StatefulWidget {
-  final AppUser? user;
-
   const AdminPageForVenues({
     super.key,
-    required this.user,
   });
 
   @override
@@ -23,13 +21,19 @@ class AdminPageForVenues extends StatefulWidget {
 
 class _AdminPageForVenuesState extends State<AdminPageForVenues>
     with SingleTickerProviderStateMixin {
+  //user
+  late final AppUser? user;
+
   late final AdminUnapproveCubit adminUnapproveCubit;
   late final AdminApproveCubit adminApproveCubit;
+
   late TabController tabController;
 
   @override
   void initState() {
     super.initState();
+
+    user = context.read<AuthCubit>().currentUser;
 
     //get cubit
     adminUnapproveCubit = context.read<AdminUnapproveCubit>();
@@ -41,6 +45,7 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
   @override
   void dispose() {
     super.dispose();
+
     tabController.dispose();
   }
 
@@ -48,7 +53,7 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AdminAppBar(
-        user: widget.user,
+        user: user,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),
           child: MenuTabBar(

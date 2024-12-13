@@ -7,7 +7,7 @@ import 'package:events_jo/features/owner/representation/components/owner_page_ba
 import 'package:flutter/material.dart';
 
 //* This page displays info for the user's event
-class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
+class ConfirmEventPage extends StatelessWidget {
   final void Function()? onPressed;
   final void Function()? showMeals;
   final void Function()? showDrinks;
@@ -21,7 +21,7 @@ class ConfirmAndAddEventToDatabasePage extends StatelessWidget {
   final int peopleMax;
   final int peopleMin;
 
-  const ConfirmAndAddEventToDatabasePage({
+  const ConfirmEventPage({
     super.key,
     required this.onPressed,
     required this.eventType,

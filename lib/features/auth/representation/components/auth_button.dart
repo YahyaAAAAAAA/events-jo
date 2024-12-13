@@ -5,6 +5,7 @@ class AuthButton extends StatelessWidget {
   final void Function()? onTap;
   final String text;
   final IconData icon;
+
   const AuthButton({
     super.key,
     required this.onTap,
@@ -45,7 +46,6 @@ class AuthButton extends StatelessWidget {
                       ),
                     ),
                     padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
-                    // backgroundColor: WidgetStatePropertyAll(MyColors.royalBlue),
                   ),
                   icon: Ink(
                     decoration: BoxDecoration(

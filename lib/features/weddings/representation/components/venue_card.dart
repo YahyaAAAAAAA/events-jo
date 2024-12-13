@@ -20,34 +20,6 @@ class VenueCard extends StatelessWidget {
     required this.isLoading,
   });
 
-  //todo move this to the cubit
-  List<CachedNetworkImage> addPicsToList() {
-    List<CachedNetworkImage> picsList = [];
-    for (int i = 0; i < weddingVenue.pics.length; i++) {
-      picsList.add(
-        CachedNetworkImage(
-          imageUrl: weddingVenue.pics[i],
-          //waiting for image
-          placeholder: (context, url) => const SizedBox(
-            width: 100,
-            child: GlobalLoadingImage(),
-          ),
-          //error getting image
-          errorWidget: (context, url, error) => SizedBox(
-            width: 100,
-            child: Icon(
-              Icons.error_outline,
-              color: GColors.black,
-              size: 40,
-            ),
-          ),
-          fit: BoxFit.fill,
-        ),
-      );
-    }
-    return picsList;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -174,7 +146,6 @@ class VenueCard extends StatelessWidget {
                             builder: (context) => WeddingVenuesDetailsPage(
                               weddingVenue: weddingVenue,
                               user: user,
-                              picsList: addPicsToList(),
                             ),
                           ),
                         )

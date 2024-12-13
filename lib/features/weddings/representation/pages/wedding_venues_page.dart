@@ -84,8 +84,9 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                         FittedBox(
                           child: VenueSearchBar(
                             controller: searchController,
-                            onPressed: () =>
-                                setState(() => searchController.clear()),
+                            onPressed: () => setState(
+                              () => searchController.clear(),
+                            ),
                             onChanged: (venue) => weddingVenueCubit.searchList(
                               venues,
                               filterdWeddingVenuList,
@@ -96,9 +97,9 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
 
                         //sort menu
                         VenueSearchBarButton(
-                          onOpened: () =>
-                              setState(() => searchController.clear()),
-                          //todo sort alpha (deleted later)
+                          onOpened: () => setState(
+                            () => searchController.clear(),
+                          ),
                           onTapAlpha: () => weddingVenueCubit.sortAlpha(venues),
                           //sort from closest
                           onTapNearest: () => weddingVenueCubit.sortFromClosest(
@@ -125,7 +126,6 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                         exitTransition: [SlideInLeft()],
                         insertDuration: const Duration(milliseconds: 300),
                         removeDuration: const Duration(milliseconds: 300),
-                        //todo test this
                         isSameItem: (a, b) => a.id == b.id,
                         itemBuilder: (context, index) => VenueCard(
                           isLoading: false,

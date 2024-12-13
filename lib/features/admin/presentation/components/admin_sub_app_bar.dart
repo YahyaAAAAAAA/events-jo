@@ -1,5 +1,5 @@
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
+import 'package:events_jo/features/home/presentation/components/app_bar_button.dart';
 import 'package:flutter/material.dart';
 
 class AdminSubAppBar extends StatelessWidget implements PreferredSizeWidget {

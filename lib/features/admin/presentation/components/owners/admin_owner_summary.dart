@@ -22,7 +22,7 @@ class AdminOwnerSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 450), //todo comeback
+      constraints: const BoxConstraints(maxWidth: 450),
       child: ListView(
         shrinkWrap: false,
         children: [

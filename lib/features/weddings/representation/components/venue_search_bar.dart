@@ -5,11 +5,13 @@ class VenueSearchBar extends StatelessWidget {
   final TextEditingController? controller;
   final void Function()? onPressed;
   final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
   const VenueSearchBar({
     super.key,
     required this.controller,
-    required this.onPressed,
-    required this.onChanged,
+    this.onPressed,
+    this.onChanged,
+    this.onSubmitted,
   });
 
   @override
@@ -52,6 +54,7 @@ class VenueSearchBar extends StatelessWidget {
               ),
               //start search
               onChanged: onChanged,
+              onSubmitted: onSubmitted,
             ),
           )
         : const SizedBox();

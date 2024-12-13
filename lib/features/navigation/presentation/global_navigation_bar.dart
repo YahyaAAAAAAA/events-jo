@@ -2,15 +2,13 @@ import 'package:events_jo/config/packages/google%20navigation%20bar/gbutton.dart
 import 'package:events_jo/config/packages/google%20navigation%20bar/gnav.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page.dart';
+import 'package:events_jo/features/settings/representation/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class GlobalNavigationBar extends StatefulWidget {
-  final AppUser? user;
   const GlobalNavigationBar({
     super.key,
-    required this.user,
   });
 
   @override
@@ -18,8 +16,6 @@ class GlobalNavigationBar extends StatefulWidget {
 }
 
 class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
-  late final AppUser? user;
-
   //current nav bar page
   int selecetedPage = 1;
 
@@ -29,8 +25,6 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
   @override
   void initState() {
     super.initState();
-
-    user = widget.user;
 
     screens = [
       //first nav item
@@ -43,16 +37,9 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
         ),
       ),
       //middle nav item
-      HomePage(user: user),
+      const HomePage(),
       //last nav item
-      Center(
-        child: Text(
-          'Settings page',
-          style: TextStyle(
-            color: GColors.black,
-          ),
-        ),
-      ),
+      const SettingsPage(),
     ];
   }
 

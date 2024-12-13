@@ -4,8 +4,8 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
 import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
+import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 
 class HomePage extends StatefulWidget {
-  final AppUser? user;
-
   const HomePage({
     super.key,
-    required this.user,
   });
 
   @override
@@ -25,6 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final AppUser? user;
+
   //controls cards animation
   final AnimatedMeshGradientController animatedController =
       AnimatedMeshGradientController();
@@ -33,37 +32,26 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    user = context.read<AuthCubit>().currentUser;
+
     animatedController.start();
   }
 
   @override
   void dispose() {
     super.dispose();
+
     animatedController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        leading: AppBarButton(
-          onPressed: () => context
-              .read<AuthCubit>()
-              .logout(widget.user!.uid, widget.user!.type),
-          icon: Icons.person,
-          size: 25,
-        ),
-        actions: [
-          AppBarButton(
-            onPressed: () {},
-            icon: CustomIcons.menu,
-            size: 20,
-          ),
-        ],
-        leadingWidth: 90,
-        toolbarHeight: 70,
+      appBar: HomeAppBar(
+        onPressed: () => context.read<AuthCubit>().logout(
+              user!.uid,
+              user!.type,
+            ),
       ),
       body: Center(
         child: ConstrainedBox(
@@ -80,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                 //welcome text
                 Center(
                   child: GradientText(
-                    "Welcome ${widget.user!.name.toCapitalized}",
+                    "Welcome ${user!.name.toCapitalized}",
                     gradient: GColors.logoGradient,
                     style: TextStyle(
                       color: GColors.poloBlue,
@@ -116,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => WeddingVenuesPage(
-                              user: widget.user,
+                              user: user,
                             ),
                           ),
                         ),

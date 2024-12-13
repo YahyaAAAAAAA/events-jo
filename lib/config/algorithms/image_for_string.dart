@@ -99,9 +99,8 @@ class ImageForString {
     "fettuccine alfredo": 'https://i.ibb.co/x6BnvV1/fettuccine-alfredo.jpg',
 
     //deserts
-    //todo add cakes
     "apple crumble pie": 'https://i.ibb.co/nwJfyFJ/apple-crumble-pie.jpg',
-    "chocolate gateau": 'https://i.ibb.co/R3cJwYs/chocolate-gateau.jpg',
+    "chocolate gateau cake": 'https://i.ibb.co/R3cJwYs/chocolate-gateau.jpg',
     "fruit salad": 'https://i.ibb.co/D4gVSKN/fruit-salad.jpg',
     "creme caramel": 'https://i.ibb.co/NmKHh1c/creme-caramel.png',
     "tiramisu": 'https://i.ibb.co/tht2yqn/tiramisu.jpg',
@@ -110,6 +109,9 @@ class ImageForString {
     "eclairs": 'https://i.ibb.co/s1W7Vbm/eclairs.jpg',
     "brownies": 'https://i.ibb.co/R0HpJ5K/brownies.jpg',
     "knafeh": 'https://i.ibb.co/PttTp1h/knafeh.jpg',
+    "vanilla gateau cake": 'https://i.ibb.co/C02bBzF/vanilla-gateau-cake.jpg',
+    "strawberry gateau cake":
+        'https://i.ibb.co/qrtzznV/strawberry-gateau-cake.jpg',
   };
 
   //map for drinks

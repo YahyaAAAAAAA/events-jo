@@ -3,7 +3,7 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
+import 'package:events_jo/features/home/presentation/components/app_bar_button.dart';
 import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
 import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
@@ -14,10 +14,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 
 class HomePageForOwners extends StatefulWidget {
-  final AppUser? user;
   const HomePageForOwners({
     super.key,
-    required this.user,
   });
 
   @override
@@ -25,6 +23,8 @@ class HomePageForOwners extends StatefulWidget {
 }
 
 class _HomePageForOwnersState extends State<HomePageForOwners> {
+  late final AppUser? user;
+
   //controls cards animation
   final AnimatedMeshGradientController animatedController =
       AnimatedMeshGradientController();
@@ -34,6 +34,8 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
   @override
   void initState() {
     super.initState();
+
+    user = context.read<AuthCubit>().currentUser;
 
     animatedController.start();
   }
@@ -51,9 +53,8 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         leading: AppBarButton(
-          onPressed: () => context
-              .read<AuthCubit>()
-              .logout(widget.user!.uid, widget.user!.type),
+          onPressed: () =>
+              context.read<AuthCubit>().logout(user!.uid, user!.type),
           icon: Icons.person,
           size: 25,
         ),
@@ -82,7 +83,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                 //welcome text
                 Center(
                   child: GradientText(
-                    "Welcome ${widget.user!.name}",
+                    "Welcome ${user!.name}",
                     gradient: GColors.logoGradient,
                     style: TextStyle(
                       color: GColors.poloBlue,
@@ -117,7 +118,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                         onPressed: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => WeddingVenuesPage(
-                              user: widget.user,
+                              user: user,
                             ),
                           ),
                         ),
@@ -130,7 +131,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                         onPressed: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => OwnerPage(
-                              user: widget.user,
+                              user: user,
                             ),
                           ),
                         ),

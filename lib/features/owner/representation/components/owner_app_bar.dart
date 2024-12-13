@@ -1,7 +1,7 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
-class OwnerAppBar extends StatefulWidget {
+class OwnerAppBar extends StatefulWidget implements PreferredSizeWidget {
   final int index;
   const OwnerAppBar({
     super.key,
@@ -10,6 +10,9 @@ class OwnerAppBar extends StatefulWidget {
 
   @override
   State<OwnerAppBar> createState() => _OwnerAppBarState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _OwnerAppBarState extends State<OwnerAppBar> {
@@ -77,12 +80,20 @@ class _OwnerAppBarState extends State<OwnerAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 450),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        children: list,
+    return AppBar(
+      //hides back button
+      leading: const SizedBox(),
+      leadingWidth: 0,
+      //note: remove appbar color when scrolling
+      surfaceTintColor: Colors.transparent,
+      centerTitle: true,
+      title: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 450),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          children: list,
+        ),
       ),
     );
   }

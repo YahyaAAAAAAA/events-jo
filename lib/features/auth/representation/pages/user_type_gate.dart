@@ -15,27 +15,25 @@ class UserTypeGate extends StatefulWidget {
 }
 
 class _UserTypeGateState extends State<UserTypeGate> {
-  late AppUser? currentUser;
+  late AppUser? user;
 
   @override
   void initState() {
     super.initState();
 
     //get user
-    currentUser = context.read<AuthCubit>().currentUser!;
+    user = context.read<AuthCubit>().currentUser!;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (currentUser!.type == UserType.admin) {
-      return GlobalNavigationBarForAdmins(
-        user: currentUser!,
-      );
+    if (user!.type == UserType.admin) {
+      return const GlobalNavigationBarForAdmins();
     }
-    if (currentUser!.type == UserType.owner) {
-      return GlobalNavigationBarForOwners(user: currentUser!);
+    if (user!.type == UserType.owner) {
+      return const GlobalNavigationBarForOwners();
     } else {
-      return GlobalNavigationBar(user: currentUser!);
+      return const GlobalNavigationBar();
     }
   }
 }

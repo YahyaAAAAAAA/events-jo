@@ -10,12 +10,8 @@ import 'package:events_jo/features/home/presentation/pages/home_page_for_admins.
 import 'package:flutter/material.dart';
 
 class GlobalNavigationBarForAdmins extends StatefulWidget {
-  //request user from gate
-  final AppUser? user;
-
   const GlobalNavigationBarForAdmins({
     super.key,
-    required this.user,
   });
 
   @override
@@ -37,13 +33,11 @@ class _GlobalNavigationBarForAdminsState
   void initState() {
     super.initState();
 
-    user = widget.user;
-
     screens = [
       //first nav item
-      HomePageForAdmins(user: user),
+      const HomePageForAdmins(),
       //second nav item
-      AdminPageForVenues(user: user),
+      const AdminPageForVenues(),
       //third nav item
       const AdminPageForFarms(),
       //forth nav item

@@ -88,7 +88,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
       return;
     }
 
-    //fix meals id
+    //fixed meals id
     for (int i = 0; i < meals.length; i++) {
       meals[i].id = (i + 1).toString();
     }
@@ -113,7 +113,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
       return;
     }
 
-    //fix drinks id
+    //fixed drinks id
     for (int i = 0; i < drinks.length; i++) {
       drinks[i].id = (i + 1).toString();
     }

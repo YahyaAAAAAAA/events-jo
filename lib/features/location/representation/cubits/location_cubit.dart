@@ -37,7 +37,6 @@ class LocationCubit extends Cubit<LocationStates> {
   Future<void> showMapDialog(
     BuildContext context, {
     required EjLocation userLocation,
-    bool isInRegisterPage = false,
   }) async {
     //wait for user input
     await showDialog(
@@ -47,7 +46,32 @@ class LocationCubit extends Cubit<LocationStates> {
           latitude: userLocation.lat,
           longitude: userLocation.long,
           marker: userLocation.marker!,
-          zoom: isInRegisterPage ? 3 : 15,
+          zoom: 15,
+          //update
+          onTap: (_, point) => onTap(setState, userLocation, point),
+          //coords and marker to init value
+          onCancel: () => onCancel(setState, context, userLocation),
+          //saves coords and marker
+          onConfirm: () => onConfirm(setState, context, userLocation),
+        ),
+      ),
+    );
+  }
+
+  //same as showMapDialog, but only used in register page
+  Future<void> showMapDialogRegisterPage(
+    BuildContext context, {
+    required EjLocation userLocation,
+  }) async {
+    //wait for user input
+    await showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => MapDialog(
+          latitude: userLocation.lat,
+          longitude: userLocation.long,
+          marker: userLocation.marker!,
+          zoom: 3,
           //update
           onTap: (_, point) => onTap(setState, userLocation, point),
           //coords and marker to init value
@@ -56,15 +80,14 @@ class LocationCubit extends Cubit<LocationStates> {
           onConfirm: () {
             onConfirm(setState, context, userLocation);
 
-            if (isInRegisterPage) {
-              emit(LocationLoaded());
-            }
+            emit(LocationLoaded());
           },
         ),
       ),
     );
   }
 
+  //------methods for showMapDialog------
   void onConfirm(
       StateSetter setState, BuildContext context, EjLocation userLocation) {
     return setState(

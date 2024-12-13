@@ -23,14 +23,13 @@ import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/ad
 import 'package:events_jo/features/admin/presentation/pages/owners/admin_owners_list_page.dart';
 import 'package:events_jo/features/admin/presentation/pages/users/admin_users_list_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageForAdmins extends StatefulWidget {
-  final AppUser? user;
   const HomePageForAdmins({
     super.key,
-    required this.user,
   });
 
   @override
@@ -38,6 +37,9 @@ class HomePageForAdmins extends StatefulWidget {
 }
 
 class _HomePageForAdminsState extends State<HomePageForAdmins> {
+  //user
+  late final AppUser? user;
+
   //counts
   late final AdminUsersCountCubit adminUsersCountCubit;
   late final AdminOwnersCountCubit adminOwnersCountCubit;
@@ -52,6 +54,8 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
   @override
   void initState() {
     super.initState();
+
+    user = context.read<AuthCubit>().currentUser;
 
     //get users count cubit
     adminUsersCountCubit = context.read<AdminUsersCountCubit>();
@@ -78,7 +82,7 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AdminAppBar(
-        user: widget.user,
+        user: user,
       ),
       body: Center(
         child: ConstrainedBox(

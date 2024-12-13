@@ -4,7 +4,10 @@ import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/config/enums/user_type_enum.dart';
 
 abstract class AuthRepo {
-  Future<AppUser?> loginWithEmailPassword(String email, String password);
+  Future<AppUser?> loginWithEmailPassword(
+    String email,
+    String password,
+  );
 
   Future<AppUser?> registerWithEmailPassword(
     String name,
@@ -15,7 +18,10 @@ abstract class AuthRepo {
     UserType type,
   );
 
-  Future<void> logout(String id, UserType userType);
+  Future<void> logout(
+    String id,
+    UserType userType,
+  );
 
   Future<AppUser?> getCurrentUser();
 

@@ -1,8 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/enums/user_type_enum.dart';
+import 'package:events_jo/config/extensions/double_extensions.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/identical_objects.dart';
+import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_states.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -12,7 +19,9 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
   SingleWeddingVenueCubit({required this.weddingVenueRepo})
       : super(SingleWeddingVenueInit());
 
-  void getSingleVenueStream(String id) {
+  WeddingVenueDetailed? updatedData;
+
+  WeddingVenueDetailed? getSingleVenueStream(String id) {
     emit(SingleWeddingVenueLoading());
 
     final venueStream = weddingVenueRepo.getVenueStream(id);
@@ -40,6 +49,7 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
 
         final currentState = state;
         WeddingVenueDetailed currentData = data;
+        updatedData = data;
 
         if (currentState is SingleWeddingVenueLoaded) {
           currentData = currentState.data;
@@ -78,5 +88,65 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
         emit(SingleWeddingVenueError(error.toString()));
       },
     );
+    return null;
+  }
+
+  //calculates & updates prices for drinks
+  void calculateIndividualMealsPrice(WeddingVenueMeal meal, double value) {
+    emit(SingleWeddingVenueLoading());
+
+    //reset calculatedPrice value
+    meal.calculatedPrice = meal.price;
+
+    //update value in slider
+    meal.selectedAmount = value.toInt();
+
+    //calculate price
+    meal.calculatedPrice = (meal.price * value.toInt()).toPrecision(2);
+
+    emit(SingleWeddingVenueLoaded(updatedData!));
+  }
+
+  //calculates & updates prices for drinks
+  void calculateIndividualDrinksPrice(WeddingVenueDrink drink, double value) {
+    emit(SingleWeddingVenueLoading());
+
+    //reset calculatedPrice value
+    drink.calculatedPrice = drink.price;
+
+    //update value in slider
+    drink.selectedAmount = value.toInt();
+
+    //calculate price
+    drink.calculatedPrice = (drink.price * value.toInt()).toPrecision(2);
+
+    emit(SingleWeddingVenueLoaded(updatedData!));
+  }
+
+  List<CachedNetworkImage> stringsToImages(List<dynamic> pics) {
+    List<CachedNetworkImage> picsList = [];
+    for (int i = 0; i < pics.length; i++) {
+      picsList.add(
+        CachedNetworkImage(
+          imageUrl: pics[i],
+          //waiting for image
+          placeholder: (context, url) => const SizedBox(
+            width: 100,
+            child: GlobalLoadingImage(),
+          ),
+          //error getting image
+          errorWidget: (context, url, error) => SizedBox(
+            width: 100,
+            child: Icon(
+              Icons.error_outline,
+              color: GColors.black,
+              size: 40,
+            ),
+          ),
+          fit: BoxFit.fill,
+        ),
+      );
+    }
+    return picsList;
   }
 }

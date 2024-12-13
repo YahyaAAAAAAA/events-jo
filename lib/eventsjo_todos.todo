@@ -40,12 +40,14 @@ pending:
     ✔ location is now optional @done(24-12-13 02:25)
     ✔ limit text fields @started(24-12-13 02:35) @done(24-12-13 03:30) @lasted(55m)
     ✔ trim name field in register page @done(24-12-13 02:28)
-    ☐ add type enum for text fields
-    ☐ check on all dialogs
-    ☐ check todos in code
-    ☐ check the code overall
     //-----------------
-    ☐ settings feature (account,venues,problem,contact)
+    ✔ add type enum for text fields @done(24-12-13 16:29)
+    ✔ check on all dialogs @done(24-12-13 21:20)
+    ✔ check todos in code @done(24-12-13 23:11)
+    ✔ check the code overall @done(24-12-13 23:11)
+    ☐ beautify numbers
+    //-----------------
+    ☐ settings feature (account,venues,problem,contact) @started(24-12-14 00:42)
     ☐ owner venues feature (venues by owner id,details,update)
 
 

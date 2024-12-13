@@ -1,6 +1,7 @@
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/algorithms/image_for_string.dart';
 import 'package:events_jo/config/enums/food_type.dart';
+import 'package:events_jo/config/enums/text_field_input_type.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
@@ -10,7 +11,7 @@ import 'package:events_jo/features/owner/representation/components/owner_page_ba
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 
-class SelectEventMeals extends StatelessWidget {
+class SelectEventMealsPage extends StatelessWidget {
   final TextEditingController mealNameController;
   final TextEditingController mealAmountController;
   final TextEditingController mealPriceController;
@@ -22,7 +23,7 @@ class SelectEventMeals extends StatelessWidget {
   final Widget Function(BuildContext, int) itemBuilder;
   final void Function(dynamic)? onMealSelected;
 
-  const SelectEventMeals({
+  const SelectEventMealsPage({
     super.key,
     required this.mealNameController,
     required this.mealAmountController,
@@ -140,7 +141,7 @@ class SelectEventMeals extends StatelessWidget {
                   maxLength: 7,
                   hintText: 'Meal Amount',
                   elevation: 3,
-                  isOnlyInt: true,
+                  inputType: TextFieldInputType.integers,
                   obscureText: false,
                 ),
               ),
@@ -153,7 +154,7 @@ class SelectEventMeals extends StatelessWidget {
                   hintText: 'Meal Price',
                   maxLength: 7,
                   elevation: 3,
-                  isOnlyDouble: true,
+                  inputType: TextFieldInputType.doubles,
                   obscureText: false,
                 ),
               ),

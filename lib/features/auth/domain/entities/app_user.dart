@@ -19,8 +19,7 @@ class AppUser {
     required this.longitude,
   });
 
-//convert app user to json
-
+  //convert app user to json
   Map<String, dynamic> toJson() {
     return {
       'uid': uid,
@@ -33,8 +32,7 @@ class AppUser {
     };
   }
 
-//convert json to app user
-
+  //convert json to app user
   factory AppUser.fromJson(Map<String, dynamic> jsonUser) {
     return AppUser(
       uid: jsonUser['uid'],

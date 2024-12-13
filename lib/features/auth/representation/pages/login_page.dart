@@ -1,4 +1,3 @@
-import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/representation/components/events_jo_logo_auth.dart';
 import 'package:events_jo/features/auth/representation/components/auth_button.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //* This page allows an existing user to login to EventsJo
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
+
   const LoginPage({
     super.key,
     required this.onTap,
@@ -20,24 +20,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //cubit
+  late final AuthCubit authCubit;
+
+  //fields
   final emailController = TextEditingController();
   final pwController = TextEditingController();
 
-  void login() {
-    //prepare email & pw
-    final String email = emailController.text;
-    final String pw = pwController.text;
+  @override
+  void initState() {
+    super.initState();
 
-    //auth cubit
-    final AuthCubit authCubit = context.read<AuthCubit>();
-
-    //ensure that email & pw not empty
-    if (email.isNotEmpty && pw.isNotEmpty) {
-      authCubit.login(email, pw);
-    } else {
-      GSnackBar.show(
-          context: context, text: 'Please enter both email and password');
-    }
+    //get cubit
+    authCubit = context.read<AuthCubit>();
   }
 
   @override
@@ -63,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 10),
 
-                //welcome back message
+                //login message
                 Text(
                   "Login to EventsJo",
                   style: TextStyle(
@@ -94,14 +89,18 @@ class _LoginPageState extends State<LoginPage> {
 
                 //login button
                 AuthButton(
-                  onTap: login,
+                  onTap: () => authCubit.login(
+                    context,
+                    email: emailController.text.trim(),
+                    pw: pwController.text,
+                  ),
                   text: 'Login',
                   icon: Icons.arrow_forward_ios,
                 ),
 
                 const SizedBox(height: 50),
 
-                //not a member ? register now
+                //go to register page
                 Wrap(
                   alignment: WrapAlignment.center,
                   children: [

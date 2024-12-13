@@ -134,12 +134,6 @@ class EventsJoApp extends StatelessWidget {
           scaffoldBackgroundColor: GColors.scaffoldBg,
           appBarTheme: AppBarTheme(
             backgroundColor: GColors.appBarBg,
-            iconTheme: IconThemeData(
-              color: GColors.black,
-            ),
-          ),
-          iconTheme: IconThemeData(
-            color: GColors.whiteShade3,
           ),
         ),
         home: BlocConsumer<AuthCubit, AuthStates>(
@@ -150,15 +144,22 @@ class EventsJoApp extends StatelessWidget {
             if (state is Unauthenticated) {
               return const AuthPage();
             }
+
             //logged-in
             if (state is Authenticated) {
               //user authenticated now check type (user,owner,admin)
               return const UserTypeGate();
             }
+
             //loading...
-            else if (state is AuthLoading) {
-              return Scaffold(body: GlobalLoadingBar(subText: state.message));
+            if (state is AuthLoading) {
+              return Scaffold(
+                body: GlobalLoadingBar(
+                  subText: state.message,
+                ),
+              );
             }
+
             //error
             else {
               return const AuthErrorCard();

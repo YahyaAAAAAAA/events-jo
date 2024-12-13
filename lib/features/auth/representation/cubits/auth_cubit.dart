@@ -31,10 +31,27 @@ class AuthCubit extends Cubit<AuthStates> {
   AppUser? get currentUser => _currentUser;
 
   //login with email+pass
-  Future<void> login(String email, String pw) async {
+  Future<void> login(
+    BuildContext context, {
+    required String email,
+    required String pw,
+  }) async {
     try {
       //show loading state
       emit(AuthLoading(message: "Welcome Back"));
+
+      //check info
+      final check = checkLoginInfo(
+        context,
+        email: email,
+        pw: pw,
+      );
+
+      //info invalid
+      if (check == false) {
+        emit(Unauthenticated());
+        return;
+      }
 
       //get user
       final user = await authRepo.loginWithEmailPassword(email, pw);
@@ -67,7 +84,7 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(AuthLoading(message: "Welcome to EventsJo"));
 
       //check info
-      final check = checkInfo(
+      final check = checkRegisterInfo(
         context,
         email: email,
         name: name,
@@ -109,7 +126,8 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(Unauthenticated());
   }
 
-  bool checkInfo(
+  //validate user's register input
+  bool checkRegisterInfo(
     BuildContext context, {
     required String email,
     required String name,
@@ -163,6 +181,33 @@ class AuthCubit extends Cubit<AuthStates> {
         text: 'Passwords dont match',
       );
 
+      return false;
+    }
+
+    return true;
+  }
+
+  //validate user's login input
+  bool checkLoginInfo(
+    BuildContext context, {
+    required String email,
+    required String pw,
+  }) {
+    //name empty
+    if (email.isEmpty) {
+      GSnackBar.show(
+        context: context,
+        text: 'Please enter an email',
+      );
+      return false;
+    }
+
+    //password empty
+    if (pw.isEmpty) {
+      GSnackBar.show(
+        context: context,
+        text: 'Please enter a password',
+      );
       return false;
     }
 

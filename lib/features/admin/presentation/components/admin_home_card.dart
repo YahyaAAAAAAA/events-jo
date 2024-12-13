@@ -54,7 +54,7 @@ class AdminHomeCard extends StatelessWidget {
             CircleAvatar(
               backgroundColor: GColors.cyanShade6,
               child: Text(
-                count, //todo add +9 maybe ?
+                count,
                 style: TextStyle(
                   color: GColors.white,
                   fontSize: 20,

@@ -13,16 +13,19 @@ class EmptyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: GColors.white,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: GColors.royalBlue,
-          fontSize: 17,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: GColors.royalBlue,
+            fontSize: 20,
+          ),
         ),
       ),
     );

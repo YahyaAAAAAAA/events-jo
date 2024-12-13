@@ -1,7 +1,6 @@
-// Auth States
-
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 
+// Auth States
 abstract class AuthStates {}
 
 // initial state

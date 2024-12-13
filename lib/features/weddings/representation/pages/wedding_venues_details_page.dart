@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:events_jo/config/extensions/double_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
@@ -7,8 +5,6 @@ import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:events_jo/features/weddings/representation/components/drink_card.dart';
 import 'package:events_jo/features/weddings/representation/components/empty_card.dart';
 import 'package:events_jo/features/weddings/representation/components/meal_card.dart';
@@ -28,14 +24,10 @@ class WeddingVenuesDetailsPage extends StatefulWidget {
   final AppUser? user;
   final WeddingVenue weddingVenue;
 
-  //request the pics for null safety
-  final List<CachedNetworkImage> picsList;
-
   const WeddingVenuesDetailsPage({
     super.key,
     required this.user,
     required this.weddingVenue,
-    required this.picsList,
   });
 
   @override
@@ -63,8 +55,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   late String selectedInitTimeText;
 
   late int numberOfExpectedPeople;
-
-  final ScrollController scrollController = ScrollController();
 
   double padding = 12;
 
@@ -110,42 +100,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    scrollController.dispose();
-  }
-
-  //calculates & updates prices for drinks
-  void calculateIndividualDrinksPrice(WeddingVenueDrink drink, double value) {
-    return setState(() {
-      //reset calculatedPrice value
-      drink.calculatedPrice = drink.price;
-
-      //update value in slider
-      drink.selectedAmount = value.toInt();
-
-      //calculate price
-      drink.calculatedPrice = (drink.price * value.toInt()).toPrecision(2);
-    });
-  }
-
-  //calculates & updates prices for meals
-  void calculateIndividualMealsPrice(WeddingVenueMeal meal, double value) {
-    return setState(
-      () {
-        //reset calculatedPrice value
-        meal.calculatedPrice = meal.price;
-
-        //update value in slider
-        meal.selectedAmount = value.toInt();
-
-        //calculate price
-        meal.calculatedPrice = (meal.price * value.toInt()).toPrecision(2);
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       //* title
@@ -156,6 +110,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
           child:
               BlocConsumer<SingleWeddingVenueCubit, SingleWeddingVenueStates>(
             listener: (context, state) {
+              //change occurred
               if (state is SingleWeddingVenueChanged) {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -170,184 +125,186 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                 final meals = state.data.meals;
                 final drinks = state.data.drinks;
 
-                return RawScrollbar(
-                  thumbVisibility: true,
-                  radius: const Radius.circular(12),
-                  thumbColor: GColors.poloBlue.withOpacity(0.5),
-                  controller: scrollController,
-                  interactive: true,
-                  //main list
-                  child: ListView(
-                    controller: scrollController,
-                    padding: const EdgeInsets.all(12),
-                    children: [
-                      //* images slider
-                      VenueImageSlider(picsList: widget.picsList),
-
-                      //* name,rating and location
-                      VenueNameRatingAndLocation(
-                        padding: padding,
-                        weddingVenue: venue,
-                        locationCubit: locationCubit,
-                        venueLocation: venueLocation,
+                return ListView(
+                  padding: const EdgeInsets.all(12),
+                  children: [
+                    //* images slider
+                    VenueImageSlider(
+                      picsList: singleWeddingVenueCubit.stringsToImages(
+                        venue.pics,
                       ),
+                    ),
 
-                      const SizedBox(height: 20),
+                    //* name,rating and location
+                    VenueNameRatingAndLocation(
+                      padding: padding,
+                      weddingVenue: venue,
+                      locationCubit: locationCubit,
+                      venueLocation: venueLocation,
+                    ),
 
-                      venueText('Select the date you want to book'),
+                    const SizedBox(height: 20),
 
-                      //* date
-                      VenueDatePicker(
-                        minDate: DateTime(
-                          venue.startDate[0],
-                          venue.startDate[1],
-                          venue.startDate[2],
-                        ),
-                        maxDate: DateTime(
-                          venue.endDate[0],
-                          venue.endDate[1],
-                          venue.endDate[2],
-                        ),
-                        //save date
-                        onDateSelected: (date) =>
-                            setState(() => selectedDate = date),
+                    venueText('Select the date you want to book'),
+
+                    //* date
+                    VenueDatePicker(
+                      minDate: DateTime(
+                        venue.startDate[0],
+                        venue.startDate[1],
+                        venue.startDate[2],
                       ),
-
-                      const SizedBox(height: 20),
-
-                      venueText('Select the time for your venue'),
-
-                      //* time
-                      VenueTimePicker(
-                        text: selectedTimeText,
-                        padding: padding,
-                        backgroundColor: GColors.whiteShade3,
-                        buttonColor: GColors.white,
-                        timeColor: GColors.royalBlue,
-                        initTime: selectedTime,
-                        minTime: DateTime(0, 0, 0, venue.time[0]),
-                        maxTime: DateTime(0, 0, 0, venue.time[1]),
-                        minuteInterval: 10,
-                        use24hFormat: false,
-                        //waits for confirmation
-                        onDateTimeChanged: (date) {
-                          selectedInitTimeText = 'Your venue time: ' +
-                              date.hour
-                                  .toString()
-                                  .toTimeWithMinutes(date.minute.toString());
-                          selectedTimeInit = date;
-                        },
-                        //saves selected time
-                        confirmPressed: () => setState(() {
-                          selectedTimeText = selectedInitTimeText;
-                          selectedTime = selectedTimeInit;
-                          Navigator.of(context).pop();
-                        }),
-                        //do nothing
-                        cancelPressed: () => Navigator.of(context).pop(),
+                      maxDate: DateTime(
+                        venue.endDate[0],
+                        venue.endDate[1],
+                        venue.endDate[2],
                       ),
-
-                      const SizedBox(height: 20),
-
-                      venueText(
-                          'Select the number of expected people for your venue'),
-
-                      //* number of expected people
-                      VenuePeopleSlider(
-                        padding: padding,
-                        max: venue.peopleMax,
-                        min: venue.peopleMin,
-                        numberOfExpectedPeople: numberOfExpectedPeople,
-                        pricePerPerson: venue.peoplePrice,
-                        onChanged: (value) => setState(
-                            () => numberOfExpectedPeople = value.toInt()),
+                      //save date
+                      onDateSelected: (date) => setState(
+                        () => selectedDate = date,
                       ),
+                    ),
 
-                      const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                      venueText('Select your preferred meals'),
+                    venueText('Select the time for your venue'),
 
-                      //* meals
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: meals.isNotEmpty ? meals.length : 1,
-                        //add gap between children
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 20,
-                        ),
-                        //build meals
-                        itemBuilder: (context, index) {
-                          return meals.isNotEmpty
-                              ? MealCard(
-                                  isChecked: meals[index].isChecked,
-                                  amount: meals[index].amount,
-                                  price: meals[index].price,
-                                  selectedAmount: meals[index].selectedAmount,
-                                  name: meals[index].name,
-                                  calculatedPrice: meals[index].calculatedPrice,
-                                  //check & uncheck meal
-                                  onCheckBoxChanged: (value) => setState(
-                                    () => meals[index].isChecked =
-                                        !meals[index].isChecked,
-                                  ),
-                                  //change meal amount
-                                  onSliderChanged: (value) =>
-                                      calculateIndividualMealsPrice(
-                                    meals[index],
-                                    value,
-                                  ),
-                                )
-                              : EmptyCard(
-                                  text: 'No meals available for ${venue.name}',
-                                );
-                        },
+                    //* time
+                    VenueTimePicker(
+                      text: selectedTimeText,
+                      padding: padding,
+                      backgroundColor: GColors.whiteShade3,
+                      buttonColor: GColors.white,
+                      timeColor: GColors.royalBlue,
+                      initTime: selectedTime,
+                      minTime: DateTime(0, 0, 0, venue.time[0]),
+                      maxTime: DateTime(0, 0, 0, venue.time[1]),
+                      minuteInterval: 10,
+                      use24hFormat: false,
+                      //waits for confirmation
+                      onDateTimeChanged: (date) {
+                        selectedInitTimeText = 'Your venue time: ' +
+                            date.hour
+                                .toString()
+                                .toTimeWithMinutes(date.minute.toString());
+                        selectedTimeInit = date;
+                      },
+                      //saves selected time
+                      confirmPressed: () => setState(() {
+                        selectedTimeText = selectedInitTimeText;
+                        selectedTime = selectedTimeInit;
+                        Navigator.of(context).pop();
+                      }),
+                      //do nothing
+                      cancelPressed: () => Navigator.of(context).pop(),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    venueText(
+                        'Select the number of expected people for your venue'),
+
+                    //* number of expected people
+                    VenuePeopleSlider(
+                      padding: padding,
+                      max: venue.peopleMax,
+                      min: venue.peopleMin,
+                      numberOfExpectedPeople: numberOfExpectedPeople,
+                      pricePerPerson: venue.peoplePrice,
+                      onChanged: (value) => setState(
+                        () => numberOfExpectedPeople = value.toInt(),
                       ),
+                    ),
 
-                      const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                      venueText('Select your preferred drinks'),
+                    venueText('Select your preferred meals'),
 
-                      //* drinks
-                      ListView.separated(
-                        //note: this is how to put listview inside a column
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: drinks.isNotEmpty ? drinks.length : 1,
-                        //add gap between children
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 20,
-                        ),
-                        //build meals
-                        itemBuilder: (context, index) {
-                          return drinks.isNotEmpty
-                              ? DrinkCard(
-                                  isChecked: drinks[index].isChecked,
-                                  amount: drinks[index].amount,
-                                  price: drinks[index].price,
-                                  selectedAmount: drinks[index].selectedAmount,
-                                  calculatedPrice:
-                                      drinks[index].calculatedPrice,
-                                  name: drinks[index].name,
-                                  //check & uncheck meal
-                                  onCheckBoxChanged: (value) => setState(() =>
-                                      drinks[index].isChecked =
-                                          !drinks[index].isChecked),
-                                  //change meal amount
-                                  onSliderChanged: (value) =>
-                                      calculateIndividualDrinksPrice(
-                                          drinks[index], value),
-                                )
-                              : EmptyCard(
-                                  text: 'No drinks available for ${venue.name}',
-                                );
-                        },
+                    //* meals
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: meals.isNotEmpty ? meals.length : 1,
+                      //add gap between children
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 20,
                       ),
-                      //payment
+                      //build meals
+                      itemBuilder: (context, index) {
+                        return meals.isNotEmpty
+                            ? MealCard(
+                                isChecked: meals[index].isChecked,
+                                amount: meals[index].amount,
+                                price: meals[index].price,
+                                selectedAmount: meals[index].selectedAmount,
+                                name: meals[index].name,
+                                calculatedPrice: meals[index].calculatedPrice,
+                                //check & uncheck meal
+                                onCheckBoxChanged: (value) => setState(
+                                  () => meals[index].isChecked =
+                                      !meals[index].isChecked,
+                                ),
+                                //change meal amount
+                                onSliderChanged: (value) =>
+                                    singleWeddingVenueCubit
+                                        .calculateIndividualMealsPrice(
+                                  meals[index],
+                                  value,
+                                ),
+                              )
+                            : EmptyCard(
+                                text: 'No meals available for ${venue.name}',
+                              );
+                      },
+                    ),
 
-                      //back and checkout
-                    ],
-                  ),
+                    const SizedBox(height: 20),
+
+                    venueText('Select your preferred drinks'),
+
+                    //* drinks
+                    ListView.separated(
+                      //note: this is how to put listview inside a column
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: drinks.isNotEmpty ? drinks.length : 1,
+                      //add gap between children
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 20,
+                      ),
+                      //build meals
+                      itemBuilder: (context, index) {
+                        return drinks.isNotEmpty
+                            ? DrinkCard(
+                                isChecked: drinks[index].isChecked,
+                                amount: drinks[index].amount,
+                                price: drinks[index].price,
+                                selectedAmount: drinks[index].selectedAmount,
+                                calculatedPrice: drinks[index].calculatedPrice,
+                                name: drinks[index].name,
+                                //check & uncheck meal
+                                onCheckBoxChanged: (value) => setState(
+                                  () => drinks[index].isChecked =
+                                      !drinks[index].isChecked,
+                                ),
+                                //change meal amount
+                                onSliderChanged: (value) =>
+                                    singleWeddingVenueCubit
+                                        .calculateIndividualDrinksPrice(
+                                  drinks[index],
+                                  value,
+                                ),
+                              )
+                            : EmptyCard(
+                                text: 'No drinks available for ${venue.name}',
+                              );
+                      },
+                    ),
+
+                    //* payment
+
+                    //back and checkout
+                  ],
                 );
               } else {
                 return const GlobalLoadingBar(mainText: false);

@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/text_field_input_type.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,8 +17,7 @@ class AuthTextField extends StatelessWidget {
   final BorderRadius? borderRadius;
   final double? elevation;
 
-  final bool isOnlyDouble;
-  final bool isOnlyInt;
+  final TextFieldInputType? inputType;
 
   const AuthTextField({
     super.key,
@@ -31,8 +31,7 @@ class AuthTextField extends StatelessWidget {
     this.textColor,
     this.fontWeight,
     this.maxLength,
-    this.isOnlyDouble = false,
-    this.isOnlyInt = false,
+    this.inputType,
   });
 
   @override
@@ -54,19 +53,19 @@ class AuthTextField extends StatelessWidget {
         textAlign: textAlign ?? TextAlign.start,
         keyboardType:
             // accepts only integers
-            isOnlyInt
+            inputType == TextFieldInputType.integers
                 ? TextInputType.number
                 //accepts only doubles
-                : isOnlyDouble
+                : inputType == TextFieldInputType.doubles
                     ? const TextInputType.numberWithOptions(decimal: true)
                     //accepts anything
                     : null,
         inputFormatters:
             // accepts only integers
-            isOnlyInt
+            inputType == TextFieldInputType.integers
                 ? [FilteringTextInputFormatter.digitsOnly]
                 //accepts only doubles
-                : isOnlyDouble
+                : inputType == TextFieldInputType.doubles
                     ? [
                         FilteringTextInputFormatter.allow(
                             RegExp(r'^(\d+)?\.?\d{0,2}'))

@@ -187,9 +187,6 @@ class FirebaseAuthRepo implements AuthRepo {
     return null;
   }
 
-  //the following methods are helper methods
-  //their returns saved in the current user object with every login
-
   //get user name
   @override
   Future<String?> getCurrentUserName() async {

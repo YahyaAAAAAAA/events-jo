@@ -8,12 +8,12 @@ import 'package:events_jo/features/location/representation/cubits/location_cubit
 import 'package:events_jo/features/owner/representation/components/owner_app_bar.dart';
 import 'package:events_jo/features/owner/representation/components/owner_drink_card.dart';
 import 'package:events_jo/features/owner/representation/components/owner_meal_card.dart';
-import 'package:events_jo/features/owner/representation/pages/sub%20pages/confirm_and_add_event_to_database_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/confirm_event_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/event_added_successfully_page.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_navigation_bar.dart';
-import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_drinks.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_drinks_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_location_page.dart';
-import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_meals.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_meals_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_name_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_type_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_images_page.dart';
@@ -145,16 +145,7 @@ class _OwnerPageState extends State<OwnerPage> {
       //disables native back button
       canPop: false,
       child: Scaffold(
-        //todo fix this
-        appBar: AppBar(
-          //hides back button
-          leading: const SizedBox(),
-          leadingWidth: 0,
-          //note: remove appbar color when scrolling
-          surfaceTintColor: Colors.transparent,
-          centerTitle: true,
-          title: OwnerAppBar(index: index),
-        ),
+        appBar: OwnerAppBar(index: index),
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 450),
@@ -163,7 +154,6 @@ class _OwnerPageState extends State<OwnerPage> {
               index: index,
               children: [
                 //* owner sub pages
-
                 //type
                 SelectEventType(
                   eventType: eventType,
@@ -238,7 +228,7 @@ class _OwnerPageState extends State<OwnerPage> {
                 ),
 
                 //meals
-                SelectEventMeals(
+                SelectEventMealsPage(
                   mealNameController: mealNameController,
                   mealAmountController: mealAmountController,
                   mealPriceController: mealPriceController,
@@ -298,7 +288,7 @@ class _OwnerPageState extends State<OwnerPage> {
                 ),
 
                 //drinks
-                SelectEventDrinks(
+                SelectEventDrinksPage(
                   drinkNameController: drinkNameController,
                   drinkAmountController: drinkAmountController,
                   drinkPriceController: drinkPriceController,
@@ -477,7 +467,7 @@ class _OwnerPageState extends State<OwnerPage> {
       builder: (context, state) {
         //initial
         if (state is OwnerInitial) {
-          return ConfirmAndAddEventToDatabasePage(
+          return ConfirmEventPage(
             eventType: eventType,
             name: nameController.text,
             range: range,

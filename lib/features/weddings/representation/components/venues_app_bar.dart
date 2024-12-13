@@ -1,17 +1,15 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
+import 'package:events_jo/features/home/presentation/components/app_bar_button.dart';
 import 'package:flutter/material.dart';
 
 class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppUser? user;
-  final PreferredSize? bottom;
 
   const VenuesAppBar({
     super.key,
     required this.user,
-    this.bottom,
   });
 
   @override
@@ -36,7 +34,6 @@ class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
-        bottom: bottom,
         actions: [
           AppBarButton(
             onPressed: () {},
@@ -51,6 +48,5 @@ class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(
-      bottom == null ? kToolbarHeight + 20 : kToolbarHeight + 60);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 20);
 }

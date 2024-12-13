@@ -1,7 +1,7 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/appbar_button.dart';
+import 'package:events_jo/features/home/presentation/components/app_bar_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
