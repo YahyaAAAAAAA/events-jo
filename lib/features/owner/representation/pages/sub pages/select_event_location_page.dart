@@ -1,5 +1,6 @@
 import 'package:events_jo/config/enums/event_type.dart';
-import 'package:events_jo/features/home/presentation/components/owner_button.dart';
+import 'package:events_jo/features/owner/representation/components/owner_button.dart';
+import 'package:events_jo/features/owner/representation/components/owner_page_bar.dart';
 import 'package:flutter/material.dart';
 
 //* This page lets the user to choose a location on a map (NOT REQUIRED)
@@ -18,8 +19,11 @@ class SelectEventLocationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
-        shrinkWrap: true,
         children: [
+          const OwnerPageBar(),
+
+          const SizedBox(height: 100),
+
           //location button
           OwnerButton(
             text: eventType == EventType.venue
@@ -34,6 +38,8 @@ class SelectEventLocationPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
             onPressed: onPressed,
           ),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

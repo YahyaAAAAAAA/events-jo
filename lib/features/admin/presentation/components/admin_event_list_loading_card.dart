@@ -15,13 +15,14 @@ class AdminEventListLoadingCard extends StatelessWidget {
         itemCount: 10,
         shrinkWrap: true,
         itemBuilder: (context, index) => AdminEventsCard(
-            name: '            ',
-            index: index,
-            owner: '      ',
-            isApproved: false,
-            isBeingApproved: false,
-            isLoading: true,
-            onPressed: null),
+          name: '            ',
+          index: index,
+          owner: '      ',
+          isApproved: false,
+          isBeingApproved: false,
+          isLoading: true,
+          onPressed: null,
+        ),
       ),
     );
   }

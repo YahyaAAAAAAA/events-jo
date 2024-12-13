@@ -6,12 +6,10 @@ import 'package:events_jo/features/admin/presentation/components/owners/admin_ow
 import 'package:events_jo/features/admin/presentation/cubits/single%20owner/admin_single_owner_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/single%20owner/admin_single_owner_states.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/location/domain/entities/user_location.dart';
+import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 
 class AdminOwnerDetailsPage extends StatefulWidget {
   final AppUser owner;
@@ -30,7 +28,7 @@ class _AdminOwnerDetailsPageState extends State<AdminOwnerDetailsPage> {
   late final LocationCubit locationCubit;
 
   //location instance
-  late final MapLocation ownerLocation;
+  late final EjLocation ownerLocation;
 
   //owner stream
   late final AdminSingleOwnerCubit adminSingleOwnerCubit;
@@ -44,21 +42,11 @@ class _AdminOwnerDetailsPageState extends State<AdminOwnerDetailsPage> {
     locationCubit = context.read<LocationCubit>();
 
     //setup owner location values
-    ownerLocation = MapLocation(
+    ownerLocation = EjLocation(
       lat: widget.owner.latitude,
       long: widget.owner.longitude,
       initLat: widget.owner.latitude,
       initLong: widget.owner.longitude,
-      marker: Marker(
-        point: LatLng(
-          widget.owner.latitude,
-          widget.owner.longitude,
-        ),
-        child: Icon(
-          Icons.location_pin,
-          color: GColors.black,
-        ),
-      ),
     );
 
     adminSingleOwnerCubit.getOwnerStream(widget.owner.uid);

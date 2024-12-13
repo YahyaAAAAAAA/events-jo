@@ -1,6 +1,6 @@
 import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
-import 'package:events_jo/features/home/presentation/components/owner_button.dart';
+import 'package:events_jo/features/owner/representation/components/owner_button.dart';
 import 'package:flutter/material.dart';
 
 //* This page displays a finish text to the user

@@ -9,38 +9,36 @@ class OwnerPageBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 140),
-      child: FittedBox(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            //* logo text
-            GradientText(
-              'Ej',
-              gradient: GColors.logoGradient,
-              style: TextStyle(
-                color: GColors.royalBlue,
-                fontSize: 80,
-                fontFamily: 'Gugi',
-                fontWeight: FontWeight.bold,
-              ),
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //* logo text
+          GradientText(
+            'Ej',
+            gradient: GColors.logoGradient,
+            style: TextStyle(
+              color: GColors.royalBlue,
+              fontSize: 80,
+              fontFamily: 'Gugi',
+              fontWeight: FontWeight.bold,
             ),
+          ),
 
-            //* logo text
-            GradientText(
-              'EventsJo for Owners',
-              gradient: GColors.logoGradient,
-              style: TextStyle(
-                color: GColors.black,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
+          //* logo text
+          GradientText(
+            'EventsJo for Owners',
+            gradient: GColors.logoGradient,
+            style: TextStyle(
+              color: GColors.black,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

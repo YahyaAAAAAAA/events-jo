@@ -1,6 +1,7 @@
 import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/owner/representation/components/owner_page_bar.dart';
 import 'package:flutter/material.dart';
 
 //* This page lets the user to pick the event type (NOT REQUIRED)
@@ -23,11 +24,11 @@ class SelectEventType extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: MainAxisAlignment.center,
-        // mainAxisSize: MainAxisSize.min,
-        shrinkWrap: true,
         children: [
+          const OwnerPageBar(),
+
+          const SizedBox(height: 100),
+
           Center(
             child: Text(
               'Pick which type of event you would like to add',
@@ -160,6 +161,8 @@ class SelectEventType extends StatelessWidget {
               ),
             ],
           ),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

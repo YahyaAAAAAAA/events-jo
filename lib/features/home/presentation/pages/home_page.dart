@@ -14,6 +14,7 @@ import 'package:mesh_gradient/mesh_gradient.dart';
 
 class HomePage extends StatefulWidget {
   final AppUser? user;
+
   const HomePage({
     super.key,
     required this.user,

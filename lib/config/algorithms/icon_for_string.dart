@@ -1,5 +1,5 @@
+import 'package:events_jo/config/packages/string%20similarity/string_similarity.dart';
 import 'package:flutter/material.dart';
-import 'package:string_similarity/string_similarity.dart';
 
 class IconForString {
   // Function to get the best matching icon

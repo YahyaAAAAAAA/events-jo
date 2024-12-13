@@ -6,12 +6,10 @@ import 'package:events_jo/features/admin/presentation/components/users/admin_use
 import 'package:events_jo/features/admin/presentation/cubits/single%20user/admin_single_user_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/single%20user/admin_single_user_states.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/location/domain/entities/user_location.dart';
+import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 
 class AdminUserDetailsPage extends StatefulWidget {
   final AppUser user;
@@ -30,7 +28,7 @@ class _AdminUserDetailsPageState extends State<AdminUserDetailsPage> {
   late final LocationCubit locationCubit;
 
   //location instance
-  late final MapLocation userLocation;
+  late final EjLocation userLocation;
 
   //user stream
   late final AdminSingleUserCubit adminSingleOwnerCubit;
@@ -44,21 +42,11 @@ class _AdminUserDetailsPageState extends State<AdminUserDetailsPage> {
     locationCubit = context.read<LocationCubit>();
 
     //setup user location values
-    userLocation = MapLocation(
+    userLocation = EjLocation(
       lat: widget.user.latitude,
       long: widget.user.longitude,
       initLat: widget.user.latitude,
       initLong: widget.user.longitude,
-      marker: Marker(
-        point: LatLng(
-          widget.user.latitude,
-          widget.user.longitude,
-        ),
-        child: Icon(
-          Icons.location_pin,
-          color: GColors.black,
-        ),
-      ),
     );
 
     adminSingleOwnerCubit.getUserStream(widget.user.uid);

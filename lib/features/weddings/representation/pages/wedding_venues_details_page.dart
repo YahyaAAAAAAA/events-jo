@@ -4,7 +4,7 @@ import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/location/domain/entities/user_location.dart';
+import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
@@ -19,12 +19,10 @@ import 'package:events_jo/features/weddings/representation/components/details/ve
 import 'package:events_jo/features/weddings/representation/components/details/venue_time_picker.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_changed.dart';
 import 'package:events_jo/features/weddings/representation/components/venues_app_bar.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 
 class WeddingVenuesDetailsPage extends StatefulWidget {
   final AppUser? user;
@@ -53,7 +51,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
   //venue location
   late final LocationCubit locationCubit;
-  late final MapLocation venueLocation;
+  late final EjLocation venueLocation;
 
   //date
   late DateTime selectedDate;
@@ -100,21 +98,11 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
     numberOfExpectedPeople = weddingVenue.peopleMin;
 
     //get venue location
-    venueLocation = MapLocation(
+    venueLocation = EjLocation(
       lat: weddingVenue.latitude,
       long: weddingVenue.longitude,
       initLat: weddingVenue.latitude,
       initLong: weddingVenue.longitude,
-      marker: Marker(
-        point: LatLng(
-          weddingVenue.latitude,
-          weddingVenue.longitude,
-        ),
-        child: Icon(
-          Icons.location_pin,
-          color: GColors.black,
-        ),
-      ),
     );
 
     //listen to venue

@@ -1,7 +1,7 @@
 import 'dart:ui';
+import 'package:events_jo/config/packages/image%20slideshow/image_slideshow.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
 class AdminImagesDialogPreview extends StatelessWidget {
   const AdminImagesDialogPreview({

@@ -1,5 +1,6 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
+import 'package:events_jo/features/owner/representation/components/owner_page_bar.dart';
 import 'package:flutter/material.dart';
 
 class SelectPeopleRange extends StatelessWidget {
@@ -18,8 +19,11 @@ class SelectPeopleRange extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
-        shrinkWrap: true,
         children: [
+          const OwnerPageBar(),
+
+          const SizedBox(height: 100),
+
           //* text
           FittedBox(
             fit: BoxFit.scaleDown,
@@ -45,6 +49,7 @@ class SelectPeopleRange extends StatelessWidget {
                     elevation: 3,
                     obscureText: false,
                     isOnlyDouble: true,
+                    maxLength: 7,
                   ),
                 ),
               ),
@@ -79,6 +84,7 @@ class SelectPeopleRange extends StatelessWidget {
                     elevation: 3,
                     isOnlyInt: true,
                     obscureText: false,
+                    maxLength: 7,
                   ),
                 ),
               ),
@@ -91,11 +97,14 @@ class SelectPeopleRange extends StatelessWidget {
                     elevation: 3,
                     isOnlyInt: true,
                     obscureText: false,
+                    maxLength: 7,
                   ),
                 ),
               ),
             ],
           ),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

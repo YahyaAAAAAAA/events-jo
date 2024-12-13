@@ -1,14 +1,15 @@
+import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChangeUserTypeRow extends StatelessWidget {
-  final bool isOwner;
+  final UserType type;
   final void Function()? setUserType;
   final void Function()? setOwnerType;
 
   const ChangeUserTypeRow({
     super.key,
-    required this.isOwner,
+    required this.type,
     required this.setUserType,
     required this.setOwnerType,
   });
@@ -39,7 +40,7 @@ class ChangeUserTypeRow extends StatelessWidget {
             child: Icon(
               Icons.person,
               size: 30,
-              color: isOwner ? GColors.black : GColors.royalBlue,
+              color: type == UserType.user ? GColors.royalBlue : GColors.black,
             ),
           ),
           TextButton(
@@ -58,11 +59,11 @@ class ChangeUserTypeRow extends StatelessWidget {
             child: Icon(
               Icons.person_4,
               size: 30,
-              color: isOwner ? GColors.royalBlue : GColors.black,
+              color: type == UserType.owner ? GColors.royalBlue : GColors.black,
             ),
           ),
           Text(
-            isOwner ? 'Owner Account' : 'User Account',
+            type == UserType.user ? 'User Account' : 'Owner Account',
             style: const TextStyle(
               fontSize: 18,
               overflow: TextOverflow.clip,

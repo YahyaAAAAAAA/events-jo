@@ -1,7 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:events_jo/config/enums/event_type.dart';
-import 'package:events_jo/features/home/presentation/components/owner_button.dart';
+import 'package:events_jo/features/owner/representation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/image_card.dart';
+import 'package:events_jo/features/owner/representation/components/owner_page_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,9 +25,12 @@ class SelectImagesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
-        shrinkWrap: true,
         children: [
-          images.isEmpty ? const SizedBox() : const SizedBox(height: 20),
+          const OwnerPageBar(),
+
+          images.isEmpty
+              ? const SizedBox(height: 100)
+              : const SizedBox(height: 30),
 
           //images button
           OwnerButton(
@@ -54,13 +58,6 @@ class SelectImagesPage extends StatelessWidget {
                       : const SizedBox(),
                   //responsive height
                   options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height > 693
-                        ? 250
-                        : MediaQuery.of(context).size.height > 643
-                            ? 200
-                            : MediaQuery.of(context).size.height > 595
-                                ? 150
-                                : 0,
                     enlargeFactor: 1,
                     enlargeCenterPage: true,
                     enlargeStrategy: CenterPageEnlargeStrategy.height,
@@ -68,6 +65,8 @@ class SelectImagesPage extends StatelessWidget {
                   ),
                 )
               : const SizedBox(),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

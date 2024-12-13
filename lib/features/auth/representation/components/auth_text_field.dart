@@ -83,7 +83,6 @@ class AuthTextField extends StatelessWidget {
           ),
           fillColor: GColors.white,
           filled: true,
-
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: GColors.whiteShade3,

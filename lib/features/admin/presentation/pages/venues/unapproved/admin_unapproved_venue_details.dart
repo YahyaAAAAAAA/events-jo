@@ -7,13 +7,11 @@ import 'package:events_jo/features/admin/presentation/components/unapproved%20ve
 import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
-import 'package:events_jo/features/location/domain/entities/user_location.dart';
+import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 
 class AdminUnapprovedVenueDetails extends StatefulWidget {
   final WeddingVenue weddingVenue;
@@ -41,7 +39,7 @@ class _AdminUnapprovedVenueDetailsState
   late final LocationCubit locationCubit;
 
   //location instance
-  late final MapLocation userLocation;
+  late final EjLocation userLocation;
 
   @override
   void initState() {
@@ -54,21 +52,11 @@ class _AdminUnapprovedVenueDetailsState
     locationCubit = context.read<LocationCubit>();
 
     //setup user location values
-    userLocation = MapLocation(
+    userLocation = EjLocation(
       lat: weddingVenue.latitude,
       long: weddingVenue.longitude,
       initLat: weddingVenue.latitude,
       initLong: weddingVenue.longitude,
-      marker: Marker(
-        point: LatLng(
-          weddingVenue.latitude,
-          weddingVenue.longitude,
-        ),
-        child: Icon(
-          Icons.location_pin,
-          color: GColors.black,
-        ),
-      ),
     );
 
     //lock venue

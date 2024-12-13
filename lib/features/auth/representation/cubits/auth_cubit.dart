@@ -1,7 +1,9 @@
+import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/features/auth/domain/repos/auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
@@ -51,29 +53,48 @@ class AuthCubit extends Cubit<AuthStates> {
 
   //register with email+pass
   Future<void> regitser(
-    String name,
-    String email,
-    String pw,
-    double latitude,
-    double longitude,
-    UserType type,
-    bool isOnline,
-  ) async {
+    BuildContext context, {
+    required String name,
+    required String email,
+    required String pw,
+    required String confirmPw,
+    required double latitude,
+    required double longitude,
+    required UserType type,
+  }) async {
     try {
       //show loading state
       emit(AuthLoading(message: "Welcome to EventsJo"));
 
-      //get user
+      //check info
+      final check = checkInfo(
+        context,
+        email: email,
+        name: name,
+        pw: pw,
+        confirmPw: confirmPw,
+      );
+
+      //info invalid
+      if (check == false) {
+        emit(Unauthenticated());
+        return;
+      }
+
+      //register and save user
       final user = await authRepo.registerWithEmailPassword(
-          name, email, pw, latitude, longitude, type, isOnline);
+          name, email, pw, latitude, longitude, type);
 
       if (user != null) {
+        //done
         _currentUser = user;
         emit(Authenticated(user));
       } else {
+        //user doesn't exist
         emit(Unauthenticated());
       }
     } catch (e) {
+      //error
       emit(AuthError(e.toString()));
       emit(Unauthenticated());
     }
@@ -86,5 +107,65 @@ class AuthCubit extends Cubit<AuthStates> {
     await authRepo.logout(id, userType);
 
     emit(Unauthenticated());
+  }
+
+  bool checkInfo(
+    BuildContext context, {
+    required String email,
+    required String name,
+    required String pw,
+    required String confirmPw,
+  }) {
+    //name empty
+    if (name.isEmpty) {
+      GSnackBar.show(
+        context: context,
+        text: 'Please enter a name',
+      );
+
+      return false;
+    }
+
+    //email empty
+    if (email.isEmpty) {
+      GSnackBar.show(
+        context: context,
+        text: 'Please enter an email',
+      );
+
+      return false;
+    }
+
+    //password empty
+    if (pw.isEmpty) {
+      GSnackBar.show(
+        context: context,
+        text: 'Please enter a password',
+      );
+
+      return false;
+    }
+
+    //confirm password empty
+    if (confirmPw.isEmpty) {
+      GSnackBar.show(
+        context: context,
+        text: 'Please confirm your password',
+      );
+
+      return false;
+    }
+
+    //passwords dont match
+    if (pw != confirmPw) {
+      GSnackBar.show(
+        context: context,
+        text: 'Passwords dont match',
+      );
+
+      return false;
+    }
+
+    return true;
   }
 }

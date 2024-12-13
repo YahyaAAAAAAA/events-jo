@@ -58,8 +58,6 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
       ),
       body: TabBarView(
         controller: tabController,
-        //note: make tab bar unswappable
-        // physics: const NeverScrollableScrollPhysics(),
         children: [
           AdminUnapprovedVenues(
             adminUnapproveCubit: adminUnapproveCubit,

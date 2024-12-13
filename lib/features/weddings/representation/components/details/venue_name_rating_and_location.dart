@@ -1,7 +1,7 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
-import 'package:events_jo/features/location/domain/entities/user_location.dart';
+import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_rating.dart';
@@ -20,7 +20,7 @@ class VenueNameRatingAndLocation extends StatelessWidget {
   final double padding;
   final WeddingVenue weddingVenue;
   final LocationCubit? locationCubit;
-  final MapLocation? venueLocation;
+  final EjLocation? venueLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +42,18 @@ class VenueNameRatingAndLocation extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               //venue name
-              GradientText(
-                weddingVenue.name,
-                gradient: GColors.logoGradient,
-                style: TextStyle(
-                  color: GColors.royalBlue,
-                  fontSize: 28,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 290),
+                child: FittedBox(
+                  child: GradientText(
+                    weddingVenue.name,
+                    gradient: GColors.logoGradient,
+                    style: TextStyle(
+                      color: GColors.royalBlue,
+                      fontSize: 28,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
               ),
 

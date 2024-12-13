@@ -1,14 +1,13 @@
 import 'package:events_jo/config/enums/event_type.dart';
-import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/config/packages/lazy%20indexed%20stack/lazy_indexed_stack.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/location/domain/entities/user_location.dart';
+import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/owner/representation/components/owner_app_bar.dart';
 import 'package:events_jo/features/owner/representation/components/owner_drink_card.dart';
 import 'package:events_jo/features/owner/representation/components/owner_meal_card.dart';
-import 'package:events_jo/features/owner/representation/components/owner_page_bar_handler.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/confirm_and_add_event_to_database_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/event_added_successfully_page.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_navigation_bar.dart';
@@ -27,10 +26,7 @@ import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:latlong2/latlong.dart';
 //note: check if platform is web
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -47,6 +43,8 @@ class OwnerPage extends StatefulWidget {
 }
 
 class _OwnerPageState extends State<OwnerPage> {
+  late final AppUser user;
+
   //owner cubit instance
   late final OwnerCubit ownerCubit;
 
@@ -54,7 +52,7 @@ class _OwnerPageState extends State<OwnerPage> {
   late final LocationCubit locationCubit;
 
   //location instance
-  late final MapLocation userLocation;
+  late final EjLocation userLocation;
 
   //event name
   final TextEditingController nameController = TextEditingController();
@@ -105,6 +103,9 @@ class _OwnerPageState extends State<OwnerPage> {
   void initState() {
     super.initState();
 
+    //get user
+    user = widget.user!;
+
     //get cubits
     ownerCubit = context.read<OwnerCubit>();
     locationCubit = context.read<LocationCubit>();
@@ -114,21 +115,11 @@ class _OwnerPageState extends State<OwnerPage> {
     // long = 35.89443320390641;
 
     //setup user location values
-    userLocation = MapLocation(
-      lat: widget.user!.latitude,
-      long: widget.user!.longitude,
-      initLat: widget.user!.latitude,
-      initLong: widget.user!.longitude,
-      marker: Marker(
-        point: LatLng(
-          widget.user!.latitude,
-          widget.user!.longitude,
-        ),
-        child: Icon(
-          Icons.location_pin,
-          color: GColors.black,
-        ),
-      ),
+    userLocation = EjLocation(
+      lat: user.latitude,
+      long: user.longitude,
+      initLat: user.latitude,
+      initLong: user.longitude,
     );
   }
 
@@ -172,6 +163,7 @@ class _OwnerPageState extends State<OwnerPage> {
               index: index,
               children: [
                 //* owner sub pages
+
                 //type
                 SelectEventType(
                   eventType: eventType,
@@ -189,8 +181,10 @@ class _OwnerPageState extends State<OwnerPage> {
                 //location
                 SelectEventLocationPage(
                   eventType: eventType,
-                  onPressed: () => locationCubit.showMapDialog(context,
-                      userLocation: userLocation),
+                  onPressed: () => locationCubit.showMapDialog(
+                    context,
+                    userLocation: userLocation,
+                  ),
                 ),
 
                 //pics
@@ -287,7 +281,7 @@ class _OwnerPageState extends State<OwnerPage> {
                     meals.add(
                       WeddingVenueMeal(
                         id: 'added later :D',
-                        name: mealNameController.text,
+                        name: mealNameController.text.trim(),
                         amount: int.parse(mealAmountController.text),
                         price: double.parse(mealPriceController.text),
                       ),
@@ -347,7 +341,7 @@ class _OwnerPageState extends State<OwnerPage> {
                     drinks.add(
                       WeddingVenueDrink(
                         id: 'added later :D',
-                        name: drinkNameController.text,
+                        name: drinkNameController.text.trim(),
                         amount: int.parse(drinkAmountController.text),
                         price: double.parse(drinkPriceController.text),
                       ),
@@ -369,9 +363,6 @@ class _OwnerPageState extends State<OwnerPage> {
             ),
           ),
         ),
-        floatingActionButton:
-            OwnerPageBarHandler(index: index, isImagesEmpty: images.isEmpty),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
 
         //watch the state here to hide the bar when loading
         bottomNavigationBar: BlocConsumer<OwnerCubit, OwnerStates>(
@@ -514,7 +505,7 @@ class _OwnerPageState extends State<OwnerPage> {
 
               //call cubit
               await ownerCubit.addVenueToDatabase(
-                name: nameController.text,
+                name: nameController.text.trim(),
                 lat: userLocation.lat,
                 lon: userLocation.long,
                 peopleMax: int.parse(peopleMaxController.text),
@@ -537,8 +528,8 @@ class _OwnerPageState extends State<OwnerPage> {
                   time[0],
                   time[1],
                 ],
-                ownerId: widget.user!.uid,
-                ownerName: widget.user!.name,
+                ownerId: user.uid,
+                ownerName: user.name,
               );
             },
           );

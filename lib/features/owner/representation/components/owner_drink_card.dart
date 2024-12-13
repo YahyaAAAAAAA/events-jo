@@ -14,7 +14,6 @@ class OwnerDrinkCard extends StatelessWidget {
     required this.drinks,
     required this.index,
     required this.onPressed,
-    //normal color here because optional parameters must be constants
     this.textColor = const Color(0xFF306BDD),
     this.withButton = true,
   });

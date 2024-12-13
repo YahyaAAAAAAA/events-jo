@@ -101,6 +101,7 @@ class UnapprovedAdminVenueSummary extends StatelessWidget {
                 ),
                 child: ListView(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     //type
                     const AdminConfirmationDisplayRow(
@@ -190,6 +191,8 @@ class UnapprovedAdminVenueSummary extends StatelessWidget {
               onApprovePressed: onApprovePressed,
               onDenyPressed: onDenyPressed,
             ),
+
+            const SizedBox(height: 20),
           ],
         ),
       ),

@@ -36,7 +36,7 @@ class AdminEventsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               border: Border(
                 left: BorderSide(
-                  color: GColors.cyanShade6,
+                  color: isLoading ? GColors.white : GColors.cyanShade6,
                   width: 10,
                 ),
               ),

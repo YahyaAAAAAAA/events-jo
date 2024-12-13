@@ -21,12 +21,13 @@ import 'package:events_jo/features/location/representation/cubits/location_cubit
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/all/wedding_venues_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 /*
 Root level
@@ -55,6 +56,9 @@ class EventsJoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //remove splash screen
+    FlutterNativeSplash.remove();
+
     //set orientations
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,

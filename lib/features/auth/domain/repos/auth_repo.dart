@@ -7,20 +7,17 @@ abstract class AuthRepo {
   Future<AppUser?> loginWithEmailPassword(String email, String password);
 
   Future<AppUser?> registerWithEmailPassword(
-      String name,
-      String email,
-      String password,
-      double latitude,
-      double longitude,
-      UserType type,
-      bool isOnline);
+    String name,
+    String email,
+    String password,
+    double latitude,
+    double longitude,
+    UserType type,
+  );
 
   Future<void> logout(String id, UserType userType);
 
   Future<AppUser?> getCurrentUser();
-
-  //the following methods are helper methods
-  //only called withing the data layer
 
   Future<UserType?> getUserType();
 

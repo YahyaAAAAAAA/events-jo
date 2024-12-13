@@ -2,7 +2,7 @@ import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/utils/identical_objects.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/single/single_wedding_venue_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 

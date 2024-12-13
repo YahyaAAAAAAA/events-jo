@@ -8,6 +8,7 @@ class HomeCard extends StatelessWidget {
   final IconData icon;
   final String text;
   final void Function()? onPressed;
+
   const HomeCard({
     super.key,
     required this.controller,

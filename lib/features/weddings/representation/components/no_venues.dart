@@ -1,6 +1,6 @@
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/config/utils/gradient/gradient_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 
 class NoVenues extends StatelessWidget {
   final String text;

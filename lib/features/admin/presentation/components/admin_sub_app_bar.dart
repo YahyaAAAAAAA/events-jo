@@ -16,11 +16,13 @@ class AdminSubAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       title: Padding(
         padding: const EdgeInsets.only(top: 8),
-        child: Text(
-          title ?? '',
-          style: TextStyle(
-            color: GColors.cyanShade6,
-            fontSize: 25,
+        child: FittedBox(
+          child: Text(
+            title ?? ' ',
+            style: TextStyle(
+              color: GColors.cyanShade6,
+              fontSize: 25,
+            ),
           ),
         ),
       ),

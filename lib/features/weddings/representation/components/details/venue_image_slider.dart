@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/packages/image%20slideshow/image_slideshow.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
 class VenueImageSlider extends StatelessWidget {
   final List<CachedNetworkImage> picsList;

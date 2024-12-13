@@ -100,6 +100,7 @@ class AdminApprovedVenueSummary extends StatelessWidget {
                 ),
                 child: ListView(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     //type
                     const AdminConfirmationDisplayRow(
@@ -188,6 +189,8 @@ class AdminApprovedVenueSummary extends StatelessWidget {
             AdminApprovedVenuesBar(
               onSuspendPressed: onSuspendPressed,
             ),
+
+            const SizedBox(height: 20),
           ],
         ),
       ),

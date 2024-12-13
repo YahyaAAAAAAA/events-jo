@@ -1,6 +1,7 @@
 import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/packages/from%20to%20picker/from_to_picker.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/owner/representation/components/time_picker.dart';
+import 'package:events_jo/features/owner/representation/components/owner_page_bar.dart';
 import 'package:flutter/material.dart';
 
 //* This page lets the user pick between a range between 2 times (REQUIRED)
@@ -20,10 +21,34 @@ class SelectRangeTimePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
-        shrinkWrap: true,
         children: [
+          const OwnerPageBar(),
+
+          const SizedBox(height: 100),
+
           //time range
-          TimePicker(onTab: onTab),
+          Center(
+            child: FittedBox(
+              child: FromToTimePicker(
+                onTab: onTab,
+                dialogBackgroundColor: GColors.poloBlue.withOpacity(0.5),
+                fromHeadlineColor: GColors.black,
+                toHeadlineColor: GColors.black,
+                timeBoxColor: GColors.royalBlue,
+                upIconColor: GColors.white,
+                downIconColor: GColors.white,
+                dividerColor: GColors.poloBlue,
+                timeTextColor: GColors.white,
+                activeDayNightColor: GColors.royalBlue,
+                dismissTextColor: GColors.redShade3,
+                defaultDayNightColor: GColors.whiteShade3,
+                doneTextColor: GColors.royalBlue,
+                dismissText: '',
+                showHeaderBullet: true,
+                maxWidth: 500,
+              ),
+            ),
+          ),
 
           Center(
             child: Text(
@@ -51,6 +76,8 @@ class SelectRangeTimePage extends StatelessWidget {
               ),
             ),
           ),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

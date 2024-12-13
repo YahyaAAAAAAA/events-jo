@@ -53,6 +53,7 @@ class GSnackBar {
                         color: textColor ?? GColors.white,
                         fontWeight: FontWeight.w700,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

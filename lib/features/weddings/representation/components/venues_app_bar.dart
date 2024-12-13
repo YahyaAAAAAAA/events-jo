@@ -27,11 +27,13 @@ class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
           size: 25,
         ),
         centerTitle: true,
-        title: Text(
-          'Wedding Venues in Jordan',
-          style: TextStyle(
-            color: GColors.black,
-            fontSize: 20,
+        title: FittedBox(
+          child: Text(
+            'Wedding Venues in Jordan',
+            style: TextStyle(
+              color: GColors.black,
+              fontSize: 20,
+            ),
           ),
         ),
         bottom: bottom,

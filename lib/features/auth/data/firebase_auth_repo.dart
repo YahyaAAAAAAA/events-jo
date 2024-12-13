@@ -108,7 +108,6 @@ class FirebaseAuthRepo implements AuthRepo {
     double latitude,
     double longitude,
     UserType type,
-    bool isOnline,
   ) async {
     try {
       //attempt sign up
@@ -123,7 +122,7 @@ class FirebaseAuthRepo implements AuthRepo {
         type: type,
         latitude: latitude,
         longitude: longitude,
-        isOnline: isOnline,
+        isOnline: true,
       );
 
       //save user data in firestore

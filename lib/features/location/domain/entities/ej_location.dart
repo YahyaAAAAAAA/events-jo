@@ -1,20 +1,33 @@
+import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
-//main purpose is state management and abstraction of code
-class MapLocation {
+//main purpose is state management
+class EjLocation {
   double lat;
   double long;
   double initLat;
   double initLong;
-  Marker marker;
+  Marker? marker;
 
-  MapLocation({
+  EjLocation({
     required this.lat,
     required this.long,
     required this.initLat,
     required this.initLong,
-    required this.marker,
-  });
+  }) {
+    this.marker = Marker(
+      point: LatLng(
+        lat,
+        long,
+      ),
+      child: Icon(
+        Icons.location_pin,
+        color: GColors.black,
+      ),
+    );
+  }
 
 //team example on why we use Entities/Models
 //.

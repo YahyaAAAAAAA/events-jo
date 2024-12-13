@@ -1,5 +1,5 @@
 import 'package:events_jo/config/enums/food_type.dart';
-import 'package:string_similarity/string_similarity.dart';
+import 'package:events_jo/config/packages/string%20similarity/string_similarity.dart';
 
 class ImageForString {
   //get the best matching string

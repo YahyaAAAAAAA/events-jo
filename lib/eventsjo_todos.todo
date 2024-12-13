@@ -29,12 +29,21 @@ pending:
     ✔ add delay to venue unlock @done(24-12-11 21:04)
     ✔ set orientations @done(24-12-11 23:12)
     ✔ try higher quality logo @started(24-12-12 17:00) @done(24-12-12 19:13) @lasted(2h13m39s)
-    ☐ update background with the new logo (for mobile, desktop & github icon) @started(24-12-12 19:13)
-    ☐ title in venues page and venues details needs FittedBox
-    ☐ sub list in admin summaries unscrollable
-    ☐ some sub pages in owner page needs fix
+    ✔ update background with the new logo (for mobile, desktop & github icon) @started(24-12-12 19:13) @done(24-12-12 20:26) @lasted(1h13m12s)
+    ✔ title in venues page and venues details needs FittedBox @started(24-12-12 21:12) @done(24-12-12 21:12) @lasted(58s)
+    ✔ sub list in admin summaries unscrollable @done(24-12-12 21:12)
+    ✔ sub pages in owner page needs fix @done(24-12-12 21:12)
+    ✔ clean external packages @done(24-12-12 22:44)
+    ✔ check files names overall @done(24-12-12 23:00)
+    ✔ fixes in register page @done(24-12-13 02:25)
+    ✔ changes in ej location object @done(24-12-13 02:25)
+    ✔ location is now optional @done(24-12-13 02:25)
+    ✔ limit text fields @started(24-12-13 02:35) @done(24-12-13 03:30) @lasted(55m)
+    ✔ trim name field in register page @done(24-12-13 02:28)
+    ☐ add type enum for text fields
+    ☐ check on all dialogs
+    ☐ check todos in code
     ☐ check the code overall
-    ☐ check files names overall 
     //-----------------
     ☐ settings feature (account,venues,problem,contact)
     ☐ owner venues feature (venues by owner id,details,update)

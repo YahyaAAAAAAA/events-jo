@@ -3,7 +3,7 @@ import 'package:events_jo/config/algorithms/haversine.dart';
 import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venue/all/wedding_venues_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {

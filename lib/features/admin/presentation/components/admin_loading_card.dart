@@ -17,7 +17,7 @@ class AdminLoadingCard extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               left: BorderSide(
-                color: GColors.cyanShade6,
+                color: GColors.white,
                 width: 10,
               ),
             ),
