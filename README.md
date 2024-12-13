@@ -41,28 +41,7 @@
 
 ###
 
-<h2 align="left">Project Architecture, Use Case Diagram and Screens</h2>
-<div align="left">
-  
-<a href="https://drive.google.com/file/d/151Gh3IPBVC2VyLv4quY4qaiMTGQLyQC-/view?usp=sharing" style="text-decoration: none">
-  <img src="assets/git_images/archjo.png" height="100" alt="Project Architecture"  />
-</a>
- 
-<img width="12" />
-  
-<a  style="text-decoration: dotted" href="https://drive.google.com/file/d/1Jdf2Tx_KFwl9lGgbJFPikjUTi1AOaaDE/view?usp=sharing">
-  <img src="assets/git_images/diagramjo.png" height="100" alt="Project Use Case"  />
-</a>
 
-<img width="12" />
-
-<a style="text-decoration: none" href="https://drive.google.com/file/d/1nL5Vg3SFE-SD3r8JxnhDIas4NuTnz1mx/view?usp=sharing " >
-  <img src="assets/git_images/mobilejo.png" height="100" alt="Project Screens and Navigation"  />
-</a>
-  
-</div>
-
-###
 
 <h2 align="left">Introduction</h2>
 
@@ -76,7 +55,7 @@
 
 ###
 
-<p align="left">The user can choose from:<br><br>• Wedding Venues.<br>• Personal Event.<br>• Farms.<br>• Football Courts.</p>
+<p align="left">The user can choose from:<br><br>• Wedding Venues.<br>• Farms.<br>• Football Courts.</p>
 
 ###
 
