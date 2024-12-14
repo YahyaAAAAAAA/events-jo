@@ -45,10 +45,11 @@ pending:
     ✔ check on all dialogs @done(24-12-13 21:20)
     ✔ check todos in code @done(24-12-13 23:11)
     ✔ check the code overall @done(24-12-13 23:11)
-    ☐ beautify numbers
     //-----------------
-    ☐ settings feature (account,venues,problem,contact) @started(24-12-14 00:42)
+    ✔ settings feature (account,venues,problem,contact) @started(24-12-14 19:17) @done(24-12-14 19:43) @lasted(26m20s)
+    //-----------------
     ☐ owner venues feature (venues by owner id,details,update)
+    ☐ beautify numbers
 
 
 vulnerabilities:

@@ -3,8 +3,8 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/app_bar_button.dart';
 import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
+import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
 import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
@@ -49,24 +49,9 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        leading: AppBarButton(
-          onPressed: () =>
-              context.read<AuthCubit>().logout(user!.uid, user!.type),
-          icon: Icons.person,
-          size: 25,
-        ),
-        actions: [
-          AppBarButton(
-            onPressed: () {},
-            icon: CustomIcons.menu,
-            size: 20,
-          ),
-        ],
-        leadingWidth: 90,
-        toolbarHeight: 70,
+      appBar: HomeAppBar(
+        onPressed: () =>
+            context.read<AuthCubit>().logout(user!.uid, user!.type),
       ),
       body: Center(
         child: ConstrainedBox(

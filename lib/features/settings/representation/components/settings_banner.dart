@@ -2,8 +2,8 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:flutter/material.dart';
 
-class EventsJoLogo extends StatelessWidget {
-  const EventsJoLogo({super.key});
+class SettingsBanner extends StatelessWidget {
+  const SettingsBanner({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class EventsJoLogo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: GradientText(
-                'EventsJo',
+                'Settings',
                 gradient: GColors.logoGradientReversed,
                 style: TextStyle(
                   color: GColors.royalBlue,
