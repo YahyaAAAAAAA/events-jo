@@ -48,6 +48,13 @@ pending:
     //-----------------
     ✔ settings feature (account,venues,problem,contact) @started(24-12-14 19:17) @done(24-12-14 19:43) @lasted(26m20s)
     //-----------------
+    ✔ remove location from user @started(24-12-18 17:20) @done(24-12-18 18:26) @lasted(1h6m37s)
+    ✔ add search by city instead @started(24-12-18 19:13) @done(24-12-19 00:40) @lasted(5h27m23s)
+    ☐ start and end time for venue details
+    ☐ add license for owner page
+    ☐ get done with settings ui for owners and users
+    ☐ remove location button from admin panel for users
+    //-----------------
     ☐ owner venues feature (venues by owner id,details,update)
     ☐ beautify numbers
 

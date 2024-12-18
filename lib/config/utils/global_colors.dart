@@ -6,14 +6,14 @@ class GColors {
 
   static Color white = const Color(0xFFFDFDFD);
 
-  static Color black = const Color.fromARGB(255, 0, 0, 0);
+  static Color black = const Color(0xFF000000);
 
   static Color royalBlue = const Color(0xFF306BDD);
 
   static Color poloBlue = const Color(0xFF88a1c8);
 
   static Color emptyRate = const Color(0xFF808080);
-  static Color fullRate = Colors.yellow.shade700;
+  static Color fullRate = const Color(0xFFFBC02D);
 
   static Color cyan = const Color(0xFF00BCD4);
   static Color cyanShade6 = const Color(0xFF00ACC1);

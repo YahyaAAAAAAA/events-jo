@@ -16,6 +16,7 @@ class WeddingVenue {
   late List<dynamic> startDate;
   late List<dynamic> endDate;
   late List<dynamic> time;
+  late String city;
 
   WeddingVenue({
     required this.id,
@@ -35,6 +36,7 @@ class WeddingVenue {
     required this.peopleMax,
     required this.peopleMin,
     required this.peoplePrice,
+    required this.city,
   });
 
   //convert wedding venue to json
@@ -57,6 +59,7 @@ class WeddingVenue {
       'peopleMax': peopleMax,
       'peopleMin': peopleMin,
       'peoplePrice': peoplePrice,
+      'city': city,
     };
   }
 
@@ -79,5 +82,6 @@ class WeddingVenue {
     peopleMax = jsonVenue['peopleMax'];
     peopleMin = jsonVenue['peopleMin'];
     peoplePrice = jsonVenue['peoplePrice'].toDouble();
+    city = jsonVenue['city'];
   }
 }

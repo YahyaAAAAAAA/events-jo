@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
@@ -28,7 +29,7 @@ class VenueCard extends StatelessWidget {
         children: [
           //* image
           Container(
-            height: 110,
+            height: 120,
             width: 150,
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
@@ -69,7 +70,7 @@ class VenueCard extends StatelessWidget {
           //* details
           Expanded(
             child: Container(
-              height: 100,
+              height: 110,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: GColors.white,
@@ -80,13 +81,37 @@ class VenueCard extends StatelessWidget {
                   //* title
                   FittedBox(
                     child: Text(
-                      weddingVenue.name,
-                      // loopSpace: 2,
+                      weddingVenue.name.isEmpty
+                          ? '        '
+                          : weddingVenue.name,
                       style: TextStyle(
                         color: GColors.black,
                         fontSize: 22,
                         overflow: TextOverflow.ellipsis,
                       ),
+                    ),
+                  ),
+
+                  //* city
+                  FittedBox(
+                    child: Row(
+                      children: [
+                        Icon(
+                          CustomIcons.map_marker,
+                          color: GColors.black,
+                          size: 13,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          weddingVenue.city.isEmpty
+                              ? '        '
+                              : weddingVenue.city,
+                          style: TextStyle(
+                            color: GColors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
@@ -127,7 +152,7 @@ class VenueCard extends StatelessWidget {
 
           //* button
           Container(
-            height: 100,
+            height: 110,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(10),

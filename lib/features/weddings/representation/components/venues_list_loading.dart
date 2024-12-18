@@ -46,6 +46,7 @@ class VenuesListLoading extends StatelessWidget {
               peopleMax: 1,
               peopleMin: 0,
               peoplePrice: 1,
+              city: '',
             ),
           );
         },

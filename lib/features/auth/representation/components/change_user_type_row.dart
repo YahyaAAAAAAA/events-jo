@@ -4,72 +4,101 @@ import 'package:flutter/material.dart';
 
 class ChangeUserTypeRow extends StatelessWidget {
   final UserType type;
-  final void Function()? setUserType;
-  final void Function()? setOwnerType;
+  final void Function(UserType)? onSelected;
 
   const ChangeUserTypeRow({
     super.key,
     required this.type,
-    required this.setUserType,
-    required this.setOwnerType,
+    required this.onSelected,
   });
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Wrap(
-        runSpacing: 10,
-        spacing: 10,
-        alignment: WrapAlignment.start,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          TextButton(
-            onPressed: setUserType,
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(GColors.white),
-              shape: WidgetStatePropertyAll(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              padding: const WidgetStatePropertyAll(
-                EdgeInsets.all(12),
+      child: PopupMenuButton(
+        icon: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Join As',
+              style: TextStyle(
+                fontSize: 18,
+                overflow: TextOverflow.clip,
               ),
             ),
-            child: Icon(
-              Icons.person,
-              size: 30,
-              color: type == UserType.user ? GColors.royalBlue : GColors.black,
+            Icon(
+              Icons.arrow_drop_down_sharp,
+              color: GColors.black,
+              size: 35,
+            ),
+          ],
+        ),
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(GColors.white),
+          padding: const WidgetStatePropertyAll(
+            EdgeInsets.all(12),
+          ),
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
-          TextButton(
-            onPressed: setOwnerType,
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(GColors.white),
-              shape: WidgetStatePropertyAll(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+        ),
+        color: GColors.white,
+        onSelected: onSelected,
+        tooltip: '',
+        enableFeedback: false,
+        initialValue: type,
+        position: PopupMenuPosition.under,
+        itemBuilder: (context) {
+          return [
+            PopupMenuItem(
+              value: UserType.user,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: GColors.black,
+                    size: 25,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    'User',
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
               ),
-              padding: const WidgetStatePropertyAll(
-                EdgeInsets.all(12),
+            ),
+            PopupMenuItem(
+              value: UserType.owner,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.person_4_rounded,
+                    color: GColors.black,
+                    size: 25,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    'Owner',
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
               ),
             ),
-            child: Icon(
-              Icons.person_4,
-              size: 30,
-              color: type == UserType.owner ? GColors.royalBlue : GColors.black,
-            ),
-          ),
-          Text(
-            type == UserType.user ? 'User Account' : 'Owner Account',
-            style: const TextStyle(
-              fontSize: 18,
-              overflow: TextOverflow.clip,
-            ),
-          ),
-        ],
+          ];
+        },
       ),
     );
   }

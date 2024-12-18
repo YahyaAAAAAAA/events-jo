@@ -1,4 +1,5 @@
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+import 'package:events_jo/config/enums/sort_direction.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/features/weddings/representation/components/error_venues.dart';
 import 'package:events_jo/features/weddings/representation/components/no_venues.dart';
@@ -100,15 +101,26 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                           onOpened: () => setState(
                             () => searchController.clear(),
                           ),
-                          onTapAlpha: () => weddingVenueCubit.sortAlpha(venues),
-                          //sort from closest
-                          onTapNearest: () => weddingVenueCubit.sortFromClosest(
+                          onTapSortByCity: (city) => setState(
+                            () => weddingVenueCubit.sortByCity(
+                              venues,
+                              city.name,
+                            ),
+                          ),
+                          //sort by price ascending order
+                          onTapSortByPriceAscend: () =>
+                              weddingVenueCubit.sortByPrice(
                             venues,
-                            user.latitude,
-                            user.longitude,
+                            SortDirection.ascending,
+                          ),
+                          //sort by price descending order
+                          onTapSortByPriceDescend: () =>
+                              weddingVenueCubit.sortByPrice(
+                            venues,
+                            SortDirection.descending,
                           ),
                           //sort by rate
-                          onTapRate: () => GSnackBar.show(
+                          onTapSortByRate: () => GSnackBar.show(
                             context: context,
                             text: 'Coming Soon',
                           ),
@@ -154,7 +166,16 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                 return const VenuesListLoading();
               }
             },
-            listener: (context, state) {
+            listener: (context, state) async {
+              if (state is WeddingVenuesLoaded) {
+                // for (int i = 0; i < state.venues.length; i++) {
+                //   state.venues[i].city = await weddingVenueCubit.getCity(
+                //         state.venues[i].latitude,
+                //         state.venues[i].longitude,
+                //       ) ??
+                //       'x';
+                // }
+              }
               //listens for errors
               if (state is WeddingVenueError) {
                 //todo add counter to make bar show only once

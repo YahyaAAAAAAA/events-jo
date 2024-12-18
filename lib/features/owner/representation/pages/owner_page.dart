@@ -497,7 +497,7 @@ class _OwnerPageState extends State<OwnerPage> {
               await ownerCubit.addVenueToDatabase(
                 name: nameController.text.trim(),
                 lat: userLocation.lat,
-                lon: userLocation.long,
+                long: userLocation.long,
                 peopleMax: int.parse(peopleMaxController.text),
                 peopleMin: int.parse(peopleMinController.text),
                 peoplePrice: double.parse(peoplePriceController.text),

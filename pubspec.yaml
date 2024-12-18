@@ -47,6 +47,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   #for location
   geolocator: ^11.0.0
+  geocoding: ^3.0.0
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
   #for image upload

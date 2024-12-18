@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/config/algorithms/haversine.dart';
+import 'package:events_jo/config/enums/sort_direction.dart';
 import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
@@ -79,23 +80,12 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     return weddingVenues;
   }
 
-  //! DEPRECATED
-  //get all venues from database
-  Future<List<WeddingVenue>> getAllVenues() async {
-    emit(WeddingVenueLoading());
-
-    final weddingVenuesList = await weddingVenueRepo.getAllVenues();
-
-    emit(WeddingVenuesLoaded(weddingVenuesList));
-
-    return weddingVenuesList;
-  }
-
+  //unique id
   String generateUniqueId() {
     return weddingVenueRepo.generateUniqueId();
   }
 
-  //search given list
+  //search list
   List<WeddingVenue> searchList(List<WeddingVenue> weddingVenueList,
       List<WeddingVenue> filterdWeddingVenuList, String venue) {
     //loading...
@@ -120,7 +110,58 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     return weddingVenueList;
   }
 
-  //sort given list alphabetically
+  //sort by city
+  List<WeddingVenue> sortByCity(
+    List<WeddingVenue> weddingVenueList,
+    String targetCity,
+  ) {
+    //loading...
+    emit(WeddingVenueLoading());
+
+    weddingVenueList.sort((a, b) {
+      final firstVenue = a.city.toLowerCase();
+      final secondVenue = b.city.toLowerCase();
+
+      if (firstVenue == targetCity && secondVenue != targetCity) {
+        return -1;
+      } else if (firstVenue != targetCity && secondVenue == targetCity) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    //done
+    emit(WeddingVenuesLoaded(weddingVenueList));
+
+    return weddingVenueList;
+  }
+
+  //sort by price
+  List<WeddingVenue> sortByPrice(
+    List<WeddingVenue> weddingVenueList,
+    SortDirection direction,
+  ) {
+    //loading...
+    emit(WeddingVenueLoading());
+
+    //ascending order
+    if (direction == SortDirection.ascending) {
+      weddingVenueList.sort((a, b) => a.peoplePrice.compareTo(b.peoplePrice));
+    }
+
+    //descending order
+    if (direction == SortDirection.descending) {
+      weddingVenueList.sort((a, b) => b.peoplePrice.compareTo(a.peoplePrice));
+    }
+
+    //done
+    emit(WeddingVenuesLoaded(weddingVenueList));
+
+    return weddingVenueList;
+  }
+
+  //sort list alphabetically
   List<WeddingVenue> sortAlpha(List<WeddingVenue> weddingVenueList) {
     //loading..
     emit(WeddingVenueLoading());
@@ -136,7 +177,8 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     return weddingVenueList;
   }
 
-  //sort given list based on the user's location
+  //! DEPRECATED
+  //sort list based on the user's location
   List<WeddingVenue> sortFromClosest(
       List<WeddingVenue> weddingVenueList, double lat, double long) {
     //loading..
@@ -157,5 +199,17 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     emit(WeddingVenuesLoaded(weddingVenueList));
 
     return weddingVenueList;
+  }
+
+  //! DEPRECATED
+  //get all venues from database
+  Future<List<WeddingVenue>> getAllVenues() async {
+    emit(WeddingVenueLoading());
+
+    final weddingVenuesList = await weddingVenueRepo.getAllVenues();
+
+    emit(WeddingVenuesLoaded(weddingVenuesList));
+
+    return weddingVenuesList;
   }
 }

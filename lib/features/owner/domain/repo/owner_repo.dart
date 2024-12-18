@@ -7,7 +7,7 @@ abstract class OwnerRepo {
   Future<void> addVenueToDatabase({
     required String name,
     required double lat,
-    required double lon,
+    required double long,
     required String ownerId,
     required String ownerName,
     required int peopleMax,
@@ -28,6 +28,8 @@ abstract class OwnerRepo {
       List<WeddingVenueDrink>? drinks, String docId);
 
   Future<List<String>> addImagesToServer(List<XFile> images, String name);
+
+  Future<String?> getCity(double lat, double long);
 
   String generateUniqueId();
 }

@@ -7,6 +7,7 @@ import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FirebaseOwnerRepo implements OwnerRepo {
@@ -21,7 +22,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
   Future<void> addVenueToDatabase({
     required String name,
     required double lat,
-    required double lon,
+    required double long,
     required String ownerId,
     required String ownerName,
     required int peopleMax,
@@ -41,7 +42,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
     WeddingVenue weddingVenue = WeddingVenue(
       id: docId,
       latitude: lat,
-      longitude: lon,
+      longitude: long,
       name: name.toTitleCase,
       startDate: startDate,
       endDate: endDate,
@@ -59,6 +60,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
             'https://i.ibb.co/ZVf53hB/placeholder.png',
           ],
       rate: 0,
+      city: await getCity(lat, long) ?? '  ',
     );
 
     // add new venue to database
@@ -78,6 +80,13 @@ class FirebaseOwnerRepo implements OwnerRepo {
     //------------------Drinks--------------------
 
     await addVenueDrinksToDatabase(drinks, docId);
+  }
+
+  @override
+  Future<String?> getCity(double lat, double long) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+
+    return placemarks[0].locality;
   }
 
   @override

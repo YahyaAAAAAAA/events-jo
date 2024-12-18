@@ -97,8 +97,16 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 10),
 
               ChangeUserTypeRow(
-                setUserType: () => setState(() => type = UserType.user),
-                setOwnerType: () => setState(() => type = UserType.owner),
+                onSelected: (value) {
+                  //type is user
+                  if (value == UserType.user) {
+                    setState(() => type = UserType.user);
+                  }
+                  //type is owner
+                  if (value == UserType.owner) {
+                    setState(() => type = UserType.owner);
+                  }
+                },
                 type: type,
               ),
 
@@ -143,44 +151,53 @@ class _RegisterPageState extends State<RegisterPage> {
               //location bloc
               BlocConsumer<LocationCubit, LocationStates>(
                 builder: (context, state) {
+                  //no location for user
+
                   //location not provided
                   if (state is LocationInitial || state is LocationError) {
-                    return AuthButton(
-                      onTap: () async => showDialog(
-                        context: context,
-                        builder: (context) {
-                          return ChooseLocationMethod(
-                            //pick location manually
-                            onPressedManual: () async =>
-                                await locationCubit.showMapDialogRegisterPage(
-                              context,
-                              userLocation: userLocation,
-                            ),
-                            //pick location automatically
-                            onPressedAuto: () async {
-                              //pop the current dialog
-                              Navigator.of(context).pop();
+                    return AnimatedOpacity(
+                      opacity: type == UserType.owner ? 1 : 0,
+                      duration: const Duration(milliseconds: 300),
+                      child: Visibility(
+                        visible: type == UserType.owner ? true : false,
+                        child: AuthButton(
+                          onTap: () async => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ChooseLocationMethod(
+                                //pick location manually
+                                onPressedManual: () async => await locationCubit
+                                    .showMapDialogRegisterPage(
+                                  context,
+                                  userLocation: userLocation,
+                                ),
+                                //pick location automatically
+                                onPressedAuto: () async {
+                                  //pop the current dialog
+                                  Navigator.of(context).pop();
 
-                              final location =
-                                  await locationCubit.getUserLocation();
+                                  final location =
+                                      await locationCubit.getUserLocation();
 
-                              if (location == null) {
-                                return;
-                              }
+                                  if (location == null) {
+                                    return;
+                                  }
 
-                              //update location
-                              userLocation = EjLocation(
-                                lat: location.latitude,
-                                long: location.longitude,
-                                initLat: location.latitude,
-                                initLong: location.longitude,
+                                  //update location
+                                  userLocation = EjLocation(
+                                    lat: location.latitude,
+                                    long: location.longitude,
+                                    initLat: location.latitude,
+                                    initLong: location.longitude,
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
+                          ),
+                          text: 'Provide your location',
+                          icon: Icons.location_on_outlined,
+                        ),
                       ),
-                      text: 'Provide your location',
-                      icon: Icons.location_on_outlined,
                     );
                   }
 
@@ -241,8 +258,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   name: nameController.text.trim(),
                   pw: pwController.text,
                   confirmPw: confirmPwController.text,
-                  latitude: userLocation.lat,
-                  longitude: userLocation.long,
+                  latitude: type == UserType.owner ? userLocation.lat : 0,
+                  longitude: type == UserType.owner ? userLocation.long : 0,
                   type: type,
                 ),
                 text: 'Register',

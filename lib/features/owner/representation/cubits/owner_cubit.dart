@@ -20,7 +20,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
   Future<void> addVenueToDatabase({
     required String name,
     required double lat,
-    required double lon,
+    required double long,
     required String ownerId,
     required String ownerName,
     required int peopleMax,
@@ -41,7 +41,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
       await ownerRepo.addVenueToDatabase(
         name: name,
         lat: lat,
-        lon: lon,
+        long: long,
         startDate: startDate,
         endDate: endDate,
         time: time,
