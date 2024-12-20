@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class SettingsTextField extends StatelessWidget {
   final String? initialValue;
   final String? hintText;
+  final int? maxLines;
   final void Function(String)? onChanged;
   final bool isObscure;
   final TextEditingController? controller;
@@ -15,6 +16,7 @@ class SettingsTextField extends StatelessWidget {
     this.onChanged,
     this.isObscure = false,
     this.controller,
+    this.maxLines,
   });
 
   @override
@@ -26,6 +28,7 @@ class SettingsTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         obscureText: isObscure,
+        maxLines: maxLines ?? 1,
         style: TextStyle(
           color: GColors.royalBlue,
           fontSize: 17,

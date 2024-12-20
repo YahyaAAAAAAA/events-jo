@@ -58,10 +58,14 @@ pending:
     ✔ change email
     ✔ add delete account in privacy and security @done(24-12-20 07:16)
     //-----------------
-    ☐ change password
-    ☐ add change location in your account
-    ☐ help and support
-    ☐ start and end time for venue details
+    ✔ change password @started(24-12-20 16:07) @done(24-12-20 18:06) @lasted(1h59m45s)
+    ✔ separate pages for email password update @done(24-12-20 18:07)
+    ✔ update events name on name change @started(24-12-20 18:08) @done(24-12-20 19:30) @lasted(1h22m42s)
+    ✔ add change location in your account @started(24-12-20 19:30) @done(24-12-20 21:06) @lasted(1h36m55s)
+    ✔ help and support @done(24-12-20 21:06)
+    ✔ start and end time for venue details @done(24-12-20 22:11)
+    //-----------------
+    ☐ checkout page
     ☐ add license for owner page
     ☐ get done with settings ui for owners and users
     ☐ remove location button from admin panel for users

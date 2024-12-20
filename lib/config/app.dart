@@ -21,6 +21,8 @@ import 'package:events_jo/features/location/representation/cubits/location_cubit
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
 import 'package:events_jo/features/settings/data/firebase_settings_repo.dart';
+import 'package:events_jo/features/settings/representation/cubits/email/email_cubit.dart';
+import 'package:events_jo/features/settings/representation/cubits/password/password_cubit.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
@@ -95,6 +97,14 @@ class EventsJoApp extends StatelessWidget {
         //settings cubit
         BlocProvider(
           create: (context) => SettingsCubit(settingsRepo: settingsRepo),
+        ),
+        //email cubit
+        BlocProvider(
+          create: (context) => EmailCubit(settingsRepo: settingsRepo),
+        ),
+        //password cubit
+        BlocProvider(
+          create: (context) => PasswordCubit(settingsRepo: settingsRepo),
         ),
         //* -------------------Admin cubits below-------------------
         //approved venues cubit

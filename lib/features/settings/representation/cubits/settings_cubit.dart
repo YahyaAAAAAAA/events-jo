@@ -3,6 +3,7 @@ import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/settings/domain/settings_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_states.dart';
+import 'package:latlong2/latlong.dart';
 
 class SettingsCubit extends Cubit<SettingsStates> {
   final SettingsRepo settingsRepo;
@@ -49,25 +50,36 @@ class SettingsCubit extends Cubit<SettingsStates> {
     }
   }
 
-  //change user's email
-  Future<void> updateUserEmail(String newEmail, String oldEmail) async {
+  //change user's name
+  Future<void> updateUserLocation(
+    double initLat,
+    double initLong,
+    double newLat,
+    double newLong,
+  ) async {
     //loading...
     emit(SettingsLoading());
 
     try {
-      //change email
-      final email = await settingsRepo.updateUserEmail(newEmail, oldEmail);
+      //change name
+      final location = await settingsRepo.updateUserLocation(
+        initLat,
+        initLong,
+        newLat,
+        newLong,
+      );
 
-      if (email == newEmail) {
-        //verification email sent
-        emit(SettingsEmailVerificationSent(
-            'Email verification sent, please re-login if you verified your email'));
+      if (location != LatLng(initLat, initLong)) {
+        //update currentUser in UserManager
+        UserManager().currentUser?.latitude = location!.latitude;
+        UserManager().currentUser?.longitude = location!.longitude;
 
         //done
         emit(SettingsLoaded());
+      } else {
+        emit(SettingsError("Failed to update name"));
       }
     } catch (e) {
-      //error
       emit(SettingsError(e.toString()));
     }
   }

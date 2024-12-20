@@ -11,6 +11,7 @@ import 'package:events_jo/features/settings/representation/cubits/settings_cubit
 import 'package:events_jo/features/settings/representation/pages/account_page.dart';
 import 'package:events_jo/features/settings/representation/pages/notifications_page.dart';
 import 'package:events_jo/features/settings/representation/pages/privacy_page.dart';
+import 'package:events_jo/features/settings/representation/pages/support_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -104,9 +105,7 @@ class _SettingsPageForOwnersState extends State<SettingsPageForOwners> {
                   iconSize: 25,
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => PrivacyPage(
-                        settingsCubit: settingsCubit,
-                      ),
+                      builder: (context) => const PrivacyPage(),
                     ),
                   ),
                 ),
@@ -118,9 +117,10 @@ class _SettingsPageForOwnersState extends State<SettingsPageForOwners> {
                   text: 'Help and Support',
                   icon: CustomIcons.headphones,
                   iconSize: 25,
-                  onTap: () => GSnackBar.show(
-                    context: context,
-                    text: 'Coming Soon',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => SupportPage(),
+                    ),
                   ),
                 ),
 

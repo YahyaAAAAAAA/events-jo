@@ -89,11 +89,11 @@ class _SettingsPageState extends State<SettingsPage> {
                   text: 'Notifications',
                   icon: CustomIcons.bell,
                   iconSize: 25,
-                  onTap: () => () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => NotificationsPage(),
-                        ),
-                      ),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => NotificationsPage(),
+                    ),
+                  ),
                 ),
 
                 //divider
@@ -105,9 +105,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   iconSize: 25,
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => PrivacyPage(
-                        settingsCubit: settingsCubit,
-                      ),
+                      builder: (context) => const PrivacyPage(),
                     ),
                   ),
                 ),

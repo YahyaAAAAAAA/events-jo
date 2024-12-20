@@ -11,13 +11,11 @@ import 'package:flutter/material.dart';
 class VenueNameRatingAndLocation extends StatelessWidget {
   const VenueNameRatingAndLocation({
     super.key,
-    required this.padding,
     required this.weddingVenue,
     this.locationCubit,
     this.venueLocation,
   });
 
-  final double padding;
   final WeddingVenue weddingVenue;
   final LocationCubit? locationCubit;
   final EjLocation? venueLocation;
@@ -32,7 +30,7 @@ class VenueNameRatingAndLocation extends StatelessWidget {
           bottomRight: Radius.circular(12),
         ),
       ),
-      padding: EdgeInsets.all(padding),
+      padding: const EdgeInsets.all(12),
       child: Wrap(
         alignment: WrapAlignment.spaceBetween,
         crossAxisAlignment: WrapCrossAlignment.center,

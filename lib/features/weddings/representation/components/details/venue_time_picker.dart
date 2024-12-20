@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/material.dart';
 
 class VenueTimePicker extends StatelessWidget {
   final int minuteInterval;
-  final double padding;
   final String text;
   final bool use24hFormat;
 
@@ -25,7 +25,6 @@ class VenueTimePicker extends StatelessWidget {
 
   const VenueTimePicker({
     super.key,
-    required this.padding,
     required this.initTime,
     required this.maxTime,
     required this.minTime,
@@ -48,13 +47,16 @@ class VenueTimePicker extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: EdgeInsets.all(padding),
+        padding: const EdgeInsets.all(12),
         child: Wrap(
           alignment: WrapAlignment.spaceBetween,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Text(
-              text,
+              '$text time: ' +
+                  initTime!.hour
+                      .toString()
+                      .toTimeWithMinutes(initTime!.minute.toString()),
               style: TextStyle(
                 fontSize: 25,
                 color: GColors.royalBlue,

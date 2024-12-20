@@ -6,7 +6,6 @@ import 'package:events_jo/features/weddings/representation/components/venue_deta
 import 'package:flutter/material.dart';
 
 class VenuePeopleSlider extends StatelessWidget {
-  final double padding;
   final int min;
   final int max;
   final int numberOfExpectedPeople;
@@ -16,7 +15,6 @@ class VenuePeopleSlider extends StatelessWidget {
   const VenuePeopleSlider({
     super.key,
     required this.onChanged,
-    required this.padding,
     required this.numberOfExpectedPeople,
     required this.pricePerPerson,
     required this.max,
@@ -26,7 +24,7 @@ class VenuePeopleSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(padding),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: GColors.white,
         borderRadius: BorderRadius.circular(12),

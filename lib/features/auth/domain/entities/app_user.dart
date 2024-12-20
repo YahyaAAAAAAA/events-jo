@@ -5,9 +5,9 @@ class AppUser {
   String email;
   String name;
   UserType type;
-  final double latitude;
-  final double longitude;
-  final bool isOnline;
+  double latitude;
+  double longitude;
+  bool isOnline;
 
   AppUser({
     required this.uid,
