@@ -1,6 +1,7 @@
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/config/enums/user_type_enum.dart';
+import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/domain/repos/auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
   final AuthRepo authRepo;
-  AppUser? _currentUser;
 
   AuthCubit({required this.authRepo}) : super(AuthInitial());
 
-  // check if auth
+  //check if authenticated or not
   void checkAuth() async {
     //loading...
     emit(AuthLoading(message: "Welcome Back"));
@@ -20,15 +20,13 @@ class AuthCubit extends Cubit<AuthStates> {
     final AppUser? user = await authRepo.getCurrentUser();
 
     if (user != null) {
-      _currentUser = user;
+      UserManager().currentUser = user;
+
       emit(Authenticated(user));
     } else {
       emit(Unauthenticated());
     }
   }
-
-  //get current user
-  AppUser? get currentUser => _currentUser;
 
   //login with email+pass
   Future<void> login(
@@ -57,7 +55,8 @@ class AuthCubit extends Cubit<AuthStates> {
       final user = await authRepo.loginWithEmailPassword(email, pw);
 
       if (user != null) {
-        _currentUser = user;
+        UserManager().currentUser = user;
+
         emit(Authenticated(user));
       } else {
         emit(Unauthenticated());
@@ -103,8 +102,9 @@ class AuthCubit extends Cubit<AuthStates> {
           name, email, pw, latitude, longitude, type);
 
       if (user != null) {
+        UserManager().currentUser = user;
+
         //done
-        _currentUser = user;
         emit(Authenticated(user));
       } else {
         //user doesn't exist

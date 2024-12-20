@@ -17,37 +17,36 @@ class SettingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: iconSize,
+            color: GColors.royalBlue,
+          ),
+          const SizedBox(width: 20),
+          Text(
+            text,
+            style: TextStyle(
               color: GColors.royalBlue,
-              width: 10,
+              fontSize: 20,
             ),
           ),
-          borderRadius: BorderRadius.circular(12),
-          color: GColors.white,
-        ),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: iconSize,
+          const Spacer(),
+          IconButton(
+            onPressed: onTap,
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(Colors.transparent),
+              padding: WidgetStateProperty.all(EdgeInsets.zero),
+            ),
+            icon: Icon(
+              Icons.arrow_forward_ios_rounded,
               color: GColors.royalBlue,
             ),
-            const SizedBox(width: 10),
-            Text(
-              text,
-              style: TextStyle(
-                color: GColors.royalBlue,
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

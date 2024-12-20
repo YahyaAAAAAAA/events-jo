@@ -1,4 +1,3 @@
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/home/presentation/components/app_bar_button.dart';
@@ -24,7 +23,6 @@ class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icons.arrow_back_ios_new_rounded,
           size: 25,
         ),
-        centerTitle: true,
         title: FittedBox(
           child: Text(
             'Wedding Venues in Jordan',
@@ -34,13 +32,6 @@ class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
-        actions: [
-          AppBarButton(
-            onPressed: () {},
-            icon: CustomIcons.menu,
-            size: 20,
-          ),
-        ],
         leadingWidth: 90,
         toolbarHeight: 70,
       ),

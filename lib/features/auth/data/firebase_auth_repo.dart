@@ -61,12 +61,21 @@ class FirebaseAuthRepo implements AuthRepo {
       //fetch user's longitude
       final longitude = await getCurrentUserLongitude(type);
 
+      //update email in firestore
+      //incase user changed email, update the field
+      await firebaseFirestore
+          .collection('${userTypeToString(type!)}s')
+          .doc(userCredential.user!.uid)
+          .update(
+        {'email': email},
+      );
+
       //create user
       AppUser user = AppUser(
         uid: userCredential.user!.uid,
         email: email,
         name: name ?? '',
-        type: type!,
+        type: type,
         isOnline: true,
         latitude: latitude ?? 0,
         longitude: longitude ?? 0,
@@ -203,21 +212,21 @@ class FirebaseAuthRepo implements AuthRepo {
     final ownersCollection = FirebaseFirestore.instance.collection('owners');
     final adminsCollection = FirebaseFirestore.instance.collection('admins');
 
-    // Check if the document exists in the "users" collection
+    //check if the document exists in the "users" collection
     final userDoc = await usersCollection.doc(firebaseUser.uid).get();
 
     if (userDoc.exists) {
       return userDoc['name'];
     }
 
-    // Check if the document exists in the "owners" collection
+    //check if the document exists in the "owners" collection
     final ownerDoc = await ownersCollection.doc(firebaseUser.uid).get();
 
     if (ownerDoc.exists) {
       return ownerDoc['name'];
     }
 
-    // Check if the document exists in the "owners" collection
+    //check if the document exists in the "owners" collection
     final adminDoc = await adminsCollection.doc(firebaseUser.uid).get();
 
     if (adminDoc.exists) {

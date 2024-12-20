@@ -20,6 +20,8 @@ import 'package:events_jo/features/location/data/geolocator_location_repo.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/owner_cubit.dart';
+import 'package:events_jo/features/settings/data/firebase_settings_repo.dart';
+import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
@@ -51,6 +53,7 @@ class EventsJoApp extends StatelessWidget {
   final locationRepo = GeolocatorLocationRepo();
   final ownerRepo = FirebaseOwnerRepo();
   final adminRepo = FirebaseAdminRepo();
+  final settingsRepo = FirebaseSettingsRepo();
 
   EventsJoApp({super.key});
 
@@ -88,6 +91,10 @@ class EventsJoApp extends StatelessWidget {
         //owner cubit
         BlocProvider(
           create: (context) => OwnerCubit(ownerRepo: ownerRepo),
+        ),
+        //settings cubit
+        BlocProvider(
+          create: (context) => SettingsCubit(settingsRepo: settingsRepo),
         ),
         //* -------------------Admin cubits below-------------------
         //approved venues cubit

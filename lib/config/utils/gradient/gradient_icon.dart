@@ -73,7 +73,7 @@ class _GradientIconPainter extends CustomPainter {
     final yCenter = (size.height - textPainter.height) / 2;
 
     //create an offset for the icon's position within the canvas
-    final offset = offsets ?? Offset(xCenter, yCenter + 8);
+    final offset = offsets ?? Offset(xCenter, yCenter);
 
     //paint the icon on the canvas at the specified offset
     textPainter.paint(canvas, offset);

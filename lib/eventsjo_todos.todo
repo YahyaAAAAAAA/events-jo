@@ -50,11 +50,24 @@ pending:
     //-----------------
     ✔ remove location from user @started(24-12-18 17:20) @done(24-12-18 18:26) @lasted(1h6m37s)
     ✔ add search by city instead @started(24-12-18 19:13) @done(24-12-19 00:40) @lasted(5h27m23s)
+    //-----------------
+    ✔ settings page ui fix @done(24-12-20 03:48)
+    ✔ account settings @done(24-12-20 04:45)
+    ✔ notifications prototype @done(24-12-20 04:45)
+    ✔ privacy and security @started(24-12-20 04:46) @done(24-12-20 06:55) @lasted(2h9m26s)
+    ✔ change email
+    ✔ add delete account in privacy and security @done(24-12-20 07:16)
+    //-----------------
+    ☐ change password
+    ☐ add change location in your account
+    ☐ help and support
     ☐ start and end time for venue details
     ☐ add license for owner page
     ☐ get done with settings ui for owners and users
     ☐ remove location button from admin panel for users
     //-----------------
+    ☐ delete venues when owner is changed to user
+    ☐ delete venues on account delete
     ☐ owner venues feature (venues by owner id,details,update)
     ☐ beautify numbers
 

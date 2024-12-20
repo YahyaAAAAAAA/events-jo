@@ -2,9 +2,9 @@ import 'package:events_jo/config/enums/user_type_enum.dart';
 
 class AppUser {
   final String uid;
-  final String email;
-  final String name;
-  final UserType type;
+  String email;
+  String name;
+  UserType type;
   final double latitude;
   final double longitude;
   final bool isOnline;

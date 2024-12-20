@@ -1,7 +1,11 @@
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/config/utils/global_snack_bar.dart';
+import 'package:events_jo/config/utils/gradient/gradient_icon.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
@@ -35,7 +39,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
   void initState() {
     super.initState();
 
-    user = context.read<AuthCubit>().currentUser;
+    user = UserManager().currentUser;
 
     animatedController.start();
   }
@@ -67,13 +71,27 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
 
                 //welcome text
                 Center(
-                  child: GradientText(
-                    "Welcome ${user!.name}",
-                    gradient: GColors.logoGradient,
-                    style: TextStyle(
-                      color: GColors.poloBlue,
-                      fontSize: 30,
-                    ),
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      //icon
+                      GradientIcon(
+                        icon: Icons.waving_hand_outlined,
+                        gradient: GColors.logoGradient,
+                        size: 40,
+                      ),
+
+                      const SizedBox(width: 10),
+
+                      //user name
+                      GradientText(
+                        "Welcome ${user!.name.toCapitalized}",
+                        gradient: GColors.logoGradient,
+                        style: const TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
@@ -139,14 +157,20 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                     runSpacing: 10,
                     children: [
                       HomeCard(
-                        onPressed: () {},
+                        onPressed: () => GSnackBar.show(
+                          context: context,
+                          text: 'Coming soon',
+                        ),
                         controller: animatedController,
                         text: 'Farms',
                         icon: CustomIcons.farm,
                         colors: GColors.farmCardGradient,
                       ),
                       HomeCard(
-                        onPressed: () {},
+                        onPressed: () => GSnackBar.show(
+                          context: context,
+                          text: 'Coming soon',
+                        ),
                         controller: animatedController,
                         text: 'Football Courts',
                         icon: CustomIcons.football,

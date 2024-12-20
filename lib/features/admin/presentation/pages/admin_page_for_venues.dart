@@ -6,7 +6,7 @@ import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/ad
 import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venues.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +33,7 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
   void initState() {
     super.initState();
 
-    user = context.read<AuthCubit>().currentUser;
+    user = UserManager().currentUser;
 
     //get cubit
     adminUnapproveCubit = context.read<AdminUnapproveCubit>();
