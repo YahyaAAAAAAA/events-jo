@@ -10,36 +10,40 @@ class FirebaseAuthRepo implements AuthRepo {
 
   @override
   Future<AppUser?> getCurrentUser() async {
-    //get current user
-    final firebaseUser = firebaseAuth.currentUser;
+    try {
+      //get current user
+      final firebaseUser = firebaseAuth.currentUser;
 
-    //fetch user's name
-    final name = await getCurrentUserName();
+      //fetch user's name
+      final name = await getCurrentUserName();
 
-    //fetch user's type
-    final type = await getUserType();
+      //fetch user's type
+      final type = await getUserType();
 
-    //fetch user's latitude
-    final latitude = await getCurrentUserLatitude(type);
+      //fetch user's latitude
+      final latitude = await getCurrentUserLatitude(type);
 
-    //fetch user's longitude
-    final longitude = await getCurrentUserLongitude(type);
+      //fetch user's longitude
+      final longitude = await getCurrentUserLongitude(type);
 
-    //no user logged in
-    if (firebaseUser == null) {
-      return null;
+      //no user logged in
+      if (firebaseUser == null) {
+        return null;
+      }
+
+      //user exists
+      return AppUser(
+        uid: firebaseUser.uid,
+        email: firebaseUser.email!,
+        name: name ?? '',
+        type: type!,
+        isOnline: true,
+        latitude: latitude ?? 0,
+        longitude: longitude ?? 0,
+      );
+    } catch (e) {
+      throw Exception('Login Failed $e');
     }
-
-    //user exists
-    return AppUser(
-      uid: firebaseUser.uid,
-      email: firebaseUser.email!,
-      name: name ?? '',
-      type: type!,
-      isOnline: true,
-      latitude: latitude ?? 0,
-      longitude: longitude ?? 0,
-    );
   }
 
   @override

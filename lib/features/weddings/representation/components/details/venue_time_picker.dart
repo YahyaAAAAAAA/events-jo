@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:events_jo/config/extensions/string_extensions.dart';
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +13,7 @@ class VenueTimePicker extends StatelessWidget {
   final Color buttonColor;
   final Color backgroundColor;
   final Color timeColor;
+  final IconData icon;
 
   final DateTime? initTime;
   final DateTime? minTime;
@@ -31,6 +31,7 @@ class VenueTimePicker extends StatelessWidget {
     required this.backgroundColor,
     required this.buttonColor,
     required this.timeColor,
+    required this.icon,
     required this.minuteInterval,
     required this.use24hFormat,
     required this.onDateTimeChanged,
@@ -107,18 +108,6 @@ class VenueTimePicker extends StatelessWidget {
                                   backgroundColor: backgroundColor,
                                   mode: CupertinoDatePickerMode.time,
                                   onDateTimeChanged: onDateTimeChanged,
-                                  //temp if (widget.minTime != null &&
-                                  //     dateTime
-                                  //         .isBefore(widget.minTime!)) {
-                                  //   selectedDateTimeSpinner =
-                                  //       widget.minTime!;
-                                  // } else if (widget.maxTime != null &&
-                                  //     dateTime.isAfter(widget.maxTime!)) {
-                                  //   selectedDateTimeSpinner =
-                                  //       widget.maxTime!;
-                                  // } else {
-                                  //   selectedDateTimeSpinner = dateTime;
-                                  // }
                                 ),
                               ),
                             ),
@@ -169,30 +158,13 @@ class VenueTimePicker extends StatelessWidget {
                   },
                 );
               },
-              icon: CustomIcons.calendar_clock,
+              icon: icon,
               iconSize: 30,
               padding: 18,
             ),
           ],
         ),
       ),
-      // child: TimePickerSpinnerPopUp(
-      //   initTime: DateTime(0, 0, 0, weddingVenue.time[0], 0),
-      //   minTime: DateTime(0, 0, 0, weddingVenue.time[0]),
-      //   maxTime: DateTime(0, 0, 0, weddingVenue.time[1]),
-      //   backgroundColor: GColors.whiteShade3,
-      //   minuteInterval: 30,
-      //   textStyle: TextStyle(color: GColors.royalBlue),
-      //   confirmTextStyle: TextStyle(color: GColors.royalBlue),
-      //   cancelTextStyle: TextStyle(color: GColors.royalBlue),
-      //   radius: 12,
-      //   padding: EdgeInsets.all(padding),
-      //   paddingHorizontalOverlay: BorderSide.strokeAlignCenter,
-      //   use24hFormat: false,
-      //   cancelText: 'Cancel',
-      //   confirmText: 'OK',
-      //   onChange: onChange,
-      // ),
     );
   }
 }

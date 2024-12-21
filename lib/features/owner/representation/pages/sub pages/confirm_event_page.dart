@@ -1,5 +1,6 @@
 import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/owner/representation/components/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/owner_confirmation_display_row.dart';
@@ -13,6 +14,7 @@ class ConfirmEventPage extends StatelessWidget {
   final void Function()? showDrinks;
   final void Function()? showMap;
   final void Function()? showImages;
+  final void Function()? showLicense;
   final EventType eventType;
   final String name;
   final DateTimeRange? range;
@@ -35,6 +37,7 @@ class ConfirmEventPage extends StatelessWidget {
     this.showImages,
     this.showMeals,
     this.showDrinks,
+    this.showLicense,
   });
 
   @override
@@ -83,7 +86,6 @@ class ConfirmEventPage extends StatelessWidget {
             //summary list
             Container(
               padding: const EdgeInsets.all(8.0),
-              constraints: const BoxConstraints(maxHeight: 400),
               decoration: BoxDecoration(
                 color: GColors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -97,6 +99,7 @@ class ConfirmEventPage extends StatelessWidget {
               ),
               child: ListView(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   //type
                   OwnerConfirmationDisplayRow(
@@ -164,7 +167,7 @@ class ConfirmEventPage extends StatelessWidget {
 
                   //images
                   OwnerConfirmationDisplayRow(
-                    mainText: 'Images:   ',
+                    mainText: 'Images:    ',
                     isText: false,
                     subText: '',
                     icon: Icons.image,
@@ -173,9 +176,20 @@ class ConfirmEventPage extends StatelessWidget {
 
                   localDivider(),
 
+                  //images
+                  OwnerConfirmationDisplayRow(
+                    mainText: 'License:   ',
+                    isText: false,
+                    subText: '',
+                    icon: CustomIcons.license,
+                    onPressed: showLicense,
+                  ),
+
+                  localDivider(),
+
                   //location
                   OwnerConfirmationDisplayRow(
-                    mainText: 'Location: ',
+                    mainText: 'Location:  ',
                     isText: false,
                     subText: '',
                     onPressed: showMap,

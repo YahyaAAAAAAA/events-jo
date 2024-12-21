@@ -24,7 +24,7 @@ class _OwnerAppBarState extends State<OwnerAppBar> {
 
     //generate list
     list = List.generate(
-      10,
+      11,
       (index) {
         if (index == 0) {
           return AnimatedContainer(

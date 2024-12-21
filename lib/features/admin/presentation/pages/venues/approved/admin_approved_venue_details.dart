@@ -103,6 +103,9 @@ class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
                   .showDrinksDialogPreview(context, drinks),
               showImages: () => widget.adminApproveCubit
                   .showImagesDialogPreview(context, venue.pics),
+              showLicense: () => widget.adminApproveCubit
+                  .showImagesDialogPreview(
+                      context, ['https://i.ibb.co/bb3jstn/license.jpg']),
               range: DateTimeRange(
                 start: DateTime(
                   venue.startDate[0],

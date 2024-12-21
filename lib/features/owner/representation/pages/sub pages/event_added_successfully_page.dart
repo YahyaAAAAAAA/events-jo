@@ -20,7 +20,7 @@ class EventAddedSuccessfullyPage extends StatelessWidget {
       child: ListView(
         children: [
           const OwnerPageBar(),
-          const SizedBox(height: 100),
+          const SizedBox(height: 200),
           OwnerButton(
             text: eventType == EventType.venue
                 ? 'Your Venue has been sent for admin approval'

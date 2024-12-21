@@ -65,13 +65,13 @@ pending:
     ✔ help and support @done(24-12-20 21:06)
     ✔ start and end time for venue details @done(24-12-20 22:11)
     //-----------------
-    ☐ checkout page
-    ☐ add license for owner page
-    ☐ get done with settings ui for owners and users
-    ☐ remove location button from admin panel for users
+    ✔ checkout page @done(24-12-21 19:12)
+    ✔ add license for owner page @done(24-12-21 19:46)
+    ✔ remove location button from admin panel for users @done(24-12-21 20:01)
     //-----------------
     ☐ delete venues when owner is changed to user
     ☐ delete venues on account delete
+    ☐ add license upload to server :D
     ☐ owner venues feature (venues by owner id,details,update)
     ☐ beautify numbers
 

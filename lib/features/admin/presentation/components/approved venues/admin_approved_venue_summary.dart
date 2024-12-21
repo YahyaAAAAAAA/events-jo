@@ -1,4 +1,5 @@
 import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_confirmation_display_row.dart';
@@ -10,6 +11,7 @@ class AdminApprovedVenueSummary extends StatelessWidget {
   final void Function()? showMeals;
   final void Function()? showDrinks;
   final void Function()? showMap;
+  final void Function()? showLicense;
   final void Function()? showImages;
   final void Function()? onSuspendPressed;
   final String venueName;
@@ -33,6 +35,7 @@ class AdminApprovedVenueSummary extends StatelessWidget {
     this.showImages,
     this.showMeals,
     this.showDrinks,
+    this.showLicense,
     this.onSuspendPressed,
   });
 
@@ -164,7 +167,7 @@ class AdminApprovedVenueSummary extends StatelessWidget {
 
                     //images
                     AdminConfirmationDisplayRow(
-                      mainText: 'Images:   ',
+                      mainText: 'Images:    ',
                       isText: false,
                       subText: '',
                       icon: Icons.image,
@@ -173,9 +176,20 @@ class AdminApprovedVenueSummary extends StatelessWidget {
 
                     localDivider(),
 
+                    //license
+                    AdminConfirmationDisplayRow(
+                      mainText: 'License:   ',
+                      isText: false,
+                      subText: '',
+                      icon: CustomIcons.license,
+                      onPressed: showLicense,
+                    ),
+
+                    localDivider(),
+
                     //location
                     AdminConfirmationDisplayRow(
-                      mainText: 'Location: ',
+                      mainText: 'Location:  ',
                       isText: false,
                       subText: '',
                       onPressed: showMap,

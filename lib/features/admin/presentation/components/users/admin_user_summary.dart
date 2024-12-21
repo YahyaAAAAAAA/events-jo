@@ -82,16 +82,6 @@ class AdminUserSummary extends StatelessWidget {
 
                   //id
                   AdminConfirmationDisplayRow(mainText: 'Id: ', subText: id),
-
-                  localDivider(),
-
-                  //location
-                  AdminConfirmationDisplayRow(
-                    mainText: 'Location: ',
-                    isText: false,
-                    subText: '',
-                    onPressed: showMap,
-                  ),
                 ],
               ),
             ),

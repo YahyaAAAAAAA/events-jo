@@ -14,6 +14,10 @@ class CustomIcons {
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData messages_question =
       IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData license =
+      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData calendar =
+      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData settings =
       IconData(0xe82f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData farm =

@@ -17,13 +17,13 @@ class OwnerPageNavigationBar extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(maxWidth: 450),
       decoration: BoxDecoration(
-        borderRadius: index != 9
+        borderRadius: index != 10
             ? const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               )
             : null,
-        boxShadow: index != 9
+        boxShadow: index != 10
             ? [
                 BoxShadow(
                   color: GColors.royalBlue.withOpacity(0.5),
@@ -81,7 +81,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
             ],
           ),
           //next button
-          index != 9
+          index != 10
               ? Row(
                   children: [
                     Text(

@@ -130,6 +130,9 @@ class _AdminUnapprovedVenueDetailsState
                   .showDrinksDialogPreview(context, drinks),
               showImages: () => widget.adminUnapproveCubit
                   .showImagesDialogPreview(context, venue.pics),
+              showLicense: () => widget.adminUnapproveCubit
+                  .showImagesDialogPreview(
+                      context, ['https://i.ibb.co/bb3jstn/license.jpg']),
               range: DateTimeRange(
                 start: DateTime(
                   venue.startDate[0],

@@ -17,6 +17,7 @@ import 'package:events_jo/features/owner/representation/pages/sub%20pages/select
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_name_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_event_type_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_images_page.dart';
+import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_license_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_people_range.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_date_page.dart';
 import 'package:events_jo/features/owner/representation/pages/sub%20pages/select_range_time_page.dart';
@@ -72,6 +73,9 @@ class _OwnerPageState extends State<OwnerPage> {
 
   //images list
   List<XFile> images = [];
+
+  //license
+  List<XFile> license = [];
 
   //people
   TextEditingController peopleMinController = TextEditingController();
@@ -192,6 +196,27 @@ class _OwnerPageState extends State<OwnerPage> {
                     //user confirms -> clear old list and add new images
                     images.clear();
                     images.addAll(selectedImages);
+
+                    //update
+                    setState(() {});
+                  },
+                ),
+
+                //license
+                SelectLicensePage(
+                  images: license,
+                  eventType: eventType,
+                  onPressed: () async {
+                    //pick images
+                    final selectedLicense =
+                        await ImagePicker().pickMultiImage(limit: 2);
+
+                    //save old license
+                    if (selectedLicense.isEmpty) return;
+
+                    //save new license
+                    license.clear();
+                    license.add(selectedLicense.first);
 
                     //update
                     setState(() {});
@@ -372,8 +397,17 @@ class _OwnerPageState extends State<OwnerPage> {
                         return;
                       }
                     }
-                    //if no date range provided
+
                     if (index == 4) {
+                      if (license.isEmpty) {
+                        GSnackBar.show(
+                            context: context, text: 'Please provide a license');
+                        return;
+                      }
+                    }
+
+                    //if no date range provided
+                    if (index == 5) {
                       if (range == null) {
                         GSnackBar.show(
                             context: context,
@@ -383,7 +417,7 @@ class _OwnerPageState extends State<OwnerPage> {
                     }
 
                     //if no time range provided
-                    if (index == 5) {
+                    if (index == 6) {
                       if (tempValueForTime == 0) {
                         GSnackBar.show(
                             context: context,
@@ -393,7 +427,7 @@ class _OwnerPageState extends State<OwnerPage> {
                     }
 
                     //if no people price or range provided
-                    if (index == 6) {
+                    if (index == 7) {
                       //checks if fields are empty
                       if (peoplePriceController.text.isEmpty) {
                         GSnackBar.show(
@@ -423,7 +457,7 @@ class _OwnerPageState extends State<OwnerPage> {
                     }
 
                     //last page
-                    if (index == 9) {
+                    if (index == 10) {
                       return;
                     }
 
@@ -482,6 +516,8 @@ class _OwnerPageState extends State<OwnerPage> {
                 userLocation: userLocation),
             showImages: () =>
                 ownerCubit.showImagesDialogPreview(context, images, kIsWeb),
+            showLicense: () =>
+                ownerCubit.showImagesDialogPreview(context, license, kIsWeb),
             onPressed: () async {
               //reset urls for images
               List<String> urls = [];

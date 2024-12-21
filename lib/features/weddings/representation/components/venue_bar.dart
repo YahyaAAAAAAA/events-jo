@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 class VenueBar extends StatelessWidget {
   final void Function()? onPressedNext;
   final void Function()? onPressedBack;
-  final int index;
 
   const VenueBar({
     super.key,
     required this.onPressedNext,
     required this.onPressedBack,
-    required this.index,
   });
 
   @override

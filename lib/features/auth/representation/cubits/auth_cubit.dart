@@ -14,16 +14,21 @@ class AuthCubit extends Cubit<AuthStates> {
 
   //check if authenticated or not
   void checkAuth() async {
-    //loading...
-    emit(AuthLoading(message: "Welcome Back"));
+    try {
+      //loading...
+      emit(AuthLoading(message: "Welcome Back"));
 
-    final AppUser? user = await authRepo.getCurrentUser();
+      final AppUser? user = await authRepo.getCurrentUser();
 
-    if (user != null) {
-      UserManager().currentUser = user;
+      if (user != null) {
+        UserManager().currentUser = user;
 
-      emit(Authenticated(user));
-    } else {
+        emit(Authenticated(user));
+      } else {
+        emit(Unauthenticated());
+      }
+    } catch (e) {
+      emit(AuthError(e.toString()));
       emit(Unauthenticated());
     }
   }

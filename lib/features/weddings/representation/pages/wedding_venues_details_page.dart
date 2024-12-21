@@ -1,10 +1,12 @@
 import 'package:events_jo/config/packages/lazy%20indexed%20stack/lazy_indexed_stack.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/representation/components/details/venue_details_summary.dart';
 import 'package:events_jo/features/weddings/representation/components/drink_card.dart';
 import 'package:events_jo/features/weddings/representation/components/empty_card.dart';
 import 'package:events_jo/features/weddings/representation/components/meal_card.dart';
@@ -58,6 +60,8 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   late int numberOfExpectedPeople;
 
   int index = 0;
+
+  String selectedPaymentMethod = 'Credit Card';
 
   @override
   void initState() {
@@ -123,6 +127,16 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                 final venue = state.data.venue;
                 final meals = state.data.meals;
                 final drinks = state.data.drinks;
+                final selectedMeals = meals
+                    .where(
+                      (element) => element.isChecked,
+                    )
+                    .toList();
+                final selectedDrinks = drinks
+                    .where(
+                      (element) => element.isChecked,
+                    )
+                    .toList();
 
                 return LazyIndexedStack(
                   index: index,
@@ -174,6 +188,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                         //* time
                         VenueTimePicker(
                           text: 'Start',
+                          icon: CustomIcons.calendar,
                           backgroundColor: GColors.whiteShade3,
                           buttonColor: GColors.white,
                           timeColor: GColors.royalBlue,
@@ -200,6 +215,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                         //* time
                         VenueTimePicker(
                           text: 'Finish',
+                          icon: CustomIcons.calendar_clock,
                           backgroundColor: GColors.whiteShade3,
                           buttonColor: GColors.white,
                           timeColor: GColors.royalBlue,
@@ -329,37 +345,45 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
                         //* payment
                         VenueBar(
-                          onPressedNext: () {
-                            setState(() {
-                              if (index == 1) {
-                                return;
-                              }
-
-                              index++;
-                            });
-                          },
-                          onPressedBack: () {
-                            setState(
-                              () {
-                                if (index == 0) {
-                                  Navigator.of(context).pop();
-                                  return;
-                                }
-
-                                index--;
-                              },
-                            );
-                          },
-                          index: 0,
+                          onPressedNext: () => setState(() => index = 1),
+                          onPressedBack: () => setState(
+                            () => Navigator.of(context).pop(),
+                          ),
                         ),
+
+                        const SizedBox(height: 20),
                       ],
                     ),
 
                     //* checkout ,total price
-                    ListView(
-                      padding: const EdgeInsets.all(12),
-                      children: [],
-                    )
+                    VenueDetailsSummary(
+                      venue: venue,
+                      selectedDate: selectedDate,
+                      selectedStartTime: selectedStartTime,
+                      selectedEndTime: selectedEndTime,
+                      selectedMeals: selectedMeals,
+                      selectedDrinks: selectedDrinks,
+                      selectedPaymentMethod: selectedPaymentMethod,
+                      total: () {
+                        double total = 0;
+                        //calculate total meals
+                        for (int i = 0; i < selectedMeals.length; i++) {
+                          total += selectedMeals[i].calculatedPrice;
+                        }
+                        //calculate total drinks
+                        for (int i = 0; i < selectedDrinks.length; i++) {
+                          total += selectedDrinks[i].calculatedPrice;
+                        }
+                        //calculate total price for people
+                        total += (numberOfExpectedPeople * venue.peoplePrice);
+
+                        return total;
+                      },
+                      onPressedNext: () => setState(() => index = 1),
+                      onPressedBack: () => setState(() => index = 0),
+                      onChanged: (value) => setState(
+                          () => selectedPaymentMethod = value.toString()),
+                    ),
                   ],
                 );
               } else {
@@ -372,12 +396,16 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
     );
   }
 
-  Text venueText(String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 17,
-        color: GColors.poloBlue,
+  Widget venueText(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: GColors.royalBlue,
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
