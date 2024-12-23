@@ -43,26 +43,56 @@
 
 
 
-<h2 align="left">Introduction</h2>
+<h2 align="left">👋 Introduction</h2>
 
 ###
 
-<p align="left">EventsJo a cross-platform mobile app about booking various types of places.</p>
+<p align="left">EventsJo is a cross-platform mobile application designed to simplify the process of booking venues for various events in Jordan, including weddings, farm gatherings, and football courts.<br> Built using Flutter and powered by Firebase, EventsJo provides a seamless experience for users to browse, book, and manage event reservations.</p>
 
 ###
 
-<h2 align="left">Categories</h2>
+<h2 align="left">📱 Key Features</h2>
 
 ###
 
-<p align="left">The user can choose from:<br><br>• Wedding Venues.<br>• Farms.<br>• Football Courts.</p>
+<p align="left">• Venue Booking: Reserve wedding halls, farms, and football courts.<br>• User Authentication: Secure login and registration system.<br>• Payment Options: Choose between cash payments or secure credit card transactions.<br>• Notifications: Receive real-time updates and reminders for upcoming events.<br>• Event Tracking: Track scheduled and past reservations.</p>
 
 ###
 
-<h2 align="left">Technologies Used</h2>
+<h2 align="left">🔨 Tech Stack</h2>
 
-<p align="left">EventsJo is developed using the framework Flutter with Dart as the programming language and with Bloc as a state management and Firebase as a the database.</p>
+<p align="left">• Frontend: Flutter.<br>• Backend: Firebase (Firestore, Authentication, Cloud Functions).<br>• Payment Integration: Stripe</p>
+
+<h2 align="left">🚀 Download EventsJo</h2>
 
 ###
+
+<div align="left">
+<a href="https://github.com/YahyaAAAAAAA/Squareo/releases/tag/v1.1.0" style="text-decoration: none">
+  <img src="assets/git_images/android.png" height="100" alt="download android"/>
+</a>
+  
+<a href="https://github.com/YahyaAAAAAAA/Squareo/releases/tag/v1.1.0-windows ">
+  <img src="assets/git_images/windows.png" height="100" alt="download windows"/>
+</a>
+
+<a href="https://squareoweb.github.io/" style="text-decoration: none">
+  <img src="assets/git_images/web.png" height="100" alt="download web"/>
+</a>
+
+</div>
+
+###
+
+<h2 align="left">📃 License</h2>
+
+<p align="left">This project is licensed under the MIT License.</p>
+
+###
+
+<h2 align="left">📬 Contact</h2>
+
+<p align="left">• Email: yahya.amarneh73@gmail.com</p>
+
 
 
