@@ -1,6 +1,6 @@
 import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
-import 'package:events_jo/features/settings/domain/settings_repo.dart';
+import 'package:events_jo/features/settings/domain/repos/settings_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_states.dart';
 import 'package:latlong2/latlong.dart';

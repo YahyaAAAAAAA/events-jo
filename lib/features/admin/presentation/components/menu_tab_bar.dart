@@ -1,9 +1,9 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/tab_item.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_states.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

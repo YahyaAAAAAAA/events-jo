@@ -1,8 +1,8 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_app_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/menu_tab_bar.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venues.dart';
 import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';

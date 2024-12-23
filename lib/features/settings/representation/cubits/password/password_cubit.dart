@@ -1,4 +1,4 @@
-import 'package:events_jo/features/settings/domain/settings_repo.dart';
+import 'package:events_jo/features/settings/domain/repos/settings_repo.dart';
 import 'package:events_jo/features/settings/representation/cubits/password/password_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

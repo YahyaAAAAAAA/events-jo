@@ -8,7 +8,7 @@ import 'package:events_jo/features/admin/presentation/components/dialogs/admin_a
 import 'package:events_jo/features/admin/presentation/components/dialogs/admin_drinks_dialog_preview.dart';
 import 'package:events_jo/features/admin/presentation/components/dialogs/admin_images_dialog_preview.dart';
 import 'package:events_jo/features/admin/presentation/components/dialogs/admin_meals_dialog_preview.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_states.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';

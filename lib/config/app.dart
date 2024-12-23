@@ -9,8 +9,8 @@ import 'package:events_jo/features/admin/presentation/cubits/single%20user/admin
 import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/users%20count/admin_users_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/users%20online/admin_users_online_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/approve/admin_approve_cubit.dart';
-import 'package:events_jo/features/admin/presentation/cubits/venues/unapprove/admin_unapprove_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/auth/data/firebase_auth_repo.dart';
 import 'package:events_jo/features/auth/representation/components/auth_error_card.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';

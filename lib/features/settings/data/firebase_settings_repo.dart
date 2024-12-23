@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/config/enums/user_type_enum.dart';
-import 'package:events_jo/features/settings/domain/settings_repo.dart';
+import 'package:events_jo/features/settings/domain/repos/settings_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:latlong2/latlong.dart';
 

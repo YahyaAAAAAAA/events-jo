@@ -22,7 +22,7 @@ class FirebaseAdminRepo implements AdminRepo {
   @override
   Stream<QuerySnapshot<Map<String, dynamic>>>
       getUnapprovedWeddingVenuesStream() {
-    //notifies of query results at this 'venues' collection
+    //notifies of query results at 'venues' collection
     return firebaseFirestore
         .collection('venues')
         .where('isApproved', isEqualTo: false)
@@ -31,7 +31,7 @@ class FirebaseAdminRepo implements AdminRepo {
 
   @override
   Stream<QuerySnapshot<Map<String, dynamic>>> getApprovedWeddingVenuesStream() {
-    //notifies of query results at this 'venues' collection
+    //notifies of query results at 'venues' collection
     return firebaseFirestore
         .collection('venues')
         .where('isApproved', isEqualTo: true)

@@ -69,10 +69,15 @@ pending:
     ✔ add license for owner page @done(24-12-21 19:46)
     ✔ remove location button from admin panel for users @done(24-12-21 20:01)
     //-----------------
+    ☐ unapproved,approved venues stream by id @started(24-12-22 19:21)
+    ☐ unapproved no details, only tracking
+    ☐ approved venues details stream 
+    ☐ owner venues feature (venues by owner id,details,update)
+    //-----------------
+    ☐ add coming soon for farms, courts in owner page
     ☐ delete venues when owner is changed to user
     ☐ delete venues on account delete
     ☐ add license upload to server :D
-    ☐ owner venues feature (venues by owner id,details,update)
     ☐ beautify numbers
 
 
