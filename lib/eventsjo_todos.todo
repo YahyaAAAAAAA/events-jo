@@ -69,8 +69,8 @@ pending:
     ✔ add license for owner page @done(24-12-21 19:46)
     ✔ remove location button from admin panel for users @done(24-12-21 20:01)
     //-----------------
-    ☐ unapproved,approved venues stream by id @started(24-12-22 19:21)
-    ☐ unapproved no details, only tracking
+    ✔ unapproved,approved venues stream by id @done(24-12-25 01:06)
+    ✔ unapproved no details, only tracking @done(24-12-25 01:06)
     ☐ approved venues details stream 
     ☐ owner venues feature (venues by owner id,details,update)
     //-----------------

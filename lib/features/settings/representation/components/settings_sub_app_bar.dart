@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class SettingsSubAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final PreferredSize? bottom;
 
   const SettingsSubAppBar({
     super.key,
     this.title = '       ',
+    this.bottom,
   });
 
   @override
@@ -15,11 +17,13 @@ class SettingsSubAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.transparent,
+      bottom: bottom,
       leading: AppBarButton(
         onPressed: () => Navigator.of(context).pop(),
         icon: Icons.arrow_back_ios_new_rounded,
         size: 25,
       ),
+      centerTitle: true,
       title: FittedBox(
         child: Text(
           title,
@@ -35,5 +39,6 @@ class SettingsSubAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 20);
+  Size get preferredSize => Size.fromHeight(
+      bottom == null ? kToolbarHeight + 20 : kToolbarHeight + 60);
 }

@@ -1,11 +1,11 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
-class TabItem extends StatelessWidget {
+class AdminTabItem extends StatelessWidget {
   final String title;
   final int count;
 
-  const TabItem({
+  const AdminTabItem({
     super.key,
     required this.title,
     required this.count,

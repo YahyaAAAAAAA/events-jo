@@ -1,14 +1,18 @@
-import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_icon.dart';
 import 'package:flutter/material.dart';
 
-class NoRequestsLeft extends StatelessWidget {
+class EmptyList extends StatelessWidget {
   final String text;
   final IconData icon;
-  const NoRequestsLeft({
+  final Gradient gradient;
+  final Color color;
+
+  const EmptyList({
     super.key,
     required this.icon,
     required this.text,
+    required this.gradient,
+    required this.color,
   });
 
   @override
@@ -19,7 +23,7 @@ class NoRequestsLeft extends StatelessWidget {
         children: [
           GradientIcon(
             icon: icon,
-            gradient: GColors.adminGradient,
+            gradient: gradient,
             size: 60,
           ),
           const SizedBox(height: 20),
@@ -27,7 +31,7 @@ class NoRequestsLeft extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                color: GColors.cyanShade6,
+                color: color,
                 fontSize: 20,
               ),
             ),

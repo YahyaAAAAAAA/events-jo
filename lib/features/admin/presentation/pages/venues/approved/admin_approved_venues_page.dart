@@ -4,31 +4,34 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_events_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_event_list_loading_card.dart';
-import 'package:events_jo/features/admin/presentation/components/no_requests_left.dart';
+import 'package:events_jo/features/admin/presentation/components/empty_list.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_states.dart';
-import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venue_details.dart';
+import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venue_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdminApprovedVenues extends StatefulWidget {
-  final AdminApproveCubit adminApproveCubit;
-  const AdminApprovedVenues({
+class AdminApprovedVenuesPage extends StatefulWidget {
+  const AdminApprovedVenuesPage({
     super.key,
-    required this.adminApproveCubit,
   });
 
   @override
-  State<AdminApprovedVenues> createState() => _AdminApprovedVenuesState();
+  State<AdminApprovedVenuesPage> createState() =>
+      _AdminApprovedVenuesPageState();
 }
 
-class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
+class _AdminApprovedVenuesPageState extends State<AdminApprovedVenuesPage> {
+  late final AdminApproveCubit adminApproveCubit;
+
   @override
   void initState() {
     super.initState();
 
+    adminApproveCubit = context.read<AdminApproveCubit>();
+
     //start listening to approved venues stream
-    widget.adminApproveCubit.getApprovedWeddingVenuesStream();
+    adminApproveCubit.getApprovedWeddingVenuesStream();
   }
 
   @override
@@ -40,9 +43,11 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
           final venues = state.venues;
 
           if (venues.isEmpty) {
-            return const NoRequestsLeft(
+            return EmptyList(
               icon: CustomIcons.sad,
               text: 'No Approved Venues in EventsJo',
+              gradient: GColors.adminGradient,
+              color: GColors.cyanShade6,
             );
           }
 
@@ -59,15 +64,15 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
                 name: venues[index].name,
                 owner: venues[index].ownerName,
                 index: index,
-                key: Key(widget.adminApproveCubit.generateUniqueId()),
+                key: Key(adminApproveCubit.generateUniqueId()),
                 isApproved: venues[index].isApproved,
                 isBeingApproved: venues[index].isBeingApproved,
                 isLoading: false,
                 //navigate to venue details
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => AdminApprovedVenueDetails(
-                      adminApproveCubit: widget.adminApproveCubit,
+                    builder: (context) => AdminApprovedVenueDetailsPage(
+                      adminApproveCubit: adminApproveCubit,
                       weddingVenue: venues[index],
                     ),
                   ),
@@ -97,7 +102,7 @@ class _AdminApprovedVenuesState extends State<AdminApprovedVenues> {
         }
         //approval loading dialog
         if (state is AdminSuspendActionLoading) {
-          widget.adminApproveCubit.showAdminActionsDialog(
+          adminApproveCubit.showAdminActionsDialog(
             context,
             text: 'Suspending the venue please wait...',
             animation: 'assets/animations/ban.json',

@@ -5,6 +5,7 @@ import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
+import 'package:events_jo/features/owner%20venues/representation/pages/owner_venues.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
 import 'package:events_jo/features/settings/representation/components/settings_divider.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
@@ -131,9 +132,11 @@ class _SettingsPageForOwnersState extends State<SettingsPageForOwners> {
                   text: 'Your Venues',
                   iconSize: 25,
                   icon: CustomIcons.rings_wedding_1,
-                  onTap: () => GSnackBar.show(
-                    context: context,
-                    text: 'Coming Soon',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const OwnerVenues(),
+                    ),
                   ),
                 ),
 

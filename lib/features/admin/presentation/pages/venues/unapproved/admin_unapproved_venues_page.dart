@@ -4,32 +4,34 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_events_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_event_list_loading_card.dart';
-import 'package:events_jo/features/admin/presentation/components/no_requests_left.dart';
+import 'package:events_jo/features/admin/presentation/components/empty_list.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_states.dart';
-import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venue_details.dart';
+import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venue_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdminUnapprovedVenues extends StatefulWidget {
-  final AdminUnapproveCubit adminUnapproveCubit;
-
-  const AdminUnapprovedVenues({
+class AdminUnapprovedVenuesPage extends StatefulWidget {
+  const AdminUnapprovedVenuesPage({
     super.key,
-    required this.adminUnapproveCubit,
   });
 
   @override
-  State<AdminUnapprovedVenues> createState() => _AdminUnapprovedVenuesState();
+  State<AdminUnapprovedVenuesPage> createState() =>
+      _AdminUnapprovedVenuesPageState();
 }
 
-class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
+class _AdminUnapprovedVenuesPageState extends State<AdminUnapprovedVenuesPage> {
+  late final AdminUnapproveCubit adminUnapproveCubit;
+
   @override
   void initState() {
     super.initState();
 
+    adminUnapproveCubit = context.read<AdminUnapproveCubit>();
+
     //start listening to unapproved venues stream
-    widget.adminUnapproveCubit.getUnapprovedWeddingVenuesStream();
+    adminUnapproveCubit.getUnapprovedWeddingVenuesStream();
   }
 
   @override
@@ -41,9 +43,11 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
           final venues = state.venues;
 
           if (venues.isEmpty) {
-            return const NoRequestsLeft(
+            return EmptyList(
               icon: CustomIcons.grin_beam,
               text: 'No Requests for Wedding Venues left',
+              gradient: GColors.adminGradient,
+              color: GColors.cyanShade6,
             );
           }
 
@@ -60,15 +64,15 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
                 name: venues[index].name,
                 owner: venues[index].ownerName,
                 index: index,
-                key: Key(widget.adminUnapproveCubit.generateUniqueId()),
+                key: Key(adminUnapproveCubit.generateUniqueId()),
                 isApproved: venues[index].isApproved,
                 isBeingApproved: venues[index].isBeingApproved,
                 isLoading: false,
                 //navigate to venue details
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => AdminUnapprovedVenueDetails(
-                      adminUnapproveCubit: widget.adminUnapproveCubit,
+                    builder: (context) => AdminUnapprovedVenueDetailsPage(
+                      adminUnapproveCubit: adminUnapproveCubit,
                       weddingVenue: venues[index],
                     ),
                   ),
@@ -98,7 +102,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
 
         //approval loading dialog
         if (state is AdminApproveActionLoading) {
-          widget.adminUnapproveCubit.showAdminActionsDialog(
+          adminUnapproveCubit.showAdminActionsDialog(
             context,
             text: 'Approving the venue please wait...',
             animation: 'assets/animations/approve.json',
@@ -118,7 +122,7 @@ class _AdminUnapprovedVenuesState extends State<AdminUnapprovedVenues> {
 
         //denial loading dialog
         if (state is AdminDenyActionLoading) {
-          widget.adminUnapproveCubit.showAdminActionsDialog(
+          adminUnapproveCubit.showAdminActionsDialog(
             context,
             text: 'Denying the venue please wait...',
             animation: 'assets/animations/delete.json',

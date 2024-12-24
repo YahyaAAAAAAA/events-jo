@@ -1,10 +1,10 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_app_bar.dart';
-import 'package:events_jo/features/admin/presentation/components/menu_tab_bar.dart';
+import 'package:events_jo/features/admin/presentation/components/admin_menu_tab_bar.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_cubit.dart';
-import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venues.dart';
-import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues.dart';
+import 'package:events_jo/features/admin/presentation/pages/venues/approved/admin_approved_venues_page.dart';
+import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
         user: user,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),
-          child: MenuTabBar(
+          child: AdminMenuTabBar(
             controller: tabController,
           ),
         ),
@@ -64,12 +64,8 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
       body: TabBarView(
         controller: tabController,
         children: [
-          AdminUnapprovedVenues(
-            adminUnapproveCubit: adminUnapproveCubit,
-          ),
-          AdminApprovedVenues(
-            adminApproveCubit: adminApproveCubit,
-          ),
+          const AdminUnapprovedVenuesPage(),
+          const AdminApprovedVenuesPage(),
         ],
       ),
       bottomNavigationBar: Divider(

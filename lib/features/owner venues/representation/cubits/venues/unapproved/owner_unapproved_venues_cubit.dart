@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/features/owner%20venues/domain/repos/owner_venues_repo.dart';
-import 'package:events_jo/features/owner%20venues/representation/cubits/venues/unapproved/unapproved_venues_states.dart';
+import 'package:events_jo/features/owner%20venues/representation/cubits/venues/unapproved/owner_unapproved_venues_states.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UnapprovedVenuesCubit extends Cubit<UnapprovedVenuesStates> {
+class OwnerUnapprovedVenuesCubit extends Cubit<OwnerUnapprovedVenuesStates> {
   final OwnerVenuesRepo ownerVenuesRepo;
 
-  UnapprovedVenuesCubit({required this.ownerVenuesRepo})
-      : super(UnapprovedVenuesInitial());
+  OwnerUnapprovedVenuesCubit({required this.ownerVenuesRepo})
+      : super(OwnerUnapprovedVenuesInitial());
 
-  List<WeddingVenue> getApprovedVenuesStream(String id) {
+  List<WeddingVenue> getUnapprovedVenuesStream(String id) {
     //loading...
-    emit(UnapprovedVenuesLoading());
+    emit(OwnerUnapprovedVenuesLoading());
 
     List<WeddingVenue> weddingVenues = [];
 
@@ -21,10 +22,10 @@ class UnapprovedVenuesCubit extends Cubit<UnapprovedVenuesStates> {
         final currentState = state;
         List<WeddingVenue> currentVenues = [];
 
-        // await Delay.halfSecond();
+        await Delay.halfSecond();
 
         //get current venues
-        if (currentState is UnapprovedVenuesLoaded) {
+        if (currentState is OwnerUnapprovedVenuesLoaded) {
           currentVenues = List.from(currentState.venues);
         }
 
@@ -63,16 +64,21 @@ class UnapprovedVenuesCubit extends Cubit<UnapprovedVenuesStates> {
           }
         }
 
-        emit(UnapprovedVenuesLoaded(currentVenues));
+        emit(OwnerUnapprovedVenuesLoaded(currentVenues));
       },
       onError: (error) {
         //error
-        emit(UnapprovedVenuesError(error.toString()));
+        emit(OwnerUnapprovedVenuesError(error.toString()));
 
         return [];
       },
     );
 
     return weddingVenues;
+  }
+
+  //unique id
+  String generateUniqueId() {
+    return ownerVenuesRepo.generateUniqueId();
   }
 }

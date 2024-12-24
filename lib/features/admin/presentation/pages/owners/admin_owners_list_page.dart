@@ -5,7 +5,7 @@ import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_loading_users_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_sub_app_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_users_card.dart';
-import 'package:events_jo/features/admin/presentation/components/no_requests_left.dart';
+import 'package:events_jo/features/admin/presentation/components/empty_list.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_states.dart';
 import 'package:events_jo/features/admin/presentation/pages/owners/admin_owner_details_page.dart';
@@ -49,9 +49,11 @@ class _AdminUsersListPageState extends State<AdminOwnersListPage> {
                 final owners = state.owners;
 
                 if (owners.isEmpty) {
-                  return const NoRequestsLeft(
+                  return EmptyList(
                     icon: CustomIcons.sad,
                     text: 'EventsJo have no owners',
+                    gradient: GColors.adminGradient,
+                    color: GColors.cyanShade6,
                   );
                 }
 

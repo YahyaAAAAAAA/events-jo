@@ -6,4 +6,6 @@ abstract class OwnerVenuesRepo {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getUnapprovedVenuesStream(
       String id);
+
+  String generateUniqueId();
 }

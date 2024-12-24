@@ -35,4 +35,10 @@ class FirebaseOwnerVenuesRepo implements OwnerVenuesRepo {
         .where('ownerId', isEqualTo: id)
         .snapshots();
   }
+
+  //unique id
+  @override
+  String generateUniqueId() {
+    return firebaseFirestore.collection('venues').doc().id;
+  }
 }

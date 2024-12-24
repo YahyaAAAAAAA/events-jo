@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/features/owner%20venues/domain/repos/owner_venues_repo.dart';
-import 'package:events_jo/features/owner%20venues/representation/cubits/venues/approved/approved_venues_states.dart';
+import 'package:events_jo/features/owner%20venues/representation/cubits/venues/approved/owner_approved_venues_states.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ApprovedVenuesCubit extends Cubit<ApprovedVenuesStates> {
+class OwnerApprovedVenuesCubit extends Cubit<OwnerApprovedVenuesStates> {
   final OwnerVenuesRepo ownerVenuesRepo;
 
-  ApprovedVenuesCubit({required this.ownerVenuesRepo})
-      : super(ApprovedVenuesInitial());
+  OwnerApprovedVenuesCubit({required this.ownerVenuesRepo})
+      : super(OwnerApprovedVenuesInitial());
 
   List<WeddingVenue> getApprovedVenuesStream(String id) {
     //loading...
-    emit(ApprovedVenuesLoading());
+    emit(OwnerApprovedVenuesLoading());
 
     List<WeddingVenue> weddingVenues = [];
 
@@ -21,10 +22,10 @@ class ApprovedVenuesCubit extends Cubit<ApprovedVenuesStates> {
         final currentState = state;
         List<WeddingVenue> currentVenues = [];
 
-        // await Delay.halfSecond();
+        await Delay.halfSecond();
 
         //get current venues
-        if (currentState is ApprovedVenuesLoaded) {
+        if (currentState is OwnerApprovedVenuesLoaded) {
           currentVenues = List.from(currentState.venues);
         }
 
@@ -63,16 +64,20 @@ class ApprovedVenuesCubit extends Cubit<ApprovedVenuesStates> {
           }
         }
 
-        emit(ApprovedVenuesLoaded(currentVenues));
+        emit(OwnerApprovedVenuesLoaded(currentVenues));
       },
       onError: (error) {
         //error
-        emit(ApprovedVenuesError(error.toString()));
-
+        emit(OwnerApprovedVenuesError(error.toString()));
         return [];
       },
     );
 
     return weddingVenues;
+  }
+
+  //unique id
+  String generateUniqueId() {
+    return ownerVenuesRepo.generateUniqueId();
   }
 }

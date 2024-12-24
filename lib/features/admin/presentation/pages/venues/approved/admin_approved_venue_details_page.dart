@@ -12,22 +12,23 @@ import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdminApprovedVenueDetails extends StatefulWidget {
+class AdminApprovedVenueDetailsPage extends StatefulWidget {
   final WeddingVenue weddingVenue;
   final AdminApproveCubit adminApproveCubit;
 
-  const AdminApprovedVenueDetails({
+  const AdminApprovedVenueDetailsPage({
     super.key,
     required this.weddingVenue,
     required this.adminApproveCubit,
   });
 
   @override
-  State<AdminApprovedVenueDetails> createState() =>
-      _AdminApprovedVenueDetailsState();
+  State<AdminApprovedVenueDetailsPage> createState() =>
+      _AdminApprovedVenueDetailsPageState();
 }
 
-class _AdminApprovedVenueDetailsState extends State<AdminApprovedVenueDetails> {
+class _AdminApprovedVenueDetailsPageState
+    extends State<AdminApprovedVenueDetailsPage> {
   late final WeddingVenue weddingVenue;
   late final AdminSingleVenueCubit adminSingleVenueCubit;
 

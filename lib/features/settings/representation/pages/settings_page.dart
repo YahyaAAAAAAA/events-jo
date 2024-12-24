@@ -1,6 +1,5 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
@@ -11,6 +10,7 @@ import 'package:events_jo/features/settings/representation/cubits/settings_cubit
 import 'package:events_jo/features/settings/representation/pages/account_page.dart';
 import 'package:events_jo/features/settings/representation/pages/notifications_page.dart';
 import 'package:events_jo/features/settings/representation/pages/privacy_page.dart';
+import 'package:events_jo/features/settings/representation/pages/support_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -117,9 +117,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   text: 'Help and Support',
                   icon: CustomIcons.headphones,
                   iconSize: 25,
-                  onTap: () => GSnackBar.show(
-                    context: context,
-                    text: 'Coming Soon',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => SupportPage(),
+                    ),
                   ),
                 ),
               ],
