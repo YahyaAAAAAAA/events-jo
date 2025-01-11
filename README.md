@@ -84,12 +84,6 @@
 
 ###
 
-<h2 align="left">📃 License</h2>
-
-<p align="left">This project is licensed under the MIT License.</p>
-
-###
-
 <h2 align="left">📬 Contact</h2>
 
 <p align="left">• Email: yahya.amarneh73@gmail.com</p>
