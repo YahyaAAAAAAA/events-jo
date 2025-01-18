@@ -37,7 +37,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: GColors.black.withOpacity(0.2),
+                      color: GColors.black.withValues(alpha: 0.2),
                       blurRadius: 2,
                       offset: const Offset(0, 2),
                     ),
@@ -83,7 +83,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: GColors.black.withOpacity(0.2),
+                      color: GColors.black.withValues(alpha: 0.2),
                       blurRadius: 2,
                       offset: const Offset(0, 2),
                     ),
@@ -129,7 +129,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: GColors.black.withOpacity(0.2),
+                      color: GColors.black.withValues(alpha: 0.2),
                       blurRadius: 2,
                       offset: const Offset(0, 2),
                     ),

@@ -31,7 +31,7 @@ class AppBarButton extends StatelessWidget {
             padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
             backgroundColor: WidgetStatePropertyAll(GColors.white),
             shadowColor: WidgetStatePropertyAll(
-              GColors.black.withOpacity(0.5),
+              GColors.black.withValues(alpha: 0.5),
             ),
             elevation: const WidgetStatePropertyAll(3),
             shape: WidgetStatePropertyAll(

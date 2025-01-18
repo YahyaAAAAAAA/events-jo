@@ -24,7 +24,7 @@ class EventsJoLogo extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: GColors.royalBlue.withOpacity(0.2),
+            color: GColors.royalBlue.withValues(alpha: 0.2),
             blurRadius: 3,
             offset: const Offset(1, 1),
           ),

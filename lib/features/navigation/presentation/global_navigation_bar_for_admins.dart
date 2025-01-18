@@ -62,7 +62,7 @@ class _GlobalNavigationBarForAdminsState
                 duration: const Duration(milliseconds: 300),
                 color: GColors.cyanShade6,
                 activeColor: GColors.cyanShade6,
-                rippleColor: GColors.white.withOpacity(0.2),
+                rippleColor: GColors.white.withValues(alpha: 0.2),
                 iconSize: 24,
                 tabBackgroundColor: Colors.transparent,
                 tabActiveBorder: Border(

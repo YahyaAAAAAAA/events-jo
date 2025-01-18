@@ -37,15 +37,15 @@ class SelectRangeDatePage extends StatelessWidget {
               onRangeSelected: onRangeSelected,
               //styling down
               selectedCellsDecoration: BoxDecoration(
-                color: GColors.royalBlue.withOpacity(0.5),
+                color: GColors.royalBlue.withValues(alpha: 0.5),
               ),
               selectedCellsTextStyle: TextStyle(
                 color: GColors.white,
                 fontSize: 23,
               ),
               slidersColor: GColors.royalBlue,
-              highlightColor: GColors.royalBlue.withOpacity(0.2),
-              splashColor: GColors.royalBlue.withOpacity(0.2),
+              highlightColor: GColors.royalBlue.withValues(alpha: 0.2),
+              splashColor: GColors.royalBlue.withValues(alpha: 0.2),
               singleSelectedCellDecoration: BoxDecoration(
                 gradient: GColors.logoGradient,
                 borderRadius: BorderRadius.circular(100),

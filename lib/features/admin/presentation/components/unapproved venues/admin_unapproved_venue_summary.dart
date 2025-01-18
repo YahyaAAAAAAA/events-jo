@@ -96,7 +96,7 @@ class UnapprovedAdminVenueSummary extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: GColors.cyan.withOpacity(0.2),
+                      color: GColors.cyan.withValues(alpha: 0.2),
                       blurRadius: 7,
                       offset: const Offset(0, 0),
                     ),

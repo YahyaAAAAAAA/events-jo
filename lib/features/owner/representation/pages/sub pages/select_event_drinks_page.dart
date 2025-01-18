@@ -101,7 +101,7 @@ class SelectEventDrinksPage extends StatelessWidget {
                   ),
                 ),
                 shadowColor: WidgetStatePropertyAll(
-                  GColors.black.withOpacity(0.5),
+                  GColors.black.withValues(alpha: 0.5),
                 ),
                 elevation: const WidgetStatePropertyAll(3),
               ),
@@ -200,7 +200,7 @@ class SelectEventDrinksPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: GColors.black.withOpacity(0.1),
+                    color: GColors.black.withValues(alpha: 0.3),
                     offset: const Offset(0, 2),
                     blurRadius: 1,
                   ),
@@ -214,6 +214,7 @@ class SelectEventDrinksPage extends StatelessWidget {
                     exitTransition: [SlideInLeft()],
                     insertDuration: const Duration(milliseconds: 300),
                     removeDuration: const Duration(milliseconds: 300),
+                    isSameItem: (a, b) => a.id == b.id,
                   )
                 : Center(
                     child: Text(

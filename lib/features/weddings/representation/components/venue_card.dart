@@ -37,7 +37,7 @@ class VenueCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               boxShadow: [
                 BoxShadow(
-                  color: GColors.poloBlue.withOpacity(0.3),
+                  color: GColors.poloBlue.withValues(alpha: 0.3),
                   blurRadius: 10,
                   offset: const Offset(2, 2),
                 ),
@@ -181,7 +181,7 @@ class VenueCard extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll(GColors.white),
                   shadowColor: WidgetStatePropertyAll(
-                    GColors.black.withOpacity(0.5),
+                    GColors.black.withValues(alpha: 0.5),
                   ),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(

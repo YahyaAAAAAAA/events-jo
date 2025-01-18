@@ -550,7 +550,8 @@ class _FromToTimePickerState extends State<FromToTimePicker> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      highlightColor: FTTColors.primary_color.withOpacity(.2),
+                      highlightColor:
+                          FTTColors.primary_color.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                       onTap: () {
                         if (timePickerStartTime < 12) {
@@ -574,7 +575,8 @@ class _FromToTimePickerState extends State<FromToTimePicker> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      highlightColor: FTTColors.primary_color.withOpacity(.2),
+                      highlightColor:
+                          FTTColors.primary_color.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                       onTap: () {
                         if (timePickerStartTime > 1) {
@@ -659,7 +661,8 @@ class _FromToTimePickerState extends State<FromToTimePicker> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      highlightColor: FTTColors.primary_color.withOpacity(.2),
+                      highlightColor:
+                          FTTColors.primary_color.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                       onTap: () {
                         if (timePickerEndTime < 12) {
@@ -683,7 +686,8 @@ class _FromToTimePickerState extends State<FromToTimePicker> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      highlightColor: FTTColors.primary_color.withOpacity(.2),
+                      highlightColor:
+                          FTTColors.primary_color.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                       onTap: () {
                         if (timePickerEndTime > 1) {

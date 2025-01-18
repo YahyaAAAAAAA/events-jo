@@ -26,7 +26,7 @@ class SettingsIconButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(GColors.white),
           shadowColor: WidgetStatePropertyAll(
-            GColors.black.withOpacity(0.5),
+            GColors.black.withValues(alpha: 0.5),
           ),
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(

@@ -31,7 +31,7 @@ class SelectRangeTimePage extends StatelessWidget {
             child: FittedBox(
               child: FromToTimePicker(
                 onTab: onTab,
-                dialogBackgroundColor: GColors.poloBlue.withOpacity(0.5),
+                dialogBackgroundColor: GColors.poloBlue.withValues(alpha: 0.5),
                 fromHeadlineColor: GColors.black,
                 toHeadlineColor: GColors.black,
                 timeBoxColor: GColors.royalBlue,

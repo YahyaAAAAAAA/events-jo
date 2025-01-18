@@ -54,7 +54,7 @@ class SelectEventType extends StatelessWidget {
                   boxShadow: [
                     //note: soft shadow
                     BoxShadow(
-                      color: GColors.black.withOpacity(0.1),
+                      color: GColors.black.withValues(alpha: 0.3),
                       offset: const Offset(0, 2),
                       blurRadius: 1,
                     ),
@@ -102,8 +102,8 @@ class SelectEventType extends StatelessWidget {
                 ),
                 style: ButtonStyle(
                     elevation: const WidgetStatePropertyAll(3),
-                    shadowColor:
-                        WidgetStatePropertyAll(GColors.white.withOpacity(0.5)),
+                    shadowColor: WidgetStatePropertyAll(
+                        GColors.white.withValues(alpha: 0.5)),
                     backgroundColor: WidgetStatePropertyAll(GColors.white),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(

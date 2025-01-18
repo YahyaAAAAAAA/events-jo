@@ -84,9 +84,13 @@ class FirebaseOwnerRepo implements OwnerRepo {
 
   @override
   Future<String?> getCity(double lat, double long) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
 
-    return placemarks[0].locality;
+      return placemarks[0].locality;
+    } catch (e) {
+      return '  ';
+    }
   }
 
   @override

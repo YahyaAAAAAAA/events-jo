@@ -36,8 +36,8 @@ class VenueDatePicker extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
         ),
         slidersColor: GColors.royalBlue,
-        highlightColor: GColors.royalBlue.withOpacity(0.2),
-        splashColor: GColors.royalBlue.withOpacity(0.2),
+        highlightColor: GColors.royalBlue.withValues(alpha: 0.2),
+        splashColor: GColors.royalBlue.withValues(alpha: 0.2),
         selectedCellDecoration: BoxDecoration(
           gradient: GColors.logoGradient,
           borderRadius: BorderRadius.circular(100),

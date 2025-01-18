@@ -26,7 +26,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
         boxShadow: index != 10
             ? [
                 BoxShadow(
-                  color: GColors.royalBlue.withOpacity(0.5),
+                  color: GColors.royalBlue.withValues(alpha: 0.5),
                   blurRadius: 7,
                   offset: const Offset(0, 4),
                 )
@@ -46,7 +46,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
                 style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
                     shadowColor: WidgetStatePropertyAll(
-                      GColors.black.withOpacity(0.5),
+                      GColors.black.withValues(alpha: 0.5),
                     ),
                     elevation: const WidgetStatePropertyAll(3),
                     shape: WidgetStatePropertyAll(
@@ -98,7 +98,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
                           backgroundColor:
                               WidgetStatePropertyAll(GColors.royalBlue),
                           shadowColor: WidgetStatePropertyAll(
-                            GColors.black.withOpacity(0.5),
+                            GColors.black.withValues(alpha: 0.5),
                           ),
                           elevation: const WidgetStatePropertyAll(3),
                           shape: WidgetStatePropertyAll(
@@ -142,7 +142,7 @@ class OwnerPageNavigationBar extends StatelessWidget {
                           backgroundColor:
                               WidgetStatePropertyAll(GColors.royalBlue),
                           shadowColor: WidgetStatePropertyAll(
-                            GColors.black.withOpacity(0.5),
+                            GColors.black.withValues(alpha: 0.5),
                           ),
                           elevation: const WidgetStatePropertyAll(3),
                           shape: WidgetStatePropertyAll(

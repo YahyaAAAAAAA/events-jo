@@ -22,7 +22,7 @@ class VenueDetailsButton extends StatelessWidget {
       style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
           shadowColor: WidgetStatePropertyAll(
-            GColors.black.withOpacity(0.5),
+            GColors.black.withValues(alpha: 0.5),
           ),
           elevation: const WidgetStatePropertyAll(3),
           shape: WidgetStatePropertyAll(

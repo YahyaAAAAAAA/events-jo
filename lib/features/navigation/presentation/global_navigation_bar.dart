@@ -60,7 +60,7 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
                 duration: const Duration(milliseconds: 300),
                 color: GColors.poloBlue,
                 activeColor: GColors.royalBlue,
-                rippleColor: GColors.white.withOpacity(0.2),
+                rippleColor: GColors.white.withValues(alpha: 0.2),
                 iconSize: 24,
                 tabBackgroundColor: Colors.transparent,
                 tabActiveBorder: Border(

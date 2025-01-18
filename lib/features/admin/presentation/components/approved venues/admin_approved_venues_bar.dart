@@ -30,7 +30,7 @@ class AdminApprovedVenuesBar extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: GColors.cyan.withOpacity(0.2),
+              color: GColors.cyan.withValues(alpha: 0.2),
               blurRadius: 7,
               offset: const Offset(0, 0),
             ),
@@ -46,7 +46,7 @@ class AdminApprovedVenuesBar extends StatelessWidget {
               style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
                   shadowColor: WidgetStatePropertyAll(
-                    GColors.black.withOpacity(0.5),
+                    GColors.black.withValues(alpha: 0.2),
                   ),
                   elevation: const WidgetStatePropertyAll(3),
                   shape: WidgetStatePropertyAll(

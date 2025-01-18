@@ -26,7 +26,7 @@ class ImageCard extends StatelessWidget {
         color: GColors.white,
         boxShadow: [
           BoxShadow(
-            color: GColors.poloBlue.withOpacity(0.3),
+            color: GColors.poloBlue.withValues(alpha: 0.3),
             blurRadius: 7,
             offset: const Offset(0, 4),
           )

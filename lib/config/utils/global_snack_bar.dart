@@ -31,8 +31,8 @@ class GSnackBar {
                     boxShadow: [
                       BoxShadow(
                         color: color != null
-                            ? color.withOpacity(0.3)
-                            : GColors.royalBlue.withOpacity(0.3),
+                            ? color.withValues(alpha: 0.2)
+                            : GColors.royalBlue.withValues(alpha: 0.2),
                         blurRadius: 7,
                         offset: const Offset(4, 4),
                       )

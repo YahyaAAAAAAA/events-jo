@@ -123,7 +123,7 @@ class _AltButtonState extends State<AltButton> with TickerProviderStateMixin {
                   : widget.border,
               gradient: widget.gradient,
               color: _expanded
-                  ? widget.color!.withOpacity(0)
+                  ? widget.color!.withValues(alpha: 0.2)
                   : widget.debug!
                       ? Colors.red
                       : widget.gradient != null

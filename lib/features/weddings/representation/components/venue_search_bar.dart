@@ -24,7 +24,7 @@ class VenueSearchBar extends StatelessWidget {
               controller: controller,
               hintText: 'Search Venues...',
               shadowColor: WidgetStatePropertyAll(
-                GColors.black.withOpacity(0.5),
+                GColors.black.withValues(alpha: 0.5),
               ),
               shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(

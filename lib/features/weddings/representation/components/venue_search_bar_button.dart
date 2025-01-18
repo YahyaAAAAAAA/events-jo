@@ -32,7 +32,7 @@ class VenueSearchBarButton extends StatelessWidget {
       onOpened: onOpened,
       style: ButtonStyle(
         shadowColor: WidgetStatePropertyAll(
-          GColors.black.withOpacity(0.5),
+          GColors.black.withValues(alpha: 0.5),
         ),
         elevation: const WidgetStatePropertyAll(3),
         backgroundColor: WidgetStatePropertyAll(GColors.white),

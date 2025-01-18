@@ -16,7 +16,7 @@ class SettingsDropdownField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      shadowColor: GColors.black.withOpacity(0.2),
+      shadowColor: GColors.black.withValues(alpha: 0.2),
       elevation: 3,
       borderRadius: BorderRadius.circular(12),
       child: DropdownButtonFormField(

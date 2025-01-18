@@ -44,7 +44,7 @@ class OwnerEventsCard extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: GColors.royalBlue.withOpacity(0.2),
+                  color: GColors.royalBlue.withValues(alpha: 0.2),
                   blurRadius: 7,
                   offset: const Offset(0, 0),
                 ),

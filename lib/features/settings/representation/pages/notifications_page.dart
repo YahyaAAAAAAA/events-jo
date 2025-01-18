@@ -37,15 +37,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
               const SizedBox(height: 20),
 
-              //sms
-              SettingsSwitch(
-                text: 'SMS Notifications',
-                value: smsNotifications,
-                onChanged: (bool value) =>
-                    setState(() => smsNotifications = value),
-              ),
-              const SizedBox(height: 20),
-
               //push
               SettingsSwitch(
                 text: 'Push Notifications',

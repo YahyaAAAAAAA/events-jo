@@ -18,6 +18,7 @@ class OwnerEventsListLoadingCard extends StatelessWidget {
           name: '            ',
           index: index,
           owner: '      ',
+          icon: Icons.event,
           isApproved: false,
           isBeingApproved: false,
           isLoading: true,
