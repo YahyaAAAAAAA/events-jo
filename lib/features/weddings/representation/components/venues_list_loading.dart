@@ -1,6 +1,6 @@
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_card.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -13,31 +13,31 @@ class VenuesListLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Skeletonizer(
       enabled: true,
-      child: ListView.builder(
+      containersColor: GColors.white,
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 15,
+        ),
         itemCount: 10,
+        shrinkWrap: true,
         itemBuilder: (context, index) {
-          if (index == 0) {
-            return const VenueSearchBar(
-              controller: null,
-              onPressed: null,
-              onChanged: null,
-            );
-          }
           return VenueCard(
             user: null,
             //disable colors
-            isLoading: true,
             //dummy object
             weddingVenue: WeddingVenue(
               id: 'x',
-              name: 'Loading',
+              name: 'Loadingggggggg',
               latitude: 0,
               longitude: 0,
               rate: 0,
               isOpen: true,
               isApproved: true,
               isBeingApproved: false,
-              pics: ["x"],
+              pics: [
+                "https://i.ibb.co/hh5xKbD/plain-white-background-or-wallpaper-abstract-image-2-E064-N7.jpg"
+              ],
               ownerId: 'x',
               ownerName: 'x',
               startDate: [],
@@ -46,7 +46,7 @@ class VenuesListLoading extends StatelessWidget {
               peopleMax: 1,
               peopleMin: 0,
               peoplePrice: 1,
-              city: '',
+              city: 'loadingg',
             ),
           );
         },

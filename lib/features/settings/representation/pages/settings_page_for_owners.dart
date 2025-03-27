@@ -1,3 +1,4 @@
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
@@ -6,6 +7,7 @@ import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/owner%20venues/representation/pages/owner_venues.dart';
+import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
 import 'package:events_jo/features/settings/representation/components/settings_divider.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
@@ -42,7 +44,9 @@ class _SettingsPageForOwnersState extends State<SettingsPageForOwners> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        title: 'Settings',
+        title: user?.name ?? 'Guest 123',
+        onOwnerButtonTap: () => context.push(OwnerPage(user: user)),
+        isOwner: true,
         onPressed: () => context.read<AuthCubit>().logout(
               user!.uid,
               user!.type,

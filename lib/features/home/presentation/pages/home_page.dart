@@ -1,19 +1,16 @@
-import 'package:events_jo/config/extensions/string_extensions.dart';
-import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/global_snack_bar.dart';
-import 'package:events_jo/config/utils/gradient/gradient_icon.dart';
-import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
-import 'package:events_jo/features/home/presentation/components/home_card.dart';
-import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
+import 'package:events_jo/features/home/presentation/components/sponserd_venue.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
+import 'package:events_jo/features/weddings/representation/pages/wedding_venues_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mesh_gradient/mesh_gradient.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -26,10 +23,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final AppUser? user;
+  late final WeddingVenuesCubit weddingVenuesCubit;
 
-  //controls cards animation
-  final AnimatedMeshGradientController animatedController =
-      AnimatedMeshGradientController();
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -37,134 +33,162 @@ class _HomePageState extends State<HomePage> {
 
     user = UserManager().currentUser;
 
-    animatedController.start();
+    weddingVenuesCubit = context.read<WeddingVenuesCubit>();
+    if (weddingVenuesCubit.cachedVenues == null) {
+      weddingVenuesCubit.getAllVenues();
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
-
-    animatedController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        onPressed: () => context.read<AuthCubit>().logout(
-              user!.uid,
-              user!.type,
-            ),
+        isOwner: false,
+        onPressed: () =>
+            context.read<AuthCubit>().logout(user!.uid, user!.type),
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 450),
+          constraints: const BoxConstraints(maxWidth: kListViewWidth),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
             child: ListView(
               children: [
-                //logo
-                const EventsJoLogo(),
-
-                const SizedBox(height: 10),
-
-                //welcome text
-                Center(
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      //icon
-                      GradientIcon(
-                        icon: Icons.waving_hand_outlined,
-                        gradient: GColors.logoGradient,
-                        size: 40,
-                      ),
-
-                      const SizedBox(width: 10),
-
-                      //user name
-                      GradientText(
-                        "Welcome ${user!.name.toCapitalized}",
-                        gradient: GColors.logoGradient,
-                        style: const TextStyle(
-                          fontSize: 30,
-                        ),
-                      ),
-                    ],
+                //todo search bar
+                VenueSearchBar(
+                  controller: searchController,
+                  onPressed: () => setState(
+                    () => searchController.clear(),
                   ),
+                  // onChanged: (venue) => weddingVenuesCubit.searchList(
+                  //   venues,
+                  //   venues,
+                  //   venue,
+                  // ),
                 ),
 
-                const SizedBox(height: 60),
+                10.height,
 
-                //text
-                Center(
-                  child: Text(
-                    "Browse a category",
-                    style: TextStyle(
-                      color: GColors.poloBlue,
-                      fontSize: 20,
+                //categories text
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      "Categories",
+                      style: TextStyle(
+                        color: GColors.black,
+                        fontSize: kNormalFontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                    Text(
+                      "See All",
+                      style: TextStyle(
+                        color: GColors.black,
+                        fontSize: kSmallFontSize,
+                      ),
+                    ),
+                  ],
                 ),
 
-                const SizedBox(height: 10),
+                5.height,
 
-                //venues
+                //categories buttons
                 FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    spacing: 10,
-                    runSpacing: 10,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    spacing: 5,
                     children: [
-                      HomeCard(
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => WeddingVenuesPage(
-                              user: user,
-                            ),
+                      TextButton(
+                        onPressed: () {},
+                        style:
+                            Theme.of(context).textButtonTheme.style?.copyWith(
+                                  backgroundColor:
+                                      WidgetStatePropertyAll(GColors.royalBlue),
+                                ),
+                        child: Text(
+                          'Wedding Venues',
+                          style: TextStyle(
+                            color: GColors.white,
+                            fontSize: kSmallFontSize,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        controller: animatedController,
-                        text: 'Wedding Venues',
-                        icon: CustomIcons.wedding,
-                        colors: GColors.weddingCardGradient,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Farms',
+                          style: TextStyle(
+                            color: GColors.black,
+                            fontSize: kSmallFontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Football Courts',
+                          style: TextStyle(
+                            color: GColors.black,
+                            fontSize: kSmallFontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                20.height,
 
-                //farms and courts
-                FittedBox(
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [
-                      HomeCard(
-                        onPressed: () => GSnackBar.show(
-                          context: context,
-                          text: 'Coming soon',
-                        ),
-                        controller: animatedController,
-                        text: 'Farms',
-                        icon: CustomIcons.farm,
-                        colors: GColors.farmCardGradient,
+                const SponserdVenue(),
+
+                20.height,
+
+                //popular venues text
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Popular Wedding Venues",
+                      style: TextStyle(
+                        color: GColors.black,
+                        fontSize: kNormalFontSize,
+                        fontWeight: FontWeight.bold,
                       ),
-                      HomeCard(
-                        onPressed: () => GSnackBar.show(
-                          context: context,
-                          text: 'Coming soon',
-                        ),
-                        controller: animatedController,
-                        text: 'Football Courts',
-                        icon: CustomIcons.football,
-                        colors: GColors.footballCardGradient,
+                    ),
+                    IconButton(
+                      onPressed: () async =>
+                          await weddingVenuesCubit.getAllVenues(),
+                      style: Theme.of(context).iconButtonTheme.style?.copyWith(
+                            backgroundColor: WidgetStatePropertyAll(
+                              GColors.scaffoldBg,
+                            ),
+                          ),
+                      icon: const Icon(
+                        Icons.refresh_rounded,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+
+                //venus list
+                WeddingVenuesList(
+                  user: user,
+                  weddingVenuesCubit: weddingVenuesCubit,
+                  searchController: searchController,
                 ),
               ],
             ),

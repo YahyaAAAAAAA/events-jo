@@ -1,51 +1,30 @@
-import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppBarButton extends StatelessWidget {
   final void Function()? onPressed;
   final IconData icon;
-  final double size;
+  final double? iconSize;
+  final Color? iconColor;
+  final ButtonStyle? style;
+
   const AppBarButton({
     super.key,
     required this.onPressed,
     required this.icon,
-    required this.size,
+    this.iconSize,
+    this.style,
+    this.iconColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        bottom: 10,
-        right: 20,
-        top: 10,
-      ),
-      child: SizedBox(
-        width: 50,
-        height: 50,
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ButtonStyle(
-            fixedSize: const WidgetStatePropertyAll(Size.fromWidth(20)),
-            padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
-            backgroundColor: WidgetStatePropertyAll(GColors.white),
-            shadowColor: WidgetStatePropertyAll(
-              GColors.black.withValues(alpha: 0.5),
-            ),
-            elevation: const WidgetStatePropertyAll(3),
-            shape: WidgetStatePropertyAll(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-          child: Icon(
-            icon,
-            color: GColors.poloBlue,
-            size: size,
-          ),
-        ),
+    return IconButton(
+      onPressed: onPressed,
+      style: style,
+      icon: Icon(
+        icon,
+        color: iconColor,
+        size: iconSize,
       ),
     );
   }

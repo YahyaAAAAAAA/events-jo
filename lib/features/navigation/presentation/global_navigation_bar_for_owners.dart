@@ -1,5 +1,4 @@
-import 'package:events_jo/config/packages/google%20navigation%20bar/gbutton.dart';
-import 'package:events_jo/config/packages/google%20navigation%20bar/gnav.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page_for_owners.dart';
@@ -19,7 +18,7 @@ class GlobalNavigationBarForOwners extends StatefulWidget {
 class _GlobalNavigationBarForOwnersState
     extends State<GlobalNavigationBarForOwners> {
   //current nav bar page
-  int selecetedPage = 1;
+  int selecetedPage = 0;
 
   //nav bar items
   late final List<Widget> screens;
@@ -30,6 +29,8 @@ class _GlobalNavigationBarForOwnersState
 
     screens = [
       //first nav item
+      const HomePageForOwners(),
+      //middle nav item
       Center(
         child: Text(
           'List of the user orders',
@@ -38,8 +39,6 @@ class _GlobalNavigationBarForOwnersState
           ),
         ),
       ),
-      //middle nav item
-      const HomePageForOwners(),
       //last nav item
       const SettingsPageForOwners(),
     ];
@@ -49,58 +48,50 @@ class _GlobalNavigationBarForOwnersState
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: false,
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 15,
-          right: 15,
-          bottom: 15,
-        ),
-        child: MediaQuery.of(context).size.width > 320
-            ? GNav(
-                backgroundColor: GColors.navBar,
-                tabBorderRadius: 12,
-                duration: const Duration(milliseconds: 300),
-                color: GColors.poloBlue,
-                activeColor: GColors.royalBlue,
-                rippleColor: GColors.white.withValues(alpha: 0.2),
-                iconSize: 24,
-                tabBackgroundColor: Colors.transparent,
-                tabActiveBorder: Border(
-                  left: BorderSide(
-                    color: GColors.royalBlue,
-                    width: 5,
-                  ),
-                  right: BorderSide(
-                    color: GColors.royalBlue,
-                    width: 5,
-                  ),
-                ),
-                textStyle: TextStyle(
-                  fontSize: 15,
-                  color: GColors.royalBlue,
-                  fontWeight: FontWeight.bold,
-                ),
-                selectedIndex: selecetedPage,
-                tabMargin: const EdgeInsets.all(5),
-                padding: const EdgeInsets.all(20),
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                tabs: const [
-                  GButton(
-                    icon: CustomIcons.list,
-                    text: ' Your Orders',
-                  ),
-                  GButton(
-                    icon: CustomIcons.home,
-                    text: ' Home',
-                  ),
-                  GButton(
-                    icon: CustomIcons.settings,
-                    text: ' Settings',
-                  ),
-                ],
-                onTabChange: (value) => setState(() => selecetedPage = value),
-              )
-            : const SizedBox(),
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: GColors.navBar,
+        selectedIndex: selecetedPage,
+        animationDuration: const Duration(milliseconds: 300),
+        indicatorColor: GColors.royalBlue.withValues(alpha: 0),
+        indicatorShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(kOuterRadius)),
+        labelTextStyle: WidgetStatePropertyAll(TextStyle(
+          color: GColors.black,
+          fontFamily: 'Abel',
+        )),
+        destinations: [
+          NavigationDestination(
+            selectedIcon: Icon(
+              CustomIcons.home,
+              color: GColors.royalBlue,
+            ),
+            icon: const Icon(
+              CustomIcons.home,
+            ),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(
+              CustomIcons.list,
+              color: GColors.royalBlue,
+            ),
+            icon: const Icon(
+              CustomIcons.list,
+            ),
+            label: 'Your Orders',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(
+              CustomIcons.settings,
+              color: GColors.royalBlue,
+            ),
+            icon: const Icon(
+              CustomIcons.settings,
+            ),
+            label: 'Settings',
+          ),
+        ],
+        onDestinationSelected: (value) => setState(() => selecetedPage = value),
       ),
       body: screens[selecetedPage],
     );

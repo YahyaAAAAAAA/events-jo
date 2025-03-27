@@ -9,15 +9,6 @@ import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart'
 class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-  @override
-  Stream<QuerySnapshot<Map<String, dynamic>>> getVenuesStream() {
-    //notifies of query results at this 'venues' collection
-    return firebaseFirestore
-        .collection('venues')
-        .where('isApproved', isEqualTo: true) // listen only to approved venues
-        .snapshots();
-  }
-
   //listen to single a venue document change
   @override
   Stream<WeddingVenue?> getVenueStream(String id) {
@@ -61,11 +52,12 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
             .toList());
   }
 
-  //! DEPRECATED
   @override
   Future<List<WeddingVenue>> getAllVenues() async {
     //gets a reference for the specified path in firebase
-    final collectionRef = firebaseFirestore.collection('venues');
+    final collectionRef = firebaseFirestore
+        .collection('venues')
+        .where('isApproved', isEqualTo: true);
 
     //fetch the documents for this query
     QuerySnapshot querySnapshot = await collectionRef.get();

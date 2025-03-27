@@ -1,8 +1,8 @@
 import 'dart:ui';
+import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/double_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/gradient/gradient_slider.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
 import 'package:flutter/material.dart';
 
 class VenuePeopleSlider extends StatelessWidget {
@@ -23,60 +23,23 @@ class VenuePeopleSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: GColors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        // alignment: WrapAlignment.start,
+        // crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          Expanded(
-            child: Column(
-              children: [
-                SliderTheme(
-                  data: SliderThemeData(
-                    trackShape: GradientRectSliderTrackShape(
-                      gradient: GColors.logoGradient,
-                      darkenInactive: true,
-                    ),
-                  ),
-                  child: Slider(
-                    min: min.toDouble(),
-                    max: max.toDouble(),
-                    thumbColor: GColors.royalBlue,
-                    value: numberOfExpectedPeople.toDouble(),
-                    activeColor: GColors.royalBlue,
-                    inactiveColor: GColors.poloBlue,
-                    label: numberOfExpectedPeople.toString(),
-                    divisions: 100, //this should be max value
-                    onChanged: onChanged,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        min.toString(),
-                        style: TextStyle(
-                          color: GColors.royalBlue,
-                        ),
-                      ),
-                      Text(
-                        max.toString(),
-                        style: TextStyle(
-                          color: GColors.royalBlue,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          IconButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  WidgetStatePropertyAll(GColors.whiteShade3.shade600),
             ),
-          ),
-          VenueDetailsButton(
+            icon: Icon(
+              Icons.chair,
+              size: kSmallIconSize,
+              color: GColors.royalBlue,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -171,9 +134,23 @@ class VenuePeopleSlider extends StatelessWidget {
                 },
               );
             },
-            icon: Icons.chair,
-            iconSize: 30,
-            padding: 18,
+          ),
+          Expanded(
+            child: Transform.scale(
+              scale: 0.7,
+              child: Slider(
+                padding: const EdgeInsets.all(0),
+                min: min.toDouble(),
+                max: max.toDouble(),
+                thumbColor: GColors.royalBlue,
+                value: numberOfExpectedPeople.toDouble(),
+                activeColor: GColors.royalBlue,
+                inactiveColor: GColors.poloBlue,
+                label: numberOfExpectedPeople.toString(),
+                divisions: 100, //this should be max value
+                onChanged: onChanged,
+              ),
+            ),
           ),
         ],
       ),

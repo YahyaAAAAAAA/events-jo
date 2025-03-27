@@ -30,7 +30,7 @@ class AdminSubAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: AppBarButton(
         onPressed: () => Navigator.of(context).pop(),
         icon: Icons.arrow_back_ios_new,
-        size: 25,
+        iconSize: 25,
       ),
       leadingWidth: 90,
       toolbarHeight: 70,

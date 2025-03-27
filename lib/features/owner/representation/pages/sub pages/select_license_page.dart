@@ -1,10 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/features/owner/representation/components/owner_button.dart';
-import 'package:events_jo/features/owner/representation/components/image_card.dart';
 import 'package:events_jo/features/owner/representation/components/owner_page_bar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -52,19 +50,20 @@ class SelectLicensePage extends StatelessWidget {
 
           //images slider
           images.isNotEmpty
-              ? CarouselSlider.builder(
-                  itemCount: images.length,
-                  itemBuilder: (context, index, realIndex) => images.isNotEmpty
-                      ? ImageCard(images: images, index: index, isWeb: kIsWeb)
-                      : const SizedBox(),
-                  //responsive height
-                  options: CarouselOptions(
-                    enlargeFactor: 1,
-                    enlargeCenterPage: true,
-                    enlargeStrategy: CenterPageEnlargeStrategy.height,
-                    autoPlay: false,
-                  ),
-                )
+              ? const Text('removed carousel slider temp')
+              // ? CarouselSlider.builder(
+              //     itemCount: images.length,
+              //     itemBuilder: (context, index, realIndex) => images.isNotEmpty
+              //         ? ImageCard(images: images, index: index, isWeb: kIsWeb)
+              //         : const SizedBox(),
+              //     //responsive height
+              //     options: CarouselOptions(
+              //       enlargeFactor: 1,
+              //       enlargeCenterPage: true,
+              //       enlargeStrategy: CenterPageEnlargeStrategy.height,
+              //       autoPlay: false,
+              //     ),
+              //   )
               : const SizedBox(),
 
           const SizedBox(height: 20),

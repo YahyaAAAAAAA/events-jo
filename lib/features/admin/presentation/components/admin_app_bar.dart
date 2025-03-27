@@ -26,14 +26,14 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () =>
               context.read<AuthCubit>().logout(user!.uid, user!.type),
           icon: Icons.person,
-          size: 25,
+          iconSize: 25,
         ),
         bottom: bottom,
         actions: [
           AppBarButton(
             onPressed: () {},
             icon: CustomIcons.menu,
-            size: 20,
+            iconSize: 20,
           ),
         ],
         leadingWidth: 90,

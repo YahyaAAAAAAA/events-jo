@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.events_jo"
-    compileSdkVersion 34
+    compileSdkVersion 35
     // compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

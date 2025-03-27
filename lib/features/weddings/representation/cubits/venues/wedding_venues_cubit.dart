@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/config/algorithms/haversine.dart';
 import 'package:events_jo/config/enums/sort_direction.dart';
-import 'package:events_jo/config/utils/delay.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_states.dart';
@@ -11,74 +9,10 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
   final WeddingVenueRepo weddingVenueRepo;
   final Haversine haversine = Haversine();
 
+  //cached list of venues
+  List<WeddingVenue>? cachedVenues;
   WeddingVenuesCubit({required this.weddingVenueRepo})
       : super(WeddingVenueInit());
-
-  //listen to venues stream
-  List<WeddingVenue> getVenuesStream() {
-    //loading...
-    emit(WeddingVenueLoading());
-
-    List<WeddingVenue> weddingVenues = [];
-
-    //start listening
-    weddingVenueRepo.getVenuesStream().listen(
-      (snapshot) async {
-        final currentState = state;
-        List<WeddingVenue> currentVenues = [];
-
-        await Delay.oneSecond();
-
-        //get current venues
-        if (currentState is WeddingVenuesLoaded) {
-          currentVenues = List.from(currentState.venues);
-        }
-
-        for (var change in snapshot.docChanges) {
-          //get change data
-          final data = change.doc.data();
-
-          //ignore if change is null
-          if (data == null) continue;
-
-          //current venue for the change
-          final venue = WeddingVenue.fromJson(data);
-
-          //add
-          if (change.type == DocumentChangeType.added) {
-            //check if the venue already exists before adding
-            final exists = currentVenues.any((v) => v.id == venue.id);
-            if (!exists) {
-              currentVenues.add(venue);
-            }
-          }
-          //update
-          else if (change.type == DocumentChangeType.modified) {
-            //get updated venue index
-            final index = currentVenues.indexWhere((v) => v.id == venue.id);
-
-            if (index != -1) {
-              currentVenues[index] = venue;
-            }
-          }
-          //remove
-          else if (change.type == DocumentChangeType.removed) {
-            currentVenues.removeWhere((v) => v.id == venue.id);
-          }
-        }
-
-        //done
-        emit(WeddingVenuesLoaded(currentVenues));
-      },
-      onError: (error) {
-        //error
-        emit(WeddingVenueError(error.toString()));
-
-        return [];
-      },
-    );
-    return weddingVenues;
-  }
 
   //unique id
   String generateUniqueId() {
@@ -207,6 +141,7 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     emit(WeddingVenueLoading());
 
     final weddingVenuesList = await weddingVenueRepo.getAllVenues();
+    cachedVenues = weddingVenuesList;
 
     emit(WeddingVenuesLoaded(weddingVenuesList));
 

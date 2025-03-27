@@ -1,3 +1,4 @@
+import 'package:events_jo/config/theme/eventsjo_theme.dart';
 import 'package:events_jo/features/auth/representation/pages/user_type_gate.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
@@ -29,7 +30,6 @@ import 'package:events_jo/features/settings/representation/cubits/password/passw
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
-import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -160,13 +160,7 @@ class EventsJoApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'Abel',
-          scaffoldBackgroundColor: GColors.scaffoldBg,
-          appBarTheme: AppBarTheme(
-            backgroundColor: GColors.appBarBg,
-          ),
-        ),
+        theme: eventsJoTheme(),
         home: BlocConsumer<AuthCubit, AuthStates>(
           builder: (context, state) {
             debugPrint(state.toString());

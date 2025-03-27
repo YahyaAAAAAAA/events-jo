@@ -21,7 +21,7 @@ class SettingsSubAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: AppBarButton(
         onPressed: () => Navigator.of(context).pop(),
         icon: Icons.arrow_back_ios_new_rounded,
-        size: 25,
+        iconSize: 25,
       ),
       centerTitle: true,
       title: FittedBox(

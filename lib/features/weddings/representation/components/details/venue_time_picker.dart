@@ -1,7 +1,9 @@
 import 'dart:ui';
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -42,128 +44,129 @@ class VenueTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: GColors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              '$text time: ' +
-                  initTime!.hour
-                      .toString()
-                      .toTimeWithMinutes(initTime!.minute.toString()),
-              style: TextStyle(
-                fontSize: 25,
-                color: GColors.royalBlue,
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Wrap(
+        alignment: WrapAlignment.start,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          IconButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  WidgetStatePropertyAll(GColors.whiteShade3.shade600),
             ),
-            //time
-            VenueDetailsButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ClipRRect(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                        child: AlertDialog(
-                          backgroundColor: backgroundColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          content: SizedBox(
-                            height: 225,
-                            child: ScrollConfiguration(
-                              //add drag behavior for cupertino widgets on Windows
-                              behavior: const MaterialScrollBehavior().copyWith(
-                                dragDevices: {
-                                  PointerDeviceKind.mouse,
-                                  PointerDeviceKind.touch,
-                                  PointerDeviceKind.stylus,
-                                  PointerDeviceKind.unknown,
-                                },
-                              ),
-                              child: CupertinoTheme(
-                                data: CupertinoThemeData(
-                                  textTheme: CupertinoTextThemeData(
-                                    dateTimePickerTextStyle: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                      color: timeColor,
-                                    ),
-                                  ),
-                                ),
-                                child: CupertinoDatePicker(
-                                  initialDateTime: initTime,
-                                  maximumDate: maxTime,
-                                  minimumDate: minTime,
-                                  minuteInterval: minuteInterval,
-                                  use24hFormat: use24hFormat,
-                                  backgroundColor: backgroundColor,
-                                  mode: CupertinoDatePickerMode.time,
-                                  onDateTimeChanged: onDateTimeChanged,
-                                ),
-                              ),
-                            ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: cancelPressed,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    WidgetStatePropertyAll(buttonColor),
-                                shape: WidgetStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                  color: GColors.royalBlue,
-                                  fontSize: 17,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: confirmPressed,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    WidgetStatePropertyAll(buttonColor),
-                                shape: WidgetStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                'Ok',
-                                style: TextStyle(
-                                  color: GColors.royalBlue,
-                                  fontSize: 17,
-                                ),
-                              ),
-                            ),
-                          ],
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                      child: AlertDialog(
+                        backgroundColor: backgroundColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        content: SizedBox(
+                          height: 225,
+                          child: ScrollConfiguration(
+                            //add drag behavior for cupertino widgets on Windows
+                            behavior: const MaterialScrollBehavior().copyWith(
+                              dragDevices: {
+                                PointerDeviceKind.mouse,
+                                PointerDeviceKind.touch,
+                                PointerDeviceKind.stylus,
+                                PointerDeviceKind.unknown,
+                              },
+                            ),
+                            child: CupertinoTheme(
+                              data: CupertinoThemeData(
+                                textTheme: CupertinoTextThemeData(
+                                  dateTimePickerTextStyle: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: timeColor,
+                                  ),
+                                ),
+                              ),
+                              child: CupertinoDatePicker(
+                                initialDateTime: initTime,
+                                maximumDate: maxTime,
+                                minimumDate: minTime,
+                                minuteInterval: minuteInterval,
+                                use24hFormat: use24hFormat,
+                                backgroundColor: backgroundColor,
+                                mode: CupertinoDatePickerMode.time,
+                                onDateTimeChanged: onDateTimeChanged,
+                              ),
+                            ),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: cancelPressed,
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(buttonColor),
+                              shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                color: GColors.royalBlue,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: confirmPressed,
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(buttonColor),
+                              shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              'Ok',
+                              style: TextStyle(
+                                color: GColors.royalBlue,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                );
-              },
-              icon: icon,
-              iconSize: 30,
-              padding: 18,
+                    ),
+                  );
+                },
+              );
+            },
+            icon: Icon(
+              icon,
+              size: kSmallIconSize,
+              color: GColors.royalBlue,
             ),
-          ],
-        ),
+          ),
+          5.width,
+          //time
+          Text(
+            '$text at: ' +
+                initTime!.hour
+                    .toString()
+                    .toTimeWithMinutes(initTime!.minute.toString()),
+            style: TextStyle(
+              fontSize: kSmallFontSize - 2,
+              color: GColors.black,
+            ),
+          ),
+        ],
       ),
     );
   }

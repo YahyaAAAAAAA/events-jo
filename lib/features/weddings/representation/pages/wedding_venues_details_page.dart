@@ -1,4 +1,6 @@
+import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/packages/lazy%20indexed%20stack/lazy_indexed_stack.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
@@ -150,108 +152,147 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                           picsList: singleWeddingVenueCubit.stringsToImages(
                             venue.pics,
                           ),
-                        ),
-
-                        //* name,rating and location
-                        VenueNameRatingAndLocation(
                           weddingVenue: venue,
                           locationCubit: locationCubit,
                           venueLocation: venueLocation,
                         ),
 
-                        const SizedBox(height: 20),
+                        5.height,
 
-                        venueText('Select the date you want to book'),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              venueText('The date you want to book'),
+                              100.width,
+                              venueText('The time for your venue'),
+                            ],
+                          ),
+                        ),
 
                         //* date
-                        VenueDatePicker(
-                          minDate: DateTime(
-                            venue.startDate[0],
-                            venue.startDate[1],
-                            venue.startDate[2],
-                          ),
-                          maxDate: DateTime(
-                            venue.endDate[0],
-                            venue.endDate[1],
-                            venue.endDate[2],
-                          ),
-                          //save date
-                          onDateSelected: (date) => setState(
-                            () => selectedDate = date,
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              VenueDatePicker(
+                                minDate: DateTime(
+                                  venue.startDate[0],
+                                  venue.startDate[1],
+                                  venue.startDate[2],
+                                ),
+                                maxDate: DateTime(
+                                  venue.endDate[0],
+                                  venue.endDate[1],
+                                  venue.endDate[2],
+                                ),
+                                //save date
+                                onDateSelected: (date) => setState(
+                                  () => selectedDate = date,
+                                ),
+                              ),
+                              5.width,
+                              Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: GColors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(kOuterRadius),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        VenueTimePicker(
+                                          text: 'Start',
+                                          icon: CustomIcons.calendar,
+                                          backgroundColor: GColors.whiteShade3,
+                                          buttonColor: GColors.white,
+                                          timeColor: GColors.royalBlue,
+                                          initTime: selectedStartTime,
+                                          minTime:
+                                              DateTime(0, 0, 0, venue.time[0]),
+                                          maxTime:
+                                              DateTime(0, 0, 0, venue.time[1]),
+                                          minuteInterval: 10,
+                                          use24hFormat: false,
+                                          //waits for confirmation
+                                          onDateTimeChanged: (date) {
+                                            selectedStartTimeInit = date;
+                                          },
+                                          //saves selected time
+                                          confirmPressed: () => setState(() {
+                                            selectedStartTime =
+                                                selectedStartTimeInit;
+                                            Navigator.of(context).pop();
+                                          }),
+                                          //do nothing
+                                          cancelPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                        const SizedBox(
+                                          width: 140,
+                                          child: Divider(),
+                                        ),
+
+                                        //* time
+                                        VenueTimePicker(
+                                          text: 'Finish',
+                                          icon: CustomIcons.calendar_clock,
+                                          backgroundColor: GColors.whiteShade3,
+                                          buttonColor: GColors.white,
+                                          timeColor: GColors.royalBlue,
+                                          initTime: selectedEndTime,
+                                          minTime:
+                                              DateTime(0, 0, 0, venue.time[0]),
+                                          maxTime:
+                                              DateTime(0, 0, 0, venue.time[1]),
+                                          minuteInterval: 10,
+                                          use24hFormat: false,
+                                          //waits for confirmation
+                                          onDateTimeChanged: (date) =>
+                                              selectedEndTimeInit = date,
+                                          //saves selected time
+                                          confirmPressed: () => setState(() {
+                                            selectedEndTime =
+                                                selectedEndTimeInit;
+                                            Navigator.of(context).pop();
+                                          }),
+                                          //do nothing
+                                          cancelPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  venueText('Number of expected people'),
+                                  Container(
+                                    width: 160,
+                                    height: 65,
+                                    decoration: BoxDecoration(
+                                      color: GColors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(kOuterRadius),
+                                    ),
+                                    child: VenuePeopleSlider(
+                                      max: venue.peopleMax,
+                                      min: venue.peopleMin,
+                                      numberOfExpectedPeople:
+                                          numberOfExpectedPeople,
+                                      pricePerPerson: venue.peoplePrice,
+                                      onChanged: (value) => setState(
+                                        () => numberOfExpectedPeople =
+                                            value.toInt(),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-
-                        const SizedBox(height: 20),
-
-                        venueText('Select the time for your venue'),
-
-                        //* time
-                        VenueTimePicker(
-                          text: 'Start',
-                          icon: CustomIcons.calendar,
-                          backgroundColor: GColors.whiteShade3,
-                          buttonColor: GColors.white,
-                          timeColor: GColors.royalBlue,
-                          initTime: selectedStartTime,
-                          minTime: DateTime(0, 0, 0, venue.time[0]),
-                          maxTime: DateTime(0, 0, 0, venue.time[1]),
-                          minuteInterval: 10,
-                          use24hFormat: false,
-                          //waits for confirmation
-                          onDateTimeChanged: (date) {
-                            selectedStartTimeInit = date;
-                          },
-                          //saves selected time
-                          confirmPressed: () => setState(() {
-                            selectedStartTime = selectedStartTimeInit;
-                            Navigator.of(context).pop();
-                          }),
-                          //do nothing
-                          cancelPressed: () => Navigator.of(context).pop(),
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        //* time
-                        VenueTimePicker(
-                          text: 'Finish',
-                          icon: CustomIcons.calendar_clock,
-                          backgroundColor: GColors.whiteShade3,
-                          buttonColor: GColors.white,
-                          timeColor: GColors.royalBlue,
-                          initTime: selectedEndTime,
-                          minTime: DateTime(0, 0, 0, venue.time[0]),
-                          maxTime: DateTime(0, 0, 0, venue.time[1]),
-                          minuteInterval: 10,
-                          use24hFormat: false,
-                          //waits for confirmation
-                          onDateTimeChanged: (date) =>
-                              selectedEndTimeInit = date,
-                          //saves selected time
-                          confirmPressed: () => setState(() {
-                            selectedEndTime = selectedEndTimeInit;
-                            Navigator.of(context).pop();
-                          }),
-                          //do nothing
-                          cancelPressed: () => Navigator.of(context).pop(),
-                        ),
-
-                        const SizedBox(height: 20),
-                        venueText(
-                            'Select the number of expected people for your venue'),
-
-                        //* number of expected people
-                        VenuePeopleSlider(
-                          max: venue.peopleMax,
-                          min: venue.peopleMin,
-                          numberOfExpectedPeople: numberOfExpectedPeople,
-                          pricePerPerson: venue.peoplePrice,
-                          onChanged: (value) => setState(
-                            () => numberOfExpectedPeople = value.toInt(),
-                          ),
-                        ),
-
-                        const SizedBox(height: 20),
 
                         venueText('Select your preferred meals'),
 
@@ -402,9 +443,9 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
       child: Text(
         text,
         style: TextStyle(
-          color: GColors.royalBlue,
-          fontSize: 17,
-          fontWeight: FontWeight.bold,
+          color: GColors.black,
+          fontSize: kSmallFontSize,
+          fontWeight: FontWeight.normal,
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:events_jo/config/enums/jordan_city.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
@@ -25,17 +26,19 @@ class VenueSearchBarButton extends StatelessWidget {
     return PopupMenuButton(
       icon: Icon(
         CustomIcons.sort,
-        size: 20,
+        size: kSmallIconSize,
         color: GColors.black,
       ),
-
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          kOuterRadius,
+        ),
+      ),
       onOpened: onOpened,
       style: ButtonStyle(
-        shadowColor: WidgetStatePropertyAll(
-          GColors.black.withValues(alpha: 0.5),
-        ),
-        elevation: const WidgetStatePropertyAll(3),
-        backgroundColor: WidgetStatePropertyAll(GColors.white),
+        elevation: const WidgetStatePropertyAll(0),
+        backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
+        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

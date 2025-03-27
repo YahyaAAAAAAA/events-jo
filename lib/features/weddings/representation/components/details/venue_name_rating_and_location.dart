@@ -1,11 +1,10 @@
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_rating.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_details_button.dart';
 import 'package:flutter/material.dart';
 
 class VenueNameRatingAndLocation extends StatelessWidget {
@@ -41,14 +40,15 @@ class VenueNameRatingAndLocation extends StatelessWidget {
             children: [
               //venue name
               ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 290),
+                constraints: const BoxConstraints(minWidth: 362),
                 child: FittedBox(
-                  child: GradientText(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
                     weddingVenue.name,
-                    gradient: GColors.logoGradient,
                     style: TextStyle(
-                      color: GColors.royalBlue,
-                      fontSize: 28,
+                      color: GColors.black,
+                      fontSize: kSmallFontSize,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -56,17 +56,17 @@ class VenueNameRatingAndLocation extends StatelessWidget {
               ),
 
               //rate
-              VenueRating(weddingVenue: weddingVenue, size: 20),
+              VenueRating(weddingVenue: weddingVenue, size: kSmallIconSize - 5),
             ],
           ),
 
           //location
-          VenueDetailsButton(
+          IconButton(
             onPressed: () => locationCubit!
                 .showMapDialogPreview(context, userLocation: venueLocation!),
-            icon: CustomIcons.map_marker,
-            iconSize: 30,
-            padding: 18,
+            icon: const Icon(
+              CustomIcons.map_marker,
+            ),
           ),
         ],
       ),

@@ -31,6 +31,10 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
+    //todo remove later
+    emailController.text = 'hi@gmail.com';
+    pwController.text = '123456';
+
     //get cubit
     authCubit = context.read<AuthCubit>();
   }

@@ -1,0 +1,42 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6.0"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Project"
+				}
+			],
+			"targets" : []
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/Flutterrrr/FlutterProjects/events_jo/android/app/.cxx/Debug/5e6c6ep4/x86_64",
+		"source" : "D:/Flutterrrr/flutter/packages/flutter_tools/gradle/src/main/groovy"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 1
+	}
+}

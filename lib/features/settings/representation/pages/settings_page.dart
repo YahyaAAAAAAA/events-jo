@@ -41,6 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: HomeAppBar(
         title: 'Settings',
+        isOwner: false,
         onPressed: () => context.read<AuthCubit>().logout(
               user!.uid,
               user!.type,
