@@ -1,5 +1,5 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
-import 'package:events_jo/config/packages/lazy%20indexed%20stack/lazy_indexed_stack.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
@@ -8,20 +8,20 @@ import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/representation/components/details/venue_details_summary.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:events_jo/features/weddings/representation/components/drink_card.dart';
 import 'package:events_jo/features/weddings/representation/components/empty_card.dart';
 import 'package:events_jo/features/weddings/representation/components/meal_card.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_image_slider.dart';
-import 'package:events_jo/features/weddings/representation/components/details/venue_name_rating_and_location.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_date_picker.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_people_slider.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_time_picker.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_changed.dart';
 import 'package:events_jo/features/weddings/representation/components/venues_app_bar.dart';
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_states.dart';
+import 'package:events_jo/features/weddings/representation/pages/cashout_modal_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,9 +61,10 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
   late int numberOfExpectedPeople;
 
-  int index = 0;
-
-  String selectedPaymentMethod = 'Credit Card';
+  double totalAmount = 0;
+  String paymentMethod = 'cash';
+  List<WeddingVenueMeal>? selectedMeals = [];
+  List<WeddingVenueDrink>? selectedDrinks = [];
 
   @override
   void initState() {
@@ -104,11 +105,45 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
     singleWeddingVenueCubit.getSingleVenueStream(weddingVenue.id);
   }
 
+  double getTotalPrice({
+    required List<WeddingVenueMeal> meals,
+    required List<WeddingVenueDrink> drinks,
+    required double peoplePrice,
+    required double numberOfPeople,
+  }) {
+    double total = 0;
+    //calculate total meals
+    for (int i = 0; i < meals.length; i++) {
+      total += meals[i].calculatedPrice;
+    }
+    //calculate total drinks
+    for (int i = 0; i < drinks.length; i++) {
+      total += drinks[i].calculatedPrice;
+    }
+    //calculate total price for people
+    total += (numberOfPeople * peoplePrice);
+
+    totalAmount = total;
+    selectedMeals = meals.map((meal) => meal.copyWith()).toList();
+    selectedDrinks = drinks.map((drink) => drink.copyWith()).toList();
+    for (int i = 0; i < selectedMeals!.length; i++) {
+      selectedMeals![i].amount = meals[i].selectedAmount;
+    }
+
+    for (int i = 0; i < selectedDrinks!.length; i++) {
+      selectedDrinks![i].amount = drinks[i].selectedAmount;
+    }
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //* title
-      appBar: VenuesAppBar(user: widget.user),
+      appBar: VenuesAppBar(
+        user: widget.user,
+        venueName: weddingVenue.name,
+      ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 450),
@@ -129,301 +164,233 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                 final venue = state.data.venue;
                 final meals = state.data.meals;
                 final drinks = state.data.drinks;
-                final selectedMeals = meals
-                    .where(
-                      (element) => element.isChecked,
-                    )
-                    .toList();
-                final selectedDrinks = drinks
-                    .where(
-                      (element) => element.isChecked,
-                    )
-                    .toList();
 
-                return LazyIndexedStack(
-                  index: index,
+                return ListView(
+                  padding: const EdgeInsets.all(12),
                   children: [
-                    //* details list
-                    ListView(
-                      padding: const EdgeInsets.all(12),
-                      children: [
-                        //* images slider
-                        VenueImageSlider(
-                          picsList: singleWeddingVenueCubit.stringsToImages(
-                            venue.pics,
-                          ),
-                          weddingVenue: venue,
-                          locationCubit: locationCubit,
-                          venueLocation: venueLocation,
-                        ),
-
-                        5.height,
-
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            children: [
-                              venueText('The date you want to book'),
-                              100.width,
-                              venueText('The time for your venue'),
-                            ],
-                          ),
-                        ),
-
-                        //* date
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              VenueDatePicker(
-                                minDate: DateTime(
-                                  venue.startDate[0],
-                                  venue.startDate[1],
-                                  venue.startDate[2],
-                                ),
-                                maxDate: DateTime(
-                                  venue.endDate[0],
-                                  venue.endDate[1],
-                                  venue.endDate[2],
-                                ),
-                                //save date
-                                onDateSelected: (date) => setState(
-                                  () => selectedDate = date,
-                                ),
-                              ),
-                              5.width,
-                              Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: GColors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(kOuterRadius),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        VenueTimePicker(
-                                          text: 'Start',
-                                          icon: CustomIcons.calendar,
-                                          backgroundColor: GColors.whiteShade3,
-                                          buttonColor: GColors.white,
-                                          timeColor: GColors.royalBlue,
-                                          initTime: selectedStartTime,
-                                          minTime:
-                                              DateTime(0, 0, 0, venue.time[0]),
-                                          maxTime:
-                                              DateTime(0, 0, 0, venue.time[1]),
-                                          minuteInterval: 10,
-                                          use24hFormat: false,
-                                          //waits for confirmation
-                                          onDateTimeChanged: (date) {
-                                            selectedStartTimeInit = date;
-                                          },
-                                          //saves selected time
-                                          confirmPressed: () => setState(() {
-                                            selectedStartTime =
-                                                selectedStartTimeInit;
-                                            Navigator.of(context).pop();
-                                          }),
-                                          //do nothing
-                                          cancelPressed: () =>
-                                              Navigator.of(context).pop(),
-                                        ),
-                                        const SizedBox(
-                                          width: 140,
-                                          child: Divider(),
-                                        ),
-
-                                        //* time
-                                        VenueTimePicker(
-                                          text: 'Finish',
-                                          icon: CustomIcons.calendar_clock,
-                                          backgroundColor: GColors.whiteShade3,
-                                          buttonColor: GColors.white,
-                                          timeColor: GColors.royalBlue,
-                                          initTime: selectedEndTime,
-                                          minTime:
-                                              DateTime(0, 0, 0, venue.time[0]),
-                                          maxTime:
-                                              DateTime(0, 0, 0, venue.time[1]),
-                                          minuteInterval: 10,
-                                          use24hFormat: false,
-                                          //waits for confirmation
-                                          onDateTimeChanged: (date) =>
-                                              selectedEndTimeInit = date,
-                                          //saves selected time
-                                          confirmPressed: () => setState(() {
-                                            selectedEndTime =
-                                                selectedEndTimeInit;
-                                            Navigator.of(context).pop();
-                                          }),
-                                          //do nothing
-                                          cancelPressed: () =>
-                                              Navigator.of(context).pop(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  venueText('Number of expected people'),
-                                  Container(
-                                    width: 160,
-                                    height: 65,
-                                    decoration: BoxDecoration(
-                                      color: GColors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(kOuterRadius),
-                                    ),
-                                    child: VenuePeopleSlider(
-                                      max: venue.peopleMax,
-                                      min: venue.peopleMin,
-                                      numberOfExpectedPeople:
-                                          numberOfExpectedPeople,
-                                      pricePerPerson: venue.peoplePrice,
-                                      onChanged: (value) => setState(
-                                        () => numberOfExpectedPeople =
-                                            value.toInt(),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        venueText('Select your preferred meals'),
-
-                        //* meals
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemCount: meals.isNotEmpty ? meals.length : 1,
-                          //add gap between children
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 20,
-                          ),
-                          //build meals
-                          itemBuilder: (context, index) {
-                            return meals.isNotEmpty
-                                ? MealCard(
-                                    isChecked: meals[index].isChecked,
-                                    amount: meals[index].amount,
-                                    price: meals[index].price,
-                                    selectedAmount: meals[index].selectedAmount,
-                                    name: meals[index].name,
-                                    calculatedPrice:
-                                        meals[index].calculatedPrice,
-                                    //check & uncheck meal
-                                    onCheckBoxChanged: (value) => setState(
-                                      () => meals[index].isChecked =
-                                          !meals[index].isChecked,
-                                    ),
-                                    //change meal amount
-                                    onSliderChanged: (value) =>
-                                        singleWeddingVenueCubit
-                                            .calculateIndividualMealsPrice(
-                                      meals[index],
-                                      value,
-                                    ),
-                                  )
-                                : EmptyCard(
-                                    text:
-                                        'No meals available for ${venue.name}',
-                                  );
-                          },
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        venueText('Select your preferred drinks'),
-
-                        //* drinks
-                        ListView.separated(
-                          //note: this is how to put listview inside a column
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemCount: drinks.isNotEmpty ? drinks.length : 1,
-                          //add gap between children
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 20,
-                          ),
-                          //build meals
-                          itemBuilder: (context, index) {
-                            return drinks.isNotEmpty
-                                ? DrinkCard(
-                                    isChecked: drinks[index].isChecked,
-                                    amount: drinks[index].amount,
-                                    price: drinks[index].price,
-                                    selectedAmount:
-                                        drinks[index].selectedAmount,
-                                    calculatedPrice:
-                                        drinks[index].calculatedPrice,
-                                    name: drinks[index].name,
-                                    //check & uncheck meal
-                                    onCheckBoxChanged: (value) => setState(
-                                      () => drinks[index].isChecked =
-                                          !drinks[index].isChecked,
-                                    ),
-                                    //change meal amount
-                                    onSliderChanged: (value) =>
-                                        singleWeddingVenueCubit
-                                            .calculateIndividualDrinksPrice(
-                                      drinks[index],
-                                      value,
-                                    ),
-                                  )
-                                : EmptyCard(
-                                    text:
-                                        'No drinks available for ${venue.name}',
-                                  );
-                          },
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        //* payment
-                        VenueBar(
-                          onPressedNext: () => setState(() => index = 1),
-                          onPressedBack: () => setState(
-                            () => Navigator.of(context).pop(),
-                          ),
-                        ),
-
-                        const SizedBox(height: 20),
-                      ],
+                    //* images slider
+                    VenueImageSlider(
+                      picsList: singleWeddingVenueCubit.stringsToImages(
+                        venue.pics,
+                      ),
+                      weddingVenue: venue,
+                      locationCubit: locationCubit,
+                      venueLocation: venueLocation,
                     ),
 
-                    //* checkout ,total price
-                    VenueDetailsSummary(
-                      venue: venue,
-                      selectedDate: selectedDate,
-                      selectedStartTime: selectedStartTime,
-                      selectedEndTime: selectedEndTime,
-                      selectedMeals: selectedMeals,
-                      selectedDrinks: selectedDrinks,
-                      selectedPaymentMethod: selectedPaymentMethod,
-                      total: () {
-                        double total = 0;
-                        //calculate total meals
-                        for (int i = 0; i < selectedMeals.length; i++) {
-                          total += selectedMeals[i].calculatedPrice;
-                        }
-                        //calculate total drinks
-                        for (int i = 0; i < selectedDrinks.length; i++) {
-                          total += selectedDrinks[i].calculatedPrice;
-                        }
-                        //calculate total price for people
-                        total += (numberOfExpectedPeople * venue.peoplePrice);
+                    5.height,
 
-                        return total;
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          venueText('The date you want to book'),
+                          100.width,
+                          venueText('The time for your venue'),
+                        ],
+                      ),
+                    ),
+
+                    //* date
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          VenueDatePicker(
+                            minDate: DateTime(
+                              venue.startDate[0],
+                              venue.startDate[1],
+                              venue.startDate[2],
+                            ),
+                            maxDate: DateTime(
+                              venue.endDate[0],
+                              venue.endDate[1],
+                              venue.endDate[2],
+                            ),
+                            //save date
+                            onDateSelected: (date) => setState(
+                              () => selectedDate = date,
+                            ),
+                          ),
+                          5.width,
+                          Column(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: GColors.white,
+                                  borderRadius:
+                                      BorderRadius.circular(kOuterRadius),
+                                ),
+                                child: Column(
+                                  children: [
+                                    VenueTimePicker(
+                                      text: 'Start',
+                                      icon: CustomIcons.calendar,
+                                      backgroundColor: GColors.whiteShade3,
+                                      buttonColor: GColors.white,
+                                      timeColor: GColors.royalBlue,
+                                      initTime: selectedStartTime,
+                                      minTime: DateTime(0, 0, 0, venue.time[0]),
+                                      maxTime: DateTime(0, 0, 0, venue.time[1]),
+                                      minuteInterval: 10,
+                                      use24hFormat: false,
+                                      //waits for confirmation
+                                      onDateTimeChanged: (date) {
+                                        selectedStartTimeInit = date;
+                                      },
+                                      //saves selected time
+                                      confirmPressed: () => setState(() {
+                                        selectedStartTime =
+                                            selectedStartTimeInit;
+                                        Navigator.of(context).pop();
+                                      }),
+                                      //do nothing
+                                      cancelPressed: () =>
+                                          Navigator.of(context).pop(),
+                                    ),
+                                    const SizedBox(
+                                      width: 140,
+                                      child: Divider(),
+                                    ),
+
+                                    //* time
+                                    VenueTimePicker(
+                                      text: 'Finish',
+                                      icon: CustomIcons.calendar_clock,
+                                      backgroundColor: GColors.whiteShade3,
+                                      buttonColor: GColors.white,
+                                      timeColor: GColors.royalBlue,
+                                      initTime: selectedEndTime,
+                                      minTime: DateTime(0, 0, 0, venue.time[0]),
+                                      maxTime: DateTime(0, 0, 0, venue.time[1]),
+                                      minuteInterval: 10,
+                                      use24hFormat: false,
+                                      //waits for confirmation
+                                      onDateTimeChanged: (date) =>
+                                          selectedEndTimeInit = date,
+                                      //saves selected time
+                                      confirmPressed: () => setState(() {
+                                        selectedEndTime = selectedEndTimeInit;
+                                        Navigator.of(context).pop();
+                                      }),
+                                      //do nothing
+                                      cancelPressed: () =>
+                                          Navigator.of(context).pop(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              venueText('Number of expected people'),
+                              Container(
+                                width: 160,
+                                height: 65,
+                                decoration: BoxDecoration(
+                                  color: GColors.white,
+                                  borderRadius:
+                                      BorderRadius.circular(kOuterRadius),
+                                ),
+                                child: VenuePeopleSlider(
+                                  max: venue.peopleMax,
+                                  min: venue.peopleMin,
+                                  numberOfExpectedPeople:
+                                      numberOfExpectedPeople,
+                                  pricePerPerson: venue.peoplePrice,
+                                  onChanged: (value) => setState(
+                                    () =>
+                                        numberOfExpectedPeople = value.toInt(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    venueText('Select your preferred meals'),
+
+                    //* meals
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: meals.isNotEmpty ? meals.length : 1,
+                      //add gap between children
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 10,
+                      ),
+                      //build meals
+                      itemBuilder: (context, index) {
+                        return meals.isNotEmpty
+                            ? MealCard(
+                                isChecked: meals[index].isChecked,
+                                amount: meals[index].amount,
+                                price: meals[index].price,
+                                selectedAmount: meals[index].selectedAmount,
+                                name: meals[index].name,
+                                calculatedPrice: meals[index].calculatedPrice,
+                                //check & uncheck meal
+                                onCheckBoxChanged: (value) => setState(
+                                  () => meals[index].isChecked =
+                                      !meals[index].isChecked,
+                                ),
+                                //change meal amount
+                                onSliderChanged: (value) =>
+                                    singleWeddingVenueCubit
+                                        .calculateIndividualMealsPrice(
+                                  meals[index],
+                                  value,
+                                ),
+                              )
+                            : EmptyCard(
+                                text: 'No meals available for ${venue.name}',
+                              );
                       },
-                      onPressedNext: () => setState(() => index = 1),
-                      onPressedBack: () => setState(() => index = 0),
-                      onChanged: (value) => setState(
-                          () => selectedPaymentMethod = value.toString()),
+                    ),
+
+                    10.height,
+
+                    venueText('Select your preferred drinks'),
+
+                    //* drinks
+                    ListView.separated(
+                      //note: this is how to put listview inside a column
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: drinks.isNotEmpty ? drinks.length : 1,
+                      //add gap between children
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 10,
+                      ),
+                      //build meals
+                      itemBuilder: (context, index) {
+                        return drinks.isNotEmpty
+                            ? DrinkCard(
+                                isChecked: drinks[index].isChecked,
+                                amount: drinks[index].amount,
+                                price: drinks[index].price,
+                                selectedAmount: drinks[index].selectedAmount,
+                                calculatedPrice: drinks[index].calculatedPrice,
+                                name: drinks[index].name,
+                                //check & uncheck meal
+                                onCheckBoxChanged: (value) => setState(
+                                  () => drinks[index].isChecked =
+                                      !drinks[index].isChecked,
+                                ),
+                                //change meal amount
+                                onSliderChanged: (value) =>
+                                    singleWeddingVenueCubit
+                                        .calculateIndividualDrinksPrice(
+                                  drinks[index],
+                                  value,
+                                ),
+                              )
+                            : EmptyCard(
+                                text: 'No drinks available for ${venue.name}',
+                              );
+                      },
                     ),
                   ],
                 );
@@ -431,6 +398,113 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                 return const GlobalLoadingBar(mainText: false);
               }
             },
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: GColors.whiteShade3.shade600,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(kOuterRadius),
+            topRight: Radius.circular(kOuterRadius),
+          ),
+        ),
+        padding: const EdgeInsets.all(12),
+        child: IconButton(
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              backgroundColor: GColors.whiteShade3,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(kOuterRadius),
+                ),
+              ),
+              showDragHandle: true,
+              builder: (context) {
+                return CashoutModalSheet(
+                  paymentMethod: paymentMethod,
+                  totalAmount: totalAmount,
+                  ownerId: widget.weddingVenue.ownerId,
+                  venueId: widget.weddingVenue.id,
+                  userId: widget.user!.uid,
+                  date: selectedDate,
+                  startTime: selectedStartTime.hour,
+                  endTime: selectedEndTime.hour,
+                  people: numberOfExpectedPeople,
+                  meals: selectedMeals,
+                  drinks: selectedDrinks,
+                  onCashPressed: () => setState(() => paymentMethod = 'cash'),
+                  onCreditPressed: () =>
+                      setState(() => paymentMethod = 'credit'),
+                );
+              },
+            );
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+            padding: const WidgetStatePropertyAll(
+              EdgeInsets.all(12),
+            ),
+          ),
+          icon: Row(
+            children: [
+              Icon(
+                Icons.checklist_rtl_outlined,
+                color: GColors.white,
+                size: kNormalIconSize,
+              ),
+              10.width,
+              Text(
+                'Done? Checkout now',
+                style: TextStyle(
+                  color: GColors.white,
+                  fontSize: kSmallFontSize,
+                ),
+              ),
+              const Spacer(),
+              BlocBuilder<SingleWeddingVenueCubit, SingleWeddingVenueStates>(
+                  builder: (context, state) {
+                if (state is SingleWeddingVenueLoaded) {
+                  final venue = state.data.venue;
+                  final meals = state.data.meals;
+                  final drinks = state.data.drinks;
+                  final selectedMeals = meals
+                      .where(
+                        (element) => element.isChecked,
+                      )
+                      .toList();
+                  final selectedDrinks = drinks
+                      .where(
+                        (element) => element.isChecked,
+                      )
+                      .toList();
+                  return Text(
+                    'JOD ' +
+                        getTotalPrice(
+                          meals: selectedMeals,
+                          drinks: selectedDrinks,
+                          peoplePrice: venue.peoplePrice,
+                          numberOfPeople: numberOfExpectedPeople.toDouble(),
+                        ).toString(),
+                    style: TextStyle(
+                      color: GColors.white,
+                      fontSize: kSmallFontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                } else {
+                  return Text(
+                    'JOD 0.0',
+                    style: TextStyle(
+                      color: GColors.white,
+                      fontSize: kSmallFontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                }
+              }),
+            ],
           ),
         ),
       ),

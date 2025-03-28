@@ -72,10 +72,17 @@ pending:
     ✔ unapproved,approved venues stream by id @done(24-12-25 01:06)
     ✔ unapproved no details, only tracking @done(24-12-25 01:06)
     //-----------------
-    ☐ fix search and sort
-    ☐ redesign venues details
+    ✔ meal/drink card @done(25-03-27 23:04)
+    ✔ wedding details appbar @done(25-03-27 23:18)
+    //-----------------
+    ✔ redesign venues details @done(25-03-28 06:41)
+    ✔ order feature 50% @done(25-03-28 06:41)
+    ☐ display reserved dates in venue details
+    ☐ order page stream?
+    ☐ design orders page
     ☐ redesign settings
     ☐ redesign owner page
+    ☐ fix search and sort
     ☐ redesign admin (❁´◡`❁)
     //-----------------
     ☐ carousel slider removed check that later 

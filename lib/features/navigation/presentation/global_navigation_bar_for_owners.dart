@@ -2,6 +2,7 @@ import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page_for_owners.dart';
+import 'package:events_jo/features/order/representation/pages/orders_page.dart';
 import 'package:events_jo/features/settings/representation/pages/settings_page_for_owners.dart';
 import 'package:flutter/material.dart';
 
@@ -31,14 +32,7 @@ class _GlobalNavigationBarForOwnersState
       //first nav item
       const HomePageForOwners(),
       //middle nav item
-      Center(
-        child: Text(
-          'List of the user orders',
-          style: TextStyle(
-            color: GColors.black,
-          ),
-        ),
-      ),
+      const OrdersPage(),
       //last nav item
       const SettingsPageForOwners(),
     ];

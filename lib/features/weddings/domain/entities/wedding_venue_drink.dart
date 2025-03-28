@@ -37,4 +37,23 @@ class WeddingVenueDrink {
     amount = jsonVenue['amount'];
     price = jsonVenue['price'].toDouble();
   }
+
+  WeddingVenueDrink copyWith({
+    String? id,
+    String? name,
+    int? amount,
+    double? price,
+    bool? isChecked,
+    int? selectedAmount,
+    double? calculatedPrice,
+  }) {
+    return WeddingVenueDrink(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      amount: amount ?? this.amount,
+      price: price ?? this.price,
+      isChecked: isChecked ?? this.isChecked,
+      selectedAmount: selectedAmount ?? this.selectedAmount,
+    )..calculatedPrice = calculatedPrice ?? this.calculatedPrice;
+  }
 }

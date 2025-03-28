@@ -19,6 +19,8 @@ import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:events_jo/features/auth/representation/pages/auth_page.dart';
 import 'package:events_jo/features/location/data/geolocator_location_repo.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
+import 'package:events_jo/features/order/data/firebase_order_repo.dart';
+import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/owner%20venues/data/firebase_owner_venues_repo.dart';
 import 'package:events_jo/features/owner%20venues/representation/cubits/venues/approved/owner_approved_venues_cubit.dart';
 import 'package:events_jo/features/owner%20venues/representation/cubits/venues/unapproved/owner_unapproved_venues_cubit.dart';
@@ -60,6 +62,7 @@ class EventsJoApp extends StatelessWidget {
   final adminRepo = FirebaseAdminRepo();
   final settingsRepo = FirebaseSettingsRepo();
   final ownerVenuesRepo = FirebaseOwnerVenuesRepo();
+  final orderRepo = FirebaseOrderRepo();
 
   EventsJoApp({super.key});
 
@@ -119,6 +122,10 @@ class EventsJoApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               OwnerUnapprovedVenuesCubit(ownerVenuesRepo: ownerVenuesRepo),
+        ),
+        //order cubit
+        BlocProvider(
+          create: (context) => OrderCubit(orderRepo: orderRepo),
         ),
         //* -------------------Admin cubits below-------------------
         //approved venues cubit
