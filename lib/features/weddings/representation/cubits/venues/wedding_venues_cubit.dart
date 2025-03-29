@@ -135,7 +135,6 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     return weddingVenueList;
   }
 
-  //! DEPRECATED
   //get all venues from database
   Future<List<WeddingVenue>> getAllVenues() async {
     emit(WeddingVenueLoading());
@@ -146,5 +145,13 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     emit(WeddingVenuesLoaded(weddingVenuesList));
 
     return weddingVenuesList;
+  }
+
+  Future<WeddingVenue?> getVenueById(String venueId) async {
+    final venue = await weddingVenueRepo.getVenueById(venueId);
+    if (venue == null) {
+      return null;
+    }
+    return venue;
   }
 }

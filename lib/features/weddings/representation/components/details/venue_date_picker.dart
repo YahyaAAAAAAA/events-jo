@@ -8,12 +8,16 @@ class VenueDatePicker extends StatelessWidget {
   final DateTime minDate;
   final DateTime maxDate;
   final void Function(DateTime)? onDateSelected;
+  final List<DateTime>? reservedDates;
+  final bool isDateAvailable;
 
   const VenueDatePicker({
     super.key,
     required this.minDate,
     required this.maxDate,
     required this.onDateSelected,
+    required this.reservedDates,
+    required this.isDateAvailable,
   });
 
   @override
@@ -27,18 +31,24 @@ class VenueDatePicker extends StatelessWidget {
         decoration: BoxDecoration(
           color: GColors.white,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isDateAvailable ? GColors.white : GColors.redShade3,
+            width: 0.5,
+          ),
         ),
         child: DatePicker(
           minDate: minDate,
           maxDate: maxDate,
           initialDate: minDate,
-          selectedDate: minDate,
+          // selectedDate: minDate,
           onDateSelected: onDateSelected,
+          splashRadius: 15,
           currentDateDecoration: BoxDecoration(
             border: Border.all(
               color: GColors.royalBlue,
+              width: 0.5,
             ),
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: BorderRadius.circular(100),
           ),
           slidersColor: GColors.black,
           slidersSize: kSmallIconSize,
@@ -68,6 +78,25 @@ class VenueDatePicker extends StatelessWidget {
             fontSize: kSmallFontSize,
             color: GColors.black.withValues(alpha: 0.5),
           ),
+          currentDateTextStyle: TextStyle(
+            fontSize: kSmallFontSize,
+            color: GColors.black,
+          ),
+          disabledDayPredicate: (date) {
+            if (reservedDates == null) {
+              return false;
+            }
+            if (reservedDates!.isEmpty) {
+              return false;
+            }
+            for (var reservedDate in reservedDates!) {
+              if (date == reservedDate) {
+                return true;
+              }
+            }
+
+            return false;
+          },
         ),
       ),
     );

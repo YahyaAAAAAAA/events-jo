@@ -4,6 +4,7 @@ import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
 import 'package:events_jo/features/order/domain/order_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseOrderRepo implements OrderRepo {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -121,6 +122,27 @@ class FirebaseOrderRepo implements OrderRepo {
     }
 
     return detailedOrders;
+  }
+
+  @override
+  Future<List<DateTimeRange>> getVenueOrders(String venueId) async {
+    final querySnapshot = await firebaseFirestore
+        .collection('orders')
+        .where('venueId', isEqualTo: venueId)
+        .get();
+
+    final reservedDateRanges = querySnapshot.docs.map((doc) {
+      final data = doc.data();
+      final date = DateTime.parse(data['date']);
+      final startTime = data['startTime'];
+
+      final endTime = data['endTime'];
+      return DateTimeRange(
+        start: date.add(Duration(hours: startTime)),
+        end: date.add(Duration(hours: endTime)),
+      );
+    }).toList();
+    return reservedDateRanges;
   }
 
   @override

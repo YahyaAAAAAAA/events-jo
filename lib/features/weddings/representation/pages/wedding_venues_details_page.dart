@@ -1,4 +1,6 @@
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/datetime_range_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
@@ -7,6 +9,7 @@ import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
+import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
@@ -21,7 +24,6 @@ import 'package:events_jo/features/weddings/representation/components/venue_chan
 import 'package:events_jo/features/weddings/representation/components/venues_app_bar.dart';
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_states.dart';
-import 'package:events_jo/features/weddings/representation/pages/cashout_modal_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,13 +47,14 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   late final WeddingVenue weddingVenue;
 
   late final SingleWeddingVenueCubit singleWeddingVenueCubit;
+  late final OrderCubit orderCubit;
 
   //venue location
   late final LocationCubit locationCubit;
   late final EjLocation venueLocation;
 
   //date
-  late DateTime selectedDate;
+  DateTime? selectedDate;
 
   //time
   late DateTime selectedStartTime;
@@ -65,6 +68,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   String paymentMethod = 'cash';
   List<WeddingVenueMeal>? selectedMeals = [];
   List<WeddingVenueDrink>? selectedDrinks = [];
+  List<DateTimeRange>? reservedDates = [];
 
   @override
   void initState() {
@@ -75,6 +79,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
     //get cubits
     singleWeddingVenueCubit = context.read<SingleWeddingVenueCubit>();
+    orderCubit = context.read<OrderCubit>();
     locationCubit = context.read<LocationCubit>();
 
     //setup time
@@ -82,13 +87,6 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
     selectedStartTimeInit = DateTime(0, 0, 0, weddingVenue.time[0]);
     selectedEndTime = DateTime(0, 0, 0, weddingVenue.time[0]);
     selectedEndTimeInit = DateTime(0, 0, 0, weddingVenue.time[0]);
-
-    //setup date
-    selectedDate = DateTime(
-      weddingVenue.startDate[0],
-      weddingVenue.startDate[1],
-      weddingVenue.startDate[2],
-    );
 
     //setup people range
     numberOfExpectedPeople = weddingVenue.peopleMin;
@@ -103,6 +101,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
     //listen to venue
     singleWeddingVenueCubit.getSingleVenueStream(weddingVenue.id);
+    getVenueOrders();
   }
 
   double getTotalPrice({
@@ -134,6 +133,33 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
       selectedDrinks![i].amount = drinks[i].selectedAmount;
     }
     return total;
+  }
+
+  void getVenueOrders() async {
+    reservedDates = await orderCubit.getVenueOrders(weddingVenue.id);
+    setState(() {});
+  }
+
+  bool isDateAvailable() {
+    if (reservedDates == null) {
+      return true;
+    }
+
+    if (selectedDate == null) {
+      return true;
+    }
+
+    DateTime start = selectedDate!.add(Duration(hours: selectedStartTime.hour));
+    DateTime end = selectedDate!.add(Duration(hours: selectedEndTime.hour));
+    DateTimeRange range = DateTimeRange(start: start, end: end);
+
+    for (int i = 0; i < reservedDates!.length; i++) {
+      if (reservedDates![i].conflictsWith(range)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   @override
@@ -214,6 +240,8 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                             onDateSelected: (date) => setState(
                               () => selectedDate = date,
                             ),
+                            reservedDates: null,
+                            isDateAvailable: isDateAvailable(),
                           ),
                           5.width,
                           Column(
@@ -223,6 +251,12 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                                   color: GColors.white,
                                   borderRadius:
                                       BorderRadius.circular(kOuterRadius),
+                                  border: Border.all(
+                                    color: isDateAvailable()
+                                        ? GColors.white
+                                        : GColors.redShade3,
+                                    width: 0.5,
+                                  ),
                                 ),
                                 child: Column(
                                   children: [
@@ -242,11 +276,20 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                                         selectedStartTimeInit = date;
                                       },
                                       //saves selected time
-                                      confirmPressed: () => setState(() {
-                                        selectedStartTime =
-                                            selectedStartTimeInit;
-                                        Navigator.of(context).pop();
-                                      }),
+                                      confirmPressed: () {
+                                        if (!selectedEndTime
+                                            .isAfter(selectedStartTimeInit)) {
+                                          context.showSnackBar(
+                                              'Please pick a valid start time');
+                                          Navigator.of(context).pop();
+                                          return;
+                                        }
+                                        setState(() {
+                                          selectedStartTime =
+                                              selectedStartTimeInit;
+                                          Navigator.of(context).pop();
+                                        });
+                                      },
                                       //do nothing
                                       cancelPressed: () =>
                                           Navigator.of(context).pop(),
@@ -272,10 +315,19 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                                       onDateTimeChanged: (date) =>
                                           selectedEndTimeInit = date,
                                       //saves selected time
-                                      confirmPressed: () => setState(() {
-                                        selectedEndTime = selectedEndTimeInit;
-                                        Navigator.of(context).pop();
-                                      }),
+                                      confirmPressed: () {
+                                        if (selectedStartTime
+                                            .isAfter(selectedEndTimeInit)) {
+                                          context.showSnackBar(
+                                              'Please pick a valid finish time');
+                                          Navigator.of(context).pop();
+                                          return;
+                                        }
+                                        setState(() {
+                                          selectedEndTime = selectedEndTimeInit;
+                                          Navigator.of(context).pop();
+                                        });
+                                      },
                                       //do nothing
                                       cancelPressed: () =>
                                           Navigator.of(context).pop(),
@@ -412,33 +464,28 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
         padding: const EdgeInsets.all(12),
         child: IconButton(
           onPressed: () {
-            showModalBottomSheet(
+            // print(selectedDate);
+            if (selectedDate == null) {
+              context.showSnackBar('Please pick a date');
+              return;
+            }
+            if (!isDateAvailable()) {
+              context.showSnackBar('Please pick a different date or time');
+              return;
+            }
+            orderCubit.showCashoutSheet(
               context: context,
-              backgroundColor: GColors.whiteShade3,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(kOuterRadius),
-                ),
-              ),
-              showDragHandle: true,
-              builder: (context) {
-                return CashoutModalSheet(
-                  paymentMethod: paymentMethod,
-                  totalAmount: totalAmount,
-                  ownerId: widget.weddingVenue.ownerId,
-                  venueId: widget.weddingVenue.id,
-                  userId: widget.user!.uid,
-                  date: selectedDate,
-                  startTime: selectedStartTime.hour,
-                  endTime: selectedEndTime.hour,
-                  people: numberOfExpectedPeople,
-                  meals: selectedMeals,
-                  drinks: selectedDrinks,
-                  onCashPressed: () => setState(() => paymentMethod = 'cash'),
-                  onCreditPressed: () =>
-                      setState(() => paymentMethod = 'credit'),
-                );
-              },
+              userId: widget.user!.uid,
+              venueId: weddingVenue.id,
+              ownerId: weddingVenue.ownerId,
+              date: selectedDate,
+              startTime: selectedStartTime.hour,
+              endTime: selectedEndTime.hour,
+              people: numberOfExpectedPeople,
+              paymentMethod: paymentMethod,
+              totalAmount: totalAmount,
+              meals: selectedMeals!,
+              drinks: selectedDrinks!,
             );
           },
           style: ButtonStyle(

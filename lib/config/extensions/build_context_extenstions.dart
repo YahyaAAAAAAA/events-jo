@@ -1,4 +1,6 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/transition_animation.dart';
 import 'package:flutter/material.dart';
 
@@ -48,12 +50,27 @@ extension BuildContextExtension on BuildContext {
         content: FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.center,
-          child: Text(
-            message,
-            style: Theme.of(this).textTheme.labelMedium,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 5,
+            children: [
+              Icon(
+                Icons.info_outline_rounded,
+                color: GColors.royalBlue,
+                size: kSmallIconSize,
+              ),
+              Text(
+                message,
+                style: TextStyle(
+                  color: GColors.royalBlue,
+                  fontSize: kSmallFontSize,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
-        backgroundColor: Theme.of(this).secondaryHeaderColor,
+        backgroundColor: GColors.whiteShade3.shade600,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(kOuterRadius),

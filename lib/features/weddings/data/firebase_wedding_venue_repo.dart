@@ -76,6 +76,18 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
   }
 
   @override
+  Future<WeddingVenue?> getVenueById(String id) async {
+    final docRef = firebaseFirestore.collection('venues').doc(id);
+    final docSnapshot = await docRef.get();
+
+    if (!docSnapshot.exists || docSnapshot.data() == null) {
+      return null;
+    }
+
+    return WeddingVenue.fromJson(docSnapshot.data()!);
+  }
+
+  @override
   String generateUniqueId() {
     //current time (from year to microsecond)
     final now = DateTime.now();

@@ -46,7 +46,7 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
         if (data == null) {
           return;
         }
-
+        //to make firebase send messages on a platform thread.
         final currentState = state;
         WeddingVenueDetailed currentData = data;
         updatedData = data;

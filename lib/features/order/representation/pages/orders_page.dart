@@ -1,9 +1,21 @@
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
+import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
+import 'package:events_jo/features/order/representation/components/order_details_modal_sheet.dart';
+import 'package:events_jo/features/order/representation/components/user_order_card.dart';
+import 'package:events_jo/features/order/representation/components/user_orders_empty.dart';
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class OrdersPage extends StatefulWidget {
   const OrdersPage({Key? key}) : super(key: key);
@@ -21,85 +33,87 @@ class _OrdersPageState extends State<OrdersPage> {
 
     user = UserManager().currentUser;
 
-    context.read<OrderCubit>().fetchUserOrders(user!.uid);
+    context.read<OrderCubit>().getUserOrders(user!.uid);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'My Orders',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
+      appBar: HomeAppBar(
+        isOwner: false,
+        title: user!.name,
+        onPressed: () =>
+            context.read<AuthCubit>().logout(user!.uid, user!.type),
       ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 450),
-          child: BlocBuilder<OrderCubit, OrderStates>(
-            builder: (context, state) {
-              if (state is OrderLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is OrderLoaded) {
-                final orders = state.orders;
-                if (orders.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'No orders available',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  );
-                }
-                return ListView.separated(
-                  padding: const EdgeInsets.all(12),
-                  itemCount: orders.length,
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemBuilder: (context, index) {
-                    final order = orders[index];
-                    return Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(12),
-                        title: Text(
-                          'Order Status: ${order.order.status.name}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Order ID: ${order.order.id}'),
-                            Text(
-                                'Total Amount: \$${order.order.amount.toStringAsFixed(2)}'),
-                            Text('Date: ${order.order.createdAt.toLocal()}'),
-                          ],
-                        ),
-                        trailing: const Icon(Icons.arrow_forward_ios_rounded),
-                        onTap: () {
-                          // Navigate to order details page (if implemented)
-                        },
-                      ),
-                    );
-                  },
-                );
-              } else if (state is OrderError) {
-                return Center(
-                  child: Text(
-                    'Failed to load orders: ${state.message}',
-                    style: const TextStyle(fontSize: 18, color: Colors.red),
-                  ),
-                );
+          child: BlocConsumer<OrderCubit, OrderStates>(
+            listener: (context, state) {
+              if (state is OrderError) {
+                context.showSnackBar('Something wrong happend.');
               }
-              return const Center(child: Text('Something went wrong'));
+            },
+            builder: (context, state) {
+              return Skeletonizer(
+                enabled: state is OrderLoading ? true : false,
+                containersColor: GColors.white,
+                child: state is UserOrdersLoaded
+                    ? state.orders.isEmpty
+                        ? UserOrdersEmpty(text: user!.name.toCapitalized)
+                        : ListView.separated(
+                            padding: const EdgeInsets.all(12),
+                            itemCount: state.orders.length,
+                            separatorBuilder: (context, index) =>
+                                const Divider(),
+                            itemBuilder: (context, index) {
+                              final order = state.orders[index].order;
+                              final meals = state.orders[index].meals;
+                              final drinks = state.orders[index].drinks;
+
+                              return UserOrderCard(
+                                order: order,
+                                onPressed: () async {
+                                  final venue = await context
+                                      .read<WeddingVenuesCubit>()
+                                      .getVenueById(order.venueId);
+                                  showModalBottomSheet(
+                                    context: context,
+                                    backgroundColor: GColors.whiteShade3,
+                                    showDragHandle: true,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(kOuterRadius),
+                                      ),
+                                    ),
+                                    isScrollControlled: true,
+                                    builder: (context) {
+                                      return OrderDetailsModalSheet(
+                                        venue: venue,
+                                        order: order,
+                                        meals: meals,
+                                        drinks: drinks,
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          )
+                    : ListView.separated(
+                        itemCount: 5,
+                        separatorBuilder: (context, index) => 10.height,
+                        itemBuilder: (context, index) => const UserOrderCard()),
+              );
             },
           ),
         ),
+      ),
+      bottomNavigationBar: Divider(
+        color: GColors.poloBlue,
+        thickness: 0.5,
+        indent: 10,
+        endIndent: 10,
       ),
     );
   }

@@ -78,6 +78,9 @@ pending:
     ✔ redesign venues details @done(25-03-28 06:41)
     ✔ order feature 50% @done(25-03-28 06:41)
     ☐ display reserved dates in venue details
+    ☐ fix wedding details bottom
+    ☐ fix wedding details bottom sheet state resets on drag
+    ☐ add payment method to order model
     ☐ order page stream?
     ☐ design orders page
     ☐ redesign settings

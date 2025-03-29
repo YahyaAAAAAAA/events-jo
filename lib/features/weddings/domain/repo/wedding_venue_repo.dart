@@ -14,5 +14,7 @@ abstract class WeddingVenueRepo {
 
   Future<List<WeddingVenue>> getAllVenues();
 
+  Future<WeddingVenue?> getVenueById(String id);
+
   String generateUniqueId();
 }

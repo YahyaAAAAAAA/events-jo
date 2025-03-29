@@ -17,14 +17,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CashoutModalSheet extends StatelessWidget {
-  final void Function()? onCashPressed;
-  final void Function()? onCreditPressed;
   final double totalAmount;
   final String paymentMethod;
   final String userId;
   final String ownerId;
   final String venueId;
-  final DateTime date;
+  final DateTime? date;
   final int startTime;
   final int endTime;
   final int people;
@@ -44,8 +42,6 @@ class CashoutModalSheet extends StatelessWidget {
     required this.people,
     this.meals,
     this.drinks,
-    this.onCashPressed,
-    this.onCreditPressed,
   });
 
   @override
@@ -84,7 +80,6 @@ class CashoutModalSheet extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    //start time,end time,date, meals,drinks,people
                     onPressed: () {
                       context.pop();
                       context.pop();
@@ -99,16 +94,16 @@ class CashoutModalSheet extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       spacing: 10,
                       children: [
-                        Icon(
-                          Icons.thumb_up_alt_outlined,
-                          color: GColors.royalBlue,
-                        ),
                         Text(
                           'Go Back',
                           style: TextStyle(
                             color: GColors.royalBlue,
                             fontSize: kNormalFontSize,
                           ),
+                        ),
+                        Icon(
+                          Icons.thumb_up_alt_outlined,
+                          color: GColors.royalBlue,
                         ),
                       ],
                     ),
@@ -118,7 +113,9 @@ class CashoutModalSheet extends StatelessWidget {
             ),
           );
         }
-        if (state is OrderInitial) {
+        if (state is OrderLoading) {
+          return const GlobalLoadingBar(mainText: false);
+        } else {
           return StatefulBuilder(
             builder: (context, setState) {
               return SingleChildScrollView(
@@ -137,13 +134,9 @@ class CashoutModalSheet extends StatelessWidget {
                       ),
                       5.height,
                       VenuePaymentCard(
-                        onPressed: () {
-                          setState(
-                            () {
-                              localPaymentMethod = 'credit';
-                            },
-                          );
-                        },
+                        onPressed: () => setState(
+                          () => localPaymentMethod = 'credit',
+                        ),
                         title: 'Credit Card',
                         value: 'credit',
                         groupValue: localPaymentMethod,
@@ -160,13 +153,9 @@ class CashoutModalSheet extends StatelessWidget {
                       ),
                       10.height,
                       VenuePaymentCard(
-                        onPressed: () {
-                          setState(
-                            () {
-                              localPaymentMethod = 'cash';
-                            },
-                          );
-                        },
+                        onPressed: () => setState(
+                          () => localPaymentMethod = 'cash',
+                        ),
                         title: 'Cash',
                         value: 'cash',
                         groupValue: localPaymentMethod,
@@ -211,7 +200,7 @@ class CashoutModalSheet extends StatelessWidget {
                                         people: people,
                                         status: OrderStatus.pending,
                                         createdAt: DateTime.now(),
-                                        date: date,
+                                        date: date!,
                                       ),
                                       meals,
                                       drinks,
@@ -237,8 +226,6 @@ class CashoutModalSheet extends StatelessWidget {
               );
             },
           );
-        } else {
-          return const GlobalLoadingBar(mainText: false);
         }
       },
     );
