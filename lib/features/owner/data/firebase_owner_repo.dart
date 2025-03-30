@@ -4,6 +4,7 @@ import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,6 +12,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FirebaseOwnerRepo implements OwnerRepo {
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
   //setup cloudinary server (for image upload & removal)
   final cloudinary = Cloudinary.full(
     apiKey: dotenv.get('IMG_API_KEY'),
@@ -168,6 +171,52 @@ class FirebaseOwnerRepo implements OwnerRepo {
     }
 
     return urls;
+  }
+
+  @override
+  Future<List<WeddingVenueDetailed>> getOwnerVenues(String ownerId) async {
+    final querySnapshot = await firebaseFirestore
+        .collection('venues')
+        .where('ownerId', isEqualTo: ownerId)
+        .get();
+
+    List<WeddingVenueDetailed> venuesDetailed = [];
+
+    for (var doc in querySnapshot.docs) {
+      final venue = WeddingVenue.fromJson(doc.data());
+
+      final mealsSnapshot = await firebaseFirestore
+          .collection('venues')
+          .doc(venue.id)
+          .collection('meals')
+          .get();
+
+      final meals = mealsSnapshot.docs
+          .map(
+            (mealDoc) => WeddingVenueMeal.fromJson(
+              mealDoc.data(),
+            ),
+          )
+          .toList();
+
+      final drinksSnapshot = await firebaseFirestore
+          .collection('venues')
+          .doc(venue.id)
+          .collection('drinks')
+          .get();
+
+      final drinks = drinksSnapshot.docs
+          .map(
+            (drinkDoc) => WeddingVenueDrink.fromJson(
+              drinkDoc.data(),
+            ),
+          )
+          .toList();
+
+      venuesDetailed.add(
+          WeddingVenueDetailed(venue: venue, meals: meals, drinks: drinks));
+    }
+    return venuesDetailed;
   }
 
   @override

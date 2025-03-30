@@ -1,4 +1,6 @@
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
@@ -6,10 +8,9 @@ import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
-import 'package:events_jo/features/owner%20venues/representation/pages/owner_venues.dart';
-import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
+import 'package:events_jo/features/owner/representation/pages/venues/owner_venues_tab_page.dart';
+import 'package:events_jo/features/owner/representation/pages/creation/owner_page.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
-import 'package:events_jo/features/settings/representation/components/settings_divider.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/settings/representation/pages/account_page.dart';
 import 'package:events_jo/features/settings/representation/pages/notifications_page.dart';
@@ -52,128 +53,108 @@ class _SettingsPageForOwnersState extends State<SettingsPageForOwners> {
               user!.type,
             ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Container(
-            constraints: const BoxConstraints(
-              maxWidth: 450,
-            ),
-            decoration: BoxDecoration(
-              color: GColors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: GColors.black.withValues(alpha: 0.3),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
+      body: MediaQuery.of(context).size.width >= 300
+          ? Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 450,
                 ),
-              ],
-            ),
-            child: ListView(
-              padding: const EdgeInsets.all(20),
-              shrinkWrap: true,
-              children: [
-                //account
-                SettingsCard(
-                  text: 'Your Account',
-                  icon: CustomIcons.portrait,
-                  iconSize: 25,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => AccountPage(
-                        settingsCubit: settingsCubit,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      //account
+                      Text(
+                        'Account',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize + 2,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                      SettingsCard(
+                        text: 'Your Account',
+                        icon: CustomIcons.portrait,
+                        onTap: () => context.push(
+                          AccountPage(settingsCubit: settingsCubit),
+                        ),
+                      ),
+                      10.height,
+                      SettingsCard(
+                        text: 'Notifications',
+                        icon: CustomIcons.bell,
+                        onTap: () => context.push(NotificationsPage()),
+                      ),
+                      10.height,
+
+                      Text(
+                        'Support',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize + 2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      5.height,
+                      //privacy and security
+                      SettingsCard(
+                        text: 'Privacy & Security',
+                        icon: CustomIcons.lock,
+                        onTap: () => context.push(const PrivacyPage()),
+                      ),
+                      10.height,
+
+                      //help and support
+                      SettingsCard(
+                        text: 'Help and Support',
+                        icon: CustomIcons.headphones,
+                        onTap: () => context.push(SupportPage()),
+                      ),
+                      10.height,
+                      Text(
+                        'Your Events',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize + 2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      5.height,
+                      //venues
+                      SettingsCard(
+                        text: 'Your Venues',
+                        icon: CustomIcons.rings_wedding_1,
+                        onTap: () => context.push(const OwnerVenuesTabPage()),
+                      ),
+                      10.height,
+
+                      //farms
+                      SettingsCard(
+                        text: 'Your Farms',
+                        icon: CustomIcons.wheat,
+                        onTap: () => GSnackBar.show(
+                          context: context,
+                          text: 'Coming Soon',
+                        ),
+                      ),
+                      10.height,
+
+                      //courts
+                      SettingsCard(
+                        text: 'Your Courts',
+                        icon: CustomIcons.football_1,
+                        onTap: () => GSnackBar.show(
+                          context: context,
+                          text: 'Coming Soon',
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-
-                const SettingsDivider(),
-
-                SettingsCard(
-                  text: 'Notifications',
-                  icon: CustomIcons.bell,
-                  iconSize: 25,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => NotificationsPage(),
-                    ),
-                  ),
-                ),
-
-                const SettingsDivider(),
-
-                //privacy and security
-                SettingsCard(
-                  text: 'Privacy & Security',
-                  icon: CustomIcons.lock,
-                  iconSize: 25,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const PrivacyPage(),
-                    ),
-                  ),
-                ),
-
-                const SettingsDivider(),
-
-                //help and support
-                SettingsCard(
-                  text: 'Help and Support',
-                  icon: CustomIcons.headphones,
-                  iconSize: 25,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => SupportPage(),
-                    ),
-                  ),
-                ),
-
-                const SettingsDivider(),
-
-                //venues
-                SettingsCard(
-                  text: 'Your Venues',
-                  iconSize: 25,
-                  icon: CustomIcons.rings_wedding_1,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const OwnerVenues(),
-                    ),
-                  ),
-                ),
-
-                const SettingsDivider(),
-
-                //farms
-                SettingsCard(
-                  text: 'Your Farms',
-                  iconSize: 25,
-                  icon: CustomIcons.wheat,
-                  onTap: () => GSnackBar.show(
-                    context: context,
-                    text: 'Coming Soon',
-                  ),
-                ),
-
-                const SettingsDivider(),
-
-                //courts
-                SettingsCard(
-                  text: 'Your Courts',
-                  iconSize: 25,
-                  icon: CustomIcons.football_1,
-                  onTap: () => GSnackBar.show(
-                    context: context,
-                    text: 'Coming Soon',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+              ),
+            )
+          : 0.width,
       bottomNavigationBar: Divider(
         color: GColors.poloBlue,
         thickness: 0.5,

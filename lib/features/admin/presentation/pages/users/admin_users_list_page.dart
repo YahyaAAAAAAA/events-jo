@@ -49,11 +49,9 @@ class _AdminUsersListPageState extends State<AdminUsersListPage> {
                 final users = state.users;
 
                 if (users.isEmpty) {
-                  return EmptyList(
+                  return const EmptyList(
                     icon: CustomIcons.sad,
                     text: 'EventsJo have no users',
-                    gradient: GColors.adminGradient,
-                    color: GColors.cyanShade6,
                   );
                 }
 

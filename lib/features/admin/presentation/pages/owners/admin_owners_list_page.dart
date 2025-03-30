@@ -49,11 +49,9 @@ class _AdminUsersListPageState extends State<AdminOwnersListPage> {
                 final owners = state.owners;
 
                 if (owners.isEmpty) {
-                  return EmptyList(
+                  return const EmptyList(
                     icon: CustomIcons.sad,
                     text: 'EventsJo have no owners',
-                    gradient: GColors.adminGradient,
-                    color: GColors.cyanShade6,
                   );
                 }
 

@@ -1,3 +1,6 @@
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -5,7 +8,6 @@ import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
-import 'package:events_jo/features/settings/representation/components/settings_divider.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/settings/representation/pages/account_page.dart';
 import 'package:events_jo/features/settings/representation/pages/notifications_page.dart';
@@ -40,7 +42,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        title: 'Settings',
+        title: user?.name ?? 'Guest 123',
         isOwner: false,
         onPressed: () => context.read<AuthCubit>().logout(
               user!.uid,
@@ -48,81 +50,60 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Container(
-            constraints: const BoxConstraints(
-              maxWidth: 450,
-            ),
-            decoration: BoxDecoration(
-              color: GColors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: GColors.black.withValues(alpha: 0.3),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 450,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
             child: ListView(
-              padding: const EdgeInsets.all(20),
-              shrinkWrap: true,
               children: [
                 //account
+                Text(
+                  'Account',
+                  style: TextStyle(
+                    color: GColors.black,
+                    fontSize: kSmallFontSize + 2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 SettingsCard(
                   text: 'Your Account',
                   icon: CustomIcons.portrait,
-                  iconSize: 25,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => AccountPage(
-                        settingsCubit: settingsCubit,
-                      ),
-                    ),
+                  onTap: () => context.push(
+                    AccountPage(settingsCubit: settingsCubit),
                   ),
                 ),
-
-                //divider
-                const SettingsDivider(),
-
+                10.height,
                 SettingsCard(
                   text: 'Notifications',
                   icon: CustomIcons.bell,
-                  iconSize: 25,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => NotificationsPage(),
-                    ),
+                  onTap: () => context.push(NotificationsPage()),
+                ),
+                10.height,
+
+                Text(
+                  'Support',
+                  style: TextStyle(
+                    color: GColors.black,
+                    fontSize: kSmallFontSize + 2,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-
-                //divider
-                const SettingsDivider(),
-
+                5.height,
+                //privacy and security
                 SettingsCard(
                   text: 'Privacy & Security',
                   icon: CustomIcons.lock,
-                  iconSize: 25,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const PrivacyPage(),
-                    ),
-                  ),
+                  onTap: () => context.push(const PrivacyPage()),
                 ),
+                10.height,
 
-                //divider
-                const SettingsDivider(),
-
+                //help and support
                 SettingsCard(
                   text: 'Help and Support',
                   icon: CustomIcons.headphones,
-                  iconSize: 25,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => SupportPage(),
-                    ),
-                  ),
+                  onTap: () => context.push(SupportPage()),
                 ),
               ],
             ),

@@ -1,5 +1,6 @@
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/settings/representation/components/settings_loading_button.dart';
@@ -67,9 +68,9 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
               Text(
                 'Change Password',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: kNormalFontSize,
                   fontWeight: FontWeight.bold,
-                  color: GColors.royalBlue,
+                  color: GColors.black,
                 ),
               ),
 
@@ -121,37 +122,25 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                       onPressed: () async {
                         //check if old password is empty
                         if (oldPasswordController.text.trim().isEmpty) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'Old password is empty',
-                          );
+                          context.showSnackBar('Old password is empty');
                           return;
                         }
 
                         //check if new password is empty
                         if (newPasswordController.text.trim().isEmpty) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'New password is empty',
-                          );
+                          context.showSnackBar('New password is empty');
                           return;
                         }
                         //check if confirm new password is empty
                         if (confirmNewPasswordController.text.trim().isEmpty) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'Confirm new password is empty',
-                          );
+                          context.showSnackBar('Confirm new password is empty');
                           return;
                         }
 
                         //check if passwords match
                         if (newPasswordController.text.trim() !=
                             confirmNewPasswordController.text.trim()) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'Passwords do not match',
-                          );
+                          context.showSnackBar('Passwords do not match');
                           return;
                         }
 
@@ -161,25 +150,17 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                             oldPasswordController.text);
                       },
                       text: 'Reset Password',
-                      padding: EdgeInsets.zero,
-                      buttonPadding: const EdgeInsets.all(20),
                     ),
                   );
                 },
                 listener: (context, state) {
                   //password updated
                   if (state is PasswordUpdated) {
-                    GSnackBar.show(
-                      context: context,
-                      text: state.message,
-                    );
+                    context.showSnackBar(state.message);
                   }
                   //error
                   if (state is PasswordError) {
-                    GSnackBar.show(
-                      context: context,
-                      text: state.message,
-                    );
+                    context.showSnackBar(state.message);
                   }
                 },
               ),

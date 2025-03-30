@@ -7,7 +7,7 @@ import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/home/presentation/components/sponserd_venue.dart';
-import 'package:events_jo/features/owner/representation/pages/owner_page.dart';
+import 'package:events_jo/features/owner/representation/pages/creation/owner_page.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_list.dart';
@@ -60,10 +60,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: kListViewWidth),
           child: Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-            ),
+            padding: const EdgeInsets.all(12),
             child: ListView(
               children: [
                 //todo search bar

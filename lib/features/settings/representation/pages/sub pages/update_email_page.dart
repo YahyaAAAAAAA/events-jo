@@ -1,5 +1,6 @@
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/settings/representation/components/settings_loading_button.dart';
@@ -67,9 +68,9 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
               Text(
                 'Change Email',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: kNormalFontSize,
                   fontWeight: FontWeight.bold,
-                  color: GColors.royalBlue,
+                  color: GColors.black,
                 ),
               ),
 
@@ -119,47 +120,33 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
                       onPressed: () async {
                         //check if old email is empty
                         if (oldEmailController.text.trim().isEmpty) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'Old email is empty',
-                          );
+                          context.showSnackBar('Old email is empty');
                           return;
                         }
 
                         //check if new email is empty
                         if (newEmailController.text.trim().isEmpty) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'New email is empty',
-                          );
+                          context.showSnackBar('New email is empty');
                           return;
                         }
 
                         //check if old email is correct
                         if (oldEmailController.text.trim() != user!.email) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'Old email is incorrect',
-                          );
+                          context.showSnackBar('Old email is incorrect');
                           return;
                         }
 
                         //check if old email is the same as the new email
                         if (oldEmailController.text.trim() ==
                             newEmailController.text.trim()) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'Old email is the same as the new email',
-                          );
+                          context.showSnackBar(
+                              'Old email is the same as the new email');
                           return;
                         }
 
                         //check if password is empty
                         if (oldPasswordForEmailController.text.trim().isEmpty) {
-                          GSnackBar.show(
-                            context: context,
-                            text: 'Password is empty',
-                          );
+                          context.showSnackBar('Password is empty');
                           return;
                         }
 
@@ -171,25 +158,17 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
                         );
                       },
                       text: 'Change Email',
-                      padding: EdgeInsets.zero,
-                      buttonPadding: const EdgeInsets.all(20),
                     ),
                   );
                 },
                 listener: (context, state) {
                   //email verification sent
                   if (state is EmailVerificationSent) {
-                    GSnackBar.show(
-                      context: context,
-                      text: state.message,
-                    );
+                    context.showSnackBar(state.message);
                   }
                   //error
                   if (state is EmailError) {
-                    GSnackBar.show(
-                      context: context,
-                      text: state.message,
-                    );
+                    context.showSnackBar(state.message);
                   }
                 },
               ),

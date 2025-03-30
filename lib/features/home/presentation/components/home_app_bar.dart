@@ -27,63 +27,65 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Row(
-          children: [
-            AppBarButton(
-              onPressed: onPressed,
-              icon: Icons.person_outline,
-              iconSize: kNormalIconSize,
-            ),
-            10.width,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  //todo user name
-                  'Hello ${title.toCapitalized}',
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: kSmallFontSize,
+        title: MediaQuery.of(context).size.width >= 300
+            ? Row(
+                children: [
+                  AppBarButton(
+                    onPressed: onPressed,
+                    icon: Icons.person_outline,
+                    iconSize: kNormalIconSize,
                   ),
-                ),
-                Text(
-                  'Good Morning!',
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: kSmallFontSize,
+                  10.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        //todo user name
+                        'Hello ${title.toCapitalized}',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize,
+                        ),
+                      ),
+                      Text(
+                        'Good Morning!',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: kSmallFontSize,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            isOwner
-                ? AppBarButton(
-                    onPressed: onOwnerButtonTap,
-                    icon: Icons.person_4_outlined,
-                    iconSize: kSmallIconSize + 5,
-                    iconColor: GColors.white,
-                    style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStatePropertyAll(GColors.royalBlue),
-                    ),
-                  )
-                : 0.width,
-            isOwner ? 5.width : 0.width,
-            AppBarButton(
-              onPressed: () {},
-              icon: CustomIcons.bell_notification_social_media,
-              iconSize: kSmallIconSize,
-            ),
-            5.width,
-            AppBarButton(
-              onPressed: () {},
-              icon: CustomIcons.menu,
-              iconSize: kSmallIconSize,
-            ),
-            5.width,
-          ],
-        ),
+                  const Spacer(),
+                  isOwner
+                      ? AppBarButton(
+                          onPressed: onOwnerButtonTap,
+                          icon: Icons.person_4_outlined,
+                          iconSize: kSmallIconSize + 5,
+                          iconColor: GColors.white,
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(GColors.royalBlue),
+                          ),
+                        )
+                      : 0.width,
+                  isOwner ? 5.width : 0.width,
+                  AppBarButton(
+                    onPressed: () {},
+                    icon: CustomIcons.bell_notification_social_media,
+                    iconSize: kSmallIconSize,
+                  ),
+                  5.width,
+                  AppBarButton(
+                    onPressed: () {},
+                    icon: CustomIcons.menu,
+                    iconSize: kSmallIconSize,
+                  ),
+                  5.width,
+                ],
+              )
+            : 0.width,
         toolbarHeight: 70,
       ),
     );

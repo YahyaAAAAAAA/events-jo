@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/enums/order_status.dart';
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
@@ -6,10 +8,12 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
+import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderDetailsModalSheet extends StatelessWidget {
   final WeddingVenue? venue;
@@ -61,42 +65,80 @@ class OrderDetailsModalSheet extends StatelessWidget {
             ),
             drinksContainer(),
             const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      GColors.whiteShade3,
-                    ),
+            order.status == OrderStatus.pending
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            GColors.whiteShade3,
+                          ),
+                        ),
+                        icon: Text(
+                          'Go Back',
+                          style: TextStyle(
+                            color: GColors.royalBlue,
+                            fontSize: kSmallFontSize,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        //todo
+                        onPressed: () async {
+                          context.pop();
+                          await context.read<OrderCubit>().updateOrderStatus(
+                                'userId',
+                                order.userId,
+                                order.id,
+                                OrderStatus.canceled,
+                              );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            GColors.redShade3.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        icon: Text(
+                          'Cancel Order ?',
+                          style: TextStyle(
+                            color: GColors.redShade3.shade800,
+                            fontSize: kSmallFontSize,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Row(
+                    spacing: 10,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Order Done',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => context.pop(),
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            GColors.whiteShade3.shade600,
+                          ),
+                        ),
+                        icon: Text(
+                          'Go Back',
+                          style: TextStyle(
+                            color: GColors.royalBlue,
+                            fontSize: kSmallFontSize,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  icon: Text(
-                    'Cancel',
-                    style: TextStyle(
-                      color: GColors.royalBlue,
-                      fontSize: kSmallFontSize,
-                    ),
-                  ),
-                ),
-                IconButton(
-                  //todo
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      GColors.redShade3.withValues(alpha: 0.3),
-                    ),
-                  ),
-                  icon: Text(
-                    'Delete Order ?',
-                    style: TextStyle(
-                      color: GColors.redShade3.shade800,
-                      fontSize: kSmallFontSize,
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

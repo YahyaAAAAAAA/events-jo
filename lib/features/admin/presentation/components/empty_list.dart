@@ -1,42 +1,41 @@
-import 'package:events_jo/config/utils/gradient/gradient_icon.dart';
+import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class EmptyList extends StatelessWidget {
-  final String text;
-  final IconData icon;
-  final Gradient gradient;
-  final Color color;
+  final String? text;
+  final IconData? icon;
 
   const EmptyList({
     super.key,
-    required this.icon,
-    required this.text,
-    required this.gradient,
-    required this.color,
+    this.icon,
+    this.text,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          GradientIcon(
-            icon: icon,
-            gradient: gradient,
-            size: 60,
-          ),
-          const SizedBox(height: 20),
-          Center(
-            child: Text(
-              text,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Icon(
+              icon ?? CustomIcons.sad,
+              color: GColors.black,
+              size: kNormalIconSize + 15,
+            ),
+            Text(
+              text ?? 'Nothing here',
               style: TextStyle(
-                color: color,
-                fontSize: 20,
+                color: GColors.black,
+                fontSize: kNormalFontSize,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

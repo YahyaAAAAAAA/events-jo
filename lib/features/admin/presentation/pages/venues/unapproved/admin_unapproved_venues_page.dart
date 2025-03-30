@@ -43,11 +43,9 @@ class _AdminUnapprovedVenuesPageState extends State<AdminUnapprovedVenuesPage> {
           final venues = state.venues;
 
           if (venues.isEmpty) {
-            return EmptyList(
+            return const EmptyList(
               icon: CustomIcons.grin_beam,
               text: 'No Requests for Wedding Venues left',
-              gradient: GColors.adminGradient,
-              color: GColors.cyanShade6,
             );
           }
 

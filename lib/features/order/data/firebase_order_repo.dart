@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events_jo/config/enums/order_status.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
 import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
 import 'package:events_jo/features/order/domain/order_repo.dart';
@@ -80,10 +81,10 @@ class FirebaseOrderRepo implements OrderRepo {
   }
 
   @override
-  Future<List<EOrderDetailed>> getUserOrders(String userId) async {
+  Future<List<EOrderDetailed>> getOrders(String byId, String id) async {
     final querySnapshot = await firebaseFirestore
         .collection('orders')
-        .where('userId', isEqualTo: userId)
+        .where(byId, isEqualTo: id)
         .get();
 
     List<EOrderDetailed> detailedOrders = [];
@@ -146,9 +147,9 @@ class FirebaseOrderRepo implements OrderRepo {
   }
 
   @override
-  Future<void> updateOrderStatus(String orderId, String status) async {
+  Future<void> updateOrderStatus(String orderId, OrderStatus status) async {
     await firebaseFirestore.collection('orders').doc(orderId).update({
-      'status': status,
+      'status': status.name,
     });
   }
 }

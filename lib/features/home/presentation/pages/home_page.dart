@@ -56,10 +56,7 @@ class _HomePageState extends State<HomePage> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: kListViewWidth),
           child: Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-            ),
+            padding: const EdgeInsets.all(12),
             child: ListView(
               children: [
                 //todo search bar

@@ -33,14 +33,14 @@ class _OrdersPageState extends State<OrdersPage> {
 
     user = UserManager().currentUser;
 
-    context.read<OrderCubit>().getUserOrders(user!.uid);
+    context.read<OrderCubit>().getOrders('userId', user!.uid);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        isOwner: false,
+        isOwner: true,
         title: user!.name,
         onPressed: () =>
             context.read<AuthCubit>().logout(user!.uid, user!.type),
@@ -48,64 +48,104 @@ class _OrdersPageState extends State<OrdersPage> {
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 450),
-          child: BlocConsumer<OrderCubit, OrderStates>(
-            listener: (context, state) {
-              if (state is OrderError) {
-                context.showSnackBar('Something wrong happend.');
-              }
-            },
-            builder: (context, state) {
-              return Skeletonizer(
-                enabled: state is OrderLoading ? true : false,
-                containersColor: GColors.white,
-                child: state is UserOrdersLoaded
-                    ? state.orders.isEmpty
-                        ? UserOrdersEmpty(text: user!.name.toCapitalized)
-                        : ListView.separated(
-                            padding: const EdgeInsets.all(12),
-                            itemCount: state.orders.length,
-                            separatorBuilder: (context, index) =>
-                                const Divider(),
-                            itemBuilder: (context, index) {
-                              final order = state.orders[index].order;
-                              final meals = state.orders[index].meals;
-                              final drinks = state.orders[index].drinks;
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: BlocConsumer<OrderCubit, OrderStates>(
+              listener: (context, state) {
+                if (state is OrderError) {
+                  context.showSnackBar('Something wrong happend.');
+                }
+              },
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    MediaQuery.of(context).size.width >= 156
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Your Orders",
+                                style: TextStyle(
+                                  color: GColors.black,
+                                  fontSize: kNormalFontSize,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () async => await context
+                                    .read<OrderCubit>()
+                                    .getOrders('userId', user!.uid),
+                                style: ButtonStyle(
+                                    backgroundColor: WidgetStatePropertyAll(
+                                        GColors.scaffoldBg)),
+                                icon: Icon(
+                                  Icons.refresh_rounded,
+                                  color: GColors.black,
+                                ),
+                              )
+                            ],
+                          )
+                        : 0.width,
+                    Expanded(
+                      child: Skeletonizer(
+                        enabled: state is OrderLoading ? true : false,
+                        containersColor: GColors.white,
+                        child: state is UserOrdersLoaded
+                            ? state.orders.isEmpty
+                                ? UserOrdersEmpty(
+                                    text: user!.name.toCapitalized)
+                                : ListView.separated(
+                                    itemCount: state.orders.length,
+                                    separatorBuilder: (context, index) =>
+                                        10.height,
+                                    itemBuilder: (context, index) {
+                                      final order = state.orders[index].order;
+                                      final meals = state.orders[index].meals;
+                                      final drinks = state.orders[index].drinks;
 
-                              return UserOrderCard(
-                                order: order,
-                                onPressed: () async {
-                                  final venue = await context
-                                      .read<WeddingVenuesCubit>()
-                                      .getVenueById(order.venueId);
-                                  showModalBottomSheet(
-                                    context: context,
-                                    backgroundColor: GColors.whiteShade3,
-                                    showDragHandle: true,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(kOuterRadius),
-                                      ),
-                                    ),
-                                    isScrollControlled: true,
-                                    builder: (context) {
-                                      return OrderDetailsModalSheet(
-                                        venue: venue,
+                                      return UserOrderCard(
                                         order: order,
-                                        meals: meals,
-                                        drinks: drinks,
+                                        onPressed: () async {
+                                          final venue = await context
+                                              .read<WeddingVenuesCubit>()
+                                              .getVenueById(order.venueId);
+                                          showModalBottomSheet(
+                                            context: context,
+                                            backgroundColor:
+                                                GColors.whiteShade3,
+                                            showDragHandle: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(
+                                                    kOuterRadius),
+                                              ),
+                                            ),
+                                            isScrollControlled: true,
+                                            builder: (context) {
+                                              return OrderDetailsModalSheet(
+                                                venue: venue,
+                                                order: order,
+                                                meals: meals,
+                                                drinks: drinks,
+                                              );
+                                            },
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
-                              );
-                            },
-                          )
-                    : ListView.separated(
-                        itemCount: 5,
-                        separatorBuilder: (context, index) => 10.height,
-                        itemBuilder: (context, index) => const UserOrderCard()),
-              );
-            },
+                                  )
+                            : ListView.separated(
+                                itemCount: 5,
+                                separatorBuilder: (context, index) => 10.height,
+                                itemBuilder: (context, index) =>
+                                    const UserOrderCard()),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

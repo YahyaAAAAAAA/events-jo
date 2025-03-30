@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/order_status.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
@@ -15,6 +16,36 @@ class UserOrderCard extends StatelessWidget {
     this.order,
     this.onPressed,
   });
+
+  Color orderStatusColorBg(OrderStatus? status) {
+    if (status == null) {
+      return GColors.whiteShade3.shade600;
+    }
+    switch (status) {
+      case OrderStatus.completed:
+        return GColors.greenShade3.withValues(alpha: 0.3);
+      case OrderStatus.canceled:
+        return GColors.redShade3.withValues(alpha: 0.3);
+
+      default:
+        return GColors.whiteShade3.shade600;
+    }
+  }
+
+  Color orderStatusColor(OrderStatus? status) {
+    if (status == null) {
+      return GColors.royalBlue;
+    }
+    switch (status) {
+      case OrderStatus.completed:
+        return GColors.greenShade3.shade800;
+      case OrderStatus.canceled:
+        return GColors.redShade3.shade800;
+
+      default:
+        return GColors.royalBlue;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +67,7 @@ class UserOrderCard extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(kOuterRadius),
-                    color: GColors.whiteShade3.shade600,
+                    color: orderStatusColorBg(order?.status),
                   ),
                   padding: const EdgeInsets.symmetric(
                     vertical: 4,
@@ -48,13 +79,13 @@ class UserOrderCard extends StatelessWidget {
                       5.height,
                       Icon(
                         Icons.pending_actions_rounded,
-                        color: GColors.royalBlue,
+                        color: orderStatusColor(order?.status),
                         size: kNormalIconSize,
                       ),
                       Text(
                         order?.status.name.toCapitalized ?? 'dummy dummy',
                         style: TextStyle(
-                          color: GColors.royalBlue,
+                          color: orderStatusColor(order?.status),
                           fontSize: kSmallFontSize,
                           fontWeight: FontWeight.bold,
                         ),

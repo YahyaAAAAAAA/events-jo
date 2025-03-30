@@ -29,53 +29,55 @@ class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
         leading: 0.width,
         toolbarHeight: 70,
         leadingWidth: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            AppBarButton(
-              onPressed: () => context.pop(),
-              icon: Icons.arrow_back_ios_new_rounded,
-              iconSize: kNormalIconSize,
-            ),
-            10.width,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  //todo user name
-                  venueName == null
-                      ? 'Venue 123'
-                      : '${venueName!.toCapitalized}',
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: kSmallFontSize,
+        title: MediaQuery.of(context).size.width >= 260
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AppBarButton(
+                    onPressed: () => context.pop(),
+                    icon: Icons.arrow_back_ios_new_rounded,
+                    iconSize: kNormalIconSize,
                   ),
-                ),
-                Text(
-                  'Wedding Venue',
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: kSmallFontSize,
+                  10.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        //todo user name
+                        venueName == null
+                            ? 'Venue 123'
+                            : '${venueName!.toCapitalized}',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize,
+                        ),
+                      ),
+                      Text(
+                        'Wedding Venue',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: kSmallFontSize,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            AppBarButton(
-              onPressed: () => context.pop(),
-              icon: Icons.star_rate_rounded,
-              iconSize: kNormalIconSize,
-            ),
-            5.width,
-            AppBarButton(
-              onPressed: () {},
-              icon: CustomIcons.menu,
-              iconSize: kSmallIconSize,
-            ),
-            5.width,
-          ],
-        ),
+                  const Spacer(),
+                  AppBarButton(
+                    onPressed: () => context.pop(),
+                    icon: Icons.star_rate_rounded,
+                    iconSize: kNormalIconSize,
+                  ),
+                  5.width,
+                  AppBarButton(
+                    onPressed: () {},
+                    icon: CustomIcons.menu,
+                    iconSize: kSmallIconSize,
+                  ),
+                  5.width,
+                ],
+              )
+            : 0.width,
       ),
     );
   }

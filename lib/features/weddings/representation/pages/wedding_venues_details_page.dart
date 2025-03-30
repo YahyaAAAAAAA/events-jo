@@ -136,7 +136,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   }
 
   void getVenueOrders() async {
-    reservedDates = await orderCubit.getVenueOrders(weddingVenue.id);
+    reservedDates = await orderCubit.getVenueReservedDates(weddingVenue.id);
     setState(() {});
   }
 
@@ -453,108 +453,115 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: GColors.whiteShade3.shade600,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(kOuterRadius),
-            topRight: Radius.circular(kOuterRadius),
-          ),
-        ),
-        padding: const EdgeInsets.all(12),
-        child: IconButton(
-          onPressed: () {
-            // print(selectedDate);
-            if (selectedDate == null) {
-              context.showSnackBar('Please pick a date');
-              return;
-            }
-            if (!isDateAvailable()) {
-              context.showSnackBar('Please pick a different date or time');
-              return;
-            }
-            orderCubit.showCashoutSheet(
-              context: context,
-              userId: widget.user!.uid,
-              venueId: weddingVenue.id,
-              ownerId: weddingVenue.ownerId,
-              date: selectedDate,
-              startTime: selectedStartTime.hour,
-              endTime: selectedEndTime.hour,
-              people: numberOfExpectedPeople,
-              paymentMethod: paymentMethod,
-              totalAmount: totalAmount,
-              meals: selectedMeals!,
-              drinks: selectedDrinks!,
-            );
-          },
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
-            padding: const WidgetStatePropertyAll(
-              EdgeInsets.all(12),
-            ),
-          ),
-          icon: Row(
-            children: [
-              Icon(
-                Icons.checklist_rtl_outlined,
-                color: GColors.white,
-                size: kNormalIconSize,
-              ),
-              10.width,
-              Text(
-                'Done? Checkout now',
-                style: TextStyle(
-                  color: GColors.white,
-                  fontSize: kSmallFontSize,
+      bottomNavigationBar: MediaQuery.of(context).size.width >= 288
+          ? Container(
+              decoration: BoxDecoration(
+                color: GColors.whiteShade3.shade600,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(kOuterRadius),
+                  topRight: Radius.circular(kOuterRadius),
                 ),
               ),
-              const Spacer(),
-              BlocBuilder<SingleWeddingVenueCubit, SingleWeddingVenueStates>(
-                  builder: (context, state) {
-                if (state is SingleWeddingVenueLoaded) {
-                  final venue = state.data.venue;
-                  final meals = state.data.meals;
-                  final drinks = state.data.drinks;
-                  final selectedMeals = meals
-                      .where(
-                        (element) => element.isChecked,
-                      )
-                      .toList();
-                  final selectedDrinks = drinks
-                      .where(
-                        (element) => element.isChecked,
-                      )
-                      .toList();
-                  return Text(
-                    'JOD ' +
-                        getTotalPrice(
-                          meals: selectedMeals,
-                          drinks: selectedDrinks,
-                          peoplePrice: venue.peoplePrice,
-                          numberOfPeople: numberOfExpectedPeople.toDouble(),
-                        ).toString(),
-                    style: TextStyle(
-                      color: GColors.white,
-                      fontSize: kSmallFontSize,
-                      fontWeight: FontWeight.bold,
-                    ),
+              padding: const EdgeInsets.all(12),
+              child: IconButton(
+                onPressed: () {
+                  if (selectedDate == null) {
+                    context.showSnackBar('Please pick a date');
+                    return;
+                  }
+                  if (!isDateAvailable()) {
+                    context
+                        .showSnackBar('Please pick a different date or time');
+                    return;
+                  }
+                  orderCubit.showCashoutSheet(
+                    context: context,
+                    userId: widget.user!.uid,
+                    venueId: weddingVenue.id,
+                    ownerId: weddingVenue.ownerId,
+                    date: selectedDate,
+                    startTime: selectedStartTime.hour,
+                    endTime: selectedEndTime.hour,
+                    people: numberOfExpectedPeople,
+                    paymentMethod: paymentMethod,
+                    totalAmount: totalAmount,
+                    meals: selectedMeals!,
+                    drinks: selectedDrinks!,
                   );
-                } else {
-                  return Text(
-                    'JOD 0.0',
-                    style: TextStyle(
+                },
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+                  padding: const WidgetStatePropertyAll(
+                    EdgeInsets.all(12),
+                  ),
+                ),
+                icon: Row(
+                  children: [
+                    Icon(
+                      Icons.checklist_rtl_outlined,
                       color: GColors.white,
-                      fontSize: kSmallFontSize,
-                      fontWeight: FontWeight.bold,
+                      size: kNormalIconSize,
                     ),
-                  );
-                }
-              }),
-            ],
-          ),
-        ),
-      ),
+                    10.width,
+                    Text(
+                      'Done? Checkout now',
+                      style: TextStyle(
+                        color: GColors.white,
+                        fontSize: kSmallFontSize,
+                      ),
+                    ),
+                    const Spacer(),
+                    BlocBuilder<SingleWeddingVenueCubit,
+                        SingleWeddingVenueStates>(builder: (context, state) {
+                      if (state is SingleWeddingVenueLoaded) {
+                        final venue = state.data.venue;
+                        final meals = state.data.meals;
+                        final drinks = state.data.drinks;
+                        final selectedMeals = meals
+                            .where(
+                              (element) => element.isChecked,
+                            )
+                            .toList();
+                        final selectedDrinks = drinks
+                            .where(
+                              (element) => element.isChecked,
+                            )
+                            .toList();
+                        return SizedBox(
+                          width: 80,
+                          child: Text(
+                            'JOD ' +
+                                getTotalPrice(
+                                  meals: selectedMeals,
+                                  drinks: selectedDrinks,
+                                  peoplePrice: venue.peoplePrice,
+                                  numberOfPeople:
+                                      numberOfExpectedPeople.toDouble(),
+                                ).toString(),
+                            style: TextStyle(
+                              color: GColors.white,
+                              fontSize: kSmallFontSize,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Text(
+                          'JOD 0.0',
+                          style: TextStyle(
+                            color: GColors.white,
+                            fontSize: kSmallFontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      }
+                    }),
+                  ],
+                ),
+              ),
+            )
+          : 0.width,
     );
   }
 

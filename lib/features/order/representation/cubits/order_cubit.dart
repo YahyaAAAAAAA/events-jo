@@ -1,6 +1,8 @@
+import 'package:events_jo/config/enums/order_status.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
+import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
 import 'package:events_jo/features/order/domain/order_repo.dart';
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
@@ -11,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderCubit extends Cubit<OrderStates> {
   final OrderRepo orderRepo;
+  List<EOrderDetailed> detailedOrders = [];
 
   OrderCubit({required this.orderRepo}) : super(OrderInitial());
 
@@ -28,20 +31,23 @@ class OrderCubit extends Cubit<OrderStates> {
     }
   }
 
-  Future<void> getUserOrders(String userId) async {
+  //byId: using (ownerId,venueId,userId), id: the respective id (owner's,user's)
+  Future<void> getOrders(String byId, String id) async {
     emit(OrderLoading());
     try {
-      final orders = await orderRepo.getUserOrders(userId);
-      emit(UserOrdersLoaded(orders));
+      detailedOrders.clear();
+
+      detailedOrders = await orderRepo.getOrders(byId, id);
+      emit(UserOrdersLoaded(detailedOrders));
     } catch (e) {
       emit(OrderError(e.toString()));
     }
   }
 
-  Future<List<DateTimeRange>?> getVenueOrders(String userId) async {
+  Future<List<DateTimeRange>?> getVenueReservedDates(String venueId) async {
     emit(OrderLoading());
     try {
-      final venueOrders = await orderRepo.getVenueOrders(userId);
+      final venueOrders = await orderRepo.getVenueOrders(venueId);
 
       emit(VenueOrdersLoaded(venueOrders));
       return venueOrders;
@@ -49,6 +55,12 @@ class OrderCubit extends Cubit<OrderStates> {
       emit(OrderError(e.toString()));
       return null;
     }
+  }
+
+  Future<void> updateOrderStatus(
+      String byId, String id, String orderId, OrderStatus status) async {
+    await orderRepo.updateOrderStatus(orderId, status);
+    await getOrders(byId, id);
   }
 
   Future<dynamic> showCashoutSheet({

@@ -1,3 +1,5 @@
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/gradient/gradient_text.dart';
 import 'package:flutter/material.dart';
@@ -32,16 +34,16 @@ class GlobalLoadingBar extends StatelessWidget {
                 )
               : const SizedBox(),
           subText != null
-              ? GradientText(
+              ? Text(
                   subText ?? '',
-                  gradient: GColors.logoGradient,
-                  style: const TextStyle(
-                    fontSize: 30,
+                  style: TextStyle(
+                    fontSize: kNormalFontSize,
                     fontWeight: FontWeight.bold,
+                    color: GColors.royalBlue,
                   ),
                 )
               : const SizedBox(),
-          subText != null ? const SizedBox(height: 20) : const SizedBox(),
+          subText != null ? 20.height : 0.height,
           Lottie.asset(
             'assets/animations/loading.json',
             frameRate: FrameRate.max,

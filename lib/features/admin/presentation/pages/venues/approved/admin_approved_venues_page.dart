@@ -43,11 +43,9 @@ class _AdminApprovedVenuesPageState extends State<AdminApprovedVenuesPage> {
           final venues = state.venues;
 
           if (venues.isEmpty) {
-            return EmptyList(
+            return const EmptyList(
               icon: CustomIcons.sad,
               text: 'No Approved Venues in EventsJo',
-              gradient: GColors.adminGradient,
-              color: GColors.cyanShade6,
             );
           }
 

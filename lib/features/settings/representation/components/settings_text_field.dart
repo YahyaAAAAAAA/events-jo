@@ -1,3 +1,4 @@
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -22,16 +23,16 @@ class SettingsTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      shadowColor: GColors.black.withValues(alpha: 0.2),
-      elevation: 3,
-      borderRadius: BorderRadius.circular(12),
+      shadowColor: GColors.black.withValues(alpha: 0),
+      elevation: 0,
+      borderRadius: BorderRadius.circular(kOuterRadius),
       child: TextFormField(
         controller: controller,
         obscureText: isObscure,
         maxLines: maxLines ?? 1,
         style: TextStyle(
-          color: GColors.royalBlue,
-          fontSize: 17,
+          color: GColors.black,
+          fontSize: kSmallFontSize,
         ),
         decoration: InputDecoration(
           filled: true,
@@ -46,7 +47,7 @@ class SettingsTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              color: GColors.royalBlue,
+              color: GColors.black,
             ),
           ),
         ),

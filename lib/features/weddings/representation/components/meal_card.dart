@@ -4,7 +4,7 @@ import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/owner/representation/components/food_card.dart';
+import 'package:events_jo/features/owner/representation/components/creation/food_card.dart';
 import 'package:flutter/material.dart';
 
 class MealCard extends StatelessWidget {
