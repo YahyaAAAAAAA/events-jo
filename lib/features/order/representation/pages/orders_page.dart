@@ -25,6 +25,7 @@ class OrdersPage extends StatefulWidget {
 }
 
 class _OrdersPageState extends State<OrdersPage> {
+  late final OrderCubit orderCubit;
   late final AppUser? user;
 
   @override
@@ -33,7 +34,12 @@ class _OrdersPageState extends State<OrdersPage> {
 
     user = UserManager().currentUser;
 
-    context.read<OrderCubit>().getOrders('userId', user!.uid);
+    orderCubit = context.read<OrderCubit>();
+    if (orderCubit.cachedOrders == null) {
+      orderCubit.getOrders('userId', user!.uid, cache: true);
+    } else {
+      orderCubit.getCachedOrders();
+    }
   }
 
   @override
@@ -72,9 +78,12 @@ class _OrdersPageState extends State<OrdersPage> {
                                 ),
                               ),
                               IconButton(
-                                onPressed: () async => await context
-                                    .read<OrderCubit>()
-                                    .getOrders('userId', user!.uid),
+                                onPressed: () async =>
+                                    await orderCubit.getOrders(
+                                  'userId',
+                                  user!.uid,
+                                  cache: true,
+                                ),
                                 style: ButtonStyle(
                                     backgroundColor: WidgetStatePropertyAll(
                                         GColors.scaffoldBg)),

@@ -1,4 +1,8 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/packages/from%20to%20picker/from_to_picker_colors.dart';
+import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -12,6 +16,8 @@ class FromToTimePicker extends StatefulWidget {
   ///
   /// on user click on ok Button
   final Function(TimeOfDay, TimeOfDay)? onTab;
+
+  final Function()? onCancelTab;
 
   /// add the limitation to the dialog width
   final double? maxWidth;
@@ -125,9 +131,16 @@ class FromToTimePicker extends StatefulWidget {
   /// color of two dots separates between two time picker box
   final Color? colonColor;
 
+  final int? initStartTime;
+
+  final int? initEndTime;
+
   const FromToTimePicker(
       {Key? key,
       required this.onTab,
+      this.initStartTime,
+      this.initEndTime,
+      this.onCancelTab,
       this.maxWidth,
       this.headerText,
       this.fromHeadline = 'From',
@@ -171,6 +184,13 @@ class _FromToTimePickerState extends State<FromToTimePicker> {
   int timePickerStartTime = 0, timePickerEndTime = 0;
   late TimeOfDay fromTime;
   late TimeOfDay toTime;
+
+  @override
+  void initState() {
+    super.initState();
+    timePickerStartTime = widget.initStartTime ?? 0;
+    timePickerEndTime = widget.initEndTime ?? 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -285,21 +305,46 @@ class _FromToTimePickerState extends State<FromToTimePicker> {
                       SizedBox(
                         width: newScreenSize.width * .06,
                       ),
-                      InkWell(
-                          onTap: () {
-                            widget.onTab!(
-                                generate24HTime(
-                                    isAmFrom, timePickerStartTime.toString()),
-                                generate24HTime(
-                                    isAmTo, timePickerEndTime.toString()));
-                          },
-                          child: Text(
-                            widget.doneText!,
-                            style: TextStyle(
-                                color: widget.doneTextColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
-                          )),
+                      IconButton(
+                        onPressed: widget.onCancelTab,
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            GColors.whiteShade3,
+                          ),
+                          padding:
+                              const WidgetStatePropertyAll(EdgeInsets.all(12)),
+                        ),
+                        icon: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            color: widget.doneTextColor,
+                            fontSize: kNormalFontSize,
+                          ),
+                        ),
+                      ),
+                      10.width,
+                      IconButton(
+                        onPressed: () {
+                          widget.onTab!(
+                              generate24HTime(
+                                  isAmFrom, timePickerStartTime.toString()),
+                              generate24HTime(
+                                  isAmTo, timePickerEndTime.toString()));
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                              GColors.whiteShade3.shade600),
+                          padding:
+                              const WidgetStatePropertyAll(EdgeInsets.all(12)),
+                        ),
+                        icon: Text(
+                          widget.doneText!,
+                          style: TextStyle(
+                            color: widget.doneTextColor,
+                            fontSize: kNormalFontSize,
+                          ),
+                        ),
+                      ),
                     ],
                   ))
             ],

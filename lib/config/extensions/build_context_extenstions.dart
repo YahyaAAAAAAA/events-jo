@@ -98,7 +98,8 @@ extension BuildContextExtension on BuildContext {
       barrierDismissible: barrierDismissible ?? true,
       transitionDuration:
           transitionDuration ?? const Duration(milliseconds: 200),
-      transitionBuilder: transitionBuilder ?? TransitionAnimations.fade,
+      transitionBuilder:
+          transitionBuilder ?? TransitionAnimations.slideFromBottom,
     );
   }
 }

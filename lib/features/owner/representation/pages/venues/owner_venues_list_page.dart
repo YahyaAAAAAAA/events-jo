@@ -82,7 +82,7 @@ class OwnerVenuesListPage extends StatelessWidget {
                             ),
                             onEditPressed: () => context.push(
                               OwnerApprovedVenueDetailsPage(
-                                weddingVenue: detailedVenues![index].venue,
+                                weddingVenueDetailed: detailedVenues![index],
                               ),
                             ),
                           ),

@@ -35,4 +35,6 @@ abstract class OwnerRepo {
   String generateUniqueId();
 
   Future<List<WeddingVenueDetailed>> getOwnerVenues(String ownerId);
+
+  Future<void> updateVenueInDatabase(WeddingVenueDetailed venueDetailed);
 }

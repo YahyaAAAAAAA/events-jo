@@ -81,8 +81,8 @@ pending:
     ✔ design orders page @done(25-03-29 10:30)
     ✔ redesign settings @done(25-03-29 17:09)
     ✔ fix wedding details bottom @done(25-03-29 17:09)
-    ☐ cache user/owner orders
-    ☐ venue edit
+    ✔ cache user/owner orders @done(25-03-31 03:45)
+    ☐ venue edit @started(25-03-31 03:59)
     ☐ substract venue meals/drinks amount on order completion
     ☐ check appbars widths
     ☐ fix wedding details bottom sheet state resets on drag

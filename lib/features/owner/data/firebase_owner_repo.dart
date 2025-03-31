@@ -147,6 +147,61 @@ class FirebaseOwnerRepo implements OwnerRepo {
   }
 
   @override
+  Future<void> updateVenueInDatabase(WeddingVenueDetailed venueDetailed) async {
+    final venue = venueDetailed.venue;
+    final meals = venueDetailed.meals;
+    final drinks = venueDetailed.drinks;
+
+    try {
+      // Update the main venue document
+      await firebaseFirestore
+          .collection('venues')
+          .doc(venue.id)
+          .update(venue.toJson());
+
+      // Update the meals subcollection
+      final mealsCollection = firebaseFirestore
+          .collection('venues')
+          .doc(venue.id)
+          .collection('meals');
+
+      // Clear existing meals
+      final existingMeals = await mealsCollection.get();
+      for (var mealDoc in existingMeals.docs) {
+        await mealDoc.reference.delete();
+      }
+
+      // Add updated meals
+      if (meals.isNotEmpty) {
+        for (var meal in meals) {
+          await mealsCollection.doc(meal.id).set(meal.toJson());
+        }
+      }
+
+      // Update the drinks subcollection
+      final drinksCollection = firebaseFirestore
+          .collection('venues')
+          .doc(venue.id)
+          .collection('drinks');
+
+      // Clear existing drinks
+      final existingDrinks = await drinksCollection.get();
+      for (var drinkDoc in existingDrinks.docs) {
+        await drinkDoc.reference.delete();
+      }
+
+      // Add updated drinks
+      if (drinks.isNotEmpty) {
+        for (var drink in drinks) {
+          await drinksCollection.doc(drink.id).set(drink.toJson());
+        }
+      }
+    } catch (e) {
+      throw Exception('Failed to update venue: ${e.toString()}');
+    }
+  }
+
+  @override
   Future<List<String>> addImagesToServer(
       List<XFile> images, String name) async {
     List<String> urls = [];

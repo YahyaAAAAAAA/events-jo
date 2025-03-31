@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderCubit extends Cubit<OrderStates> {
   final OrderRepo orderRepo;
-  List<EOrderDetailed> detailedOrders = [];
+  List<EOrderDetailed>? cachedOrders;
 
   OrderCubit({required this.orderRepo}) : super(OrderInitial());
 
@@ -31,14 +31,24 @@ class OrderCubit extends Cubit<OrderStates> {
     }
   }
 
+  Future<void> getCachedOrders() async {
+    if (cachedOrders == null) {
+      return;
+    }
+    emit(UserOrdersLoaded(cachedOrders!));
+  }
+
   //byId: using (ownerId,venueId,userId), id: the respective id (owner's,user's)
-  Future<void> getOrders(String byId, String id) async {
+  Future<void> getOrders(String byId, String id, {bool cache = false}) async {
     emit(OrderLoading());
     try {
-      detailedOrders.clear();
+      final orders = await orderRepo.getOrders(byId, id);
 
-      detailedOrders = await orderRepo.getOrders(byId, id);
-      emit(UserOrdersLoaded(detailedOrders));
+      if (cache) {
+        cachedOrders = orders;
+      }
+
+      emit(UserOrdersLoaded(orders));
     } catch (e) {
       emit(OrderError(e.toString()));
     }
@@ -58,9 +68,14 @@ class OrderCubit extends Cubit<OrderStates> {
   }
 
   Future<void> updateOrderStatus(
-      String byId, String id, String orderId, OrderStatus status) async {
+    String byId,
+    String id,
+    String orderId,
+    OrderStatus status, {
+    bool cache = false,
+  }) async {
     await orderRepo.updateOrderStatus(orderId, status);
-    await getOrders(byId, id);
+    await getOrders(byId, id, cache: cache);
   }
 
   Future<dynamic> showCashoutSheet({
