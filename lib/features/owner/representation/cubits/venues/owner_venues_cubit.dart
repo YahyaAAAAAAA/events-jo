@@ -2,6 +2,7 @@ import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/venues/owner_venues_states.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class OwnerVenuesCubit extends Cubit<OwnerVenuesStates> {
   //repo instance
@@ -22,25 +23,27 @@ class OwnerVenuesCubit extends Cubit<OwnerVenuesStates> {
     }
   }
 
-  Future<void> updateVenue(WeddingVenueDetailed updatedVenue) async {
+  Future<void> updateVenue(
+      WeddingVenueDetailed updatedVenue, List<dynamic> updatedImages) async {
     emit(OwnerVenuesLoading());
-    try {
-      await ownerRepo.updateVenueInDatabase(updatedVenue);
 
-      //reflect update locally
-      venuesDetailed = venuesDetailed?.map((detailed) {
-        return detailed.venue.id == updatedVenue.venue.id
-            ? updatedVenue
-            : detailed;
-      }).toList();
+    await ownerRepo.updateVenueInDatabase(updatedVenue, updatedImages);
 
-      if (venuesDetailed == null) {
-        getOwnerVenues(updatedVenue.venue.ownerId);
-      } else {
-        emit(OwnerVenuesLoaded(venuesDetailed!));
-      }
-    } catch (e) {
-      emit(OwnerVenuesError(e.toString()));
+    //reflect update locally
+    venuesDetailed = venuesDetailed?.map((detailed) {
+      return detailed.venue.id == updatedVenue.venue.id
+          ? updatedVenue
+          : detailed;
+    }).toList();
+
+    if (venuesDetailed == null) {
+      getOwnerVenues(updatedVenue.venue.ownerId);
+    } else {
+      emit(OwnerVenuesLoaded(venuesDetailed!));
     }
+  }
+
+  Future<void> deleteImages(String url) async {
+    await ownerRepo.deleteImagesFromServer([XFile(url)]);
   }
 }

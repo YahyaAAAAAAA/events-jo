@@ -25,11 +25,13 @@ ThemeData eventsJoTheme() {
         color: GColors.black,
         fontSize: kNormalFontSize,
         fontWeight: FontWeight.bold,
+        fontFamily: 'Abel',
       ),
       contentTextStyle: TextStyle(
         color: GColors.black,
         fontSize: kSmallFontSize,
         fontWeight: FontWeight.normal,
+        fontFamily: 'Abel',
       ),
     ),
   );

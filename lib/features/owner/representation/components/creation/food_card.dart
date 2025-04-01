@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/owner/representation/components/creation/dialogs/food_on_tap_dialog.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class FoodCard extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Container(
-            color: GColors.white,
+            color: GColors.whiteShade3.shade600,
             child: CachedNetworkImage(
               imageUrl: imageUrl,
               //waiting for image

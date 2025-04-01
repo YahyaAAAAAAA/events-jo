@@ -36,5 +36,8 @@ abstract class OwnerRepo {
 
   Future<List<WeddingVenueDetailed>> getOwnerVenues(String ownerId);
 
-  Future<void> updateVenueInDatabase(WeddingVenueDetailed venueDetailed);
+  Future<void> updateVenueInDatabase(
+      WeddingVenueDetailed venueDetailed, List<dynamic> updatedImages);
+
+  Future<void> deleteImagesFromServer(List<XFile> images);
 }

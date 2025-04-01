@@ -147,13 +147,50 @@ class FirebaseOwnerRepo implements OwnerRepo {
   }
 
   @override
-  Future<void> updateVenueInDatabase(WeddingVenueDetailed venueDetailed) async {
+  Future<void> updateVenueInDatabase(
+      WeddingVenueDetailed venueDetailed, List<dynamic> updatedImages) async {
     final venue = venueDetailed.venue;
     final meals = venueDetailed.meals;
     final drinks = venueDetailed.drinks;
 
+    //--images--
+    List<dynamic> tempImages = List.from(updatedImages);
+
+    for (int i = 0; i < tempImages.length; i++) {
+      //existing images
+      if (i < venue.pics.length) {
+        //[index][1] == 0 -> keep
+        //[index][1] == 1 -> delete
+        if (tempImages[i][1] == 1) {
+          if (tempImages[i][0] != 'https://i.ibb.co/ZVf53hB/placeholder.png') {
+            await deleteImagesFromServer([XFile(tempImages[i][0])]);
+          }
+          tempImages.removeAt(i);
+          i--;
+        }
+      }
+      //new images
+      else {
+        //[index][1] == 0 -> add
+        //[index][1] == 1 -> ignore
+        if (tempImages[i][1] == 0) {
+          final url =
+              await addImagesToServer([XFile(tempImages[i][0])], venue.name);
+          tempImages[i] = [url[0], 0];
+        } else {
+          tempImages.removeAt(i);
+          i--;
+        }
+      }
+    }
+
+    venue.pics = tempImages.map((image) => image[0] as String).toList();
+
+    if (venue.pics.isEmpty) {
+      venue.pics.add('https://i.ibb.co/ZVf53hB/placeholder.png');
+    }
     try {
-      // Update the main venue document
+      //update the main venue document
       await firebaseFirestore
           .collection('venues')
           .doc(venue.id)
@@ -226,6 +263,23 @@ class FirebaseOwnerRepo implements OwnerRepo {
     }
 
     return urls;
+  }
+
+  @override
+  Future<void> deleteImagesFromServer(List<XFile> images) async {
+    try {
+      // request upload to server
+      for (int i = 0; i < images.length; i++) {
+        var response = await cloudinary.deleteResource(
+          cloudinaryImage: CloudinaryImage(images[i].path),
+          resourceType: CloudinaryResourceType.image,
+        );
+
+        if (response.isSuccessful) {}
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   @override

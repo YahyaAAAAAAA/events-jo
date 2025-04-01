@@ -21,8 +21,6 @@ class OwnerVenueUpdateDialog extends StatelessWidget {
     this.onCancelPressed,
   });
 
-  // final TextEditingController nameController;
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -68,6 +66,6 @@ class OwnerVenueUpdateDialog extends StatelessWidget {
           ),
         ),
       ),
-    ]..addAll(actions ?? []);
+    ]..insertAll(0, actions ?? []);
   }
 }

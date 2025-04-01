@@ -82,14 +82,19 @@ pending:
     ✔ redesign settings @done(25-03-29 17:09)
     ✔ fix wedding details bottom @done(25-03-29 17:09)
     ✔ cache user/owner orders @done(25-03-31 03:45)
-    ☐ venue edit @started(25-03-31 03:59)
+    ✔ venue edit @started(25-03-31 03:59) @done(25-04-01 08:17) @lasted(1d4h18m59s)
+    ☐ add rating
+    ☐ test venue edit (images and meals/drinks)
+    ☐ replace 'cancel' with 'default' in venue edit
+    ☐ add price for meals/drinks in venue edit
+    ☐ fix search and sort
+    ☐ venue removal
     ☐ substract venue meals/drinks amount on order completion
     ☐ check appbars widths
     ☐ fix wedding details bottom sheet state resets on drag
     ☐ add payment method to order model
     ☐ order page stream?
     ☐ redesign owner page
-    ☐ fix search and sort
     ☐ remove location for owners
     ☐ redesign admin (❁´◡`❁)
     //-----------------

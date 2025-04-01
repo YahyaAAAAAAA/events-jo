@@ -12,4 +12,16 @@ class WeddingVenueDetailed {
     required this.meals,
     required this.drinks,
   });
+
+  WeddingVenueDetailed copyWith({
+    WeddingVenue? venue,
+    List<WeddingVenueMeal>? meals,
+    List<WeddingVenueDrink>? drinks,
+  }) {
+    return WeddingVenueDetailed(
+      venue: venue ?? this.venue,
+      meals: meals ?? this.meals,
+      drinks: drinks ?? this.drinks,
+    );
+  }
 }
