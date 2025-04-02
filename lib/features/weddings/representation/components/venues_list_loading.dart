@@ -31,7 +31,7 @@ class VenuesListLoading extends StatelessWidget {
               name: 'Loadingggggggg',
               latitude: 0,
               longitude: 0,
-              rate: 0,
+              rates: [],
               isOpen: true,
               isApproved: true,
               isBeingApproved: false,

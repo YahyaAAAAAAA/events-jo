@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 
 class VenueImageSlider extends StatelessWidget {
   final List<CachedNetworkImage> picsList;
-  final WeddingVenue weddingVenue;
+  final WeddingVenue? weddingVenue;
   final LocationCubit? locationCubit;
   final EjLocation? venueLocation;
 

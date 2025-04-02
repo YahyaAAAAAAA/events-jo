@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/extensions/double_extensions.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/identical_objects.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
@@ -11,7 +10,6 @@ import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart'
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rxdart/rxdart.dart';
 
 class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
   final WeddingVenueRepo weddingVenueRepo;
@@ -21,74 +19,63 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
 
   WeddingVenueDetailed? updatedData;
 
-  WeddingVenueDetailed? getSingleVenueStream(String id) {
+  Future<void> getDetailedVenue(String venueId) async {
     emit(SingleWeddingVenueLoading());
+    try {
+      final detailedVenue = await weddingVenueRepo.getDetailedVenue(venueId);
+      updatedData = detailedVenue;
 
-    final venueStream = weddingVenueRepo.getVenueStream(id);
-    final mealsStream = weddingVenueRepo.getMealsStream(id);
-    final drinksStream = weddingVenueRepo.getDrinksStream(id);
+      if (detailedVenue == null) {
+        return;
+      }
 
-    //combine 3 streams in one stream
-    CombineLatestStream.combine3(
-      venueStream,
-      mealsStream,
-      drinksStream,
-      (venue, meals, drinks) {
-        //venue doesn't exist
-        if (venue == null) {
-          return null;
-        }
-        return WeddingVenueDetailed(venue: venue, meals: meals, drinks: drinks);
-      },
-    ).listen(
-      (data) async {
-        //data in stream got deleted (deny action)
-        if (data == null) {
-          return;
-        }
-        //to make firebase send messages on a platform thread.
-        final currentState = state;
-        WeddingVenueDetailed currentData = data;
-        updatedData = data;
+      emit(SingleWeddingVenueLoaded(detailedVenue));
+    } catch (e) {
+      emit(SingleWeddingVenueError(e.toString()));
+    }
+  }
 
-        if (currentState is SingleWeddingVenueLoaded) {
-          currentData = currentState.data;
-        }
+  //rate venue
+  Future<void> rateVenue({
+    required String venueId,
+    required String userId,
+    required String userName,
+    required int userOrdersCount,
+    required int rate,
+  }) async {
+    emit(SingleWeddingVenueLoading());
+    try {
+      await weddingVenueRepo.rateVenue(
+        venueId: venueId,
+        userId: userId,
+        userName: userName,
+        userOrdersCount: userOrdersCount,
+        rate: rate,
+      );
+      getDetailedVenue(venueId);
+    } catch (e) {
+      emit(SingleWeddingVenueError(e.toString()));
+    }
+  }
 
-        //check if two venues are the same
-        if (!identicalVenues(
-          currentData,
-          data,
-          UserType.user,
-        )) {
-          //notify for change on venue
-          emit(SingleWeddingVenueChanged(
-              'A change has occurred on the Venue\'s info'));
-        }
+  int getCurrentUserRate(
+    List<String> rates,
+    String userId,
+  ) {
+    final didUserOrderBefore = rates.indexWhere(
+      (rate) {
+        int idIndex = rate.lastIndexOf('/');
+        final uid = rate.substring(idIndex + 1);
 
-        //check if two lists of meals are the same
-        else if (!identicalMeals(data.meals, currentData.meals)) {
-          //notify for change on venue
-          emit(SingleWeddingVenueChanged(
-              'A change has occurred on the Venue\'s meals'));
-        }
-
-        //check if two lists of meals are the same
-        else if (!identicalDrinks(data.drinks, currentData.drinks)) {
-          //notify for change on venue
-          emit(SingleWeddingVenueChanged(
-              'A change has occurred on the Venue\'s drinks'));
-        }
-        //no change, load data
-        else {
-          emit(SingleWeddingVenueLoaded(data));
-        }
-      },
-      onError: (error) {
-        emit(SingleWeddingVenueError(error.toString()));
+        return userId == uid;
       },
     );
-    return null;
+    if (didUserOrderBefore != -1) {
+      final rateParts = rates[didUserOrderBefore].parseRateString();
+      return int.parse(rateParts[0]);
+    }
+
+    return 0;
   }
 
   //calculates & updates prices for drinks
@@ -123,7 +110,10 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
     emit(SingleWeddingVenueLoaded(updatedData!));
   }
 
-  List<CachedNetworkImage> stringsToImages(List<dynamic> pics) {
+  List<CachedNetworkImage> stringsToImages(List<dynamic>? pics) {
+    if (pics == null) {
+      return [];
+    }
     List<CachedNetworkImage> picsList = [];
     for (int i = 0; i < pics.length; i++) {
       picsList.add(

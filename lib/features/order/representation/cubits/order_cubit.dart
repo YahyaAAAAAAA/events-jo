@@ -78,6 +78,17 @@ class OrderCubit extends Cubit<OrderStates> {
     await getOrders(byId, id, cache: cache);
   }
 
+  Future<int> getUserOrdersCount(String userId, String venueId) async {
+    try {
+      int count = await orderRepo.getUserOrdersCount(userId, venueId);
+
+      return count;
+    } catch (e) {
+      emit(OrderError(e.toString()));
+      return 0;
+    }
+  }
+
   Future<dynamic> showCashoutSheet({
     required BuildContext context,
     required String paymentMethod,

@@ -4,7 +4,6 @@ import 'package:events_jo/features/weddings/representation/components/no_venues.
 import 'package:events_jo/features/weddings/representation/components/venues_list_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_card.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_states.dart';
@@ -15,15 +14,11 @@ class WeddingVenuesList extends StatelessWidget {
   //get user
   final AppUser? user;
   final WeddingVenuesCubit weddingVenuesCubit;
-  final TextEditingController searchController;
-  final List<WeddingVenue>? filterdWeddingVenuList;
 
   const WeddingVenuesList({
     super.key,
     required this.user,
     required this.weddingVenuesCubit,
-    required this.searchController,
-    this.filterdWeddingVenuList,
   });
 
   @override

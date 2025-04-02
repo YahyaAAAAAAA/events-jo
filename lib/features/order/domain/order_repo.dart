@@ -16,4 +16,5 @@ abstract class OrderRepo {
   Future<List<EOrderDetailed>> getOrders(String fromId, String id);
   Future<List<DateTimeRange>> getVenueOrders(String venueId);
   Future<void> updateOrderStatus(String orderId, OrderStatus status);
+  Future<int> getUserOrdersCount(String userId, String venueId);
 }

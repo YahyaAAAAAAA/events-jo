@@ -152,4 +152,15 @@ class FirebaseOrderRepo implements OrderRepo {
       'status': status.name,
     });
   }
+
+  @override
+  Future<int> getUserOrdersCount(String userId, String venueId) async {
+    final querySnapshot = await firebaseFirestore
+        .collection('orders')
+        .where('userId', isEqualTo: userId)
+        .where('venueId', isEqualTo: venueId)
+        .get();
+
+    return querySnapshot.docs.length;
+  }
 }

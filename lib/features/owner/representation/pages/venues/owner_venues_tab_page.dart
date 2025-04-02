@@ -56,7 +56,6 @@ class _OwnerVenuesTabPageState extends State<OwnerVenuesTabPage>
       body: BlocConsumer<OwnerVenuesCubit, OwnerVenuesStates>(
         listener: (BuildContext context, OwnerVenuesStates state) {
           if (state is OwnerVenuesError) {
-            print(state.message);
             context.showSnackBar(state.message);
           }
         },

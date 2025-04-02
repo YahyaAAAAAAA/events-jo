@@ -11,11 +11,13 @@ import 'package:flutter/material.dart';
 class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppUser? user;
   final String? venueName;
+  final void Function()? onRatePressed;
 
   const VenuesAppBar({
     super.key,
     required this.user,
     this.venueName,
+    this.onRatePressed,
   });
 
   @override
@@ -64,7 +66,7 @@ class VenuesAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   const Spacer(),
                   AppBarButton(
-                    onPressed: () => context.pop(),
+                    onPressed: onRatePressed,
                     icon: Icons.star_rate_rounded,
                     iconSize: kNormalIconSize,
                   ),

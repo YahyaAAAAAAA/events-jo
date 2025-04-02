@@ -3,7 +3,6 @@ class WeddingVenue {
   late String name;
   late String ownerId;
   late String ownerName;
-  late int rate;
   late int peopleMax;
   late int peopleMin;
   late double latitude;
@@ -16,6 +15,7 @@ class WeddingVenue {
   late List<dynamic> startDate;
   late List<dynamic> endDate;
   late List<dynamic> time;
+  late List<String> rates;
   late String city;
 
   WeddingVenue({
@@ -23,7 +23,7 @@ class WeddingVenue {
     required this.name,
     required this.latitude,
     required this.longitude,
-    required this.rate,
+    required this.rates,
     required this.isOpen,
     required this.isApproved,
     required this.isBeingApproved,
@@ -46,7 +46,7 @@ class WeddingVenue {
       'name': name,
       'latitude': latitude,
       'longitude': longitude,
-      'rate': rate,
+      'rates': rates,
       'isOpen': isOpen,
       'isApproved': isApproved,
       'isBeingApproved': isBeingApproved,
@@ -69,7 +69,7 @@ class WeddingVenue {
     name = jsonVenue['name'];
     latitude = jsonVenue['latitude'].toDouble();
     longitude = jsonVenue['longitude'].toDouble();
-    rate = jsonVenue['rate'];
+    rates = List<String>.from(jsonVenue['rates']);
     isOpen = jsonVenue['isOpen'];
     isApproved = jsonVenue['isApproved'];
     isBeingApproved = jsonVenue['isBeingApproved'];

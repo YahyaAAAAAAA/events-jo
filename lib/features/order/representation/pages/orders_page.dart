@@ -117,7 +117,12 @@ class _OrdersPageState extends State<OrdersPage> {
                                         onPressed: () async {
                                           final venue = await context
                                               .read<WeddingVenuesCubit>()
-                                              .getVenueById(order.venueId);
+                                              .getVenue(order.venueId);
+                                          if (venue == null) {
+                                            context.showSnackBar(
+                                                'Venue doesn\'t exist');
+                                            return;
+                                          }
                                           showModalBottomSheet(
                                             context: context,
                                             backgroundColor:

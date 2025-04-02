@@ -20,7 +20,7 @@ import 'package:events_jo/features/weddings/representation/components/details/ve
 import 'package:events_jo/features/weddings/representation/components/details/venue_date_picker.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_people_slider.dart';
 import 'package:events_jo/features/weddings/representation/components/details/venue_time_picker.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_changed.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_rate.dart';
 import 'package:events_jo/features/weddings/representation/components/venues_app_bar.dart';
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_states.dart';
@@ -53,19 +53,17 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   late final LocationCubit locationCubit;
   late final EjLocation venueLocation;
 
-  //date
-  DateTime? selectedDate;
-
   //time
   late DateTime selectedStartTime;
   late DateTime selectedStartTimeInit;
   late DateTime selectedEndTime;
   late DateTime selectedEndTimeInit;
-
   late int numberOfExpectedPeople;
 
+  int currnetRating = 0;
   double totalAmount = 0;
   String paymentMethod = 'cash';
+  DateTime? selectedDate;
   List<WeddingVenueMeal>? selectedMeals = [];
   List<WeddingVenueDrink>? selectedDrinks = [];
   List<DateTimeRange>? reservedDates = [];
@@ -85,8 +83,8 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
     //setup time
     selectedStartTime = DateTime(0, 0, 0, weddingVenue.time[0]);
     selectedStartTimeInit = DateTime(0, 0, 0, weddingVenue.time[0]);
-    selectedEndTime = DateTime(0, 0, 0, weddingVenue.time[0]);
-    selectedEndTimeInit = DateTime(0, 0, 0, weddingVenue.time[0]);
+    selectedEndTime = DateTime(0, 0, 0, weddingVenue.time[1]);
+    selectedEndTimeInit = DateTime(0, 0, 0, weddingVenue.time[1]);
 
     //setup people range
     numberOfExpectedPeople = weddingVenue.peopleMin;
@@ -99,8 +97,11 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
       initLong: weddingVenue.longitude,
     );
 
+    currnetRating = singleWeddingVenueCubit.getCurrentUserRate(
+        weddingVenue.rates, widget.user!.uid);
+
     //listen to venue
-    singleWeddingVenueCubit.getSingleVenueStream(weddingVenue.id);
+    singleWeddingVenueCubit.getDetailedVenue(weddingVenue.id);
     getVenueOrders();
   }
 
@@ -169,6 +170,91 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
       appBar: VenuesAppBar(
         user: widget.user,
         venueName: weddingVenue.name,
+        onRatePressed: () => showModalBottomSheet(
+          context: context,
+          backgroundColor: GColors.whiteShade3,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(kOuterRadius),
+            ),
+          ),
+          showDragHandle: true,
+          builder: (context) => Padding(
+            padding: const EdgeInsets.all(12),
+            child: StatefulBuilder(
+              builder: (context, setState) => SingleChildScrollView(
+                child: Column(
+                  spacing: 10,
+                  children: [
+                    Text(
+                      'How do you rate ${weddingVenue.name} ?',
+                      style: TextStyle(
+                        color: GColors.black,
+                        fontSize: kNormalFontSize,
+                      ),
+                    ),
+                    VenueRate(
+                      rating: currnetRating,
+                      fullColor: GColors.fullRate,
+                      emptyColor: GColors.emptyRate,
+                      onRatingChanged: (value) {
+                        setState(() {
+                          currnetRating = value;
+                        });
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 10,
+                      children: [
+                        IconButton(
+                          onPressed: () => context.pop(),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(GColors.whiteShade3),
+                          ),
+                          icon: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              color: GColors.royalBlue,
+                              fontSize: kSmallFontSize,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            int count = await orderCubit.getUserOrdersCount(
+                                widget.user!.uid, weddingVenue.id);
+
+                            await singleWeddingVenueCubit.rateVenue(
+                              venueId: weddingVenue.id,
+                              userId: widget.user!.uid,
+                              userName: widget.user?.name ?? 'User 123',
+                              userOrdersCount: count,
+                              rate: currnetRating,
+                            );
+                            context.pop();
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                                GColors.whiteShade3.shade600),
+                          ),
+                          icon: Text(
+                            'Submit',
+                            style: TextStyle(
+                              color: GColors.royalBlue,
+                              fontSize: kSmallFontSize,
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
       body: Center(
         child: ConstrainedBox(
@@ -176,13 +262,8 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
           child:
               BlocConsumer<SingleWeddingVenueCubit, SingleWeddingVenueStates>(
             listener: (context, state) {
-              //change occurred
-              if (state is SingleWeddingVenueChanged) {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const VenueChanged(),
-                  ),
-                );
+              if (state is SingleWeddingVenueError) {
+                context.showSnackBar(state.message);
               }
             },
             builder: (context, state) {

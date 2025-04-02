@@ -16,23 +16,38 @@ ThemeData eventsJoTheme() {
     dividerTheme: appDividerTheme(),
     inputDecorationTheme: appTextFieldTheme(),
     switchTheme: appSwitchTheme(),
-    dialogTheme: DialogThemeData(
-      backgroundColor: GColors.whiteShade3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kOuterRadius),
-      ),
-      titleTextStyle: TextStyle(
-        color: GColors.black,
-        fontSize: kNormalFontSize,
-        fontWeight: FontWeight.bold,
-        fontFamily: 'Abel',
-      ),
-      contentTextStyle: TextStyle(
-        color: GColors.black,
+    dialogTheme: appDialogTheme(),
+    sliderTheme: SliderThemeData(
+      thumbColor: GColors.royalBlue,
+      activeTrackColor: GColors.royalBlue,
+      inactiveTrackColor: GColors.poloBlue,
+      valueIndicatorColor: GColors.royalBlue,
+      valueIndicatorTextStyle: TextStyle(
+        color: GColors.white,
         fontSize: kSmallFontSize,
-        fontWeight: FontWeight.normal,
         fontFamily: 'Abel',
       ),
+    ),
+  );
+}
+
+DialogThemeData appDialogTheme() {
+  return DialogThemeData(
+    backgroundColor: GColors.whiteShade3,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(kOuterRadius),
+    ),
+    titleTextStyle: TextStyle(
+      color: GColors.black,
+      fontSize: kNormalFontSize,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Abel',
+    ),
+    contentTextStyle: TextStyle(
+      color: GColors.black,
+      fontSize: kSmallFontSize,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Abel',
     ),
   );
 }

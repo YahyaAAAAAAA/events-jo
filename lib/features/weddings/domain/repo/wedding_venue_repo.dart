@@ -1,20 +1,20 @@
-// Outlines the venue operations
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 
 abstract class WeddingVenueRepo {
-  //get/listen to venues from database
-
-  Stream<WeddingVenue?> getVenueStream(String id);
-
-  Stream<List<WeddingVenueMeal>> getMealsStream(String id);
-
-  Stream<List<WeddingVenueDrink>> getDrinksStream(String id);
-
   Future<List<WeddingVenue>> getAllVenues();
 
-  Future<WeddingVenue?> getVenueById(String id);
+  Future<WeddingVenue?> getVenue(String id);
+
+  Future<WeddingVenueDetailed?> getDetailedVenue(String id);
+
+  Future<void> rateVenue({
+    required String venueId,
+    required String userId,
+    required String userName,
+    required int userOrdersCount,
+    required int rate,
+  });
 
   String generateUniqueId();
 }

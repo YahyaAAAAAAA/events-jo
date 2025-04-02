@@ -5,7 +5,7 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_rating.dart';
+import 'package:events_jo/features/weddings/representation/components/venue_ratings.dart';
 import 'package:flutter/material.dart';
 
 class VenueNameRatingAndLocation extends StatelessWidget {
@@ -16,7 +16,7 @@ class VenueNameRatingAndLocation extends StatelessWidget {
     this.venueLocation,
   });
 
-  final WeddingVenue weddingVenue;
+  final WeddingVenue? weddingVenue;
   final LocationCubit? locationCubit;
   final EjLocation? venueLocation;
 
@@ -33,8 +33,6 @@ class VenueNameRatingAndLocation extends StatelessWidget {
               ),
             ),
             padding: const EdgeInsets.all(12),
-            // fit: BoxFit.scaleDown,
-            // alignment: Alignment.centerLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -45,7 +43,7 @@ class VenueNameRatingAndLocation extends StatelessWidget {
                   children: [
                     //venue name
                     Text(
-                      weddingVenue.name,
+                      weddingVenue?.name ?? 'Venue 123',
                       style: TextStyle(
                         color: GColors.black,
                         fontSize: kSmallFontSize,
@@ -54,7 +52,8 @@ class VenueNameRatingAndLocation extends StatelessWidget {
                     ),
                     //rate
                     VenueRating(
-                        weddingVenue: weddingVenue, size: kSmallIconSize - 5),
+                      rates: weddingVenue?.rates ?? [],
+                    ),
                   ],
                 ),
 

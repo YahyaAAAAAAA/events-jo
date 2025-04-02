@@ -72,8 +72,9 @@ class VenueCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
+                  Positioned(
+                    top: -1,
+                    right: 0,
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
@@ -83,8 +84,8 @@ class VenueCard extends StatelessWidget {
                         ),
                       ),
                       child: Container(
-                        width: 30,
-                        height: 30,
+                        width: 35,
+                        height: 35,
                         decoration: BoxDecoration(
                           color: GColors.white.shade600,
                           borderRadius: BorderRadius.circular(kOuterRadius),

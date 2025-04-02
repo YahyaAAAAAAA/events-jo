@@ -6,8 +6,10 @@ import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/home/presentation/components/sponserd_venue.dart';
+import 'package:events_jo/features/home/presentation/pages/venue_search_delegate.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
+import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_states.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,8 +27,6 @@ class _HomePageState extends State<HomePage> {
   late final AppUser? user;
   late final WeddingVenuesCubit weddingVenuesCubit;
 
-  final TextEditingController searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -37,11 +37,6 @@ class _HomePageState extends State<HomePage> {
     if (weddingVenuesCubit.cachedVenues == null) {
       weddingVenuesCubit.getAllVenues();
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -59,17 +54,19 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(12),
             child: ListView(
               children: [
-                //todo search bar
-                VenueSearchBar(
-                  controller: searchController,
-                  onPressed: () => setState(
-                    () => searchController.clear(),
+                BlocBuilder<WeddingVenuesCubit, WeddingVenuesStates>(
+                  builder: (context, state) => VenueSearchBar(
+                    onPressed: state is WeddingVenuesLoaded
+                        ? () => showSearch(
+                              context: context,
+                              delegate: VenueSearchDelegate(
+                                context,
+                                state.venues,
+                                user,
+                              ),
+                            )
+                        : null,
                   ),
-                  // onChanged: (venue) => weddingVenuesCubit.searchList(
-                  //   venues,
-                  //   venues,
-                  //   venue,
-                  // ),
                 ),
 
                 10.height,
@@ -185,7 +182,6 @@ class _HomePageState extends State<HomePage> {
                 WeddingVenuesList(
                   user: user,
                   weddingVenuesCubit: weddingVenuesCubit,
-                  searchController: searchController,
                 ),
               ],
             ),

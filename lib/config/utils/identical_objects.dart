@@ -60,7 +60,7 @@ bool identicalVenues(
     if (v1.venue.isOpen != v2.venue.isOpen) {
       return false;
     }
-    if (v1.venue.rate != v2.venue.rate) {
+    if (v1.venue.rates != v2.venue.rates) {
       return false;
     }
   }

@@ -1071,7 +1071,7 @@ class _OwnerApprovedVenueDetailsPageState
                   id: venueDetailed.venue.id,
                   latitude: venueDetailed.venue.latitude,
                   longitude: venueDetailed.venue.longitude,
-                  rate: venueDetailed.venue.rate,
+                  rates: venueDetailed.venue.rates,
                   isOpen: venueDetailed.venue.isOpen,
                   isApproved: venueDetailed.venue.isApproved,
                   isBeingApproved: venueDetailed.venue.isBeingApproved,

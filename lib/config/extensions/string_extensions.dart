@@ -45,4 +45,16 @@ extension StringExtensions on String {
     }
     return '$this:$minutes AM';
   }
+
+  List<String> parseRateString() {
+    //split the string by the '/' delimiter
+    final parts = this.split('/');
+
+    //ensure the string has exactly 4 parts
+    if (parts.length != 4) {
+      throw const FormatException('Invalid rate string format');
+    }
+
+    return parts;
+  }
 }

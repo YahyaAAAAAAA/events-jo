@@ -113,7 +113,7 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
                                         onPressed: () async {
                                           final venue = await context
                                               .read<WeddingVenuesCubit>()
-                                              .getVenueById(order.venueId);
+                                              .getVenue(order.venueId);
                                           showModalBottomSheet(
                                             context: context,
                                             backgroundColor:

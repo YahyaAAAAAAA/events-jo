@@ -1,56 +1,13 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:events_jo/features/weddings/domain/repo/wedding_venue_repo.dart';
 
 class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-
-  //listen to single a venue document change
-  @override
-  Stream<WeddingVenue?> getVenueStream(String id) {
-    //notifies of document results at this 'owners' collection doc 'id'
-    return firebaseFirestore
-        .collection('venues')
-        .doc(id)
-        .snapshots()
-        .map((snapshot) {
-      if (snapshot.data() == null) {
-        return null;
-      }
-
-      return WeddingVenue.fromJson(snapshot.data()!);
-    });
-  }
-
-  @override
-  //listen to the meals subcollection
-  Stream<List<WeddingVenueMeal>> getMealsStream(String id) {
-    return firebaseFirestore
-        .collection('venues')
-        .doc(id)
-        .collection('meals')
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => WeddingVenueMeal.fromJson(doc.data()))
-            .toList());
-  }
-
-  @override
-  //listen to the drinks subcollection
-  Stream<List<WeddingVenueDrink>> getDrinksStream(String id) {
-    return firebaseFirestore
-        .collection('venues')
-        .doc(id)
-        .collection('drinks')
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => WeddingVenueDrink.fromJson(doc.data()))
-            .toList());
-  }
 
   @override
   Future<List<WeddingVenue>> getAllVenues() async {
@@ -76,7 +33,7 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
   }
 
   @override
-  Future<WeddingVenue?> getVenueById(String id) async {
+  Future<WeddingVenue?> getVenue(String id) async {
     final docRef = firebaseFirestore.collection('venues').doc(id);
     final docSnapshot = await docRef.get();
 
@@ -85,6 +42,73 @@ class FirebaseWeddingVenueRepo implements WeddingVenueRepo {
     }
 
     return WeddingVenue.fromJson(docSnapshot.data()!);
+  }
+
+  @override
+  Future<WeddingVenueDetailed?> getDetailedVenue(String id) async {
+    final venueDocRef = firebaseFirestore.collection('venues').doc(id);
+    final venueDocSnapshot = await venueDocRef.get();
+
+    if (!venueDocSnapshot.exists || venueDocSnapshot.data() == null) {
+      return null;
+    }
+
+    final venue = WeddingVenue.fromJson(venueDocSnapshot.data()!);
+
+    final mealsCollectionRef = venueDocRef.collection('meals');
+    final mealsQuerySnapshot = await mealsCollectionRef.get();
+    final meals = mealsQuerySnapshot.docs
+        .map((doc) => WeddingVenueMeal.fromJson(doc.data()))
+        .toList();
+
+    final drinksCollectionRef = venueDocRef.collection('drinks');
+    final drinksQuerySnapshot = await drinksCollectionRef.get();
+    final drinks = drinksQuerySnapshot.docs
+        .map((doc) => WeddingVenueDrink.fromJson(doc.data()))
+        .toList();
+
+    return WeddingVenueDetailed(
+      venue: venue,
+      meals: meals,
+      drinks: drinks,
+    );
+  }
+
+  @override
+  Future<void> rateVenue({
+    required String venueId,
+    required String userId,
+    required String userName,
+    required int userOrdersCount,
+    required int rate,
+  }) async {
+    final docRef = firebaseFirestore.collection('venues').doc(venueId);
+    final docSnapshot = await docRef.get();
+
+    if (!docSnapshot.exists || docSnapshot.data() == null) {
+      return null;
+    }
+
+    final oldRates = List<String>.from(docSnapshot.data()?['rates'] ?? []);
+    final newRate = '$rate/$userOrdersCount/$userName/$userId';
+
+    // Check if the user has already rated
+    final userRateIndex =
+        oldRates.indexWhere((r) => r.split('/').last == userId);
+
+    if (userRateIndex != -1) {
+      // Update the existing rate
+      oldRates[userRateIndex] = newRate;
+    } else {
+      // Add the new rate
+      oldRates.add(newRate);
+    }
+
+    await firebaseFirestore.collection('venues').doc(venueId).update(
+      {
+        'rates': oldRates,
+      },
+    );
   }
 
   @override

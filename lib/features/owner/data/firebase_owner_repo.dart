@@ -62,8 +62,8 @@ class FirebaseOwnerRepo implements OwnerRepo {
           [
             'https://i.ibb.co/ZVf53hB/placeholder.png',
           ],
-      rate: 0,
-      city: await getCity(lat, long) ?? '  ',
+      rates: [],
+      city: await getCity(lat, long) ?? 'Not Found',
     );
 
     // add new venue to database

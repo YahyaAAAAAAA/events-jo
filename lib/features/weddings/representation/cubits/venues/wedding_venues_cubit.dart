@@ -147,8 +147,8 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
     return weddingVenuesList;
   }
 
-  Future<WeddingVenue?> getVenueById(String venueId) async {
-    final venue = await weddingVenueRepo.getVenueById(venueId);
+  Future<WeddingVenue?> getVenue(String venueId) async {
+    final venue = await weddingVenueRepo.getVenue(venueId);
     if (venue == null) {
       return null;
     }
