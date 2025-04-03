@@ -193,6 +193,7 @@ class _HomePageState extends State<HomePage> {
         thickness: 0.5,
         indent: 10,
         endIndent: 10,
+        height: 0,
       ),
     );
   }

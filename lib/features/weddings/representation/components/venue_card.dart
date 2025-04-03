@@ -74,7 +74,7 @@ class VenueCard extends StatelessWidget {
                   ),
                   Positioned(
                     top: -1,
-                    right: 0,
+                    right: -1,
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(

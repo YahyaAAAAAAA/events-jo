@@ -74,9 +74,10 @@ class CashoutModalSheet extends StatelessWidget {
                   ),
                   Text(
                     'You will be notified when your order is confirmed',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: GColors.black,
-                      fontSize: kNormalFontSize,
+                      fontSize: kNormalFontSize - 2,
                     ),
                   ),
                   IconButton(

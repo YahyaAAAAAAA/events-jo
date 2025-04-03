@@ -11,13 +11,11 @@ extension BuildContextExtension on BuildContext {
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transitionBuilder,
   }) {
+    //transitions moved to theme data
+    //check any commit before "venue edit 95% done" commit for custom transitions
     Navigator.of(this).push(
-      PageRouteBuilder(
-        transitionDuration: duration ?? const Duration(milliseconds: 300),
-        reverseTransitionDuration:
-            duration ?? const Duration(milliseconds: 300),
-        pageBuilder: (context, animation, secondaryAnimation) => child,
-        transitionsBuilder: transitionBuilder ?? TransitionAnimations.fade,
+      MaterialPageRoute(
+        builder: (context) => child,
       ),
     );
   }

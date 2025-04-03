@@ -101,6 +101,7 @@ class FirebaseAuthRepo implements AuthRepo {
 
   @override
   Future<void> logout(String id, UserType userType) async {
+    //todo handle if user null
     //make user offline
     await firebaseFirestore
         .collection('${userTypeToString(userType)}s')

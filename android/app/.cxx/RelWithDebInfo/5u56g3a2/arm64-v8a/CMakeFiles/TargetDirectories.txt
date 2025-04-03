@@ -1,0 +1,2 @@
+D:/Flutterrrr/FlutterProjects/events_jo/android/app/.cxx/RelWithDebInfo/5u56g3a2/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/Flutterrrr/FlutterProjects/events_jo/android/app/.cxx/RelWithDebInfo/5u56g3a2/arm64-v8a/CMakeFiles/rebuild_cache.dir

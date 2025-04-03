@@ -69,7 +69,10 @@ class DrinkCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const VerticalDivider(),
+              const VerticalDivider(
+                endIndent: 20,
+                indent: 0,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -93,23 +96,17 @@ class DrinkCard extends StatelessWidget {
                         ),
                         Transform.scale(
                           scale: 0.8,
-                          child: SliderTheme(
-                            data: SliderThemeData(
-                              disabledThumbColor: GColors.poloBlue,
-                              disabledActiveTrackColor: GColors.poloBlue,
-                            ),
-                            child: Slider(
-                              padding: const EdgeInsets.all(0),
-                              value: selectedAmount.toDouble(),
-                              min: 1,
-                              max: amount.toDouble(),
-                              thumbColor: GColors.royalBlue,
-                              activeColor: GColors.royalBlue,
-                              inactiveColor: GColors.poloBlue,
-                              label: selectedAmount.toInt().toString(),
-                              divisions: amount.toInt(),
-                              onChanged: isChecked ? onSliderChanged : null,
-                            ),
+                          child: Slider(
+                            padding: const EdgeInsets.all(0),
+                            value: selectedAmount.toDouble(),
+                            min: 1,
+                            max: amount.toDouble(),
+                            thumbColor: GColors.royalBlue,
+                            activeColor: GColors.royalBlue,
+                            inactiveColor: GColors.poloBlue,
+                            label: selectedAmount.toInt().toString(),
+                            divisions: amount.toInt(),
+                            onChanged: isChecked ? onSliderChanged : null,
                           ),
                         ),
                         AnimatedContainer(

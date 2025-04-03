@@ -1,3 +1,4 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/theme/themes/app_icon_button_theme.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
@@ -17,16 +18,43 @@ ThemeData eventsJoTheme() {
     inputDecorationTheme: appTextFieldTheme(),
     switchTheme: appSwitchTheme(),
     dialogTheme: appDialogTheme(),
-    sliderTheme: SliderThemeData(
-      thumbColor: GColors.royalBlue,
-      activeTrackColor: GColors.royalBlue,
-      inactiveTrackColor: GColors.poloBlue,
-      valueIndicatorColor: GColors.royalBlue,
-      valueIndicatorTextStyle: TextStyle(
-        color: GColors.white,
-        fontSize: kSmallFontSize,
-        fontFamily: 'Abel',
-      ),
+    sliderTheme: appSliderTheme(),
+    pageTransitionsTheme: appPageTransitionsTheme(),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      // year2023: false,
+      borderRadius: BorderRadius.circular(kOuterRadius),
+      color: GColors.royalBlue,
+      stopIndicatorColor: GColors.royalBlue,
+      circularTrackColor: GColors.whiteShade3.shade600,
+      linearTrackColor: GColors.whiteShade3.shade600,
+      linearMinHeight: 7,
+    ),
+  );
+}
+
+PageTransitionsTheme appPageTransitionsTheme() {
+  return PageTransitionsTheme(
+    builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+      TargetPlatform.values,
+      value: (_) => const FadeForwardsPageTransitionsBuilder(),
+    ),
+  );
+}
+
+SliderThemeData appSliderTheme() {
+  return SliderThemeData(
+    trackHeight: 7,
+    year2023: false,
+    thumbSize: const WidgetStatePropertyAll(Size(3, 25)),
+    allowedInteraction: SliderInteraction.tapAndSlide,
+    thumbColor: GColors.royalBlue,
+    activeTrackColor: GColors.royalBlue,
+    inactiveTrackColor: GColors.poloBlue,
+    valueIndicatorColor: GColors.royalBlue,
+    valueIndicatorTextStyle: TextStyle(
+      color: GColors.white,
+      fontSize: kSmallFontSize,
+      fontFamily: 'Abel',
     ),
   );
 }

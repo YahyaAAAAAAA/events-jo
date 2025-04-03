@@ -48,6 +48,13 @@ class VenueSearchDelegate extends SearchDelegate<WeddingVenue?> {
               borderRadius: BorderRadius.circular(kOuterRadius),
               borderSide: BorderSide.none,
             ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(kOuterRadius),
+              borderSide: BorderSide(
+                color: GColors.black,
+                width: 0.2,
+              ),
+            ),
           );
 
   @override
@@ -208,48 +215,53 @@ class VenueSearchDelegate extends SearchDelegate<WeddingVenue?> {
                         ),
                         Transform.scale(
                           scale: 0.8,
-                          child: RangeSlider(
-                            values: RangeValues(
-                              minPeople?.toDouble() ??
-                                  venues.fold<double>(
-                                      double.infinity,
-                                      (min, venue) => venue.peopleMin < min
-                                          ? venue.peopleMin.toDouble()
-                                          : min),
-                              maxPeople?.toDouble() ??
-                                  venues.fold<double>(
+                          child: SliderTheme(
+                            data: Theme.of(context).sliderTheme.copyWith(
+                                  year2023: false,
+                                ),
+                            child: RangeSlider(
+                              values: RangeValues(
+                                minPeople?.toDouble() ??
+                                    venues.fold<double>(
+                                        double.infinity,
+                                        (min, venue) => venue.peopleMin < min
+                                            ? venue.peopleMin.toDouble()
+                                            : min),
+                                maxPeople?.toDouble() ??
+                                    venues.fold<double>(
+                                        0,
+                                        (max, venue) => venue.peopleMax > max
+                                            ? venue.peopleMax.toDouble()
+                                            : max),
+                              ),
+                              min: venues.fold<double>(
+                                  double.infinity,
+                                  (min, venue) => venue.peopleMin < min
+                                      ? venue.peopleMin.toDouble()
+                                      : min),
+                              max: venues.fold<double>(
+                                  0,
+                                  (max, venue) => venue.peopleMax > max
+                                      ? venue.peopleMax.toDouble()
+                                      : max),
+                              divisions: venues
+                                  .fold<double>(
                                       0,
                                       (max, venue) => venue.peopleMax > max
                                           ? venue.peopleMax.toDouble()
-                                          : max),
+                                          : max)
+                                  .toInt(),
+                              labels: RangeLabels(
+                                '${minPeople ?? "Min"}',
+                                '${maxPeople ?? "Max"}',
+                              ),
+                              onChanged: (RangeValues values) {
+                                setState(() {
+                                  minPeople = values.start.toInt();
+                                  maxPeople = values.end.toInt();
+                                });
+                              },
                             ),
-                            min: venues.fold<double>(
-                                double.infinity,
-                                (min, venue) => venue.peopleMin < min
-                                    ? venue.peopleMin.toDouble()
-                                    : min),
-                            max: venues.fold<double>(
-                                0,
-                                (max, venue) => venue.peopleMax > max
-                                    ? venue.peopleMax.toDouble()
-                                    : max),
-                            divisions: venues
-                                .fold<double>(
-                                    0,
-                                    (max, venue) => venue.peopleMax > max
-                                        ? venue.peopleMax.toDouble()
-                                        : max)
-                                .toInt(),
-                            labels: RangeLabels(
-                              '${minPeople ?? "Min"}',
-                              '${maxPeople ?? "Max"}',
-                            ),
-                            onChanged: (RangeValues values) {
-                              setState(() {
-                                minPeople = values.start.toInt();
-                                maxPeople = values.end.toInt();
-                              });
-                            },
                           ),
                         ),
                         Row(

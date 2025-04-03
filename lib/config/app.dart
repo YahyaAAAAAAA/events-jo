@@ -143,40 +143,44 @@ class EventsJoApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: eventsJoTheme(),
-        home: BlocConsumer<AuthCubit, AuthStates>(
-          builder: (context, state) {
-            debugPrint(state.toString());
+        home: MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1)),
+          child: BlocConsumer<AuthCubit, AuthStates>(
+            builder: (context, state) {
+              debugPrint(state.toString());
 
-            //not logged-in
-            if (state is Unauthenticated) {
-              return const AuthPage();
-            }
+              //not logged-in
+              if (state is Unauthenticated) {
+                return const AuthPage();
+              }
 
-            //logged-in
-            if (state is Authenticated) {
-              //user authenticated now check type (user,owner,admin)
-              return const UserTypeGate();
-            }
+              //logged-in
+              if (state is Authenticated) {
+                //user authenticated now check type (user,owner,admin)
+                return const UserTypeGate();
+              }
 
-            //loading...
-            if (state is AuthLoading) {
-              return Scaffold(
-                body: GlobalLoadingBar(
-                  subText: state.message,
-                ),
-              );
-            }
+              //loading...
+              if (state is AuthLoading) {
+                return Scaffold(
+                  body: GlobalLoadingBar(
+                    subText: state.message,
+                  ),
+                );
+              }
 
-            //error
-            else {
-              return const AuthErrorCard();
-            }
-          },
-          listener: (context, state) {
-            if (state is AuthError) {
-              GSnackBar.show(context: context, text: state.message);
-            }
-          },
+              //error
+              else {
+                return const AuthErrorCard();
+              }
+            },
+            listener: (context, state) {
+              if (state is AuthError) {
+                GSnackBar.show(context: context, text: state.message);
+              }
+            },
+          ),
         ),
       ),
     );

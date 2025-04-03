@@ -18,10 +18,8 @@ class GlobalNavigationBarForOwners extends StatefulWidget {
 
 class _GlobalNavigationBarForOwnersState
     extends State<GlobalNavigationBarForOwners> {
-  //current nav bar page
-  int selecetedPage = 0;
+  int selectedPage = 0;
 
-  //nav bar items
   late final List<Widget> screens;
 
   @override
@@ -29,11 +27,8 @@ class _GlobalNavigationBarForOwnersState
     super.initState();
 
     screens = [
-      //first nav item
       const HomePageForOwners(),
-      //middle nav item
       const OrdersPage(),
-      //last nav item
       const SettingsPageForOwners(),
     ];
   }
@@ -44,7 +39,7 @@ class _GlobalNavigationBarForOwnersState
       extendBody: false,
       bottomNavigationBar: NavigationBar(
         backgroundColor: GColors.navBar,
-        selectedIndex: selecetedPage,
+        selectedIndex: selectedPage,
         animationDuration: const Duration(milliseconds: 300),
         indicatorColor: GColors.royalBlue.withValues(alpha: 0),
         indicatorShape: RoundedRectangleBorder(
@@ -72,7 +67,7 @@ class _GlobalNavigationBarForOwnersState
             icon: const Icon(
               CustomIcons.list,
             ),
-            label: 'Your Orders',
+            label: 'Bookings',
           ),
           NavigationDestination(
             selectedIcon: Icon(
@@ -85,9 +80,17 @@ class _GlobalNavigationBarForOwnersState
             label: 'Settings',
           ),
         ],
-        onDestinationSelected: (value) => setState(() => selecetedPage = value),
+        onDestinationSelected: (value) {
+          setState(() => selectedPage = value);
+        },
       ),
-      body: screens[selecetedPage],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (child, animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: screens[selectedPage],
+      ),
     );
   }
 }

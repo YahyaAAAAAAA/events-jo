@@ -93,16 +93,6 @@ class _OwnerPageState extends State<OwnerPage> {
   TextEditingController drinkNameController = TextEditingController();
   TextEditingController drinkAmountController = TextEditingController();
   TextEditingController drinkPriceController = TextEditingController();
-
-  //note: for cubit ->
-  //    (pass by reference)
-  //1- create a non-primitive type (eg: an Entity)
-  //    (to reflect changes to UI)
-  //2- emit (loading) and (loaded) states
-  //3- bloc builder & consumer
-  //if you pass a primitive type (int,double, etc..)
-  //they get passed by (value) so changes will not reflect
-
   @override
   void initState() {
     super.initState();
@@ -113,10 +103,6 @@ class _OwnerPageState extends State<OwnerPage> {
     //get cubits
     ownerCubit = context.read<OwnerCubit>();
     locationCubit = context.read<LocationCubit>();
-
-    //todo will use this for quick addition
-    // lat = 31.863837903688133;
-    // long = 35.89443320390641;
 
     //setup user location values
     userLocation = EjLocation(

@@ -14,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class OrderCubit extends Cubit<OrderStates> {
   final OrderRepo orderRepo;
   List<EOrderDetailed>? cachedOrders;
+  String? cachedUserId;
 
   OrderCubit({required this.orderRepo}) : super(OrderInitial());
 
@@ -46,6 +47,7 @@ class OrderCubit extends Cubit<OrderStates> {
 
       if (cache) {
         cachedOrders = orders;
+        cachedUserId = id;
       }
 
       emit(UserOrdersLoaded(orders));

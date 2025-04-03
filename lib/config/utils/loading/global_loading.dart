@@ -27,7 +27,7 @@ class GlobalLoadingBar extends StatelessWidget {
                   gradient: GColors.logoGradient,
                   style: TextStyle(
                     color: GColors.royalBlue,
-                    fontSize: 80,
+                    fontSize: 50,
                     fontFamily: 'Gugi',
                     fontWeight: FontWeight.bold,
                   ),
@@ -43,11 +43,13 @@ class GlobalLoadingBar extends StatelessWidget {
                   ),
                 )
               : const SizedBox(),
-          subText != null ? 20.height : 0.height,
+          subText != null ? 10.height : 0.height,
           Lottie.asset(
             'assets/animations/loading.json',
             frameRate: FrameRate.max,
             fit: BoxFit.contain,
+            width: 60,
+            height: 60,
           ),
         ],
       ),

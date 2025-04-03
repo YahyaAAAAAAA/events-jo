@@ -30,8 +30,8 @@ class UserOrdersEmpty extends StatelessWidget {
             ),
             Text(
               text == null
-                  ? 'Your orders will appear here.'
-                  : '$text, your orders will appear here.',
+                  ? 'Your bookings will appear here.'
+                  : '$text, your bookings will appear here.',
               style: TextStyle(
                 color: GColors.black,
                 fontSize: kNormalFontSize,

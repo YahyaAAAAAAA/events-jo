@@ -37,6 +37,8 @@ class _OrdersPageState extends State<OrdersPage> {
     orderCubit = context.read<OrderCubit>();
     if (orderCubit.cachedOrders == null) {
       orderCubit.getOrders('userId', user!.uid, cache: true);
+    } else if (orderCubit.cachedUserId != user?.uid) {
+      orderCubit.getOrders('userId', user!.uid, cache: true);
     } else {
       orderCubit.getCachedOrders();
     }
@@ -70,7 +72,7 @@ class _OrdersPageState extends State<OrdersPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Your Orders",
+                                "Your Bookings",
                                 style: TextStyle(
                                   color: GColors.black,
                                   fontSize: kNormalFontSize,
@@ -168,6 +170,7 @@ class _OrdersPageState extends State<OrdersPage> {
         thickness: 0.5,
         indent: 10,
         endIndent: 10,
+        height: 0,
       ),
     );
   }

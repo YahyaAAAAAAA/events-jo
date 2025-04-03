@@ -2,6 +2,7 @@ import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page.dart';
+import 'package:events_jo/features/order/representation/pages/orders_page.dart';
 import 'package:events_jo/features/settings/representation/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +16,8 @@ class GlobalNavigationBar extends StatefulWidget {
 }
 
 class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
-  //current nav bar page
-  int selecetedPage = 0;
+  int selectedPage = 0;
 
-  //nav bar items
   late final List<Widget> screens;
 
   @override
@@ -26,18 +25,8 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
     super.initState();
 
     screens = [
-      //first nav item
       const HomePage(),
-      //middle nav item
-      Center(
-        child: Text(
-          'List of the user orders',
-          style: TextStyle(
-            color: GColors.black,
-          ),
-        ),
-      ),
-      //last nav item
+      const OrdersPage(),
       const SettingsPage(),
     ];
   }
@@ -48,7 +37,7 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
       extendBody: false,
       bottomNavigationBar: NavigationBar(
         backgroundColor: GColors.navBar,
-        selectedIndex: selecetedPage,
+        selectedIndex: selectedPage,
         animationDuration: const Duration(milliseconds: 300),
         indicatorColor: GColors.royalBlue.withValues(alpha: 0),
         indicatorShape: RoundedRectangleBorder(
@@ -76,7 +65,7 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
             icon: const Icon(
               CustomIcons.list,
             ),
-            label: 'Your Orders',
+            label: 'Bookings',
           ),
           NavigationDestination(
             selectedIcon: Icon(
@@ -89,9 +78,17 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
             label: 'Settings',
           ),
         ],
-        onDestinationSelected: (value) => setState(() => selecetedPage = value),
+        onDestinationSelected: (value) {
+          setState(() => selectedPage = value);
+        },
       ),
-      body: screens[selecetedPage],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder: (child, animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: screens[selectedPage],
+      ),
     );
   }
 }

@@ -115,6 +115,7 @@ class _SettingsPageState extends State<SettingsPage> {
         thickness: 0.5,
         indent: 10,
         endIndent: 10,
+        height: 0,
       ),
     );
   }
