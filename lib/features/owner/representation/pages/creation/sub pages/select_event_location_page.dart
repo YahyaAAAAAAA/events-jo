@@ -1,6 +1,8 @@
 import 'package:events_jo/config/enums/event_type.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_button.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_page_bar.dart';
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 //* This page lets the user to choose a location on a map (NOT REQUIRED)
@@ -17,29 +19,50 @@ class SelectEventLocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
+    return IconButton(
+      onPressed: onPressed,
+      icon: Row(
+        spacing: 10,
         children: [
-          const OwnerPageBar(),
-
-          const SizedBox(height: 100),
-
-          //location button
-          OwnerButton(
-            text: eventType == EventType.venue
-                ? 'Select your Venue location'
-                : eventType == EventType.farm
-                    ? 'Select your Farm location'
-                    : 'Select your Court location',
-            icon: Icons.location_on_outlined,
-            fontSize: 20,
-            iconSize: 40,
-            padding: 20,
-            fontWeight: FontWeight.bold,
-            onPressed: onPressed,
+          IconButton(
+            onPressed: null,
+            style: ButtonStyle(
+              backgroundColor:
+                  WidgetStatePropertyAll(GColors.whiteShade3.shade600),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kOuterRadius)),
+              ),
+            ),
+            icon: Icon(
+              Icons.location_on_outlined,
+              color: GColors.royalBlue,
+              size: kSmallIconSize + 5,
+            ),
           ),
-
-          const SizedBox(height: 20),
+          Text(
+            'Your ${eventType.name.toCapitalized} Location',
+            style: TextStyle(
+              color: GColors.black,
+              fontSize: kSmallFontSize,
+            ),
+          ),
+          const Spacer(),
+          IconButton(
+            onPressed: onPressed,
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kOuterRadius)),
+              ),
+            ),
+            icon: Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: GColors.white,
+              size: kSmallIconSize + 5,
+            ),
+          ),
         ],
       ),
     );

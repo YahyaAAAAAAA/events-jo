@@ -62,7 +62,6 @@ class _SettingsPageForOwnersState extends State<SettingsPageForOwners> {
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: ListView(
-                    shrinkWrap: true,
                     children: [
                       //account
                       Text(

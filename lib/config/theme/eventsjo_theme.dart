@@ -44,6 +44,7 @@ PageTransitionsTheme appPageTransitionsTheme() {
 SliderThemeData appSliderTheme() {
   return SliderThemeData(
     trackHeight: 7,
+    //ignore: deprecated_member_use
     year2023: false,
     thumbSize: const WidgetStatePropertyAll(Size(3, 25)),
     allowedInteraction: SliderInteraction.tapAndSlide,

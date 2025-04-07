@@ -1,7 +1,10 @@
 import 'package:events_jo/config/enums/event_type.dart';
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_page_bar.dart';
 import 'package:flutter/material.dart';
 
 //* This page lets the user to pick a name for their event (REQUIRED)
@@ -17,44 +20,45 @@ class SelectEventNamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
+    return IconButton(
+      onPressed: null,
+      icon: Row(
         children: [
-          const OwnerPageBar(),
-
-          const SizedBox(height: 100),
-
-          Center(
-            child: Text(
-              eventType == EventType.venue
-                  ? 'Enter your Wedding Venue name'
-                  : eventType == EventType.farm
-                      ? 'Enter your Farm name'
-                      : 'Enter your Football Court name',
-              style: TextStyle(
-                color: GColors.poloBlue,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+          IconButton(
+            onPressed: null,
+            style: ButtonStyle(
+              backgroundColor:
+                  WidgetStatePropertyAll(GColors.whiteShade3.shade600),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kOuterRadius)),
               ),
             ),
+            icon: Icon(
+              Icons.edit_outlined,
+              color: GColors.royalBlue,
+              size: kSmallIconSize + 5,
+            ),
           ),
-
-          //name text field
-          Padding(
-            padding: const EdgeInsets.all(12),
+          10.width,
+          Text(
+            'Your ${eventType.name.toCapitalized} Name: ',
+            style: TextStyle(
+              color: GColors.black,
+              fontSize: kSmallFontSize,
+            ),
+          ),
+          20.width,
+          Expanded(
             child: AuthTextField(
               controller: nameController,
-              hintText: '',
-              elevation: 3,
-              textColor: GColors.royalBlue,
-              fontWeight: FontWeight.bold,
-              obscureText: false,
-              textAlign: TextAlign.center,
+              hintText: 'Name Here',
+              textColor: GColors.black,
+              enabledColor: GColors.black.withValues(alpha: 0.3),
+              fontWeight: FontWeight.normal,
               maxLength: 25,
             ),
           ),
-
-          const SizedBox(height: 20),
         ],
       ),
     );

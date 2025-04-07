@@ -1,9 +1,11 @@
-// import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:io';
 import 'package:events_jo/config/enums/event_type.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_button.dart';
-// import 'package:events_jo/features/owner/representation/components/image_card.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_page_bar.dart';
-// import 'package:flutter/foundation.dart';
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/packages/image%20slideshow/image_slideshow.dart';
+import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,51 +25,89 @@ class SelectImagesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
+    return IconButton(
+      onPressed: onPressed,
+      icon: Row(
+        spacing: 10,
         children: [
-          const OwnerPageBar(),
-
-          images.isEmpty
-              ? const SizedBox(height: 100)
-              : const SizedBox(height: 30),
-
-          //images button
-          OwnerButton(
-            text: eventType == EventType.venue
-                ? 'Select images for your Venue'
-                : eventType == EventType.farm
-                    ? 'Select images for your Farm'
-                    : 'Select images for your Court',
-            icon: Icons.image,
-            fontSize: 20,
-            iconSize: 40,
-            padding: 20,
-            fontWeight: FontWeight.bold,
-            onPressed: onPressed,
+          IconButton(
+            onPressed: null,
+            style: ButtonStyle(
+              backgroundColor:
+                  WidgetStatePropertyAll(GColors.whiteShade3.shade600),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kOuterRadius)),
+              ),
+            ),
+            icon: Icon(
+              Icons.image_outlined,
+              color: GColors.royalBlue,
+              size: kSmallIconSize + 5,
+            ),
           ),
-
-          images.isEmpty ? const SizedBox() : const SizedBox(height: 20),
-
-          //images slider
-          images.isNotEmpty
-              ? const Text('removed carousel slider temp')
-              // ? CarouselSlider.builder(
-              //     itemCount: images.length,
-              //     itemBuilder: (context, index, realIndex) => images.isNotEmpty
-              //         ? ImageCard(images: images, index: index, isWeb: kIsWeb)
-              //         : const SizedBox(),
-              //     //responsive height
-              //     options: CarouselOptions(
-              //       enlargeFactor: 1,
-              //       enlargeCenterPage: true,
-              //       enlargeStrategy: CenterPageEnlargeStrategy.height,
-              //       autoPlay: false,
-              //     ),
-              //   )
-              : const SizedBox(),
-
-          const SizedBox(height: 20),
+          Text(
+            'Your ${eventType.name.toCapitalized} Images',
+            style: TextStyle(
+              color: GColors.black,
+              fontSize: kSmallFontSize,
+            ),
+          ),
+          const Spacer(),
+          IconButton(
+            onPressed: images.isEmpty
+                ? null
+                : () => context.dialog(
+                      pageBuilder: (context, _, __) => AlertDialog(
+                        content: ImageSlideshow(
+                          width: 300,
+                          height: 300,
+                          children: List.generate(
+                            images.length,
+                            (index) {
+                              return ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(kOuterRadius),
+                                child: Image.file(
+                                  File(images[index].path),
+                                  fit: BoxFit.contain,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kOuterRadius)),
+              ),
+            ),
+            icon: Icon(
+              images.isEmpty
+                  ? Icons.image_not_supported_outlined
+                  : Icons.image_search,
+              color: GColors.white,
+              size: kSmallIconSize + 5,
+            ),
+          ),
+          IconButton(
+            onPressed: onPressed,
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kOuterRadius)),
+              ),
+            ),
+            icon: Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: GColors.white,
+              size: kSmallIconSize + 5,
+            ),
+          ),
         ],
       ),
     );

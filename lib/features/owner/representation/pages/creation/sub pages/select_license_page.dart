@@ -1,13 +1,14 @@
-// import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:io';
 import 'package:events_jo/config/enums/event_type.dart';
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_button.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_page_bar.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-//* This page lets the user select images for their event (NOT REQUIRED)
-//if empty a placeholder image will be displayed instead
 class SelectLicensePage extends StatelessWidget {
   final List<XFile> images;
   final EventType eventType;
@@ -22,51 +23,100 @@ class SelectLicensePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
+    return IconButton(
+      onPressed: onPressed,
+      icon: Row(
+        spacing: 10,
         children: [
-          const OwnerPageBar(),
-
-          images.isEmpty
-              ? const SizedBox(height: 100)
-              : const SizedBox(height: 30),
-
-          //images button
-          OwnerButton(
-            text: eventType == EventType.venue
-                ? 'Select a licens for your Venue'
-                : eventType == EventType.farm
-                    ? 'Select a licens for your Farm'
-                    : 'Select a licens for your Court',
-            icon: CustomIcons.license,
-            fontSize: 20,
-            iconSize: 40,
-            padding: 20,
-            fontWeight: FontWeight.bold,
-            onPressed: onPressed,
+          IconButton(
+            onPressed: null,
+            style: ButtonStyle(
+              backgroundColor:
+                  WidgetStatePropertyAll(GColors.whiteShade3.shade600),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kOuterRadius)),
+              ),
+            ),
+            icon: Icon(
+              CustomIcons.license,
+              color: GColors.royalBlue,
+              size: kSmallIconSize + 5,
+            ),
           ),
-
-          images.isEmpty ? const SizedBox() : const SizedBox(height: 20),
-
-          //images slider
+          Text(
+            'Your ${eventType.name.toCapitalized} License',
+            style: TextStyle(
+              color: GColors.black,
+              fontSize: kSmallFontSize,
+            ),
+          ),
+          const Spacer(),
           images.isNotEmpty
-              ? const Text('removed carousel slider temp')
-              // ? CarouselSlider.builder(
-              //     itemCount: images.length,
-              //     itemBuilder: (context, index, realIndex) => images.isNotEmpty
-              //         ? ImageCard(images: images, index: index, isWeb: kIsWeb)
-              //         : const SizedBox(),
-              //     //responsive height
-              //     options: CarouselOptions(
-              //       enlargeFactor: 1,
-              //       enlargeCenterPage: true,
-              //       enlargeStrategy: CenterPageEnlargeStrategy.height,
-              //       autoPlay: false,
-              //     ),
-              //   )
-              : const SizedBox(),
-
-          const SizedBox(height: 20),
+              ? IconButton(
+                  onPressed: () => context.dialog(
+                    pageBuilder: (context, _, __) => AlertDialog(
+                      content: SizedBox(
+                        width: 300,
+                        height: 300,
+                        child: ListView.builder(
+                          itemCount: images.length,
+                          itemBuilder: (context, index) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(kOuterRadius),
+                              child: Image.file(
+                                File(images[index].path),
+                                fit: BoxFit.contain,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(kOuterRadius)),
+                    ),
+                  ),
+                  icon: Icon(
+                    Icons.image_search,
+                    color: GColors.white,
+                    size: kSmallIconSize + 5,
+                  ),
+                )
+              : IconButton(
+                  onPressed: null,
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(kOuterRadius)),
+                    ),
+                  ),
+                  icon: Icon(
+                    Icons.image_not_supported_outlined,
+                    color: GColors.white,
+                    size: kSmallIconSize + 5,
+                  ),
+                ),
+          IconButton(
+            onPressed: onPressed,
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kOuterRadius)),
+              ),
+            ),
+            icon: Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: GColors.white,
+              size: kSmallIconSize + 5,
+            ),
+          ),
         ],
       ),
     );

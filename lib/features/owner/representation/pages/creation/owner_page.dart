@@ -140,227 +140,234 @@ class _OwnerPageState extends State<OwnerPage> {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 450),
             //loads children only when needed
-            child: LazyIndexedStack(
-              index: index,
-              children: [
-                //* owner sub pages
-                //type
-                SelectEventType(
-                  eventType: eventType,
-                  onTap1: () => setState(() => eventType = EventType.venue),
-                  onTap2: () => setState(() => eventType = EventType.farm),
-                  onTap3: () => setState(() => eventType = EventType.court),
-                ),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: LazyIndexedStack(
+                index: index,
+                children: [
+                  //* owner sub pages
+                  //type
+                  Column(
+                    spacing: 10,
+                    children: [
+                      SelectEventType(
+                        eventType: eventType,
+                        onSelected: (event) =>
+                            setState(() => eventType = event),
+                      ),
 
-                //name
-                SelectEventNamePage(
-                  eventType: eventType,
-                  nameController: nameController,
-                ),
+                      //name
+                      SelectEventNamePage(
+                        eventType: eventType,
+                        nameController: nameController,
+                      ),
 
-                //location
-                SelectEventLocationPage(
-                  eventType: eventType,
-                  onPressed: () => locationCubit.showMapDialog(
-                    context,
-                    userLocation: userLocation,
+                      //location
+                      SelectEventLocationPage(
+                        eventType: eventType,
+                        onPressed: () => locationCubit.showMapDialog(
+                          context,
+                          userLocation: userLocation,
+                        ),
+                      ),
+
+                      //pics
+                      SelectImagesPage(
+                        images: images,
+                        eventType: eventType,
+                        onPressed: () async {
+                          //pick images
+                          final selectedImages =
+                              await ImagePicker().pickMultiImage(limit: 6);
+
+                          //user cancels -> save old list
+                          if (selectedImages.isEmpty) return;
+
+                          //user confirms -> clear old list and add new images
+                          images.clear();
+                          images.addAll(selectedImages);
+
+                          //update
+                          setState(() {});
+                        },
+                      ),
+
+                      //license
+                      SelectLicensePage(
+                        images: license,
+                        eventType: eventType,
+                        onPressed: () async {
+                          //pick images
+                          final selectedLicense =
+                              await ImagePicker().pickMultiImage(limit: 2);
+
+                          //save old license
+                          if (selectedLicense.isEmpty) return;
+
+                          //save new license
+                          license.clear();
+                          license.add(selectedLicense.first);
+
+                          //update
+                          setState(() {});
+                        },
+                      ),
+                    ],
                   ),
-                ),
 
-                //pics
-                SelectImagesPage(
-                  images: images,
-                  eventType: eventType,
-                  onPressed: () async {
-                    //pick images
-                    final selectedImages =
-                        await ImagePicker().pickMultiImage(limit: 6);
+                  //date range
+                  SelectRangeDatePage(
+                    range: range,
+                    onRangeSelected: (value) => setState(() => range = value),
+                  ),
 
-                    //user cancels -> save old list
-                    if (selectedImages.isEmpty) return;
+                  //time range
+                  SelectRangeTimePage(
+                    tempValueForTime: tempValueForTime,
+                    time: time,
+                    onTab: (from, to) => setState(
+                      () {
+                        //control UI
+                        tempValueForTime = 1;
 
-                    //user confirms -> clear old list and add new images
-                    images.clear();
-                    images.addAll(selectedImages);
+                        //set time
+                        time[0] = from.hour;
+                        time[1] = to.hour;
+                      },
+                    ),
+                  ),
 
-                    //update
-                    setState(() {});
-                  },
-                ),
+                  //people range
+                  SelectPeopleRange(
+                    peoplePriceController: peoplePriceController,
+                    peopleMinController: peopleMinController,
+                    peopleMaxController: peopleMaxController,
+                  ),
 
-                //license
-                SelectLicensePage(
-                  images: license,
-                  eventType: eventType,
-                  onPressed: () async {
-                    //pick images
-                    final selectedLicense =
-                        await ImagePicker().pickMultiImage(limit: 2);
+                  //meals
+                  SelectEventMealsPage(
+                    mealNameController: mealNameController,
+                    mealAmountController: mealAmountController,
+                    mealPriceController: mealPriceController,
+                    meals: meals,
+                    //update image when typing (only update state)
+                    onTextFieldChanged: (text) => setState(() {}),
+                    //update field on menu select
+                    onMealSelected: (meal) => setState(
+                        () => mealNameController.text = meal.toString()),
+                    itemBuilder: (context, index) {
+                      return OwnerMealCard(
+                        meals: meals,
+                        index: index,
+                        key: Key(ownerCubit.generateUniqueId()),
+                        onPressed: () => setState(() => meals.removeAt(index)),
+                      );
+                    },
+                    onAddPressed: () {
+                      //checks if fields are empty
+                      if (mealNameController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add a name for the meal');
+                        return;
+                      }
+                      if (mealAmountController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add an amount for the meal');
+                        return;
+                      }
+                      if (mealPriceController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add a price for the meal');
+                        return;
+                      }
 
-                    //save old license
-                    if (selectedLicense.isEmpty) return;
+                      //add meal to list
+                      meals.add(
+                        WeddingVenueMeal(
+                          id: 'added later :D',
+                          name: mealNameController.text.trim(),
+                          amount: int.parse(mealAmountController.text),
+                          price: double.parse(mealPriceController.text),
+                        ),
+                      );
 
-                    //save new license
-                    license.clear();
-                    license.add(selectedLicense.first);
+                      //clear fields after addition
+                      mealNameController.clear();
+                      mealAmountController.clear();
+                      mealPriceController.clear();
 
-                    //update
-                    setState(() {});
-                  },
-                ),
-
-                //date range
-                SelectRangeDatePage(
-                  range: range,
-                  onRangeSelected: (value) => setState(() => range = value),
-                ),
-
-                //time range
-                SelectRangeTimePage(
-                  tempValueForTime: tempValueForTime,
-                  time: time,
-                  onTab: (from, to) => setState(
-                    () {
-                      //control UI
-                      tempValueForTime = 1;
-
-                      //set time
-                      time[0] = from.hour;
-                      time[1] = to.hour;
+                      //update
+                      setState(() {});
                     },
                   ),
-                ),
 
-                //people range
-                SelectPeopleRange(
-                  peoplePriceController: peoplePriceController,
-                  peopleMinController: peopleMinController,
-                  peopleMaxController: peopleMaxController,
-                ),
+                  //drinks
+                  SelectEventDrinksPage(
+                    drinkNameController: drinkNameController,
+                    drinkAmountController: drinkAmountController,
+                    drinkPriceController: drinkPriceController,
+                    drinks: drinks,
+                    //update image when typing (only update state)
+                    onChanged: (text) => setState(() {}),
+                    //update field on menu select
+                    onDrinkSelected: (drink) => setState(
+                        () => drinkNameController.text = drink.toString()),
+                    itemBuilder: (context, index) {
+                      return OwnerDrinkCard(
+                        drinks: drinks,
+                        index: index,
+                        key: Key(ownerCubit.generateUniqueId()),
+                        onPressed: () => setState(() => drinks.removeAt(index)),
+                      );
+                    },
+                    onAddPressed: () {
+                      //checks if fields are empty
+                      if (drinkNameController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add a name for the drink');
+                        return;
+                      }
+                      if (drinkAmountController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add an amount for the drink');
+                        return;
+                      }
+                      if (drinkPriceController.text.isEmpty) {
+                        GSnackBar.show(
+                            context: context,
+                            text: 'Please add a price for the drink');
+                        return;
+                      }
 
-                //meals
-                SelectEventMealsPage(
-                  mealNameController: mealNameController,
-                  mealAmountController: mealAmountController,
-                  mealPriceController: mealPriceController,
-                  meals: meals,
-                  //update image when typing (only update state)
-                  onTextFieldChanged: (text) => setState(() {}),
-                  //update field on menu select
-                  onMealSelected: (meal) =>
-                      setState(() => mealNameController.text = meal.toString()),
-                  itemBuilder: (context, index) {
-                    return OwnerMealCard(
-                      meals: meals,
-                      index: index,
-                      key: Key(ownerCubit.generateUniqueId()),
-                      onPressed: () => setState(() => meals.removeAt(index)),
-                    );
-                  },
-                  onAddPressed: () {
-                    //checks if fields are empty
-                    if (mealNameController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add a name for the meal');
-                      return;
-                    }
-                    if (mealAmountController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add an amount for the meal');
-                      return;
-                    }
-                    if (mealPriceController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add a price for the meal');
-                      return;
-                    }
+                      //add meal to list
+                      drinks.add(
+                        WeddingVenueDrink(
+                          id: 'added later :D',
+                          name: drinkNameController.text.trim(),
+                          amount: int.parse(drinkAmountController.text),
+                          price: double.parse(drinkPriceController.text),
+                        ),
+                      );
 
-                    //add meal to list
-                    meals.add(
-                      WeddingVenueMeal(
-                        id: 'added later :D',
-                        name: mealNameController.text.trim(),
-                        amount: int.parse(mealAmountController.text),
-                        price: double.parse(mealPriceController.text),
-                      ),
-                    );
+                      //clear fields after addition
+                      drinkNameController.clear();
+                      drinkAmountController.clear();
+                      drinkPriceController.clear();
 
-                    //clear fields after addition
-                    mealNameController.clear();
-                    mealAmountController.clear();
-                    mealPriceController.clear();
+                      //update
+                      setState(() {});
+                    },
+                  ),
 
-                    //update
-                    setState(() {});
-                  },
-                ),
-
-                //drinks
-                SelectEventDrinksPage(
-                  drinkNameController: drinkNameController,
-                  drinkAmountController: drinkAmountController,
-                  drinkPriceController: drinkPriceController,
-                  drinks: drinks,
-                  //update image when typing (only update state)
-                  onChanged: (text) => setState(() {}),
-                  //update field on menu select
-                  onDrinkSelected: (drink) => setState(
-                      () => drinkNameController.text = drink.toString()),
-                  itemBuilder: (context, index) {
-                    return OwnerDrinkCard(
-                      drinks: drinks,
-                      index: index,
-                      key: Key(ownerCubit.generateUniqueId()),
-                      onPressed: () => setState(() => drinks.removeAt(index)),
-                    );
-                  },
-                  onAddPressed: () {
-                    //checks if fields are empty
-                    if (drinkNameController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add a name for the drink');
-                      return;
-                    }
-                    if (drinkAmountController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add an amount for the drink');
-                      return;
-                    }
-                    if (drinkPriceController.text.isEmpty) {
-                      GSnackBar.show(
-                          context: context,
-                          text: 'Please add a price for the drink');
-                      return;
-                    }
-
-                    //add meal to list
-                    drinks.add(
-                      WeddingVenueDrink(
-                        id: 'added later :D',
-                        name: drinkNameController.text.trim(),
-                        amount: int.parse(drinkAmountController.text),
-                        price: double.parse(drinkPriceController.text),
-                      ),
-                    );
-
-                    //clear fields after addition
-                    drinkNameController.clear();
-                    drinkAmountController.clear();
-                    drinkPriceController.clear();
-
-                    //update
-                    setState(() {});
-                  },
-                ),
-
-                //* submit
-                submitEvent(),
-              ],
+                  //* submit
+                  submitEvent(),
+                ],
+              ),
             ),
           ),
         ),
