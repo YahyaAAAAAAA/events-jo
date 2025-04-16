@@ -212,6 +212,15 @@ class _OwnerPageState extends State<OwnerPage> {
                           setState(() {});
                         },
                       ),
+
+                      TextButton(
+                        onPressed: () async {
+                          await ownerCubit.addCourtToDatabase();
+                        },
+                        child: const Text(
+                          'data',
+                        ),
+                      ),
                     ],
                   ),
 

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/features/courts/domain/models/football_court.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
@@ -83,6 +84,14 @@ class FirebaseOwnerRepo implements OwnerRepo {
     //------------------Drinks--------------------
 
     await addVenueDrinksToDatabase(drinks, docId);
+  }
+
+  Future<void> addCourtToDatabase(FootballCourt court) async {
+    //add new court to database
+    await firebaseFirestore
+        .collection('courts')
+        .doc(court.id)
+        .set(court.toJson());
   }
 
   @override

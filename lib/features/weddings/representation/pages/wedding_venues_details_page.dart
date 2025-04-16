@@ -409,6 +409,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
           weddingVenue: venue,
           locationCubit: locationCubit,
           venueLocation: venueLocation,
+          user: widget.user!,
         ),
 
         5.height,

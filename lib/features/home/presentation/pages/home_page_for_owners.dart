@@ -5,6 +5,8 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/courts/representation/cubits/courts/football_court_cubit.dart';
+import 'package:events_jo/features/courts/representation/pages/football_courts_list.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/home/presentation/components/sponserd_venue.dart';
 import 'package:events_jo/features/home/presentation/pages/venue_search_delegate.dart';
@@ -28,8 +30,10 @@ class HomePageForOwners extends StatefulWidget {
 class _HomePageForOwnersState extends State<HomePageForOwners> {
   late final AppUser? user;
   late final WeddingVenuesCubit weddingVenuesCubit;
+  late final FootballCourtsCubit footballCourtCubit;
 
   final TextEditingController searchController = TextEditingController();
+  int selectedTab = 0;
 
   @override
   void initState() {
@@ -38,9 +42,14 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
     user = UserManager().currentUser;
 
     weddingVenuesCubit = context.read<WeddingVenuesCubit>();
+    footballCourtCubit = context.read<FootballCourtsCubit>();
+
     if (weddingVenuesCubit.cachedVenues == null) {
       weddingVenuesCubit.getAllVenues();
     }
+
+    //todo add cached
+    footballCourtCubit.getAllCourts();
   }
 
   @override
@@ -115,38 +124,60 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                     spacing: 5,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => setState(() => selectedTab = 0),
                         style:
                             Theme.of(context).textButtonTheme.style?.copyWith(
-                                  backgroundColor:
-                                      WidgetStatePropertyAll(GColors.royalBlue),
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      selectedTab == 0
+                                          ? GColors.royalBlue
+                                          : GColors.white),
                                 ),
                         child: Text(
                           'Wedding Venues',
                           style: TextStyle(
-                            color: GColors.white,
+                            color: selectedTab == 0
+                                ? GColors.white
+                                : GColors.black,
                             fontSize: kSmallFontSize,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => setState(() => selectedTab = 1),
+                        style:
+                            Theme.of(context).textButtonTheme.style?.copyWith(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      selectedTab == 1
+                                          ? GColors.royalBlue
+                                          : GColors.white),
+                                ),
                         child: Text(
                           'Farms',
                           style: TextStyle(
-                            color: GColors.black,
+                            color: selectedTab == 1
+                                ? GColors.white
+                                : GColors.black,
                             fontSize: kSmallFontSize,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => setState(() => selectedTab = 2),
+                        style:
+                            Theme.of(context).textButtonTheme.style?.copyWith(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      selectedTab == 2
+                                          ? GColors.royalBlue
+                                          : GColors.white),
+                                ),
                         child: Text(
                           'Football Courts',
                           style: TextStyle(
-                            color: GColors.black,
+                            color: selectedTab == 2
+                                ? GColors.white
+                                : GColors.black,
                             fontSize: kSmallFontSize,
                             fontWeight: FontWeight.bold,
                           ),
@@ -158,7 +189,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
 
                 20.height,
 
-                const SponserdVenue(),
+                SponserdVenue(selectedTab: selectedTab),
 
                 20.height,
 
@@ -167,7 +198,9 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                   alignment: WrapAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Popular Wedding Venues",
+                      selectedTab == 0
+                          ? "Popular Wedding Venues"
+                          : "Popular Football Courts",
                       style: TextStyle(
                         color: GColors.black,
                         fontSize: kNormalFontSize,
@@ -190,10 +223,9 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                 ),
 
                 //venus list
-                WeddingVenuesList(
-                  user: user,
-                  weddingVenuesCubit: weddingVenuesCubit,
-                ),
+                selectedTab == 0
+                    ? WeddingVenuesList(user: user)
+                    : FootballCourtsList(user: user),
               ],
             ),
           ),

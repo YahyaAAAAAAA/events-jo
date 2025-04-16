@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 
 //todo this widget is fixed.
 class SponserdVenue extends StatelessWidget {
+  final int selectedTab;
+
   const SponserdVenue({
     super.key,
+    required this.selectedTab,
   });
 
   @override
@@ -32,7 +35,9 @@ class SponserdVenue extends StatelessWidget {
                   SizedBox(
                     width: 110,
                     child: Text(
-                      'Check Out Our Top Venue',
+                      selectedTab == 0
+                          ? 'Check Out Our Top Venue'
+                          : 'Check Out Our Top Courts',
                       style: TextStyle(
                         color: GColors.white,
                         fontSize: kNormalFontSize,
@@ -63,8 +68,9 @@ class SponserdVenue extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 children: [
                   CachedNetworkImage(
-                    imageUrl:
-                        'https://res.cloudinary.com/ddixv6xdj/image/upload/v1731104239/mmoelwfwk66xxvpszsu5.jpg',
+                    imageUrl: selectedTab == 0
+                        ? 'https://res.cloudinary.com/ddixv6xdj/image/upload/v1731104239/mmoelwfwk66xxvpszsu5.jpg'
+                        : 'https://res.cloudinary.com/ddixv6xdj/image/upload/v1744844539/2_kbn27t.png',
                     placeholder: (context, url) => const GlobalLoadingImage(),
                     errorWidget: (context, url, error) => Icon(
                       Icons.error_outline,

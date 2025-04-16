@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/packages/image%20slideshow/image_slideshow.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
@@ -12,11 +13,13 @@ class VenueImageSlider extends StatelessWidget {
   final WeddingVenue? weddingVenue;
   final LocationCubit? locationCubit;
   final EjLocation? venueLocation;
+  final AppUser user;
 
   const VenueImageSlider({
     super.key,
     required this.picsList,
     required this.weddingVenue,
+    required this.user,
     this.locationCubit,
     this.venueLocation,
   });
@@ -51,6 +54,7 @@ class VenueImageSlider extends StatelessWidget {
           weddingVenue: weddingVenue,
           locationCubit: locationCubit,
           venueLocation: venueLocation,
+          user: user,
         ),
       ],
     );

@@ -3,15 +3,18 @@ import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/weddings/representation/components/venue_rate.dart';
 import 'package:flutter/material.dart';
 
 class VenueRating extends StatelessWidget {
+  final AppUser user;
   final List<String> rates;
 
   const VenueRating({
     super.key,
     required this.rates,
+    required this.user,
   });
 
   Map<String, dynamic> calculateRatings() {
@@ -166,7 +169,10 @@ class VenueRating extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    rate[2],
+                                    //TODO
+                                    user.name == rate[2]
+                                        ? '${rate[2]} (You)'
+                                        : rate[2],
                                     style: TextStyle(
                                       color: GColors.black,
                                       fontSize: kSmallFontSize,

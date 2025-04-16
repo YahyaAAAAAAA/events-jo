@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
 
                 20.height,
 
-                const SponserdVenue(),
+                const SponserdVenue(selectedTab: 0),
 
                 20.height,
 
@@ -181,7 +181,6 @@ class _HomePageState extends State<HomePage> {
                 //venus list
                 WeddingVenuesList(
                   user: user,
-                  weddingVenuesCubit: weddingVenuesCubit,
                 ),
               ],
             ),

@@ -1,38 +1,38 @@
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/unique.dart';
+import 'package:events_jo/features/courts/representation/cubits/courts/football_court_cubit.dart';
+import 'package:events_jo/features/courts/representation/cubits/courts/football_court_states.dart';
+import 'package:events_jo/features/courts/representation/pages/components/court_card.dart';
 import 'package:events_jo/features/weddings/representation/components/error_venues.dart';
 import 'package:events_jo/features/weddings/representation/components/no_venues.dart';
 import 'package:events_jo/features/weddings/representation/components/venues_list_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_card.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WeddingVenuesList extends StatelessWidget {
+class FootballCourtsList extends StatelessWidget {
   //get user
   final AppUser? user;
 
-  const WeddingVenuesList({
+  const FootballCourtsList({
     super.key,
     required this.user,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<WeddingVenuesCubit, WeddingVenuesStates>(
+    return BlocConsumer<FootballCourtsCubit, FootballCourtsStates>(
       builder: (context, state) {
         //list ready
-        if (state is WeddingVenuesLoaded) {
+        if (state is FootballCourtsLoaded) {
           //get venues from stream
-          final venues = state.venues;
+          final courts = state.courts;
 
-          if (venues.isEmpty) {
+          if (courts.isEmpty) {
             return const NoVenues(
               icon: CustomIcons.sad,
-              text: 'No Wedding Venues Available',
+              text: 'No Football Courts Available',
             );
           }
 
@@ -43,20 +43,20 @@ class WeddingVenuesList extends StatelessWidget {
               crossAxisCount: 2,
               mainAxisSpacing: 15,
             ),
-            itemCount: venues.length,
-            itemBuilder: (context, index) => VenueCard(
+            itemCount: courts.length,
+            itemBuilder: (context, index) => CourtCard(
               user: user,
               key: Key(Unique.generateUniqueId()),
-              weddingVenue: venues[index],
+              footballCourt: courts[index],
             ),
           );
         }
 
         //error
-        if (state is WeddingVenueError) {
+        if (state is FootballCourtsError) {
           return const ErrorVenues(
             icon: CustomIcons.sad,
-            text: 'Error getting Wedding Venues',
+            text: 'Error getting Football Courts',
           );
         }
 
@@ -67,7 +67,7 @@ class WeddingVenuesList extends StatelessWidget {
       },
       listener: (context, state) async {
         //listens for errors
-        if (state is WeddingVenueError) {
+        if (state is FootballCourtsError) {
           //todo add counter to make bar show only once
           GSnackBar.show(context: context, text: state.message);
         }

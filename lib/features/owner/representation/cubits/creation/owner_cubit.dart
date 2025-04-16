@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:events_jo/config/enums/event_type.dart';
+import 'package:events_jo/config/utils/unique.dart';
+import 'package:events_jo/features/courts/domain/models/football_court.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/owner/representation/components/creation/dialogs/drinks_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/components/creation/dialogs/images_dialog_preview.dart';
@@ -53,6 +56,53 @@ class OwnerCubit extends Cubit<OwnerStates> {
         pics: pics,
         meals: meals,
         drinks: drinks,
+      );
+
+      //done
+      emit(OwnerLoaded());
+    } catch (e) {
+      //error
+      emit(OwnerError(e.toString()));
+    }
+  }
+
+  Future<void> addCourtToDatabase() async {
+    //loading...
+    emit(OwnerLoading('Uploading Your Event, Please Wait...'));
+    try {
+      //add to db
+      await ownerRepo.addCourtToDatabase(
+        FootballCourt(
+          id: Unique.generateUniqueId(),
+          name: 'Mayar Football Pitch',
+          latitude: 0,
+          longitude: 0,
+          city: 'Amman',
+          pricePerHour: 20,
+          isApproved: true,
+          endDate: [
+            2025,
+            6,
+            1,
+          ],
+          startDate: [
+            2025,
+            5,
+            1,
+          ],
+          time: [
+            12,
+            6,
+          ],
+          isBeingApproved: false,
+          ownerId: 'temp123',
+          ownerName: 'temp',
+          rates: [],
+          type: EventType.court,
+          pics: [
+            'https://i.ibb.co/ZVf53hB/placeholder.png',
+          ],
+        ),
       );
 
       //done

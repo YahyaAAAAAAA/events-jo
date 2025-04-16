@@ -1,42 +1,32 @@
-class WeddingVenue {
-  late String id;
-  late String name;
-  late String ownerId;
-  late String ownerName;
+import 'package:events_jo/config/enums/event_type.dart';
+import 'package:events_jo/features/shared/domain/models/event.dart';
+
+class WeddingVenue extends Event {
+  late double peoplePrice;
   late int peopleMax;
   late int peopleMin;
-  late double latitude;
-  late double longitude;
-  late double peoplePrice;
   late bool isOpen;
-  late bool isApproved;
-  late bool isBeingApproved;
-  late List<dynamic> pics;
-  late List<dynamic> startDate;
-  late List<dynamic> endDate;
-  late List<dynamic> time;
-  late List<String> rates;
-  late String city;
 
   WeddingVenue({
-    required this.id,
-    required this.name,
-    required this.latitude,
-    required this.longitude,
-    required this.rates,
-    required this.isOpen,
-    required this.isApproved,
-    required this.isBeingApproved,
-    required this.pics,
-    required this.ownerId,
-    required this.ownerName,
-    required this.startDate,
-    required this.endDate,
-    required this.time,
+    super.type = EventType.venue,
+    required super.id,
+    required super.name,
+    required super.latitude,
+    required super.longitude,
+    required super.rates,
+    required super.isApproved,
+    required super.isBeingApproved,
+    required super.pics,
+    required super.ownerId,
+    required super.ownerName,
+    required super.startDate,
+    required super.endDate,
+    required super.city,
+    required super.time,
     required this.peopleMax,
     required this.peopleMin,
     required this.peoplePrice,
-    required this.city,
+    required this.isOpen,
   });
 
   //convert wedding venue to json
@@ -64,24 +54,27 @@ class WeddingVenue {
   }
 
   //convert json to wedding venue
-  WeddingVenue.fromJson(Map<String, dynamic> jsonVenue) {
-    id = jsonVenue['id'];
-    name = jsonVenue['name'];
-    latitude = jsonVenue['latitude'].toDouble();
-    longitude = jsonVenue['longitude'].toDouble();
-    rates = List<String>.from(jsonVenue['rates']);
-    isOpen = jsonVenue['isOpen'];
-    isApproved = jsonVenue['isApproved'];
-    isBeingApproved = jsonVenue['isBeingApproved'];
-    pics = jsonVenue['pics'];
-    ownerId = jsonVenue['ownerId'];
-    ownerName = jsonVenue['ownerName'];
-    startDate = jsonVenue['startDate'];
-    endDate = jsonVenue['endDate'];
-    time = jsonVenue['time'];
+  WeddingVenue.fromJson(Map<String, dynamic> jsonVenue)
+      : super(
+          type: EventType.venue,
+          id: jsonVenue['id'],
+          name: jsonVenue['name'],
+          latitude: jsonVenue['latitude'].toDouble(),
+          longitude: jsonVenue['longitude'].toDouble(),
+          rates: List<String>.from(jsonVenue['rates']),
+          isApproved: jsonVenue['isApproved'],
+          isBeingApproved: jsonVenue['isBeingApproved'],
+          pics: jsonVenue['pics'],
+          ownerId: jsonVenue['ownerId'],
+          ownerName: jsonVenue['ownerName'],
+          startDate: jsonVenue['startDate'],
+          endDate: jsonVenue['endDate'],
+          city: jsonVenue['city'],
+          time: jsonVenue['time'],
+        ) {
     peopleMax = jsonVenue['peopleMax'];
     peopleMin = jsonVenue['peopleMin'];
     peoplePrice = jsonVenue['peoplePrice'].toDouble();
-    city = jsonVenue['city'];
+    isOpen = jsonVenue['isOpen'];
   }
 }

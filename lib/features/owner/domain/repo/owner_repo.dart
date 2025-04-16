@@ -1,4 +1,5 @@
 //todo this eventually will be extended to add farms,football.
+import 'package:events_jo/features/courts/domain/models/football_court.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
@@ -21,6 +22,8 @@ abstract class OwnerRepo {
     List<WeddingVenueMeal>? meals,
     List<WeddingVenueDrink>? drinks,
   });
+
+  Future<void> addCourtToDatabase(FootballCourt court);
 
   Future<void> addVenueMealsToDatabase(
       List<WeddingVenueMeal>? meals, String docId);
