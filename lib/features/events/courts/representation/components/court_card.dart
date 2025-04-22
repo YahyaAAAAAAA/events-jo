@@ -6,7 +6,7 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/events/courts/domain/models/football_court.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/courts/representation/pages/football_courts_details_page.dart';
 import 'package:flutter/material.dart';
 

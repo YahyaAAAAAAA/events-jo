@@ -4,7 +4,7 @@ import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:flutter/material.dart';
 
 class OwnerEventsCard extends StatelessWidget {

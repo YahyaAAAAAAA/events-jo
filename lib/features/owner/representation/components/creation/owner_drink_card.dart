@@ -1,5 +1,5 @@
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:flutter/material.dart';
 
 class OwnerDrinkCard extends StatelessWidget {

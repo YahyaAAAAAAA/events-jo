@@ -9,9 +9,9 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

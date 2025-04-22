@@ -1,4 +1,4 @@
-import 'package:events_jo/features/events/courts/domain/models/football_court.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 
 abstract class FootballCourtsStates {}
 

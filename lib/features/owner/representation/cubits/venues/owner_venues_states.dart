@@ -1,4 +1,4 @@
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
 
 abstract class OwnerVenuesStates {}
 

@@ -1,20 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/extensions/double_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
-import 'package:events_jo/features/events/weddings/domain/repo/wedding_venue_repo.dart';
+import 'package:events_jo/features/events/shared/domain/repo/events_repo.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/single%20venue/single_wedding_venue_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
-  final WeddingVenueRepo weddingVenueRepo;
+  final EventsRepo eventsRepo;
 
-  SingleWeddingVenueCubit({required this.weddingVenueRepo})
+  SingleWeddingVenueCubit({required this.eventsRepo})
       : super(SingleWeddingVenueInit());
 
   WeddingVenueDetailed? updatedData;
@@ -22,7 +23,7 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
   Future<void> getDetailedVenue(String venueId) async {
     emit(SingleWeddingVenueLoading());
     try {
-      final detailedVenue = await weddingVenueRepo.getDetailedVenue(venueId);
+      final detailedVenue = await eventsRepo.getDetailedVenue(venueId);
       updatedData = detailedVenue;
 
       if (detailedVenue == null) {
@@ -45,7 +46,8 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
   }) async {
     emit(SingleWeddingVenueLoading());
     try {
-      await weddingVenueRepo.rateVenue(
+      await eventsRepo.rateEvent(
+        type: EventType.farm,
         venueId: venueId,
         userId: userId,
         userName: userName,

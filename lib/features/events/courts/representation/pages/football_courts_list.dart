@@ -2,7 +2,7 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/unique.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_states.dart';
-import 'package:events_jo/features/events/courts/representation/pages/components/court_card.dart';
+import 'package:events_jo/features/events/courts/representation/components/court_card.dart';
 import 'package:events_jo/features/events/weddings/representation/components/error_venues.dart';
 import 'package:events_jo/features/events/weddings/representation/components/no_venues.dart';
 import 'package:events_jo/features/events/weddings/representation/components/venues_list_loading.dart';

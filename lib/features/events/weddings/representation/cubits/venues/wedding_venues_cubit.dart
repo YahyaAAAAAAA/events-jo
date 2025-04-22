@@ -1,23 +1,17 @@
 import 'package:events_jo/config/algorithms/haversine.dart';
 import 'package:events_jo/config/enums/sort_direction.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/events/weddings/domain/repo/wedding_venue_repo.dart';
+import 'package:events_jo/features/events/shared/domain/repo/events_repo.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
-  final WeddingVenueRepo weddingVenueRepo;
+  final EventsRepo eventsRepo;
   final Haversine haversine = Haversine();
 
   //cached list of venues
   List<WeddingVenue>? cachedVenues;
-  WeddingVenuesCubit({required this.weddingVenueRepo})
-      : super(WeddingVenueInit());
-
-  //unique id
-  String generateUniqueId() {
-    return weddingVenueRepo.generateUniqueId();
-  }
+  WeddingVenuesCubit({required this.eventsRepo}) : super(WeddingVenueInit());
 
   //search list
   List<WeddingVenue> searchList(List<WeddingVenue> weddingVenueList,
@@ -139,7 +133,7 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
   Future<List<WeddingVenue>> getAllVenues() async {
     emit(WeddingVenueLoading());
 
-    final weddingVenuesList = await weddingVenueRepo.getAllVenues();
+    final weddingVenuesList = await eventsRepo.getAllVenues();
     cachedVenues = weddingVenuesList;
 
     emit(WeddingVenuesLoaded(weddingVenuesList));
@@ -148,7 +142,7 @@ class WeddingVenuesCubit extends Cubit<WeddingVenuesStates> {
   }
 
   Future<WeddingVenue?> getVenue(String venueId) async {
-    final venue = await weddingVenueRepo.getVenue(venueId);
+    final venue = await eventsRepo.getVenue(venueId);
     if (venue == null) {
       return null;
     }

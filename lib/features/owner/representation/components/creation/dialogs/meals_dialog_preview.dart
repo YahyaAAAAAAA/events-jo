@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/owner/representation/components/creation/owner_meal_card.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 
 class MealsDialogPreview extends StatelessWidget {

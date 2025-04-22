@@ -1,7 +1,7 @@
 import 'package:events_jo/config/enums/user_type_enum.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter/foundation.dart';
 
 //todo comeback if venues, meals or drinks fields have changed

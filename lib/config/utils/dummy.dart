@@ -1,5 +1,5 @@
-import 'package:events_jo/features/events/courts/domain/models/football_court.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 
 //class to display empty objects when loading
 class Dummy {

@@ -1,6 +1,6 @@
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/venues/owner_venues_states.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 

@@ -17,7 +17,6 @@ import 'package:events_jo/features/auth/representation/components/auth_error_car
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:events_jo/features/auth/representation/pages/auth_page.dart';
-import 'package:events_jo/features/events/courts/data/firebase_football_court_repo.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/single%20court/single_football_court_cubit.dart';
 import 'package:events_jo/features/events/shared/data/firebase_events_repo.dart';
@@ -32,7 +31,6 @@ import 'package:events_jo/features/settings/data/firebase_settings_repo.dart';
 import 'package:events_jo/features/settings/representation/cubits/email/email_cubit.dart';
 import 'package:events_jo/features/settings/representation/cubits/password/password_cubit.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
-import 'package:events_jo/features/events/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +40,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 class EventsJoApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
-  final weddingVenueRepo = FirebaseWeddingVenueRepo();
   final locationRepo = GeolocatorLocationRepo();
   final ownerRepo = FirebaseOwnerRepo();
   final adminRepo = FirebaseAdminRepo();
@@ -75,13 +72,11 @@ class EventsJoApp extends StatelessWidget {
         ),
         //wedding venue cubit
         BlocProvider(
-          create: (context) =>
-              WeddingVenuesCubit(weddingVenueRepo: weddingVenueRepo),
+          create: (context) => WeddingVenuesCubit(eventsRepo: eventsRepo),
         ),
         //single wedding venue cubit
         BlocProvider(
-          create: (context) =>
-              SingleWeddingVenueCubit(weddingVenueRepo: weddingVenueRepo),
+          create: (context) => SingleWeddingVenueCubit(eventsRepo: eventsRepo),
         ),
         //football court cubit
         BlocProvider(

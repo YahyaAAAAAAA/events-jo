@@ -1,6 +1,6 @@
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 
 class WeddingVenueDetailed {
   final WeddingVenue venue;

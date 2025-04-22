@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FirebaseAdminRepo implements AdminRepo {

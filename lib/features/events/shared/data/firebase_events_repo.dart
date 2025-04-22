@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/config/enums/event_type.dart';
-import 'package:events_jo/features/events/courts/domain/models/football_court.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/shared/domain/repo/events_repo.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 
 class FirebaseEventsRepo implements EventsRepo {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;

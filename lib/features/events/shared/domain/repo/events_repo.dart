@@ -1,7 +1,7 @@
 import 'package:events_jo/config/enums/event_type.dart';
-import 'package:events_jo/features/events/courts/domain/models/football_court.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
 
 abstract class EventsRepo {
   Future<List<WeddingVenue>> getAllVenues();

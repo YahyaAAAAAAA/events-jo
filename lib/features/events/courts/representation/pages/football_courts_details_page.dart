@@ -7,7 +7,7 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/dummy.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/events/courts/domain/models/football_court.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/single%20court/single_football_court_cubit.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/single%20court/single_football_court_states.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
