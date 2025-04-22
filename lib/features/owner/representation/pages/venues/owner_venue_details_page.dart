@@ -18,10 +18,10 @@ import 'package:events_jo/features/owner/representation/components/venues/owner_
 import 'package:events_jo/features/owner/representation/cubits/venues/owner_venues_cubit.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
 import 'package:events_jo/features/settings/representation/components/settings_sub_app_bar.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

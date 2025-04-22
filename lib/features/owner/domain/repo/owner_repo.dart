@@ -1,8 +1,8 @@
 //todo this eventually will be extended to add farms,football.
-import 'package:events_jo/features/courts/domain/models/football_court.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/courts/domain/models/football_court.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class OwnerRepo {

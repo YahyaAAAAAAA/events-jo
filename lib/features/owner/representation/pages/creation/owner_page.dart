@@ -23,8 +23,8 @@ import 'package:events_jo/features/owner/representation/pages/creation/sub%20pag
 import 'package:events_jo/features/owner/representation/pages/creation/sub%20pages/select_range_time_page.dart';
 import 'package:events_jo/features/owner/representation/cubits/creation/owner_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/creation/owner_states.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';

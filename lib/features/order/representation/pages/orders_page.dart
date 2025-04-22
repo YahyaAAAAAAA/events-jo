@@ -12,7 +12,7 @@ import 'package:events_jo/features/order/representation/components/user_order_ca
 import 'package:events_jo/features/order/representation/components/user_orders_empty.dart';
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
+import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';

@@ -7,10 +7,10 @@ import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/home/presentation/components/sponserd_venue.dart';
 import 'package:events_jo/features/home/presentation/pages/venue_search_delegate.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_states.dart';
-import 'package:events_jo/features/weddings/representation/pages/wedding_venues_list.dart';
+import 'package:events_jo/features/events/shared/representation/components/events_search_bar.dart';
+import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
+import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_states.dart';
+import 'package:events_jo/features/events/weddings/representation/pages/wedding_venues_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               children: [
                 BlocBuilder<WeddingVenuesCubit, WeddingVenuesStates>(
-                  builder: (context, state) => VenueSearchBar(
+                  builder: (context, state) => EventSearchBar(
                     onPressed: state is WeddingVenuesLoaded
                         ? () => showSearch(
                               context: context,

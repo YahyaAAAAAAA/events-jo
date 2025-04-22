@@ -1,20 +1,22 @@
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/extensions/widget_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/courts/representation/cubits/courts/football_court_cubit.dart';
-import 'package:events_jo/features/courts/representation/pages/football_courts_list.dart';
+import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
+import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_states.dart';
+import 'package:events_jo/features/events/courts/representation/pages/football_courts_list.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/home/presentation/components/sponserd_venue.dart';
 import 'package:events_jo/features/home/presentation/pages/venue_search_delegate.dart';
 import 'package:events_jo/features/owner/representation/pages/creation/owner_page.dart';
-import 'package:events_jo/features/weddings/representation/components/venue_search_bar.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_states.dart';
-import 'package:events_jo/features/weddings/representation/pages/wedding_venues_list.dart';
+import 'package:events_jo/features/events/shared/representation/components/events_search_bar.dart';
+import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
+import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_states.dart';
+import 'package:events_jo/features/events/weddings/representation/pages/wedding_venues_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,7 +77,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
             child: ListView(
               children: [
                 BlocBuilder<WeddingVenuesCubit, WeddingVenuesStates>(
-                  builder: (context, state) => VenueSearchBar(
+                  builder: (context, state) => EventSearchBar(
                     onPressed: state is WeddingVenuesLoaded
                         ? () => showSearch(
                               context: context,
@@ -88,6 +90,22 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                         : null,
                   ),
                 ),
+
+                //TODO here
+                BlocBuilder<FootballCourtsCubit, FootballCourtsStates>(
+                  builder: (context, state) => EventSearchBar(
+                    onPressed: state is FootballCourtsLoaded
+                        ? () => showSearch(
+                              context: context,
+                              delegate: VenueSearchDelegate(
+                                context,
+                                [],
+                                user,
+                              ),
+                            )
+                        : null,
+                  ),
+                ).hide(),
 
                 10.height,
 
@@ -223,9 +241,16 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
                 ),
 
                 //venus list
-                selectedTab == 0
-                    ? WeddingVenuesList(user: user)
-                    : FootballCourtsList(user: user),
+                AnimatedCrossFade(
+                  duration: const Duration(milliseconds: 300),
+                  crossFadeState: selectedTab == 0
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  firstChild:
+                      WeddingVenuesList(key: const ValueKey(0), user: user),
+                  secondChild:
+                      FootballCourtsList(key: const ValueKey(1), user: user),
+                ),
               ],
             ),
           ),

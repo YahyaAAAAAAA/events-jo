@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
 
 abstract class AdminRepo {
   Stream<QuerySnapshot<Map<String, dynamic>>>

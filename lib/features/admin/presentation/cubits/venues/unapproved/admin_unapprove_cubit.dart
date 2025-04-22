@@ -9,9 +9,9 @@ import 'package:events_jo/features/admin/presentation/components/dialogs/admin_d
 import 'package:events_jo/features/admin/presentation/components/dialogs/admin_images_dialog_preview.dart';
 import 'package:events_jo/features/admin/presentation/components/dialogs/admin_meals_dialog_preview.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_states.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

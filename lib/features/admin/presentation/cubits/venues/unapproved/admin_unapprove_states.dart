@@ -1,4 +1,4 @@
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue.dart';
 
 abstract class AdminUnapproveStates {}
 

@@ -17,9 +17,10 @@ import 'package:events_jo/features/auth/representation/components/auth_error_car
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:events_jo/features/auth/representation/pages/auth_page.dart';
-import 'package:events_jo/features/courts/data/firebase_football_court_repo.dart';
-import 'package:events_jo/features/courts/representation/cubits/courts/football_court_cubit.dart';
-import 'package:events_jo/features/courts/representation/cubits/single%20court/single_football_court_cubit.dart';
+import 'package:events_jo/features/events/courts/data/firebase_football_court_repo.dart';
+import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
+import 'package:events_jo/features/events/courts/representation/cubits/single%20court/single_football_court_cubit.dart';
+import 'package:events_jo/features/events/shared/data/firebase_events_repo.dart';
 import 'package:events_jo/features/location/data/geolocator_location_repo.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/order/data/firebase_order_repo.dart';
@@ -31,9 +32,9 @@ import 'package:events_jo/features/settings/data/firebase_settings_repo.dart';
 import 'package:events_jo/features/settings/representation/cubits/email/email_cubit.dart';
 import 'package:events_jo/features/settings/representation/cubits/password/password_cubit.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
-import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
-import 'package:events_jo/features/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
-import 'package:events_jo/features/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
+import 'package:events_jo/features/events/weddings/data/firebase_wedding_venue_repo.dart';
+import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
+import 'package:events_jo/features/events/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +48,7 @@ class EventsJoApp extends StatelessWidget {
   final adminRepo = FirebaseAdminRepo();
   final settingsRepo = FirebaseSettingsRepo();
   final orderRepo = FirebaseOrderRepo();
-  final courtRepo = FirebaseFootballCourtRepo();
+  final eventsRepo = FirebaseEventsRepo();
 
   EventsJoApp({super.key});
 
@@ -84,13 +85,11 @@ class EventsJoApp extends StatelessWidget {
         ),
         //football court cubit
         BlocProvider(
-          create: (context) =>
-              FootballCourtsCubit(footballCourtRepo: courtRepo),
+          create: (context) => FootballCourtsCubit(eventsRepo: eventsRepo),
         ),
         //single football court cubit
         BlocProvider(
-          create: (context) =>
-              SingleFootballCourtCubit(footballCourtRepo: courtRepo),
+          create: (context) => SingleFootballCourtCubit(eventsRepo: eventsRepo),
         ),
         //owner cubit
         BlocProvider(

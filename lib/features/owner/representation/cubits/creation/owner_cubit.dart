@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/utils/unique.dart';
-import 'package:events_jo/features/courts/domain/models/football_court.dart';
+import 'package:events_jo/features/events/courts/domain/models/football_court.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/owner/representation/components/creation/dialogs/drinks_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/components/creation/dialogs/images_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/components/creation/dialogs/meals_dialog_preview.dart';
 import 'package:events_jo/features/owner/representation/cubits/creation/owner_states.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_drink.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_meal.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_drink.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';

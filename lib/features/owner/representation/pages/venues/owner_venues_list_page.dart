@@ -6,7 +6,7 @@ import 'package:events_jo/features/admin/presentation/components/empty_list.dart
 import 'package:events_jo/features/owner/representation/components/venues/owner_events_card.dart';
 import 'package:events_jo/features/owner/representation/pages/venues/owner_venue_details_page.dart';
 import 'package:events_jo/features/owner/representation/pages/venues/owner_venue_orders_page.dart';
-import 'package:events_jo/features/weddings/domain/entities/wedding_venue_detailed.dart';
+import 'package:events_jo/features/events/weddings/domain/entities/wedding_venue_detailed.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
