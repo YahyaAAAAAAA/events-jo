@@ -8,7 +8,7 @@
             "name": "events_jo",
             "request": "launch",
             "type": "dart",
-            "toolArgs": [
+            "args": [
                  "--no-enable-impeller"
                 ]
         },

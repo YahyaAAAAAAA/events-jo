@@ -17,6 +17,9 @@ import 'package:events_jo/features/auth/representation/components/auth_error_car
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:events_jo/features/auth/representation/pages/auth_page.dart';
+import 'package:events_jo/features/chat/data/firebase_chat_repo.dart';
+import 'package:events_jo/features/chat/representation/cubits/chat/chat_cubit.dart';
+import 'package:events_jo/features/chat/representation/cubits/message/message_cubit.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/single%20court/single_football_court_cubit.dart';
 import 'package:events_jo/features/events/shared/data/firebase_events_repo.dart';
@@ -46,6 +49,7 @@ class EventsJoApp extends StatelessWidget {
   final settingsRepo = FirebaseSettingsRepo();
   final orderRepo = FirebaseOrderRepo();
   final eventsRepo = FirebaseEventsRepo();
+  final chatRepo = FirebaseChatRepo();
 
   EventsJoApp({super.key});
 
@@ -109,6 +113,14 @@ class EventsJoApp extends StatelessWidget {
         //order cubit
         BlocProvider(
           create: (context) => OrderCubit(orderRepo: orderRepo),
+        ),
+        //message cubit
+        BlocProvider(
+          create: (context) => MessageCubit(chatRepo: chatRepo),
+        ),
+        //chat cubit
+        BlocProvider(
+          create: (context) => ChatCubit(chatRepo: chatRepo),
         ),
         //* -------------------Admin cubits below-------------------
         //approved venues cubit

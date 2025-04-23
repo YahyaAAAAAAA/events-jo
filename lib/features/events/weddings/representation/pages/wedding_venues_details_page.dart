@@ -7,6 +7,7 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/dummy.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/chat/representation/pages/chat_page.dart';
 import 'package:events_jo/features/location/domain/entities/ej_location.dart';
 import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
@@ -170,6 +171,16 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
       //* title
       appBar: EventsAppBar(
         eventName: weddingVenue.name,
+        onChatPressed: () => widget.user!.uid != weddingVenue.ownerId
+            ? context.push(
+                ChatPage(
+                  currentUserId: widget.user!.uid,
+                  otherUserId: weddingVenue.ownerId,
+                  currentUserName: widget.user!.name,
+                  otherUserName: weddingVenue.ownerName,
+                ),
+              )
+            : null,
         onRatePressed: () => showModalBottomSheet(
           context: context,
           backgroundColor: GColors.whiteShade3,

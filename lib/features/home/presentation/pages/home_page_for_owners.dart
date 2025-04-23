@@ -6,6 +6,7 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/chat/representation/pages/chats_page.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_states.dart';
 import 'package:events_jo/features/events/courts/representation/pages/football_courts_list.dart';
@@ -66,6 +67,7 @@ class _HomePageForOwnersState extends State<HomePageForOwners> {
         isOwner: true,
         title: user?.name ?? 'Guest 123',
         onOwnerButtonTap: () => context.push(OwnerPage(user: user)),
+        onChatsPressed: () => context.push(ChatsPage(user: user!)),
         onPressed: () =>
             context.read<AuthCubit>().logout(user!.uid, user!.type),
       ),

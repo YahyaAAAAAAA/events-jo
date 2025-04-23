@@ -10,11 +10,13 @@ import 'package:flutter/material.dart';
 class EventsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? eventName;
   final void Function()? onRatePressed;
+  final void Function()? onChatPressed;
 
   const EventsAppBar({
     super.key,
     this.eventName,
     this.onRatePressed,
+    this.onChatPressed,
   });
 
   @override
@@ -66,6 +68,12 @@ class EventsAppBar extends StatelessWidget implements PreferredSizeWidget {
                     onPressed: onRatePressed,
                     icon: Icons.star_rate_rounded,
                     iconSize: kNormalIconSize,
+                  ),
+                  5.width,
+                  AppBarButton(
+                    onPressed: onChatPressed,
+                    icon: Icons.message_rounded,
+                    iconSize: kNormalIconSize - 5,
                   ),
                   5.width,
                   AppBarButton(

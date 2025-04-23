@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function()? onOwnerButtonTap;
+  final void Function()? onChatsPressed;
   final void Function()? onPressed;
   final String title;
   final bool isOwner;
@@ -18,6 +19,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onPressed,
     this.title = '       ',
     this.onOwnerButtonTap,
+    this.onChatsPressed,
   });
 
   @override
@@ -72,7 +74,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       : 0.width,
                   isOwner ? 5.width : 0.width,
                   AppBarButton(
-                    onPressed: () {},
+                    onPressed: onChatsPressed,
                     icon: CustomIcons.bell_notification_social_media,
                     iconSize: kSmallIconSize,
                   ),
