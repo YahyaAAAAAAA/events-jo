@@ -1,3 +1,4 @@
+import 'package:events_jo/features/chat/domain/models/chat.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 
@@ -52,5 +53,12 @@ class Dummy {
     time: [1, 2],
     city: 'loading',
     pricePerHour: 15,
+  );
+
+  static Chat chat = Chat(
+    lastMessage: 'Hello World',
+    lastUpdated: DateTime.now(),
+    participants: ['123', '456'],
+    participantsNames: ['Sender', 'Reciever'],
   );
 }

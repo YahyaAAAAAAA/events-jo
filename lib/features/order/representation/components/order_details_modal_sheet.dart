@@ -1,12 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/enums/order_status.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading_image.dart';
+import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/chat/representation/pages/chat_page.dart';
+import 'package:events_jo/features/events/shared/domain/models/event.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
@@ -16,13 +21,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderDetailsModalSheet extends StatelessWidget {
-  final WeddingVenue? venue;
+  final AppUser user;
+  final Event? venue;
   final EOrder order;
   final List<WeddingVenueMeal>? meals;
   final List<WeddingVenueDrink>? drinks;
 
   const OrderDetailsModalSheet({
     super.key,
+    required this.user,
     required this.venue,
     required this.order,
     this.meals,
@@ -38,7 +45,7 @@ class OrderDetailsModalSheet extends StatelessWidget {
           spacing: 10,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            topRow(),
+            topRow(context),
             FittedBox(
               child: Row(
                 spacing: 10,
@@ -48,22 +55,26 @@ class OrderDetailsModalSheet extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
-              '• Meals',
-              style: TextStyle(
-                color: GColors.black,
-                fontSize: kSmallFontSize,
-              ),
-            ),
-            mealsContainer(),
-            Text(
-              '• Drinks',
-              style: TextStyle(
-                color: GColors.black,
-                fontSize: kSmallFontSize,
-              ),
-            ),
-            drinksContainer(),
+            venue is WeddingVenue
+                ? Text(
+                    '• Meals',
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: kSmallFontSize,
+                    ),
+                  )
+                : 0.width,
+            venue is WeddingVenue ? mealsContainer() : 0.width,
+            venue is WeddingVenue
+                ? Text(
+                    '• Drinks',
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: kSmallFontSize,
+                    ),
+                  )
+                : 0.width,
+            venue is WeddingVenue ? drinksContainer() : 0.width,
             const Divider(),
             order.status == OrderStatus.pending
                 ? Row(
@@ -84,31 +95,57 @@ class OrderDetailsModalSheet extends StatelessWidget {
                           ),
                         ),
                       ),
-                      IconButton(
-                        //todo
-                        onPressed: () async {
-                          context.pop();
-                          await context.read<OrderCubit>().updateOrderStatus(
-                                'userId',
-                                order.userId,
-                                order.id,
-                                OrderStatus.canceled,
-                                cache: true,
-                              );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(
-                            GColors.redShade3.withValues(alpha: 0.3),
-                          ),
-                        ),
-                        icon: Text(
-                          'Cancel Order ?',
-                          style: TextStyle(
-                            color: GColors.redShade3.shade800,
-                            fontSize: kSmallFontSize,
-                          ),
-                        ),
-                      ),
+                      order.isRefundable &&
+                              (order.eventType == EventType.venue
+                                  ? order.date
+                                          .difference(DateTime.now())
+                                          .inDays >
+                                      7
+                                  : order.date
+                                          .difference(DateTime.now())
+                                          .inDays >
+                                      1)
+                          ? IconButton(
+                              onPressed: () async {
+                                context.pop();
+                                await context
+                                    .read<OrderCubit>()
+                                    .updateOrderStatus(
+                                      'userId',
+                                      order.userId,
+                                      order.id,
+                                      OrderStatus.canceled,
+                                      cache: true,
+                                    );
+                              },
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  GColors.redShade3.withValues(alpha: 0.3),
+                                ),
+                              ),
+                              icon: Text(
+                                'Cancel Order ?',
+                                style: TextStyle(
+                                  color: GColors.redShade3.shade800,
+                                  fontSize: kSmallFontSize,
+                                ),
+                              ),
+                            )
+                          : IconButton(
+                              onPressed: null,
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  GColors.whiteShade3.shade600,
+                                ),
+                              ),
+                              icon: Text(
+                                'Non-Refundable Booking',
+                                style: TextStyle(
+                                  color: GColors.royalBlue,
+                                  fontSize: kSmallFontSize,
+                                ),
+                              ),
+                            ),
                     ],
                   )
                 : Row(
@@ -261,7 +298,7 @@ class OrderDetailsModalSheet extends StatelessWidget {
                 size: kSmallIconSize,
               ),
               Text(
-                'Expected People: ${order.people}',
+                'Expected People: ${venue is WeddingVenue ? order.people : '∞'}',
                 style: TextStyle(
                   color: GColors.black,
                   fontSize: kSmallFontSize,
@@ -352,7 +389,7 @@ class OrderDetailsModalSheet extends StatelessWidget {
     );
   }
 
-  Widget topRow() {
+  Widget topRow(BuildContext context) {
     return FittedBox(
       fit: BoxFit.scaleDown,
       alignment: Alignment.centerLeft,
@@ -367,7 +404,6 @@ class OrderDetailsModalSheet extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // spacing: 70,
           children: [
             Row(
               spacing: 10,
@@ -397,14 +433,20 @@ class OrderDetailsModalSheet extends StatelessWidget {
                         fontSize: kSmallFontSize,
                       ),
                     ),
-                    Text(
-                      venue == null
-                          ? 'Owner not fount'
-                          : 'Owner name: ${venue!.ownerName}',
-                      style: TextStyle(
-                        color: GColors.black,
-                        fontSize: kSmallFontSize,
-                      ),
+                    Row(
+                      // spacing: 10,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          venue == null
+                              ? 'Owner not fount'
+                              : 'Owner name: ${venue!.ownerName}',
+                          style: TextStyle(
+                            color: GColors.black,
+                            fontSize: kSmallFontSize,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -414,8 +456,20 @@ class OrderDetailsModalSheet extends StatelessWidget {
               spacing: 5,
               children: [
                 IconButton(
-                  //todo message venue owner
-                  onPressed: () {},
+                  onPressed: user.uid != venue!.ownerId
+                      ? () {
+                          context.pop();
+                          context.push(
+                            ChatPage(
+                              currentUserId: user.uid,
+                              otherUserId: venue!.ownerId,
+                              currentUserName: user.name,
+                              otherUserName: venue!.ownerName,
+                            ),
+                          );
+                        }
+                      : () =>
+                          context.showSnackBar('You can\'t chat with yourself'),
                   style: ButtonStyle(
                     backgroundColor:
                         WidgetStatePropertyAll(GColors.whiteShade3.shade600),

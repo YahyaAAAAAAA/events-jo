@@ -1,8 +1,13 @@
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/chat/representation/cubits/message/message_cubit.dart';
 import 'package:events_jo/features/chat/representation/cubits/message/message_states.dart';
+import 'package:events_jo/features/settings/representation/components/settings_sub_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   final String currentUserId;
@@ -37,9 +42,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Chat with ${widget.otherUserName}'),
-      ),
+      appBar: SettingsSubAppBar(title: 'Chat with ${widget.otherUserName}'),
       body: Column(
         children: [
           Expanded(
@@ -52,6 +55,7 @@ class _ChatPageState extends State<ChatPage> {
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       final message = messages[index];
+
                       final isMe = message.senderId == widget.currentUserId;
                       return Align(
                         alignment:
@@ -60,53 +64,67 @@ class _ChatPageState extends State<ChatPage> {
                           padding: const EdgeInsets.all(12.0),
                           margin: const EdgeInsets.symmetric(vertical: 4.0),
                           decoration: BoxDecoration(
-                            color: isMe ? Colors.blue : Colors.grey[300],
-                            borderRadius: BorderRadius.circular(8.0),
+                            color: isMe ? GColors.royalBlue : GColors.white,
+                            borderRadius: BorderRadius.circular(kOuterRadius),
                           ),
-                          child: Text(
-                            message.text,
-                            style: TextStyle(
-                              color: isMe ? Colors.white : Colors.black,
-                            ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                message.text,
+                                style: TextStyle(
+                                  color: isMe ? Colors.white : Colors.black,
+                                  fontSize: kSmallFontSize + 1,
+                                ),
+                              ),
+                              Text(
+                                DateFormat(DateFormat.HOUR_MINUTE_GENERIC_TZ)
+                                    .format(message.timestamp),
+                                style: TextStyle(
+                                  color: isMe
+                                      ? Colors.white.withValues(alpha: 0.5)
+                                      : Colors.black.withValues(alpha: 0.5),
+                                  fontSize: kSmallFontSize - 3,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );
                     },
                   );
                 } else {
-                  return const GlobalLoadingBar();
+                  return const GlobalLoadingBar(mainText: false);
                 }
               },
             ),
           ),
           //bottom
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: GColors.white,
+            ),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _controller,
+                    onSubmitted: (value) => sendMessage(),
                     decoration: const InputDecoration(
                       hintText: 'Type a message...',
                     ),
                   ),
                 ),
+                10.width,
                 IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () {
-                    final text = _controller.text.trim();
-                    if (text.isNotEmpty) {
-                      chatCubit.sendMessage(
-                        text: text,
-                        currentUserId: widget.currentUserId,
-                        otherUserId: widget.otherUserId,
-                        currentUserName: widget.currentUserName,
-                        otherUserName: widget.otherUserName,
-                      );
-                      _controller.clear();
-                    }
-                  },
+                  padding: const EdgeInsets.all(12),
+                  icon: const Icon(
+                    Icons.send,
+                    size: kNormalIconSize,
+                  ),
+                  onPressed: sendMessage,
                 ),
               ],
             ),
@@ -114,5 +132,19 @@ class _ChatPageState extends State<ChatPage> {
         ],
       ),
     );
+  }
+
+  void sendMessage() {
+    final text = _controller.text.trim();
+    if (text.isNotEmpty) {
+      chatCubit.sendMessage(
+        text: text,
+        currentUserId: widget.currentUserId,
+        otherUserId: widget.otherUserId,
+        currentUserName: widget.currentUserName,
+        otherUserName: widget.otherUserName,
+      );
+      _controller.clear();
+    }
   }
 }

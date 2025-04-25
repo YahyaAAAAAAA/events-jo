@@ -92,7 +92,7 @@ class FirebaseOrderRepo implements OrderRepo {
     for (var doc in querySnapshot.docs) {
       final order = EOrder.fromJson(doc.data());
 
-      // Fetch meals for the order
+      //fetch meals for the order
       final mealsSnapshot = await firebaseFirestore
           .collection('orders')
           .doc(order.id)
@@ -103,7 +103,7 @@ class FirebaseOrderRepo implements OrderRepo {
           .map((mealDoc) => WeddingVenueMeal.fromJson(mealDoc.data()))
           .toList();
 
-      // Fetch drinks for the order
+      //fetch drinks for the order
       final drinksSnapshot = await firebaseFirestore
           .collection('orders')
           .doc(order.id)
@@ -114,7 +114,7 @@ class FirebaseOrderRepo implements OrderRepo {
           .map((drinkDoc) => WeddingVenueDrink.fromJson(drinkDoc.data()))
           .toList();
 
-      // Add the detailed order to the list
+      //add the detailed order to the list
       detailedOrders.add(EOrderDetailed(
         order: order,
         meals: meals,
@@ -129,7 +129,7 @@ class FirebaseOrderRepo implements OrderRepo {
   Future<List<DateTimeRange>> getVenueOrders(String venueId) async {
     final querySnapshot = await firebaseFirestore
         .collection('orders')
-        .where('venueId', isEqualTo: venueId)
+        .where('eventId', isEqualTo: venueId)
         .get();
 
     final reservedDateRanges = querySnapshot.docs.map((doc) {
@@ -158,7 +158,7 @@ class FirebaseOrderRepo implements OrderRepo {
     final querySnapshot = await firebaseFirestore
         .collection('orders')
         .where('userId', isEqualTo: userId)
-        .where('venueId', isEqualTo: venueId)
+        .where('eventId', isEqualTo: venueId)
         .get();
 
     return querySnapshot.docs.length;

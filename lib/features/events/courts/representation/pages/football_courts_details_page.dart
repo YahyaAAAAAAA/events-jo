@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/datetime_range_extensions.dart';
@@ -7,6 +8,7 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/dummy.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/chat/representation/pages/chat_page.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/single%20court/single_football_court_cubit.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/single%20court/single_football_court_states.dart';
@@ -58,6 +60,7 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
   String paymentMethod = 'cash';
   DateTime? selectedDate;
   List<DateTimeRange>? reservedDates = [];
+  bool isRefundable = false;
 
   @override
   void initState() {
@@ -125,6 +128,16 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
       //* title
       appBar: EventsAppBar(
         eventName: footballCourt.name,
+        onChatPressed: () => widget.user!.uid != footballCourt.ownerId
+            ? context.push(
+                ChatPage(
+                  currentUserId: widget.user!.uid,
+                  otherUserId: footballCourt.ownerId,
+                  currentUserName: widget.user!.name,
+                  otherUserName: footballCourt.ownerName,
+                ),
+              )
+            : context.showSnackBar('You can\'t chat with yourself'),
         onRatePressed: () => showModalBottomSheet(
           context: context,
           backgroundColor: GColors.whiteShade3,
@@ -259,6 +272,7 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
                   }
                   orderCubit.showCashoutSheet(
                     context: context,
+                    eventType: EventType.court,
                     userId: widget.user!.uid,
                     venueId: footballCourt.id,
                     ownerId: footballCourt.ownerId,
@@ -267,7 +281,10 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
                     endTime: selectedEndTime.hour,
                     people: numberOfExpectedPeople,
                     paymentMethod: paymentMethod,
-                    totalAmount: totalAmount,
+                    totalAmount: (footballCourt.pricePerHour *
+                            (selectedEndTime.hour - selectedStartTime.hour))
+                        .toDouble(),
+                    isRefundable: isRefundable,
                     meals: [],
                     drinks: [],
                   );

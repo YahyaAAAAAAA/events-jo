@@ -1,10 +1,11 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/enums/order_status.dart';
 
 class EOrder {
   final String id;
   final String userId;
   final String ownerId;
-  final String venueId;
+  final String eventId;
   final double amount;
   final OrderStatus status;
   final DateTime createdAt;
@@ -12,11 +13,14 @@ class EOrder {
   final int startTime;
   final int endTime;
   final int people;
+  final EventType eventType;
+  final bool isRefundable;
 
   EOrder({
     required this.id,
+    required this.eventType,
     required this.userId,
-    required this.venueId,
+    required this.eventId,
     required this.ownerId,
     required this.amount,
     required this.status,
@@ -25,12 +29,14 @@ class EOrder {
     required this.endTime,
     required this.date,
     required this.people,
+    required this.isRefundable,
   });
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'eventType': eventType.name,
         'userId': userId,
-        'venueId': venueId,
+        'eventId': eventId,
         'ownerId': ownerId,
         'amount': amount,
         'status': status.name,
@@ -39,12 +45,14 @@ class EOrder {
         'people': people,
         'date': date.toIso8601String(),
         'createdAt': createdAt.toIso8601String(),
+        'isRefundable': isRefundable,
       };
 
   static EOrder fromJson(Map<String, dynamic> json) => EOrder(
         id: json['id'],
+        eventType: EventTypeExtentions.fromString(json['eventType']),
         userId: json['userId'],
-        venueId: json['venueId'],
+        eventId: json['eventId'],
         ownerId: json['ownerId'],
         amount: json['amount'],
         startTime: json['startTime'],
@@ -53,5 +61,6 @@ class EOrder {
         status: OrderStatusExtenstions.toEnum(json['status']),
         date: DateTime.parse(json['date']),
         createdAt: DateTime.parse(json['createdAt']),
+        isRefundable: json['isRefundable'],
       );
 }

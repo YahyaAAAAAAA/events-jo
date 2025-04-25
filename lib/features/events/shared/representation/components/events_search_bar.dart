@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class EventSearchBar extends StatelessWidget {
   final void Function()? onPressed;
+  final String? hintText;
 
   const EventSearchBar({
     super.key,
     this.onPressed,
+    this.hintText,
   });
 
   @override
@@ -24,7 +26,7 @@ class EventSearchBar extends StatelessWidget {
             color: GColors.black,
           ),
           Text(
-            'Search Venues...',
+            hintText ?? 'Search Events...',
             style: TextStyle(
               color: GColors.black,
             ),

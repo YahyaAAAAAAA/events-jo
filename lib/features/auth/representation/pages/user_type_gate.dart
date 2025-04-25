@@ -1,9 +1,8 @@
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
-import 'package:events_jo/features/navigation/presentation/global_navigation_bar.dart';
 import 'package:events_jo/features/navigation/presentation/global_navigation_bar_for_admins.dart';
-import 'package:events_jo/features/navigation/presentation/global_navigation_bar_for_owners.dart';
+import 'package:events_jo/features/navigation/presentation/global_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class UserTypeGate extends StatefulWidget {
@@ -29,10 +28,7 @@ class _UserTypeGateState extends State<UserTypeGate> {
     if (user!.type == UserType.admin) {
       return const GlobalNavigationBarForAdmins();
     }
-    if (user!.type == UserType.owner) {
-      return const GlobalNavigationBarForOwners();
-    } else {
-      return const GlobalNavigationBar();
-    }
+
+    return GlobalNavigationBar(userType: user!.type);
   }
 }

@@ -1,12 +1,20 @@
+import 'package:events_jo/config/enums/user_type_enum.dart';
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/chat/representation/pages/chats_page.dart';
+import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
+import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_states.dart';
+import 'package:events_jo/features/events/courts/representation/pages/football_courts_list.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/home/presentation/components/sponserd_venue.dart';
-import 'package:events_jo/features/home/presentation/pages/venue_search_delegate.dart';
+import 'package:events_jo/features/events/courts/representation/components/court_search_delegate.dart';
+import 'package:events_jo/features/events/weddings/representation/components/venue_search_delegate.dart';
+import 'package:events_jo/features/owner/representation/pages/creation/owner_page.dart';
 import 'package:events_jo/features/events/shared/representation/components/events_search_bar.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_states.dart';
@@ -15,8 +23,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
+  final UserType userType;
+
   const HomePage({
     super.key,
+    required this.userType,
   });
 
   @override
@@ -26,6 +37,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final AppUser? user;
   late final WeddingVenuesCubit weddingVenuesCubit;
+  late final FootballCourtsCubit footballCourtCubit;
+
+  final TextEditingController searchController = TextEditingController();
+  int selectedTab = 0;
 
   @override
   void initState() {
@@ -34,16 +49,30 @@ class _HomePageState extends State<HomePage> {
     user = UserManager().currentUser;
 
     weddingVenuesCubit = context.read<WeddingVenuesCubit>();
+    footballCourtCubit = context.read<FootballCourtsCubit>();
+
     if (weddingVenuesCubit.cachedVenues == null) {
       weddingVenuesCubit.getAllVenues();
     }
+
+    if (footballCourtCubit.cachechCourts == null) {
+      footballCourtCubit.getAllCourts();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        isOwner: false,
+        isOwner: widget.userType == UserType.owner ? true : false,
+        title: user?.name ?? 'Guest 123',
+        onOwnerButtonTap: () => context.push(OwnerPage(user: user)),
+        onChatsPressed: () => context.push(ChatsPage(user: user!)),
         onPressed: () =>
             context.read<AuthCubit>().logout(user!.uid, user!.type),
       ),
@@ -54,20 +83,41 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(12),
             child: ListView(
               children: [
-                BlocBuilder<WeddingVenuesCubit, WeddingVenuesStates>(
-                  builder: (context, state) => EventSearchBar(
-                    onPressed: state is WeddingVenuesLoaded
-                        ? () => showSearch(
-                              context: context,
-                              delegate: VenueSearchDelegate(
-                                context,
-                                state.venues,
-                                user,
-                              ),
-                            )
-                        : null,
-                  ),
-                ),
+                selectedTab == 0
+                    ? BlocBuilder<WeddingVenuesCubit, WeddingVenuesStates>(
+                        builder: (context, state) => EventSearchBar(
+                          hintText: 'Search Venues...',
+                          onPressed: state is WeddingVenuesLoaded
+                              ? () => showSearch(
+                                    context: context,
+                                    delegate: VenueSearchDelegate(
+                                      context,
+                                      state.venues,
+                                      user,
+                                    ),
+                                  )
+                              : null,
+                        ),
+                      )
+                    : 0.width,
+
+                selectedTab == 1
+                    ? BlocBuilder<FootballCourtsCubit, FootballCourtsStates>(
+                        builder: (context, state) => EventSearchBar(
+                          hintText: 'Search Football Courts...',
+                          onPressed: state is FootballCourtsLoaded
+                              ? () => showSearch(
+                                    context: context,
+                                    delegate: CourtSearchDelegate(
+                                      context,
+                                      state.courts,
+                                      user,
+                                    ),
+                                  )
+                              : null,
+                        ),
+                      )
+                    : 0.width,
 
                 10.height,
 
@@ -97,45 +147,89 @@ class _HomePageState extends State<HomePage> {
                 5.height,
 
                 //categories buttons
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    spacing: 5,
+                SizedBox(
+                  height: 50,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => setState(() => selectedTab = 0),
                         style:
                             Theme.of(context).textButtonTheme.style?.copyWith(
-                                  backgroundColor:
-                                      WidgetStatePropertyAll(GColors.royalBlue),
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      selectedTab == 0
+                                          ? GColors.royalBlue
+                                          : GColors.white),
                                 ),
                         child: Text(
                           'Wedding Venues',
                           style: TextStyle(
-                            color: GColors.white,
+                            color: selectedTab == 0
+                                ? GColors.white
+                                : GColors.black,
                             fontSize: kSmallFontSize,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
+                      10.width,
                       TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Farms',
-                          style: TextStyle(
-                            color: GColors.black,
-                            fontSize: kSmallFontSize,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
+                        onPressed: () => setState(() => selectedTab = 1),
+                        style:
+                            Theme.of(context).textButtonTheme.style?.copyWith(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      selectedTab == 1
+                                          ? GColors.royalBlue
+                                          : GColors.white),
+                                ),
                         child: Text(
                           'Football Courts',
                           style: TextStyle(
-                            color: GColors.black,
+                            color: selectedTab == 1
+                                ? GColors.white
+                                : GColors.black,
+                            fontSize: kSmallFontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      10.width,
+                      TextButton(
+                        onPressed: () => context.showSnackBar('Coming Soon'),
+                        style:
+                            Theme.of(context).textButtonTheme.style?.copyWith(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      selectedTab == 2
+                                          ? GColors.royalBlue
+                                          : GColors.white),
+                                ),
+                        child: Text(
+                          'Farms',
+                          style: TextStyle(
+                            color: selectedTab == 2
+                                ? GColors.white
+                                : GColors.black,
+                            fontSize: kSmallFontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      10.width,
+                      TextButton(
+                        onPressed: () => context.showSnackBar('Coming Soon'),
+                        style:
+                            Theme.of(context).textButtonTheme.style?.copyWith(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      selectedTab == 2
+                                          ? GColors.royalBlue
+                                          : GColors.white),
+                                ),
+                        child: Text(
+                          'Swimming Pools',
+                          style: TextStyle(
+                            color: selectedTab == 2
+                                ? GColors.white
+                                : GColors.black,
                             fontSize: kSmallFontSize,
                             fontWeight: FontWeight.bold,
                           ),
@@ -147,7 +241,7 @@ class _HomePageState extends State<HomePage> {
 
                 20.height,
 
-                const SponserdVenue(selectedTab: 0),
+                SponserdVenue(selectedTab: selectedTab),
 
                 20.height,
 
@@ -156,7 +250,9 @@ class _HomePageState extends State<HomePage> {
                   alignment: WrapAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Popular Wedding Venues",
+                      selectedTab == 0
+                          ? "Popular Wedding Venues"
+                          : "Popular Football Courts",
                       style: TextStyle(
                         color: GColors.black,
                         fontSize: kNormalFontSize,
@@ -164,8 +260,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () async =>
-                          await weddingVenuesCubit.getAllVenues(),
+                      onPressed: () async {
+                        if (selectedTab == 0) {
+                          await weddingVenuesCubit.getAllVenues();
+                        }
+                        if (selectedTab == 1) {
+                          await footballCourtCubit.getAllCourts();
+                        }
+                      },
                       style: Theme.of(context).iconButtonTheme.style?.copyWith(
                             backgroundColor: WidgetStatePropertyAll(
                               GColors.scaffoldBg,
@@ -179,8 +281,15 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 //venus list
-                WeddingVenuesList(
-                  user: user,
+                AnimatedCrossFade(
+                  duration: const Duration(milliseconds: 300),
+                  crossFadeState: selectedTab == 0
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  firstChild:
+                      WeddingVenuesList(key: const ValueKey(0), user: user),
+                  secondChild:
+                      FootballCourtsList(key: const ValueKey(1), user: user),
                 ),
               ],
             ),

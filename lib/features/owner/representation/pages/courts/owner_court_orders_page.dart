@@ -6,32 +6,32 @@ import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
+import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
 import 'package:events_jo/features/order/representation/components/user_order_card.dart';
 import 'package:events_jo/features/order/representation/components/user_orders_empty.dart';
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
-import 'package:events_jo/features/owner/representation/pages/venues/owner_venue_order_details_modal_sheet.dart';
+import 'package:events_jo/features/owner/representation/pages/courts/owner_court_order_details_modal_sheet.dart';
 import 'package:events_jo/features/settings/representation/components/settings_sub_app_bar.dart';
-import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class OwnerVenueOrdersPage extends StatefulWidget {
-  final String venueId;
-  final String venueName;
+class OwnerCourtOrdersPage extends StatefulWidget {
+  final String courtId;
+  final String courtName;
 
-  const OwnerVenueOrdersPage({
+  const OwnerCourtOrdersPage({
     Key? key,
-    required this.venueId,
-    required this.venueName,
+    required this.courtId,
+    required this.courtName,
   }) : super(key: key);
 
   @override
-  State<OwnerVenueOrdersPage> createState() => _OwnerVenueOrdersPageState();
+  State<OwnerCourtOrdersPage> createState() => _OwnerCourtOrdersPageState();
 }
 
-class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
+class _OwnerCourtOrdersPageState extends State<OwnerCourtOrdersPage> {
   late final AppUser? user;
 
   @override
@@ -40,14 +40,14 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
 
     user = UserManager().currentUser;
 
-    context.read<OrderCubit>().getOrders('eventId', widget.venueId);
+    context.read<OrderCubit>().getOrders('eventId', widget.courtId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SettingsSubAppBar(
-        title: 'Manage Your Venue Orders',
+        title: 'Manage Your Court Orders',
       ),
       body: Center(
         child: ConstrainedBox(
@@ -68,7 +68,7 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${widget.venueName} Orders",
+                                "${widget.courtName} Orders",
                                 style: TextStyle(
                                   color: GColors.black,
                                   fontSize: kNormalFontSize,
@@ -78,7 +78,7 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
                               IconButton(
                                 onPressed: () async => await context
                                     .read<OrderCubit>()
-                                    .getOrders('eventId', widget.venueId),
+                                    .getOrders('eventId', widget.courtId),
                                 style: ButtonStyle(
                                   backgroundColor: WidgetStatePropertyAll(
                                       GColors.scaffoldBg),
@@ -105,15 +105,13 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
                                         10.height,
                                     itemBuilder: (context, index) {
                                       final order = state.orders[index].order;
-                                      final meals = state.orders[index].meals;
-                                      final drinks = state.orders[index].drinks;
 
                                       return UserOrderCard(
                                         order: order,
                                         onPressed: () async {
-                                          final venue = await context
-                                              .read<WeddingVenuesCubit>()
-                                              .getVenue(order.eventId);
+                                          final court = await context
+                                              .read<FootballCourtsCubit>()
+                                              .getCourt(order.eventId);
                                           showModalBottomSheet(
                                             context: context,
                                             backgroundColor:
@@ -128,12 +126,10 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
                                             ),
                                             isScrollControlled: true,
                                             builder: (context) {
-                                              return OwnerVenueOrderDetailsModalSheet(
+                                              return OwnerCourtOrderDetailsModalSheet(
                                                 user: user!,
-                                                venue: venue,
+                                                court: court!,
                                                 order: order,
-                                                meals: meals,
-                                                drinks: drinks,
                                                 onOrderConfirmPressed:
                                                     () async {
                                                   context.pop();
@@ -141,7 +137,7 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
                                                       .read<OrderCubit>()
                                                       .updateOrderStatus(
                                                         'eventId',
-                                                        venue!.id,
+                                                        court.id,
                                                         order.id,
                                                         OrderStatus.completed,
                                                       );
@@ -152,7 +148,7 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
                                                       .read<OrderCubit>()
                                                       .updateOrderStatus(
                                                         'eventId',
-                                                        venue!.id,
+                                                        court.id,
                                                         order.id,
                                                         OrderStatus.canceled,
                                                       );

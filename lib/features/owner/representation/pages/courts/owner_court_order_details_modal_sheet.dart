@@ -7,28 +7,22 @@ import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/chat/representation/pages/chat_page.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
-import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
-import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
-import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 
-class OwnerVenueOrderDetailsModalSheet extends StatelessWidget {
+class OwnerCourtOrderDetailsModalSheet extends StatelessWidget {
   final AppUser user;
-  final WeddingVenue? venue;
+  final FootballCourt? court;
   final EOrder order;
-  final List<WeddingVenueMeal>? meals;
-  final List<WeddingVenueDrink>? drinks;
   final void Function()? onOrderCancelPressed;
   final void Function()? onOrderConfirmPressed;
 
-  const OwnerVenueOrderDetailsModalSheet({
+  const OwnerCourtOrderDetailsModalSheet({
     super.key,
     required this.user,
-    required this.venue,
+    required this.court,
     required this.order,
-    this.meals,
-    this.drinks,
     this.onOrderCancelPressed,
     this.onOrderConfirmPressed,
   });
@@ -52,22 +46,6 @@ class OwnerVenueOrderDetailsModalSheet extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
-              '• Meals',
-              style: TextStyle(
-                color: GColors.black,
-                fontSize: kSmallFontSize,
-              ),
-            ),
-            mealsContainer(),
-            Text(
-              '• Drinks',
-              style: TextStyle(
-                color: GColors.black,
-                fontSize: kSmallFontSize,
-              ),
-            ),
-            drinksContainer(),
             const Divider(),
             order.status == OrderStatus.pending
                 ? Row(
@@ -140,98 +118,6 @@ class OwnerVenueOrderDetailsModalSheet extends StatelessWidget {
     );
   }
 
-  Container drinksContainer() {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      height: 50,
-      decoration: BoxDecoration(
-        color: GColors.white,
-        borderRadius: BorderRadius.circular(kOuterRadius),
-      ),
-      child: drinks!.isEmpty
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              spacing: 10,
-              children: [
-                const Icon(
-                  Icons.local_drink_rounded,
-                ),
-                Text(
-                  'No Drinks were ordered',
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: kSmallFontSize,
-                  ),
-                ),
-              ],
-            )
-          : ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: drinks!.length,
-              shrinkWrap: true,
-              separatorBuilder: (context, index) {
-                return const VerticalDivider();
-              },
-              itemBuilder: (context, index) => Center(
-                child: Text(
-                  'Drink: ${drinks![index].name}, Amount: ${drinks![index].amount}',
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: kSmallFontSize,
-                  ),
-                ),
-              ),
-            ),
-    );
-  }
-
-  Container mealsContainer() {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      height: 50,
-      decoration: BoxDecoration(
-        color: GColors.white,
-        borderRadius: BorderRadius.circular(kOuterRadius),
-      ),
-      child: meals!.isEmpty
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              spacing: 10,
-              children: [
-                const Icon(
-                  Icons.soup_kitchen_rounded,
-                ),
-                Text(
-                  'No Meals were orderd',
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: kSmallFontSize,
-                  ),
-                ),
-              ],
-            )
-          : ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: meals!.length,
-              shrinkWrap: true,
-              separatorBuilder: (context, index) {
-                return const VerticalDivider();
-              },
-              itemBuilder: (context, index) => Center(
-                child: Text(
-                  'Meal: ${meals![index].name}, Amount: ${meals![index].amount}',
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: kSmallFontSize,
-                  ),
-                ),
-              ),
-            ),
-    );
-  }
-
   Container expectedPeopleContainer() {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -255,7 +141,7 @@ class OwnerVenueOrderDetailsModalSheet extends StatelessWidget {
                 size: kSmallIconSize,
               ),
               Text(
-                'Expected People: ${order.people}',
+                'Expected People: ∞',
                 style: TextStyle(
                   color: GColors.black,
                   fontSize: kSmallFontSize,
@@ -388,15 +274,15 @@ class OwnerVenueOrderDetailsModalSheet extends StatelessWidget {
               ],
             ),
             IconButton(
-              onPressed: user.uid != venue!.ownerId
+              onPressed: user.uid != court!.ownerId
                   ? () {
                       context.pop();
                       context.push(
                         ChatPage(
                           currentUserId: user.uid,
-                          otherUserId: venue!.ownerId,
+                          otherUserId: court!.ownerId,
                           currentUserName: user.name,
-                          otherUserName: venue!.ownerName,
+                          otherUserName: court!.ownerName,
                         ),
                       );
                     }

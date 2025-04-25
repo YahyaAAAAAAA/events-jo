@@ -338,6 +338,22 @@ class FirebaseOwnerRepo implements OwnerRepo {
   }
 
   @override
+  Future<List<FootballCourt>> getOwnerCourts(String ownerId) async {
+    final querySnapshot = await firebaseFirestore
+        .collection('courts')
+        .where('ownerId', isEqualTo: ownerId)
+        .get();
+    List<FootballCourt> courts = [];
+
+    for (var doc in querySnapshot.docs) {
+      final court = FootballCourt.fromJson(doc.data());
+      courts.add(court);
+    }
+
+    return courts;
+  }
+
+  @override
   String generateUniqueId() {
     //current time (from year to microsecond)
     final now = DateTime.now();

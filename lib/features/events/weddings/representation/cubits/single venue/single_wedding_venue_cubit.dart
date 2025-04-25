@@ -47,7 +47,7 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
     emit(SingleWeddingVenueLoading());
     try {
       await eventsRepo.rateEvent(
-        type: EventType.farm,
+        type: EventType.venue,
         venueId: venueId,
         userId: userId,
         userName: userName,

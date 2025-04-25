@@ -28,6 +28,7 @@ import 'package:events_jo/features/location/representation/cubits/location_cubit
 import 'package:events_jo/features/order/data/firebase_order_repo.dart';
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
+import 'package:events_jo/features/owner/representation/cubits/courts/owner_courts_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/creation/owner_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/venues/owner_venues_cubit.dart';
 import 'package:events_jo/features/settings/data/firebase_settings_repo.dart';
@@ -121,6 +122,10 @@ class EventsJoApp extends StatelessWidget {
         //chat cubit
         BlocProvider(
           create: (context) => ChatCubit(chatRepo: chatRepo),
+        ),
+        //----
+        BlocProvider(
+          create: (context) => OwnerCourtsCubit(ownerRepo: ownerRepo),
         ),
         //* -------------------Admin cubits below-------------------
         //approved venues cubit

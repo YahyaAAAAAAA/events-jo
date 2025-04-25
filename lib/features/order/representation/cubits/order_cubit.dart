@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/enums/order_status.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
@@ -7,7 +8,7 @@ import 'package:events_jo/features/order/domain/order_repo.dart';
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
-import 'package:events_jo/features/events/weddings/representation/pages/cashout_modal_sheet.dart';
+import 'package:events_jo/features/events/shared/representation/pages/cashout_modal_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,6 +45,8 @@ class OrderCubit extends Cubit<OrderStates> {
     emit(OrderLoading());
     try {
       final orders = await orderRepo.getOrders(byId, id);
+
+      orders.sort((a, b) => b.order.createdAt.compareTo(a.order.createdAt));
 
       if (cache) {
         cachedOrders = orders;
@@ -93,6 +96,7 @@ class OrderCubit extends Cubit<OrderStates> {
 
   Future<dynamic> showCashoutSheet({
     required BuildContext context,
+    required EventType eventType,
     required String paymentMethod,
     required String ownerId,
     required String venueId,
@@ -102,6 +106,7 @@ class OrderCubit extends Cubit<OrderStates> {
     required int endTime,
     required int people,
     required double totalAmount,
+    required bool isRefundable,
     required List<WeddingVenueMeal> meals,
     required List<WeddingVenueDrink> drinks,
   }) {
@@ -113,24 +118,31 @@ class OrderCubit extends Cubit<OrderStates> {
           top: Radius.circular(kOuterRadius),
         ),
       ),
-      showDragHandle:
-          state is OrderLoading || state is OrderAdded ? false : true,
-      isDismissible:
-          state is OrderLoading || state is OrderAdded ? false : true,
-      enableDrag: state is OrderLoading || state is OrderAdded ? false : true,
+      showDragHandle: false,
+      isDismissible: false,
+      enableDrag: false,
       builder: (context) {
-        return CashoutModalSheet(
-          paymentMethod: paymentMethod,
-          totalAmount: totalAmount,
-          ownerId: ownerId,
-          venueId: venueId,
-          userId: userId,
-          date: date,
-          startTime: startTime,
-          endTime: endTime,
-          people: people,
-          meals: meals,
-          drinks: drinks,
+        return PopScope(
+          canPop: false,
+          child: StatefulBuilder(builder: (context, setState) {
+            return CashoutModalSheet(
+              eventType: eventType,
+              paymentMethod: paymentMethod,
+              totalAmount: totalAmount,
+              ownerId: ownerId,
+              venueId: venueId,
+              userId: userId,
+              date: date,
+              isRefundable: isRefundable,
+              onRefundableChanged: (_) =>
+                  setState(() => isRefundable = !isRefundable),
+              startTime: startTime,
+              endTime: endTime,
+              people: people,
+              meals: meals,
+              drinks: drinks,
+            );
+          }),
         );
       },
     );

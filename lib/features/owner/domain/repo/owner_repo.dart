@@ -43,4 +43,6 @@ abstract class OwnerRepo {
       WeddingVenueDetailed venueDetailed, List<dynamic> updatedImages);
 
   Future<void> deleteImagesFromServer(List<XFile> images);
+
+  Future<List<FootballCourt>> getOwnerCourts(String ownerId);
 }

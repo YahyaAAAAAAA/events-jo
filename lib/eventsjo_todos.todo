@@ -87,8 +87,8 @@ pending:
     ✔ test venue edit (images and meals/drinks) @done(25-04-17 02:15)
     ✔ courts started @done(25-04-17 02:15)
     ✔ courts detailes page @done(25-04-23 00:15)
-    ☐ fix/test rating
-    ☐ refactor order repo 
+    ✔ fix/test rating @done(25-04-24 20:56)
+    ✔ refactor order repo @started(25-04-24 20:56) @done(25-04-24 23:36) @lasted(2h40m34s)
     ☐ cached/refresh for courts  
     ☐ replace 'cancel' with 'default' in venue edit
     ☐ add price for meals/drinks in venue edit

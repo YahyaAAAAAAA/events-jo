@@ -66,6 +66,7 @@ dependencies:
   # carousel_slider: ^5.0.0
   animated_reorderable_list: ^1.1.1
   skeletonizer: ^1.4.2
+  intl: ^0.20.2
 
 flutter_native_splash:
   android: true

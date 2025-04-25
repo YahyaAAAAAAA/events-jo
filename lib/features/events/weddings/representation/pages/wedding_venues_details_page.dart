@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/datetime_range_extensions.dart';
@@ -69,6 +70,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
   List<WeddingVenueMeal>? selectedMeals = [];
   List<WeddingVenueDrink>? selectedDrinks = [];
   List<DateTimeRange>? reservedDates = [];
+  bool isRefundable = false;
 
   @override
   void initState() {
@@ -180,7 +182,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                   otherUserName: weddingVenue.ownerName,
                 ),
               )
-            : null,
+            : context.showSnackBar('You can\'t chat with yourself'),
         onRatePressed: () => showModalBottomSheet(
           context: context,
           backgroundColor: GColors.whiteShade3,
@@ -317,6 +319,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                   }
                   orderCubit.showCashoutSheet(
                     context: context,
+                    eventType: EventType.venue,
                     userId: widget.user!.uid,
                     venueId: weddingVenue.id,
                     ownerId: weddingVenue.ownerId,
@@ -328,6 +331,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                     totalAmount: totalAmount,
                     meals: selectedMeals!,
                     drinks: selectedDrinks!,
+                    isRefundable: isRefundable,
                   );
                 },
                 style: ButtonStyle(

@@ -1,3 +1,4 @@
+import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
@@ -7,8 +8,11 @@ import 'package:events_jo/features/settings/representation/pages/settings_page.d
 import 'package:flutter/material.dart';
 
 class GlobalNavigationBar extends StatefulWidget {
+  final UserType userType;
+
   const GlobalNavigationBar({
     super.key,
+    required this.userType,
   });
 
   @override
@@ -25,9 +29,9 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
     super.initState();
 
     screens = [
-      const HomePage(),
-      const OrdersPage(),
-      const SettingsPage(),
+      HomePage(userType: widget.userType),
+      OrdersPage(userType: widget.userType),
+      SettingsPage(userType: widget.userType),
     ];
   }
 
@@ -69,13 +73,15 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              CustomIcons.settings,
+              Icons.person_rounded,
               color: GColors.royalBlue,
+              size: kNormalIconSize + 5,
             ),
             icon: const Icon(
-              CustomIcons.settings,
+              Icons.person_rounded,
+              size: kNormalIconSize + 5,
             ),
-            label: 'Settings',
+            label: 'Account',
           ),
         ],
         onDestinationSelected: (value) {
@@ -83,7 +89,7 @@ class _GlobalNavigationBarState extends State<GlobalNavigationBar> {
         },
       ),
       body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 500),
         transitionBuilder: (child, animation) {
           return FadeTransition(opacity: animation, child: child);
         },

@@ -1,3 +1,5 @@
+import 'package:events_jo/config/enums/event_type.dart';
+import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
@@ -6,6 +8,8 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/chat/representation/pages/chats_page.dart';
+import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/order/representation/components/order_details_modal_sheet.dart';
 import 'package:events_jo/features/order/representation/components/user_order_card.dart';
@@ -13,12 +17,18 @@ import 'package:events_jo/features/order/representation/components/user_orders_e
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
+import 'package:events_jo/features/owner/representation/pages/creation/owner_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class OrdersPage extends StatefulWidget {
-  const OrdersPage({Key? key}) : super(key: key);
+  final UserType userType;
+
+  const OrdersPage({
+    Key? key,
+    required this.userType,
+  }) : super(key: key);
 
   @override
   State<OrdersPage> createState() => _OrdersPageState();
@@ -48,8 +58,10 @@ class _OrdersPageState extends State<OrdersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        isOwner: true,
+        isOwner: widget.userType == UserType.owner ? true : false,
         title: user!.name,
+        onOwnerButtonTap: () => context.push(OwnerPage(user: user)),
+        onChatsPressed: () => context.push(ChatsPage(user: user!)),
         onPressed: () =>
             context.read<AuthCubit>().logout(user!.uid, user!.type),
       ),
@@ -117,13 +129,28 @@ class _OrdersPageState extends State<OrdersPage> {
                                       return UserOrderCard(
                                         order: order,
                                         onPressed: () async {
-                                          final venue = await context
-                                              .read<WeddingVenuesCubit>()
-                                              .getVenue(order.venueId);
-                                          if (venue == null) {
-                                            context.showSnackBar(
-                                                'Venue doesn\'t exist');
-                                            return;
+                                          var event;
+                                          if (order.eventType ==
+                                              EventType.venue) {
+                                            event = await context
+                                                .read<WeddingVenuesCubit>()
+                                                .getVenue(order.eventId);
+                                            if (event == null) {
+                                              context.showSnackBar(
+                                                  'Venue doesn\'t exist');
+                                              return;
+                                            }
+                                          }
+                                          if (order.eventType ==
+                                              EventType.court) {
+                                            event = await context
+                                                .read<FootballCourtsCubit>()
+                                                .getCourt(order.eventId);
+                                            if (event == null) {
+                                              context.showSnackBar(
+                                                  'Court doesn\'t exist');
+                                              return;
+                                            }
                                           }
                                           showModalBottomSheet(
                                             context: context,
@@ -140,7 +167,8 @@ class _OrdersPageState extends State<OrdersPage> {
                                             isScrollControlled: true,
                                             builder: (context) {
                                               return OrderDetailsModalSheet(
-                                                venue: venue,
+                                                user: user!,
+                                                venue: event,
                                                 order: order,
                                                 meals: meals,
                                                 drinks: drinks,
