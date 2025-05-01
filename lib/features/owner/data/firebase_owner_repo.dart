@@ -59,10 +59,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
       peoplePrice: peoplePrice,
       ownerId: ownerId,
       ownerName: ownerName,
-      pics: pics ??
-          [
-            'https://i.ibb.co/ZVf53hB/placeholder.png',
-          ],
+      pics: pics ?? [],
       rates: [],
       city: await getCity(lat, long) ?? 'Not Found',
     );
@@ -171,9 +168,7 @@ class FirebaseOwnerRepo implements OwnerRepo {
         //[index][1] == 0 -> keep
         //[index][1] == 1 -> delete
         if (tempImages[i][1] == 1) {
-          if (tempImages[i][0] != 'https://i.ibb.co/ZVf53hB/placeholder.png') {
-            await deleteImagesFromServer([XFile(tempImages[i][0])]);
-          }
+          await deleteImagesFromServer([XFile(tempImages[i][0])]);
           tempImages.removeAt(i);
           i--;
         }
@@ -195,9 +190,6 @@ class FirebaseOwnerRepo implements OwnerRepo {
 
     venue.pics = tempImages.map((image) => image[0] as String).toList();
 
-    if (venue.pics.isEmpty) {
-      venue.pics.add('https://i.ibb.co/ZVf53hB/placeholder.png');
-    }
     try {
       //update the main venue document
       await firebaseFirestore
@@ -244,6 +236,51 @@ class FirebaseOwnerRepo implements OwnerRepo {
       }
     } catch (e) {
       throw Exception('Failed to update venue: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<void> updateCourtInDatabase(
+      FootballCourt footballCourt, List<dynamic> updatedImages) async {
+    //--images--
+    List<dynamic> tempImages = List.from(updatedImages);
+
+    for (int i = 0; i < tempImages.length; i++) {
+      //existing images
+      if (i < footballCourt.pics.length) {
+        //[index][1] == 0 -> keep
+        //[index][1] == 1 -> delete
+        if (tempImages[i][1] == 1) {
+          await deleteImagesFromServer([XFile(tempImages[i][0])]);
+          tempImages.removeAt(i);
+          i--;
+        }
+      }
+      //new images
+      else {
+        //[index][1] == 0 -> add
+        //[index][1] == 1 -> ignore
+        if (tempImages[i][1] == 0) {
+          final url = await addImagesToServer(
+              [XFile(tempImages[i][0])], footballCourt.name);
+          tempImages[i] = [url[0], 0];
+        } else {
+          tempImages.removeAt(i);
+          i--;
+        }
+      }
+    }
+
+    footballCourt.pics = tempImages.map((image) => image[0] as String).toList();
+
+    try {
+      //update the main venue document
+      await firebaseFirestore
+          .collection('courts')
+          .doc(footballCourt.id)
+          .update(footballCourt.toJson());
+    } catch (e) {
+      throw Exception('Failed to update court: ${e.toString()}');
     }
   }
 

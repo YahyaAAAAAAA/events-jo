@@ -5,16 +5,17 @@ import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/events/shared/domain/models/event.dart';
+import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:flutter/material.dart';
 
 class OwnerEventsCard extends StatelessWidget {
-  final Event? venue;
+  final Event? event;
   final void Function()? onEditPressed;
   final void Function()? onOrdersPressed;
 
   const OwnerEventsCard({
     super.key,
-    required this.venue,
+    required this.event,
     this.onEditPressed,
     this.onOrdersPressed,
   });
@@ -36,13 +37,15 @@ class OwnerEventsCard extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.all(12),
                   child: Icon(
-                    CustomIcons.wedding,
+                    event is WeddingVenue
+                        ? CustomIcons.wedding
+                        : CustomIcons.football_1,
                     size: kNormalIconSize,
                     color: GColors.royalBlue,
                   ),
                 ),
                 Text(
-                  venue == null ? 'Venue 123' : venue!.name,
+                  event == null ? 'Venue 123' : event!.name,
                   style: TextStyle(
                     color: GColors.black,
                     fontSize: kNormalFontSize,
@@ -50,9 +53,9 @@ class OwnerEventsCard extends StatelessWidget {
                 ),
               ],
             ),
-            venue == null
+            event == null
                 ? 0.width
-                : !venue!.isBeingApproved && venue!.isApproved
+                : !event!.isBeingApproved && event!.isApproved
                     ? Row(
                         spacing: 10,
                         children: [
@@ -84,7 +87,7 @@ class OwnerEventsCard extends StatelessWidget {
                       )
                     : IconButton(
                         onPressed: () => context.showSnackBar(
-                            'The venue is being reviewed by our team'),
+                            'The event is being reviewed by our team'),
                         style: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(
                             GColors.royalBlue,

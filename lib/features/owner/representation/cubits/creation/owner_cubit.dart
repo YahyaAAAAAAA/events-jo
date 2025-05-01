@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:events_jo/config/enums/event_type.dart';
-import 'package:events_jo/config/utils/unique.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/owner/representation/components/creation/dialogs/drinks_dialog_preview.dart';
@@ -66,44 +64,12 @@ class OwnerCubit extends Cubit<OwnerStates> {
     }
   }
 
-  Future<void> addCourtToDatabase() async {
+  Future<void> addCourtToDatabase(FootballCourt court) async {
     //loading...
     emit(OwnerLoading('Uploading Your Event, Please Wait...'));
     try {
       //add to db
-      await ownerRepo.addCourtToDatabase(
-        FootballCourt(
-          id: Unique.generateUniqueId(),
-          name: 'Mayar Football Pitch',
-          latitude: 0,
-          longitude: 0,
-          city: 'Amman',
-          pricePerHour: 20,
-          isApproved: true,
-          endDate: [
-            2025,
-            6,
-            1,
-          ],
-          startDate: [
-            2025,
-            5,
-            1,
-          ],
-          time: [
-            12,
-            6,
-          ],
-          isBeingApproved: false,
-          ownerId: 'temp123',
-          ownerName: 'temp',
-          rates: [],
-          type: EventType.court,
-          pics: [
-            'https://i.ibb.co/ZVf53hB/placeholder.png',
-          ],
-        ),
-      );
+      await ownerRepo.addCourtToDatabase(court);
 
       //done
       emit(OwnerLoaded());
@@ -129,6 +95,12 @@ class OwnerCubit extends Cubit<OwnerStates> {
 
       return [];
     }
+  }
+
+  Future<String?> getCity(double lat, double long) async {
+    String? city = await ownerRepo.getCity(lat, long);
+
+    return city;
   }
 
   //used for meals & drinks lists locally (new ids generated on submit)

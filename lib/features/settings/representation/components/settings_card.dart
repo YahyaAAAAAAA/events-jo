@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 class SettingsCard extends StatelessWidget {
   final String text;
   final IconData icon;
+  final bool isComingSoon;
   final void Function()? onTap;
 
   const SettingsCard({
     super.key,
     required this.text,
     required this.icon,
+    this.isComingSoon = false,
     this.onTap,
   });
 
@@ -52,7 +54,9 @@ class SettingsCard extends StatelessWidget {
               padding: WidgetStateProperty.all(EdgeInsets.zero),
             ),
             icon: Icon(
-              Icons.arrow_forward_ios_rounded,
+              isComingSoon
+                  ? Icons.lock_clock_outlined
+                  : Icons.arrow_forward_ios_rounded,
               color: GColors.white,
             ),
           ),

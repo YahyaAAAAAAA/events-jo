@@ -355,7 +355,9 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
         //* images slider
         EventImageSlider(
           picsList: singleFootballCourtCubit.stringsToImages(
-            footballCourt.pics,
+            footballCourt.pics.isEmpty
+                ? [kPlaceholderImage]
+                : footballCourt.pics,
           ),
           event: footballCourt,
           eventLocation: venueLocation,

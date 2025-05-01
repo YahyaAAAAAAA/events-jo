@@ -27,7 +27,7 @@ class OwnerCourtsCubit extends Cubit<OwnerCourtsStates> {
       FootballCourt court, List<dynamic> updatedImages) async {
     emit(OwnerCourtsLoading());
 
-    // await ownerRepo.updateVenueInDatabase(court, updatedImages);
+    await ownerRepo.updateCourtInDatabase(court, updatedImages);
 
     //reflect update locally
     footballCourts = footballCourts?.map((detailed) {

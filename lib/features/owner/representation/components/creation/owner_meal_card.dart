@@ -1,3 +1,4 @@
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class OwnerMealCard extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(kOuterRadius),
             color: GColors.whiteShade3,
           ),
           padding: const EdgeInsets.all(12),
@@ -35,16 +36,15 @@ class OwnerMealCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   (index + 1).toString() +
-                      '.  Name: ' +
+                      '. ' +
                       meals[index].name +
                       ' | Amount: ' +
                       meals[index].amount.toString() +
                       ' | Price: ' +
                       meals[index].price.toString(),
                   style: TextStyle(
-                    fontSize: 17,
-                    color: textColor,
-                    fontWeight: FontWeight.bold,
+                    fontSize: kSmallFontSize,
+                    color: GColors.royalBlue,
                   ),
                 ),
               ),

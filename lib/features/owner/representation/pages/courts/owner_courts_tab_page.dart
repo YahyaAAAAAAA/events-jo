@@ -45,7 +45,7 @@ class _OwnerCourtsTabPageState extends State<OwnerCourtsTabPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SettingsSubAppBar(
-        title: 'Manage Your Venues',
+        title: 'Manage Your Courts',
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),
           child: OwnerMenuTabBar(

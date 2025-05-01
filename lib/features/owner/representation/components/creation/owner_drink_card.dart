@@ -1,3 +1,4 @@
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:flutter/material.dart';
@@ -33,16 +34,15 @@ class OwnerDrinkCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   (index + 1).toString() +
-                      '.  Name: ' +
+                      '. ' +
                       drinks[index].name +
                       ' | Amount: ' +
                       drinks[index].amount.toString() +
                       ' | Price: ' +
                       drinks[index].price.toString(),
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: kSmallFontSize,
                     color: textColor,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

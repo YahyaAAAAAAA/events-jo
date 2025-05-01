@@ -42,6 +42,9 @@ abstract class OwnerRepo {
   Future<void> updateVenueInDatabase(
       WeddingVenueDetailed venueDetailed, List<dynamic> updatedImages);
 
+  Future<void> updateCourtInDatabase(
+      FootballCourt footballCourt, List<dynamic> updatedImages);
+
   Future<void> deleteImagesFromServer(List<XFile> images);
 
   Future<List<FootballCourt>> getOwnerCourts(String ownerId);

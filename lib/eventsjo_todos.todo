@@ -89,10 +89,11 @@ pending:
     ✔ courts detailes page @done(25-04-23 00:15)
     ✔ fix/test rating @done(25-04-24 20:56)
     ✔ refactor order repo @started(25-04-24 20:56) @done(25-04-24 23:36) @lasted(2h40m34s)
-    ☐ cached/refresh for courts  
+    ✔ cached/refresh for courts @done(25-04-25 03:49)
+    ✔ add price for meals/drinks in venue edit @done(25-04-25 03:49)
+    ✔ fix search and sort @done(25-04-25 03:49)
+    ☐ courts update
     ☐ replace 'cancel' with 'default' in venue edit
-    ☐ add price for meals/drinks in venue edit
-    ☐ fix search and sort
     ☐ venue removal
     ☐ substract venue meals/drinks amount on order completion
     ☐ check appbars widths

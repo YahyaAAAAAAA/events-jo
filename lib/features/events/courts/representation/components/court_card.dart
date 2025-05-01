@@ -56,7 +56,9 @@ class CourtCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(kOuterRadius),
                       child: CachedNetworkImage(
-                        imageUrl: footballCourt.pics[0],
+                        imageUrl: footballCourt.pics.isEmpty
+                            ? kPlaceholderImage
+                            : footballCourt.pics[0],
                         placeholder: (context, url) =>
                             const GlobalLoadingImage(),
                         errorWidget: (context, url, error) => Icon(

@@ -10,8 +10,8 @@ import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/chat/representation/pages/chats_page.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:events_jo/features/owner/representation/pages/courts/owner_courts_tab_page.dart';
+import 'package:events_jo/features/owner/representation/pages/creation/owner_main_page.dart';
 import 'package:events_jo/features/owner/representation/pages/venues/owner_venues_tab_page.dart';
-import 'package:events_jo/features/owner/representation/pages/creation/owner_page.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/settings/representation/pages/account_page.dart';
@@ -54,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: HomeAppBar(
         isOwner: widget.userType == UserType.owner ? true : false,
         title: user?.name ?? 'Guest 123',
-        onOwnerButtonTap: () => context.push(OwnerPage(user: user)),
+        onOwnerButtonTap: () => context.push(OwnerMainPage(user: user)),
         onChatsPressed: () => context.push(ChatsPage(user: user!)),
         onPressed: () => context.read<AuthCubit>().logout(
               user!.uid,
@@ -161,6 +161,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ? SettingsCard(
                               text: 'Your Farms',
                               icon: CustomIcons.wheat,
+                              isComingSoon: true,
                               onTap: () => context.showSnackBar('Coming Soon'),
                             )
                           : 0.width,
@@ -172,6 +173,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ? SettingsCard(
                               text: 'Your Pools',
                               icon: Icons.pool,
+                              isComingSoon: true,
                               onTap: () => context.showSnackBar('Coming Soon'),
                             )
                           : 0.width,

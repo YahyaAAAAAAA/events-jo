@@ -1,12 +1,16 @@
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/enums/text_field_input_type.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_page_bar.dart';
 import 'package:flutter/material.dart';
 
 class SelectPeopleRange extends StatelessWidget {
+  final EventType eventType;
+
   const SelectPeopleRange({
     super.key,
+    required this.eventType,
     required this.peoplePriceController,
     required this.peopleMinController,
     required this.peopleMaxController,
@@ -20,20 +24,16 @@ class SelectPeopleRange extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
+        shrinkWrap: true,
         children: [
-          const OwnerPageBar(),
-
-          const SizedBox(height: 100),
-
           //* text
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              'Please add the price per pesron for your Venue',
+              'Add the price per pesron for your ${eventType.name}',
               style: TextStyle(
-                color: GColors.poloBlue,
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
+                color: GColors.black,
+                fontSize: kSmallFontSize,
               ),
             ),
           ),
@@ -46,7 +46,9 @@ class SelectPeopleRange extends StatelessWidget {
                   padding: const EdgeInsets.all(12),
                   child: AuthTextField(
                     controller: peoplePriceController,
-                    hintText: 'Price per person',
+                    hintText: eventType == EventType.venue
+                        ? 'Price per person'
+                        : 'Price per hour',
                     elevation: 3,
                     obscureText: false,
                     inputType: TextFieldInputType.doubles,
@@ -57,53 +59,38 @@ class SelectPeopleRange extends StatelessWidget {
             ],
           ),
 
-          //* text
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Please add a minimum and maximum amount of people for your Venue',
-                style: TextStyle(
-                  color: GColors.poloBlue,
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-
           //* min & max fields
-          Row(
-            children: [
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: AuthTextField(
-                    controller: peopleMinController,
-                    hintText: 'Minimum Amount',
-                    elevation: 3,
-                    inputType: TextFieldInputType.integers,
-                    obscureText: false,
-                    maxLength: 7,
+          if (eventType == EventType.venue)
+            Row(
+              children: [
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: AuthTextField(
+                      controller: peopleMinController,
+                      hintText: 'Minimum Amount',
+                      elevation: 3,
+                      inputType: TextFieldInputType.integers,
+                      obscureText: false,
+                      maxLength: 7,
+                    ),
                   ),
                 ),
-              ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: AuthTextField(
-                    controller: peopleMaxController,
-                    hintText: 'Maximum Amount',
-                    elevation: 3,
-                    inputType: TextFieldInputType.integers,
-                    obscureText: false,
-                    maxLength: 7,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: AuthTextField(
+                      controller: peopleMaxController,
+                      hintText: 'Maximum Amount',
+                      elevation: 3,
+                      inputType: TextFieldInputType.integers,
+                      obscureText: false,
+                      maxLength: 7,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
           const SizedBox(height: 20),
         ],

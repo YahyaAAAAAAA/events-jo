@@ -2,7 +2,7 @@ import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/features/events/shared/domain/models/event.dart';
 
 class FootballCourt extends Event {
-  late int pricePerHour;
+  late double pricePerHour;
 
   FootballCourt({
     super.type = EventType.court,
@@ -64,6 +64,6 @@ class FootballCourt extends Event {
           city: jsonCourt['city'],
           time: jsonCourt['time'],
         ) {
-    pricePerHour = jsonCourt['pricePerHour'];
+    pricePerHour = jsonCourt['pricePerHour'].toDouble();
   }
 }

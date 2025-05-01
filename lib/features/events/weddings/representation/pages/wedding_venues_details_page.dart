@@ -418,7 +418,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
         //* images slider
         EventImageSlider(
           picsList: singleWeddingVenueCubit.stringsToImages(
-            venue.pics,
+            venue.pics.isEmpty ? [kPlaceholderImage] : venue.pics,
           ),
           event: venue,
           eventLocation: venueLocation,

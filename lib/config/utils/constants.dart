@@ -11,3 +11,5 @@ const double kBiglFontSize = 25;
 const double kSmallIconSize = 17;
 const double kNormalIconSize = 24;
 const double kBigIconSize = 25;
+
+const String kPlaceholderImage = 'https://i.ibb.co/ZVf53hB/placeholder.png';

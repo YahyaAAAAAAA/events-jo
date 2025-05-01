@@ -1,17 +1,18 @@
-import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/algorithms/image_for_string.dart';
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/enums/food_type.dart';
 import 'package:events_jo/config/enums/text_field_input_type.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/creation/food_card.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_page_bar.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
 
 class SelectEventMealsPage extends StatelessWidget {
+  final EventType eventType;
+
   final TextEditingController mealNameController;
   final TextEditingController mealAmountController;
   final TextEditingController mealPriceController;
@@ -25,6 +26,7 @@ class SelectEventMealsPage extends StatelessWidget {
 
   const SelectEventMealsPage({
     super.key,
+    required this.eventType,
     required this.mealNameController,
     required this.mealAmountController,
     required this.mealPriceController,
@@ -38,19 +40,15 @@ class SelectEventMealsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      shrinkWrap: true,
       children: [
-        const OwnerPageBar(),
-
-        const SizedBox(height: 10),
-
         //* text
         Center(
           child: Text(
-            'Please add Meals you offer in your Wedding Venue',
+            'Add meals you offer in your ${eventType.name}',
             style: TextStyle(
-              color: GColors.poloBlue,
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
+              color: GColors.black,
+              fontSize: kSmallFontSize,
             ),
           ),
         ),
@@ -65,8 +63,8 @@ class SelectEventMealsPage extends StatelessWidget {
                   FoodType.meal,
                 ),
                 padding: const EdgeInsets.only(left: 12),
-                width: 70,
-                height: 70,
+                width: 60,
+                height: 60,
               ),
             ),
             Flexible(
@@ -86,18 +84,18 @@ class SelectEventMealsPage extends StatelessWidget {
             PopupMenuButton(
               icon: Icon(
                 Icons.menu_open_rounded,
-                color: GColors.royalBlue,
-                size: 35,
+                color: GColors.white,
+                size: kNormalIconSize,
               ),
               style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(GColors.white),
-                padding: const WidgetStatePropertyAll(EdgeInsets.all(9)),
+                backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+                padding: const WidgetStatePropertyAll(EdgeInsets.all(12)),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(kOuterRadius),
                   ),
                 ),
-                elevation: const WidgetStatePropertyAll(3),
+                elevation: const WidgetStatePropertyAll(0),
                 shadowColor: WidgetStatePropertyAll(
                   GColors.black.withValues(alpha: 0.5),
                 ),
@@ -159,18 +157,26 @@ class SelectEventMealsPage extends StatelessWidget {
                 ),
               ),
             ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: IconButton(
+                  onPressed: onAddPressed,
+                  padding: const EdgeInsets.all(12),
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+                  ),
+                  icon: Text(
+                    'Add Meal',
+                    style: TextStyle(
+                      color: GColors.white,
+                      fontSize: kSmallFontSize,
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
-        ),
-
-        //* add button
-        OwnerButton(
-          onPressed: onAddPressed,
-          fontSize: 20,
-          fontWeight: FontWeight.normal,
-          icon: Icons.add,
-          iconSize: 50,
-          padding: 8,
-          text: 'Add Meal',
         ),
 
         //* text
@@ -181,9 +187,8 @@ class SelectEventMealsPage extends StatelessWidget {
             child: Text(
               'Your Meals',
               style: TextStyle(
-                color: GColors.poloBlue,
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
+                color: GColors.black,
+                fontSize: kSmallFontSize,
               ),
             ),
           ),
@@ -197,39 +202,25 @@ class SelectEventMealsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
               color: GColors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: GColors.black.withValues(alpha: 0.3),
-                  offset: const Offset(0, 2),
-                  blurRadius: 1,
-                ),
-              ],
+              borderRadius: BorderRadius.circular(kOuterRadius),
             ),
             child: meals.isNotEmpty
-                ? AnimatedListView(
-                    items: meals,
+                ? ListView.builder(
+                    itemCount: meals.length,
                     padding: const EdgeInsets.all(12),
                     itemBuilder: itemBuilder,
-                    enterTransition: [SlideInRight()],
-                    exitTransition: [SlideInLeft()],
-                    insertDuration: const Duration(milliseconds: 300),
-                    removeDuration: const Duration(milliseconds: 300),
-                    isSameItem: (a, b) => a.id == b.id,
                   )
                 : Center(
                     child: Text(
                       'No Meals Added',
                       style: TextStyle(
-                        fontSize: 17,
-                        color: GColors.poloBlue,
+                        fontSize: kSmallFontSize,
+                        color: GColors.black,
                       ),
                     ),
                   ),
           ),
         ),
-
-        const SizedBox(height: 20),
       ],
     );
   }

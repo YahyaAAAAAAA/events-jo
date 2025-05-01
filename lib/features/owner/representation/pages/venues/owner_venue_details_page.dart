@@ -75,6 +75,7 @@ class _OwnerApprovedVenueDetailsPageState
     for (int i = 0; i < venueDetailed.venue.pics.length; i++) {
       updatedImages?.add([venueDetailed.venue.pics[i], 0]);
     }
+
     updatedTime[0] = venueDetailed.venue.time[0];
     updatedTime[1] = venueDetailed.venue.time[1];
 
@@ -205,73 +206,113 @@ class _OwnerApprovedVenueDetailsPageState
                         child: ImageSlideshow(
                           width: 300,
                           height: 300,
-                          children: List.generate(
-                            updatedImages?.length ?? 1,
-                            (index) {
-                              return Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.circular(kOuterRadius),
-                                    child: index <
-                                            venueDetailed.venue.pics.length
-                                        ? CachedNetworkImage(
-                                            imageUrl: updatedImages![index][0],
-                                            fit: BoxFit.contain,
-                                            placeholder: (context, url) =>
-                                                const GlobalLoadingImage(),
-                                            errorWidget:
-                                                (context, url, error) => Icon(
-                                              Icons.error_outline,
-                                              color: GColors.black,
-                                              size: 40,
+                          children:
+                              //no image
+                              updatedImages!.isEmpty
+                                  ? [
+                                      CachedNetworkImage(
+                                        imageUrl: kPlaceholderImage,
+                                        fit: BoxFit.contain,
+                                        placeholder: (context, url) =>
+                                            const GlobalLoadingImage(),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(
+                                          Icons.error_outline,
+                                          color: GColors.black,
+                                          size: 40,
+                                        ),
+                                      )
+                                    ]
+                                  : List.generate(
+                                      updatedImages!.length,
+                                      (index) {
+                                        return Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      kOuterRadius),
+                                              //show existing images
+                                              child: index <
+                                                      venueDetailed
+                                                          .venue.pics.length
+                                                  ? CachedNetworkImage(
+                                                      imageUrl:
+                                                          updatedImages![index]
+                                                              [0],
+                                                      fit: BoxFit.contain,
+                                                      placeholder: (context,
+                                                              url) =>
+                                                          const GlobalLoadingImage(),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Icon(
+                                                        Icons.error_outline,
+                                                        color: GColors.black,
+                                                        size: 40,
+                                                      ),
+                                                    )
+                                                  //todo will fail on web
+                                                  //new local images
+                                                  : Image.file(File(
+                                                      updatedImages![index]
+                                                          [0])),
                                             ),
-                                          )
-                                        //todo will fail on web
-                                        : Image.file(
-                                            File(updatedImages![index][0])),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(12),
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: IconButton(
-                                        tooltip: updatedImages![index][1] == 0
-                                            ? 'Remove'
-                                            : 'Add',
-                                        onPressed: () => setState(() {
-                                          if (updatedImages![index][1] == 0) {
-                                            updatedImages![index][1] = 1;
-                                          } else {
-                                            updatedImages![index][1] = 0;
-                                          }
-                                        }),
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              WidgetStatePropertyAll(
-                                                  GColors.whiteShade3.shade600),
-                                        ),
-                                        icon: Icon(
-                                          index <
-                                                  venueDetailed
-                                                      .venue.pics.length
-                                              ? updatedImages![index][1] == 0
-                                                  ? Icons.link
-                                                  : Icons.link_off_outlined
-                                              : updatedImages![index][1] == 0
-                                                  ? Icons.folder_rounded
-                                                  : Icons.folder_off_rounded,
-                                          size: kSmallIconSize,
-                                          color: GColors.royalBlue,
-                                        ),
-                                      ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(12),
+                                              child: Align(
+                                                alignment: Alignment.topRight,
+                                                child: IconButton(
+                                                  tooltip: updatedImages![index]
+                                                              [1] ==
+                                                          0
+                                                      ? 'Remove'
+                                                      : 'Add',
+                                                  onPressed: () => setState(() {
+                                                    if (updatedImages![index]
+                                                            [1] ==
+                                                        0) {
+                                                      updatedImages![index][1] =
+                                                          1;
+                                                    } else {
+                                                      updatedImages![index][1] =
+                                                          0;
+                                                    }
+                                                  }),
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        WidgetStatePropertyAll(
+                                                            GColors.whiteShade3
+                                                                .shade600),
+                                                  ),
+                                                  icon: Icon(
+                                                    index <
+                                                            venueDetailed.venue
+                                                                .pics.length
+                                                        ? updatedImages![index]
+                                                                    [1] ==
+                                                                0
+                                                            ? Icons.link
+                                                            : Icons
+                                                                .link_off_outlined
+                                                        : updatedImages![index]
+                                                                    [1] ==
+                                                                0
+                                                            ? Icons
+                                                                .folder_rounded
+                                                            : Icons
+                                                                .folder_off_rounded,
+                                                    size: kSmallIconSize,
+                                                    color: GColors.royalBlue,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
                         ),
                       );
                     }),

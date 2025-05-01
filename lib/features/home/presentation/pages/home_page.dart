@@ -14,11 +14,11 @@ import 'package:events_jo/features/home/presentation/components/home_app_bar.dar
 import 'package:events_jo/features/home/presentation/components/sponserd_venue.dart';
 import 'package:events_jo/features/events/courts/representation/components/court_search_delegate.dart';
 import 'package:events_jo/features/events/weddings/representation/components/venue_search_delegate.dart';
-import 'package:events_jo/features/owner/representation/pages/creation/owner_page.dart';
 import 'package:events_jo/features/events/shared/representation/components/events_search_bar.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_states.dart';
 import 'package:events_jo/features/events/weddings/representation/pages/wedding_venues_list.dart';
+import 'package:events_jo/features/owner/representation/pages/creation/owner_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
       appBar: HomeAppBar(
         isOwner: widget.userType == UserType.owner ? true : false,
         title: user?.name ?? 'Guest 123',
-        onOwnerButtonTap: () => context.push(OwnerPage(user: user)),
+        onOwnerButtonTap: () => context.push(OwnerMainPage(user: user)),
         onChatsPressed: () => context.push(ChatsPage(user: user!)),
         onPressed: () =>
             context.read<AuthCubit>().logout(user!.uid, user!.type),

@@ -17,7 +17,7 @@ import 'package:events_jo/features/order/representation/components/user_orders_e
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
-import 'package:events_jo/features/owner/representation/pages/creation/owner_page.dart';
+import 'package:events_jo/features/owner/representation/pages/creation/owner_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -60,7 +60,7 @@ class _OrdersPageState extends State<OrdersPage> {
       appBar: HomeAppBar(
         isOwner: widget.userType == UserType.owner ? true : false,
         title: user!.name,
-        onOwnerButtonTap: () => context.push(OwnerPage(user: user)),
+        onOwnerButtonTap: () => context.push(OwnerMainPage(user: user)),
         onChatsPressed: () => context.push(ChatsPage(user: user!)),
         onPressed: () =>
             context.read<AuthCubit>().logout(user!.uid, user!.type),

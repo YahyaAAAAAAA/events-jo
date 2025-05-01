@@ -63,7 +63,7 @@ class OwnerCourtsListPage extends StatelessWidget {
                         shrinkWrap: true,
                         separatorBuilder: (context, index) => 10.height,
                         itemBuilder: (context, index) =>
-                            const OwnerEventsCard(venue: null),
+                            const OwnerEventsCard(event: null),
                       ),
                     )
                   : footballCourts!.isEmpty
@@ -73,7 +73,7 @@ class OwnerCourtsListPage extends StatelessWidget {
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => 10.height,
                           itemBuilder: (context, index) => OwnerEventsCard(
-                            venue: footballCourts![index],
+                            event: footballCourts![index],
                             onOrdersPressed: () => context.push(
                               OwnerCourtOrdersPage(
                                 courtName: footballCourts![index].name,

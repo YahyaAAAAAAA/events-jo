@@ -1,17 +1,18 @@
-import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:events_jo/config/algorithms/image_for_string.dart';
+import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/enums/food_type.dart';
 import 'package:events_jo/config/enums/text_field_input_type.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/representation/components/auth_text_field.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_button.dart';
 import 'package:events_jo/features/owner/representation/components/creation/food_card.dart';
-import 'package:events_jo/features/owner/representation/components/creation/owner_page_bar.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:flutter/material.dart';
 
 class SelectEventDrinksPage extends StatelessWidget {
+  final EventType eventType;
+
   final TextEditingController drinkNameController;
   final TextEditingController drinkAmountController;
   final TextEditingController drinkPriceController;
@@ -26,6 +27,7 @@ class SelectEventDrinksPage extends StatelessWidget {
 
   const SelectEventDrinksPage({
     super.key,
+    required this.eventType,
     required this.drinkNameController,
     required this.drinkAmountController,
     required this.drinkPriceController,
@@ -39,19 +41,15 @@ class SelectEventDrinksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      shrinkWrap: true,
       children: [
-        const OwnerPageBar(),
-
-        const SizedBox(height: 10),
-
         //* text
         Center(
           child: Text(
-            'Please add Drinks you offer in your Wedding Venue',
+            'Add drinks you offer in your ${eventType.name}',
             style: TextStyle(
-              color: GColors.poloBlue,
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
+              color: GColors.black,
+              fontSize: kSmallFontSize,
             ),
           ),
         ),
@@ -66,8 +64,8 @@ class SelectEventDrinksPage extends StatelessWidget {
                   FoodType.drink,
                 ),
                 padding: const EdgeInsets.only(left: 12),
-                width: 70,
-                height: 70,
+                width: 60,
+                height: 60,
               ),
             ),
             Flexible(
@@ -87,23 +85,20 @@ class SelectEventDrinksPage extends StatelessWidget {
             PopupMenuButton(
               icon: Icon(
                 Icons.menu_open_rounded,
-                color: GColors.royalBlue,
-                size: 35,
+                color: GColors.white,
+                size: kNormalIconSize,
               ),
               color: GColors.white,
               constraints: const BoxConstraints(maxHeight: 200),
               style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(GColors.white),
-                padding: const WidgetStatePropertyAll(EdgeInsets.all(9)),
+                backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+                padding: const WidgetStatePropertyAll(EdgeInsets.all(12)),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(kOuterRadius),
                   ),
                 ),
-                shadowColor: WidgetStatePropertyAll(
-                  GColors.black.withValues(alpha: 0.5),
-                ),
-                elevation: const WidgetStatePropertyAll(3),
+                elevation: const WidgetStatePropertyAll(0),
               ),
               onSelected: onDrinkSelected,
               tooltip: '',
@@ -160,34 +155,26 @@ class SelectEventDrinksPage extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
-
-        //* add button
-        OwnerButton(
-          onPressed: onAddPressed,
-          fontSize: 20,
-          fontWeight: FontWeight.normal,
-          icon: Icons.add,
-          iconSize: 50,
-          padding: 8,
-          text: 'Add Drink',
-        ),
-
-        //* text
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Text(
-              'Your Drinks',
-              style: TextStyle(
-                color: GColors.poloBlue,
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: IconButton(
+                  onPressed: onAddPressed,
+                  padding: const EdgeInsets.all(12),
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+                  ),
+                  icon: Text(
+                    'Add Drink',
+                    style: TextStyle(
+                      color: GColors.white,
+                      fontSize: kSmallFontSize,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
+            )
+          ],
         ),
 
         //* list
@@ -196,39 +183,26 @@ class SelectEventDrinksPage extends StatelessWidget {
           child: Container(
             constraints: const BoxConstraints(maxHeight: 200),
             decoration: BoxDecoration(
-                color: GColors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: GColors.black.withValues(alpha: 0.3),
-                    offset: const Offset(0, 2),
-                    blurRadius: 1,
-                  ),
-                ]),
+              color: GColors.white,
+              borderRadius: BorderRadius.circular(kOuterRadius),
+            ),
             child: drinks.isNotEmpty
-                ? AnimatedListView(
-                    items: drinks,
+                ? ListView.builder(
+                    itemCount: drinks.length,
                     padding: const EdgeInsets.all(12),
                     itemBuilder: itemBuilder,
-                    enterTransition: [SlideInRight()],
-                    exitTransition: [SlideInLeft()],
-                    insertDuration: const Duration(milliseconds: 300),
-                    removeDuration: const Duration(milliseconds: 300),
-                    isSameItem: (a, b) => a.id == b.id,
                   )
                 : Center(
                     child: Text(
                       'No Drinks Added',
                       style: TextStyle(
-                        fontSize: 17,
-                        color: GColors.poloBlue,
+                        fontSize: kSmallFontSize,
+                        color: GColors.black,
                       ),
                     ),
                   ),
           ),
         ),
-
-        const SizedBox(height: 10),
       ],
     );
   }

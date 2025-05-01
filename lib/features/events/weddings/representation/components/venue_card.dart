@@ -56,7 +56,9 @@ class VenueCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(kOuterRadius),
                       child: CachedNetworkImage(
-                        imageUrl: weddingVenue.pics[0],
+                        imageUrl: weddingVenue.pics.isEmpty
+                            ? kPlaceholderImage
+                            : weddingVenue.pics[0],
                         placeholder: (context, url) =>
                             const GlobalLoadingImage(),
                         errorWidget: (context, url, error) => Icon(

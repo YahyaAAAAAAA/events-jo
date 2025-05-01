@@ -135,45 +135,48 @@ class FromToTimePicker extends StatefulWidget {
 
   final int? initEndTime;
 
-  const FromToTimePicker(
-      {Key? key,
-      required this.onTab,
-      this.initStartTime,
-      this.initEndTime,
-      this.onCancelTab,
-      this.maxWidth,
-      this.headerText,
-      this.fromHeadline = 'From',
-      this.toHeadline = 'To',
-      this.fromHeadlineColor = FTTColors.black,
-      this.toHeadlineColor = FTTColors.black,
-      this.activeDayNightColor = FTTColors.primary_color,
-      this.defaultDayNightColor = FTTColors.mainColor70,
-      this.activeDayNightTextColor = FTTColors.white,
-      this.defaultDayNightTextColor = FTTColors.black,
-      this.dayNightBorderRadius = 5,
-      this.timeBoxBorderRadius = 8,
-      this.timeBoxColor = FTTColors.mainColor70,
-      this.upIcon = Icons.keyboard_arrow_up_rounded,
-      this.downIcon = Icons.keyboard_arrow_down_rounded,
-      this.upIconColor = FTTColors.black,
-      this.downIconColor = FTTColors.black,
-      this.dividerColor = FTTColors.divider,
-      this.timeHintColor = FTTColors.divider,
-      this.timeTextColor = FTTColors.gray_66,
-      this.doneText = 'ok',
-      this.dismissText = 'cancel',
-      this.dayText = 'AM',
-      this.nightText = 'PM',
-      this.dialogBackgroundColor = FTTColors.white,
-      this.showHeaderBullet = false,
-      this.headerBulletColor = FTTColors.green_1,
-      this.headerTextColor = FTTColors.gray_9a,
-      this.colonColor = FTTColors.black,
-      this.timeHintText = '00',
-      this.doneTextColor = FTTColors.black,
-      this.dismissTextColor = FTTColors.dark_red})
-      : super(key: key);
+  final bool? showCancelButton;
+
+  const FromToTimePicker({
+    Key? key,
+    required this.onTab,
+    this.initStartTime,
+    this.initEndTime,
+    this.onCancelTab,
+    this.maxWidth,
+    this.headerText,
+    this.fromHeadline = 'From',
+    this.toHeadline = 'To',
+    this.fromHeadlineColor = FTTColors.black,
+    this.toHeadlineColor = FTTColors.black,
+    this.activeDayNightColor = FTTColors.primary_color,
+    this.defaultDayNightColor = FTTColors.mainColor70,
+    this.activeDayNightTextColor = FTTColors.white,
+    this.defaultDayNightTextColor = FTTColors.black,
+    this.dayNightBorderRadius = 5,
+    this.timeBoxBorderRadius = 8,
+    this.timeBoxColor = FTTColors.mainColor70,
+    this.upIcon = Icons.keyboard_arrow_up_rounded,
+    this.downIcon = Icons.keyboard_arrow_down_rounded,
+    this.upIconColor = FTTColors.black,
+    this.downIconColor = FTTColors.black,
+    this.dividerColor = FTTColors.divider,
+    this.timeHintColor = FTTColors.divider,
+    this.timeTextColor = FTTColors.gray_66,
+    this.doneText = 'ok',
+    this.dismissText = 'cancel',
+    this.dayText = 'AM',
+    this.nightText = 'PM',
+    this.dialogBackgroundColor = FTTColors.white,
+    this.showHeaderBullet = false,
+    this.headerBulletColor = FTTColors.green_1,
+    this.headerTextColor = FTTColors.gray_9a,
+    this.colonColor = FTTColors.black,
+    this.timeHintText = '00',
+    this.doneTextColor = FTTColors.black,
+    this.dismissTextColor = FTTColors.dark_red,
+    this.showCancelButton = true,
+  }) : super(key: key);
 
   @override
   State<FromToTimePicker> createState() => _FromToTimePickerState();
@@ -305,23 +308,25 @@ class _FromToTimePickerState extends State<FromToTimePicker> {
                       SizedBox(
                         width: newScreenSize.width * .06,
                       ),
-                      IconButton(
-                        onPressed: widget.onCancelTab,
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(
-                            GColors.whiteShade3,
-                          ),
-                          padding:
-                              const WidgetStatePropertyAll(EdgeInsets.all(12)),
-                        ),
-                        icon: Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: widget.doneTextColor,
-                            fontSize: kNormalFontSize,
-                          ),
-                        ),
-                      ),
+                      widget.showCancelButton!
+                          ? IconButton(
+                              onPressed: widget.onCancelTab,
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  GColors.whiteShade3,
+                                ),
+                                padding: const WidgetStatePropertyAll(
+                                    EdgeInsets.all(12)),
+                              ),
+                              icon: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  color: widget.doneTextColor,
+                                  fontSize: kNormalFontSize,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(width: 0),
                       10.width,
                       IconButton(
                         onPressed: () {
