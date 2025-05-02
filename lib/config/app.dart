@@ -30,6 +30,7 @@ import 'package:events_jo/features/order/representation/cubits/order_cubit.dart'
 import 'package:events_jo/features/owner/data/firebase_owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/courts/owner_courts_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/creation/owner_cubit.dart';
+import 'package:events_jo/features/owner/representation/cubits/stripe_connect/stripe_connect_cubit.dart';
 import 'package:events_jo/features/owner/representation/cubits/venues/owner_venues_cubit.dart';
 import 'package:events_jo/features/settings/data/firebase_settings_repo.dart';
 import 'package:events_jo/features/settings/representation/cubits/email/email_cubit.dart';
@@ -126,6 +127,10 @@ class EventsJoApp extends StatelessWidget {
         //----
         BlocProvider(
           create: (context) => OwnerCourtsCubit(ownerRepo: ownerRepo),
+        ),
+        //stripe connect (for owners)
+        BlocProvider(
+          create: (context) => StripeConnectCubit(ownerRepo: ownerRepo),
         ),
         //* -------------------Admin cubits below-------------------
         //approved venues cubit

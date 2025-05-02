@@ -3,6 +3,7 @@ import 'package:events_jo/features/events/shared/domain/models/football_court.da
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
+import 'package:events_jo/features/owner/domain/models/stripe_connect.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class OwnerRepo {
@@ -48,4 +49,6 @@ abstract class OwnerRepo {
   Future<void> deleteImagesFromServer(List<XFile> images);
 
   Future<List<FootballCourt>> getOwnerCourts(String ownerId);
+
+  Future<StripeConnect> startOnboarding(String userId);
 }

@@ -9,6 +9,10 @@ class AppUser {
   double longitude;
   bool isOnline;
 
+  String? stripeAccountId;
+  String? onboardingStatus;
+  bool? onboarded;
+
   AppUser({
     required this.uid,
     required this.email,
@@ -17,6 +21,9 @@ class AppUser {
     required this.isOnline,
     required this.latitude,
     required this.longitude,
+    this.stripeAccountId,
+    this.onboardingStatus,
+    this.onboarded,
   });
 
   //convert app user to json
@@ -29,6 +36,8 @@ class AppUser {
       'latitude': latitude,
       'longitude': longitude,
       'isOnline': isOnline,
+      'onboardingStatus': onboardingStatus,
+      'onboarded': onboarded,
     };
   }
 
@@ -42,6 +51,9 @@ class AppUser {
       latitude: jsonUser['latitude'],
       longitude: jsonUser['longitude'],
       isOnline: jsonUser['isOnline'],
+      stripeAccountId: jsonUser['stripeAccountId'],
+      onboardingStatus: jsonUser['onboardingStatus'],
+      onboarded: jsonUser['onboarded'],
     );
   }
 }

@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
+import 'package:events_jo/features/owner/domain/models/stripe_connect.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
@@ -10,6 +12,7 @@ import 'package:events_jo/features/events/shared/domain/models/wedding_venue_dri
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class FirebaseOwnerRepo implements OwnerRepo {
@@ -399,5 +402,26 @@ class FirebaseOwnerRepo implements OwnerRepo {
 
     //id example -> 2024111609413072511999
     return "${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}${now.microsecond}$randomValue";
+  }
+
+  //onboarding stripe
+  @override
+  Future<StripeConnect> startOnboarding(String userId) async {
+    try {
+      final res = await http.post(
+        Uri.parse(
+            'https://eventsjostripebackend.onrender.com/create-connected-account'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'userId': userId}),
+      );
+      print(res.statusCode);
+      final data = jsonDecode(res.body);
+      return StripeConnect(
+        stripeAccountId: data['accountId'],
+        onboardingUrl: data['url'],
+      );
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
