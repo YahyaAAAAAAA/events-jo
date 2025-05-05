@@ -9,9 +9,7 @@ import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/chat/representation/pages/chats_page.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
-import 'package:events_jo/features/owner/representation/pages/courts/owner_courts_tab_page.dart';
 import 'package:events_jo/features/owner/representation/pages/creation/owner_main_page.dart';
-import 'package:events_jo/features/owner/representation/pages/venues/owner_venues_tab_page.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/settings/representation/pages/account_page.dart';
@@ -132,49 +130,13 @@ class _SettingsPageState extends State<SettingsPage> {
 
                       5.height,
 
-                      //venues
-                      widget.userType == UserType.owner
-                          ? SettingsCard(
-                              text: 'Your Venues',
-                              icon: CustomIcons.rings_wedding_1,
-                              onTap: () =>
-                                  context.push(const OwnerVenuesTabPage()),
-                            )
-                          : 0.width,
-
-                      10.height,
-
-                      //courts
-                      widget.userType == UserType.owner
-                          ? SettingsCard(
-                              text: 'Your Courts',
-                              icon: CustomIcons.football_1,
-                              onTap: () =>
-                                  context.push(const OwnerCourtsTabPage()),
-                            )
-                          : 0.width,
-
-                      10.height,
-
                       //farms
                       widget.userType == UserType.owner
                           ? SettingsCard(
-                              text: 'Your Farms',
-                              icon: CustomIcons.wheat,
-                              isComingSoon: true,
-                              onTap: () => context.showSnackBar('Coming Soon'),
-                            )
-                          : 0.width,
-
-                      10.height,
-
-                      //pools
-                      widget.userType == UserType.owner
-                          ? SettingsCard(
-                              text: 'Your Pools',
-                              icon: Icons.pool,
-                              isComingSoon: true,
-                              onTap: () => context.showSnackBar('Coming Soon'),
+                              text: 'Create and Manage Events',
+                              icon: Icons.person_4_outlined,
+                              onTap: () =>
+                                  context.push(OwnerMainPage(user: user)),
                             )
                           : 0.width,
                     ],

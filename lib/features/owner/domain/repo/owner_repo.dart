@@ -51,4 +51,6 @@ abstract class OwnerRepo {
   Future<List<FootballCourt>> getOwnerCourts(String ownerId);
 
   Future<StripeConnect> startOnboarding(String userId);
+
+  Stream<String?> listenToOnboardingStatus(String ownerId);
 }

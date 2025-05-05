@@ -1,16 +1,18 @@
-import 'package:events_jo/features/owner/domain/models/stripe_connect.dart';
-
 abstract class StripeConnectStates {}
 
 class StripeConnectInit extends StripeConnectStates {}
 
-class StripeConnectLoading extends StripeConnectStates {}
-
 class StripeConnected extends StripeConnectStates {
-  final StripeConnect stripeConnect;
+  final String status;
 
-  StripeConnected(this.stripeConnect);
+  StripeConnected(this.status);
 }
+
+//first time owner
+class StripeNotConnected extends StripeConnectStates {}
+
+//owner started onboarding but didn't finish
+class StripeNotCompleted extends StripeConnectStates {}
 
 class StripeConnectError extends StripeConnectStates {
   final String message;

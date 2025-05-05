@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
+import 'package:events_jo/config/utils/endpoints.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/owner/domain/models/stripe_connect.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
@@ -404,17 +405,25 @@ class FirebaseOwnerRepo implements OwnerRepo {
     return "${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}${now.microsecond}$randomValue";
   }
 
+  @override
+  Stream<String?> listenToOnboardingStatus(String ownerId) {
+    return firebaseFirestore
+        .collection('owners')
+        .doc(ownerId)
+        .snapshots()
+        .map((snapshot) => snapshot.data()?['onboardingStatus'] as String?);
+  }
+
   //onboarding stripe
   @override
   Future<StripeConnect> startOnboarding(String userId) async {
     try {
       final res = await http.post(
-        Uri.parse(
-            'https://eventsjostripebackend.onrender.com/create-connected-account'),
+        Uri.parse(kCreateConnectedAccount),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'userId': userId}),
       );
-      print(res.statusCode);
+
       final data = jsonDecode(res.body);
       return StripeConnect(
         stripeAccountId: data['accountId'],
