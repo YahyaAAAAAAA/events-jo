@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/config/enums/order_status.dart';
+import 'package:events_jo/config/utils/endpoints.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
 import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
 import 'package:events_jo/features/order/domain/order_repo.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class FirebaseOrderRepo implements OrderRepo {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -165,4 +169,30 @@ class FirebaseOrderRepo implements OrderRepo {
   }
 
   //---payment---
+  @override
+  Future<String?> createCheckoutSession({
+    required String stripeAccountId,
+    required String orderId,
+    required String ownerId,
+    required double amount,
+  }) async {
+    try {
+      final res = await http.post(
+        Uri.parse(kCreateCheckoutSession),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'orderId': orderId,
+          'ownerId': ownerId,
+          'amount': amount,
+          'stripeAccountId': stripeAccountId,
+        }),
+      );
+
+      final data = jsonDecode(res.body);
+
+      return data['url'];
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

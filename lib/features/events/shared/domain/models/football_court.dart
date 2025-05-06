@@ -20,6 +20,7 @@ class FootballCourt extends Event {
     required super.endDate,
     required super.city,
     required super.time,
+    required super.stripeAccountId,
     required this.pricePerHour,
   });
 
@@ -42,6 +43,7 @@ class FootballCourt extends Event {
       'time': time,
       'city': city,
       'pricePerHour': pricePerHour,
+      'stripeAccountId': stripeAccountId,
     };
   }
 
@@ -63,6 +65,7 @@ class FootballCourt extends Event {
           endDate: jsonCourt['endDate'],
           city: jsonCourt['city'],
           time: jsonCourt['time'],
+          stripeAccountId: jsonCourt['stripeAccountId'],
         ) {
     pricePerHour = jsonCourt['pricePerHour'].toDouble();
   }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
@@ -10,6 +11,10 @@ abstract class AdminRepo {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getApprovedWeddingVenuesStream();
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> getUnapprovedCourtsStream();
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getApprovedCourtsStream();
+
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsersStream();
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllOwnersStream();
@@ -19,6 +24,8 @@ abstract class AdminRepo {
   Stream<List<AppUser>> getAllOnlineOwnersStream();
 
   Stream<WeddingVenue?> getVenueStream(String id);
+
+  Stream<FootballCourt?> getCourtStream(String id);
 
   Stream<List<WeddingVenueMeal>> getMealsStream(String id);
 

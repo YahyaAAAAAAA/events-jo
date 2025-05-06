@@ -12,74 +12,37 @@ class AdminApprovedVenuesBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: GColors.white,
-          border: Border(
-            left: BorderSide(
-              color: GColors.cyanShade6,
-              width: 10,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: GColors.white,
+      ),
+      padding: const EdgeInsets.all(20),
+      //suspend button
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: onSuspendPressed,
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(GColors.cyanShade6),
             ),
-            right: BorderSide(
-              color: GColors.cyanShade6,
-              width: 10,
+            padding: const EdgeInsets.all(12),
+            icon: Icon(
+              CustomIcons.hammer_crash,
+              size: 30,
+              color: GColors.white,
             ),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: GColors.cyan.withValues(alpha: 0.2),
-              blurRadius: 7,
-              offset: const Offset(0, 0),
+          const SizedBox(width: 10),
+          Text(
+            'Suspend',
+            style: TextStyle(
+              color: GColors.black,
+              fontSize: 25,
             ),
-          ],
-        ),
-        padding: const EdgeInsets.all(20),
-        //suspend button
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: onSuspendPressed,
-              style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
-                  shadowColor: WidgetStatePropertyAll(
-                    GColors.black.withValues(alpha: 0.2),
-                  ),
-                  elevation: const WidgetStatePropertyAll(3),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  padding: const WidgetStatePropertyAll(EdgeInsets.zero)),
-              icon: Ink(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  gradient: GColors.adminGradient,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Icon(
-                    CustomIcons.hammer_crash,
-                    size: 30,
-                    color: GColors.white,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              'Suspend',
-              style: TextStyle(
-                color: GColors.cyanShade6,
-                fontSize: 25,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

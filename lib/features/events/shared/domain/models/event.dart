@@ -15,6 +15,7 @@ abstract class Event {
   final List<dynamic> time;
   final List<String> rates;
   final EventType type;
+  final String stripeAccountId;
   List<dynamic> pics;
 
   Event({
@@ -31,6 +32,7 @@ abstract class Event {
     required this.time,
     required this.rates,
     required this.type,
+    required this.stripeAccountId,
     this.pics = const ['https://i.ibb.co/ZVf53hB/placeholder.png'],
     this.city = 'CNF',
   });

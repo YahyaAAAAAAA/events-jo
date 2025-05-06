@@ -17,7 +17,11 @@ class VenueOrdersLoaded extends OrderStates {
   VenueOrdersLoaded(this.orders);
 }
 
-class OrderAdded extends OrderStates {}
+class OrderAdded extends OrderStates {
+  final String url;
+
+  OrderAdded(this.url);
+}
 
 class OrderError extends OrderStates {
   final String message;

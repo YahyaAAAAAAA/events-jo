@@ -64,10 +64,7 @@ class AdminLoadingCard extends StatelessWidget {
                 const Spacer(),
                 const AdminButton(
                   onPressed: null,
-                  padding: EdgeInsets.zero,
                   isLoading: true,
-                  buttonPadding:
-                      EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   icon: Icons.arrow_forward_ios_rounded,
                 ),
               ],

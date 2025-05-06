@@ -1,3 +1,6 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -19,65 +22,35 @@ class AdminDashboardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
-              color: GColors.cyanShade6,
-              width: 10,
-            ),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: GColors.cyan.withValues(alpha: 0.2),
-              blurRadius: 7,
-              offset: const Offset(0, 0),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(kOuterRadius),
           color: GColors.white,
         ),
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                size: 12,
-                color: GColors.cyanShade6,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: GColors.cyanShade6.shade300.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(kOuterRadius),
               ),
-              const SizedBox(width: 10),
-              Text(
-                text,
-                style: TextStyle(
-                  color: GColors.cyanShade6,
-                  fontSize: 20,
-                ),
-              ),
-              const Spacer(),
-              CircleAvatar(
-                backgroundColor: GColors.cyanShade6,
-                child: Text(
-                  count,
-                  style: TextStyle(
-                    color: GColors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: VerticalDivider(color: GColors.cyanShade6),
-              ),
-              LottieBuilder.asset(
+              child: LottieBuilder.asset(
                 animation,
                 frameRate: const FrameRate(60),
-                width: 100,
-                height: 100,
-              )
-            ],
-          ),
+                width: 60,
+                height: 60,
+              ),
+            ),
+            10.width,
+            Text(
+              '$text $count',
+              style: TextStyle(
+                color: GColors.black,
+                fontSize: kNormalFontSize - 3,
+              ),
+            ),
+          ],
         ));
   }
 }

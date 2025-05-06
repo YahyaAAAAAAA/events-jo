@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
+import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
@@ -35,6 +36,23 @@ class FirebaseAdminRepo implements AdminRepo {
     return firebaseFirestore
         .collection('venues')
         .where('isApproved', isEqualTo: true)
+        .snapshots();
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> getApprovedCourtsStream() {
+    return firebaseFirestore
+        .collection('courts')
+        .where('isApproved', isEqualTo: true)
+        .snapshots();
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> getUnapprovedCourtsStream() {
+    //notifies of query results at 'venues' collection
+    return firebaseFirestore
+        .collection('venues')
+        .where('isApproved', isEqualTo: false)
         .snapshots();
   }
 
@@ -95,6 +113,22 @@ class FirebaseAdminRepo implements AdminRepo {
       }
 
       return WeddingVenue.fromJson(snapshot.data()!);
+    });
+  }
+
+  @override
+  Stream<FootballCourt?> getCourtStream(String id) {
+    //notifies of document results at this 'owners' collection doc 'id'
+    return firebaseFirestore
+        .collection('courts')
+        .doc(id)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.data() == null) {
+        return null;
+      }
+
+      return FootballCourt.fromJson(snapshot.data()!);
     });
   }
 

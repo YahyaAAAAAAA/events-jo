@@ -516,6 +516,7 @@ class _OwnerApprovedCourtDetailsPageState
                 ownerId: footballCourt.ownerId,
                 ownerName: footballCourt.ownerName,
                 city: footballCourt.city,
+                stripeAccountId: footballCourt.stripeAccountId,
                 //will update
                 name: nameController.text,
                 pics: footballCourt.pics,

@@ -23,6 +23,7 @@ class WeddingVenue extends Event {
     required super.endDate,
     required super.city,
     required super.time,
+    required super.stripeAccountId,
     required this.peopleMax,
     required this.peopleMin,
     required this.peoplePrice,
@@ -50,6 +51,7 @@ class WeddingVenue extends Event {
       'peopleMin': peopleMin,
       'peoplePrice': peoplePrice,
       'city': city,
+      'stripeAccountId': stripeAccountId,
     };
   }
 
@@ -71,6 +73,7 @@ class WeddingVenue extends Event {
           endDate: jsonVenue['endDate'],
           city: jsonVenue['city'],
           time: jsonVenue['time'],
+          stripeAccountId: jsonVenue['stripeAccountId'],
         ) {
     peopleMax = jsonVenue['peopleMax'];
     peopleMin = jsonVenue['peopleMin'];

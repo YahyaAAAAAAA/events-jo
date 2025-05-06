@@ -1,5 +1,4 @@
-import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/config/utils/gradient/gradient_text.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_confirmation_display_row.dart';
 import 'package:flutter/material.dart';
 
@@ -23,81 +22,23 @@ class AdminUserSummary extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 450),
       child: ListView(
-        shrinkWrap: false,
         children: [
-          //* logo text
-          Center(
-            child: GradientText(
-              'Ej',
-              gradient: GColors.adminGradient,
-              style: TextStyle(
-                color: GColors.royalBlue,
-                fontSize: 70,
-                fontFamily: 'Gugi',
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          AdminConfirmationDisplayRow(mainText: 'Name: ', subText: name),
 
-          //* users name
-          Center(
-            child: Text(
-              '$name\'s User Info',
-              style: TextStyle(
-                color: GColors.cyanShade6,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          localDivider(),
 
-          //* summary list
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: GColors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: GColors.cyan.withValues(alpha: 0.2),
-                    blurRadius: 7,
-                    offset: const Offset(0, 0),
-                  ),
-                ],
-              ),
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  //name
-                  AdminConfirmationDisplayRow(
-                      mainText: 'Name: ', subText: name),
+          //email
+          AdminConfirmationDisplayRow(mainText: 'Email: ', subText: email),
+          localDivider(),
 
-                  localDivider(),
-
-                  //email
-                  AdminConfirmationDisplayRow(
-                      mainText: 'Email: ', subText: email),
-                  localDivider(),
-
-                  //id
-                  AdminConfirmationDisplayRow(mainText: 'Id: ', subText: id),
-                ],
-              ),
-            ),
-          ),
+          //id
+          AdminConfirmationDisplayRow(mainText: 'Id: ', subText: id),
         ],
       ),
     );
   }
 
-  Divider localDivider() {
-    return Divider(
-      color: GColors.poloBlue,
-      height: 0.01,
-      thickness: 0.2,
-      indent: 10,
-      endIndent: 10,
-    );
+  Widget localDivider() {
+    return 10.height;
   }
 }

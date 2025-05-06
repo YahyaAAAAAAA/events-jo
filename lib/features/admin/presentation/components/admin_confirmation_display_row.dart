@@ -1,3 +1,6 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -27,20 +30,37 @@ class AdminConfirmationDisplayRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: GColors.white,
+        borderRadius: BorderRadius.circular(kOuterRadius),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          IconButton(
+            onPressed: null,
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(
+                GColors.cyanShade6.shade300.withValues(alpha: 0.2),
+              ),
+            ),
+            icon: Icon(
+              Icons.info,
+              color: GColors.cyanShade6,
+              size: kNormalIconSize,
+            ),
+          ),
+          10.width,
           Text(
             mainText,
             style: TextStyle(
-              color: GColors.poloBlue,
-              fontSize: 21,
-              fontWeight: FontWeight.normal,
+              color: GColors.black,
+              fontSize: kSmallFontSize,
             ),
           ),
-          const SizedBox(width: 5),
+          5.width,
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -53,9 +73,8 @@ class AdminConfirmationDisplayRow extends StatelessWidget {
                             subText,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              color: GColors.cyanShade6,
-                              fontSize: 21,
-                              fontWeight: FontWeight.normal,
+                              color: GColors.black,
+                              fontSize: kSmallFontSize,
                             ),
                           )
                         : IconButton(
@@ -63,25 +82,10 @@ class AdminConfirmationDisplayRow extends StatelessWidget {
                             style: ButtonStyle(
                               backgroundColor:
                                   WidgetStatePropertyAll(GColors.cyanShade6),
-                              shape: WidgetStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                              ),
-                              padding:
-                                  const WidgetStatePropertyAll(EdgeInsets.zero),
                             ),
-                            icon: Ink(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                gradient: GColors.adminGradient,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  icon,
-                                  color: GColors.white,
-                                ),
-                              ),
+                            icon: Icon(
+                              icon,
+                              color: GColors.white,
                             ),
                           ),
                   ),
@@ -96,25 +100,10 @@ class AdminConfirmationDisplayRow extends StatelessWidget {
                             style: ButtonStyle(
                               backgroundColor:
                                   WidgetStatePropertyAll(GColors.cyanShade6),
-                              shape: WidgetStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                              ),
-                              padding:
-                                  const WidgetStatePropertyAll(EdgeInsets.zero),
                             ),
-                            icon: Ink(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                gradient: GColors.adminGradient,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  secondIcon,
-                                  color: GColors.white,
-                                ),
-                              ),
+                            icon: Icon(
+                              secondIcon,
+                              color: GColors.white,
                             ),
                           ),
                         ),

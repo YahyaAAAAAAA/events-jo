@@ -1,3 +1,7 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_button.dart';
@@ -27,118 +31,94 @@ class AdminEventsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 450),
+        constraints: const BoxConstraints(maxWidth: kListViewWidth),
         child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Container(
-            decoration: BoxDecoration(
-              color: GColors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border(
-                left: BorderSide(
-                  color: isLoading ? GColors.white : GColors.cyanShade6,
-                  width: 10,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: IconButton(
+            onPressed: onPressed,
+            icon: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: GColors.cyanShade6.shade300.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(kOuterRadius),
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: Icon(
+                    CustomIcons.wedding,
+                    size: kNormalFontSize,
+                    color: GColors.cyanShade6,
+                  ),
                 ),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: GColors.cyan.withValues(alpha: 0.2),
-                  blurRadius: 7,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-            ),
-            //note: to display vertical divider
-            child: IntrinsicHeight(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      name,
-                      style: TextStyle(
-                        color: GColors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                10.width,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kNormalIconSize - 3,
+                        ),
                       ),
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: GColors.whiteShade3,
-                    thickness: 5,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.person_4_rounded,
-                              color: GColors.black,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              owner,
-                              style: TextStyle(
-                                color: GColors.black,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.circle,
-                              color: isApproved
-                                  ? GColors.greenShade3
-                                  : GColors.redShade3,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              isApproved ? 'Approved' : 'Not Approved',
-                              style: TextStyle(
-                                color: GColors.black,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  !isBeingApproved
-                      ?
-                      //venue is open to review
-                      AdminButton(
-                          onPressed: onPressed,
-                          isLoading: isLoading,
-                          padding: const EdgeInsets.all(15),
-                          buttonPadding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          icon: Icons.info_outline_rounded,
-                        )
-                      //venue is being reviewed
-                      : AdminButton(
-                          onPressed: () => GSnackBar.show(
-                            context: context,
-                            text:
-                                'The venue is being approved by another admin',
-                            color: GColors.cyanShade6,
-                            gradient: GColors.adminGradient,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person_4_rounded,
+                            color: GColors.black,
+                            size: kSmallIconSize,
                           ),
-                          isLoading: isLoading,
-                          padding: const EdgeInsets.all(15),
-                          buttonPadding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          icon: Icons.lock_person_outlined,
+                          5.width,
+                          Text(
+                            owner,
+                            style: TextStyle(
+                              color: GColors.black,
+                              fontSize: kSmallFontSize,
+                            ),
+                          ),
+                          5.width,
+                          Icon(
+                            Icons.circle,
+                            color: isApproved
+                                ? GColors.greenShade3
+                                : GColors.redShade3,
+                            size: kSmallIconSize - 3,
+                          ),
+                          5.width,
+                          Text(
+                            isApproved ? 'Approved' : 'Not Approved',
+                            style: TextStyle(
+                              color: GColors.black,
+                              fontSize: kSmallFontSize,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                !isBeingApproved
+                    ?
+                    //venue is open to review
+                    AdminButton(
+                        onPressed: onPressed,
+                        isLoading: isLoading,
+                        icon: Icons.info_outline_rounded,
+                      )
+                    //venue is being reviewed
+                    : AdminButton(
+                        onPressed: () => GSnackBar.show(
+                          context: context,
+                          text: 'The venue is being approved by another admin',
+                          color: GColors.cyanShade6,
+                          gradient: GColors.adminGradient,
                         ),
-                ],
-              ),
+                        isLoading: isLoading,
+                        icon: Icons.lock_person_outlined,
+                      ),
+              ],
             ),
           ),
         ),

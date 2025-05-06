@@ -1,4 +1,4 @@
-import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
@@ -49,30 +49,22 @@ class _AdminUnapprovedVenuesPageState extends State<AdminUnapprovedVenuesPage> {
             );
           }
 
-          return AnimatedListView(
-            items: venues,
+          return ListView.builder(
+            itemCount: venues.length,
             shrinkWrap: false,
-            enterTransition: [SlideInRight()],
-            exitTransition: [SlideInRight()],
-            insertDuration: const Duration(milliseconds: 300),
-            removeDuration: const Duration(milliseconds: 300),
-            isSameItem: (a, b) => a.id == b.id,
             itemBuilder: (context, index) {
               return AdminEventsCard(
                 name: venues[index].name,
                 owner: venues[index].ownerName,
                 index: index,
-                key: Key(adminUnapproveCubit.generateUniqueId()),
                 isApproved: venues[index].isApproved,
                 isBeingApproved: venues[index].isBeingApproved,
                 isLoading: false,
                 //navigate to venue details
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => AdminUnapprovedVenueDetailsPage(
-                      adminUnapproveCubit: adminUnapproveCubit,
-                      weddingVenue: venues[index],
-                    ),
+                onPressed: () => context.push(
+                  AdminUnapprovedVenueDetailsPage(
+                    adminUnapproveCubit: adminUnapproveCubit,
+                    weddingVenue: venues[index],
                   ),
                 ),
               );

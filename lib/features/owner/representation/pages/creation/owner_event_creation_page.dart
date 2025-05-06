@@ -542,6 +542,7 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                                     name: nameController.text.trim(),
                                     lat: userLocation.lat,
                                     long: userLocation.long,
+                                    stripeAccountId: user.stripeAccountId!,
                                     peopleMax:
                                         int.parse(peopleMaxController.text),
                                     peopleMin:
@@ -574,6 +575,7 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                                     FootballCourt(
                                       id: Unique.generateUniqueId(),
                                       name: nameController.text.trim(),
+                                      stripeAccountId: user.stripeAccountId!,
                                       latitude: userLocation.lat,
                                       longitude: userLocation.long,
                                       pricePerHour: double.parse(

@@ -15,6 +15,7 @@ class EOrder {
   final int people;
   final EventType eventType;
   final bool isRefundable;
+  final String stripeAccountId;
 
   EOrder({
     required this.id,
@@ -30,6 +31,7 @@ class EOrder {
     required this.date,
     required this.people,
     required this.isRefundable,
+    required this.stripeAccountId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -46,6 +48,7 @@ class EOrder {
         'date': date.toIso8601String(),
         'createdAt': createdAt.toIso8601String(),
         'isRefundable': isRefundable,
+        'stripeAccountId': stripeAccountId,
       };
 
   static EOrder fromJson(Map<String, dynamic> json) => EOrder(
@@ -62,5 +65,6 @@ class EOrder {
         date: DateTime.parse(json['date']),
         createdAt: DateTime.parse(json['createdAt']),
         isRefundable: json['isRefundable'],
+        stripeAccountId: json['stripeAccountId'],
       );
 }

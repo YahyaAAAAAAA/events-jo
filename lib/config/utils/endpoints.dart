@@ -6,3 +6,5 @@ const kHostUrl = 'http://localhost:$kHostPort';
 
 //endpoints
 const kCreateConnectedAccount = '$kHostUrl/create-connected-account';
+
+const kCreateCheckoutSession = '$kHostUrl/create-checkout-session';

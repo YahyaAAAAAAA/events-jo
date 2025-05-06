@@ -7,6 +7,7 @@ class Dummy {
   static WeddingVenue venue = WeddingVenue(
     id: '123456789',
     name: 'Loading',
+    stripeAccountId: '123456789',
     latitude: 0,
     longitude: 0,
     rates: [],
@@ -39,6 +40,7 @@ class Dummy {
     rates: [],
     isApproved: true,
     isBeingApproved: false,
+    stripeAccountId: '12345678900',
     pics: [
       "https://i.ibb.co/hh5xKbD/plain-white-background-or-wallpaper-abstract-image-2-E064-N7.jpg"
     ],

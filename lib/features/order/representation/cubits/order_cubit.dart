@@ -11,6 +11,7 @@ import 'package:events_jo/features/events/shared/domain/models/wedding_venue_mea
 import 'package:events_jo/features/events/shared/representation/pages/cashout_modal_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderCubit extends Cubit<OrderStates> {
   final OrderRepo orderRepo;
@@ -26,8 +27,26 @@ class OrderCubit extends Cubit<OrderStates> {
   ) async {
     emit(OrderLoading());
     try {
+      //create order in firebase
       await orderRepo.createOrder(order, meals, drinks);
-      emit(OrderAdded());
+
+      //create checkout session in stripe
+      String? url = await orderRepo.createCheckoutSession(
+        orderId: order.id,
+        ownerId: order.ownerId,
+        amount: order.amount,
+        stripeAccountId: order.stripeAccountId,
+      );
+
+      if (url == null) {
+        emit(OrderError('There were an error getting your payment link'));
+        return;
+      }
+
+      launchUrl(Uri.parse(url));
+
+      //pass url
+      emit(OrderAdded(url));
     } catch (e) {
       emit(OrderError(e.toString()));
     }
@@ -109,6 +128,7 @@ class OrderCubit extends Cubit<OrderStates> {
     required bool isRefundable,
     required List<WeddingVenueMeal> meals,
     required List<WeddingVenueDrink> drinks,
+    required String stripeAccountId,
   }) {
     return showModalBottomSheet(
       context: context,
@@ -141,6 +161,7 @@ class OrderCubit extends Cubit<OrderStates> {
               people: people,
               meals: meals,
               drinks: drinks,
+              stripeAccountId: stripeAccountId,
             );
           }),
         );

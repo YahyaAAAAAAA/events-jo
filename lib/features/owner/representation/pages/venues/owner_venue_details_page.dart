@@ -1119,6 +1119,7 @@ class _OwnerApprovedVenueDetailsPageState
                   ownerId: venueDetailed.venue.ownerId,
                   ownerName: venueDetailed.venue.ownerName,
                   city: venueDetailed.venue.city,
+                  stripeAccountId: venueDetailed.venue.stripeAccountId,
                   //will update
                   name: nameController.text,
                   pics: venueDetailed.venue.pics,

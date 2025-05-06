@@ -1,4 +1,7 @@
 import 'package:events_jo/config/theme/eventsjo_theme.dart';
+import 'package:events_jo/features/admin/presentation/cubits/courts/approved/admin_approved_courts_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/courts/unapproved/admin_unapproved_courts_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/single%20court/admin_single_court_cubit.dart';
 import 'package:events_jo/features/auth/representation/pages/user_type_gate.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
@@ -168,6 +171,18 @@ class EventsJoApp extends StatelessWidget {
         //single venue cubit
         BlocProvider(
           create: (context) => AdminSingleVenueCubit(adminRepo: adminRepo),
+        ),
+        //single court cubit
+        BlocProvider(
+          create: (context) => AdminSingleCourtCubit(adminRepo: adminRepo),
+        ),
+        //unapproved courts cubit
+        BlocProvider(
+          create: (context) => AdminUnapprovedCourtsCubit(adminRepo: adminRepo),
+        ),
+        //approved courts cubit
+        BlocProvider(
+          create: (context) => AdminApprovedCourtsCubit(adminRepo: adminRepo),
         ),
       ],
       child: MaterialApp(

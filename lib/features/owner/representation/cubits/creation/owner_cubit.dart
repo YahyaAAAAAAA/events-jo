@@ -30,6 +30,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
     required List<int> startDate,
     required List<int> endDate,
     required List<int> time,
+    required String stripeAccountId,
     List<String>? pics,
     List<WeddingVenueMeal>? meals,
     List<WeddingVenueDrink>? drinks,
@@ -54,6 +55,7 @@ class OwnerCubit extends Cubit<OwnerStates> {
         pics: pics,
         meals: meals,
         drinks: drinks,
+        stripeAccountId: stripeAccountId,
       );
 
       //done

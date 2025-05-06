@@ -1,3 +1,6 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_button.dart';
 import 'package:flutter/material.dart';
@@ -18,66 +21,44 @@ class AdminCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return IconButton(
+        onPressed: onPressed,
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
-              color: GColors.cyanShade6,
-              width: 10,
+        icon: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: GColors.cyanShade6.shade300.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(kOuterRadius),
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: Icon(
+                    icon,
+                    size: kNormalFontSize,
+                    color: GColors.cyanShade6,
+                  ),
+                ),
+                10.width,
+                Text(
+                  '${text} ${count}',
+                  style: TextStyle(
+                    color: GColors.black,
+                    fontSize: kSmallFontSize,
+                  ),
+                ),
+              ],
             ),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: GColors.cyan.withValues(alpha: 0.2),
-              blurRadius: 7,
-              offset: const Offset(0, 0),
+            AdminButton(
+              onPressed: onPressed,
+              isLoading: false,
+              icon: Icons.arrow_forward_ios_rounded,
             ),
           ],
-          borderRadius: BorderRadius.circular(12),
-          color: GColors.white,
-        ),
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                size: 40,
-                color: GColors.cyanShade6,
-              ),
-              VerticalDivider(color: GColors.cyanShade6),
-              Icon(
-                Icons.circle,
-                color: GColors.cyanShade6,
-                size: 12,
-              ),
-              const SizedBox(width: 5),
-              Text(
-                text,
-                style: TextStyle(
-                  color: GColors.cyanShade6,
-                  fontSize: 20,
-                ),
-              ),
-              Text(
-                count,
-                style: TextStyle(
-                  color: GColors.cyanShade6,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Spacer(),
-              AdminButton(
-                onPressed: onPressed,
-                padding: EdgeInsets.zero,
-                isLoading: false,
-                buttonPadding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                icon: Icons.arrow_forward_ios_rounded,
-              ),
-            ],
-          ),
         ));
   }
 }

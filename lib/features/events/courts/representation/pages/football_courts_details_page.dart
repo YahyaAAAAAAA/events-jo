@@ -287,6 +287,7 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
                     isRefundable: isRefundable,
                     meals: [],
                     drinks: [],
+                    stripeAccountId: footballCourt.stripeAccountId,
                   );
                 },
                 style: ButtonStyle(

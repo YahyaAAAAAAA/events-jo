@@ -12,7 +12,6 @@ import 'package:events_jo/features/order/representation/cubits/order_cubit.dart'
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
-import 'package:events_jo/features/events/weddings/representation/components/details/venue_credit_card_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,6 +30,7 @@ class CashoutModalSheet extends StatelessWidget {
   final List<WeddingVenueDrink>? drinks;
   final bool isRefundable;
   final void Function(bool)? onRefundableChanged;
+  final String stripeAccountId;
 
   const CashoutModalSheet({
     super.key,
@@ -45,6 +45,7 @@ class CashoutModalSheet extends StatelessWidget {
     required this.endTime,
     required this.people,
     required this.isRefundable,
+    required this.stripeAccountId,
     this.onRefundableChanged,
     this.meals,
     this.drinks,
@@ -56,6 +57,7 @@ class CashoutModalSheet extends StatelessWidget {
       listener: (context, state) {
         if (state is OrderError) {
           context.showSnackBar(state.message);
+          print(state.message);
         }
       },
       builder: (context, state) {
@@ -134,7 +136,7 @@ class CashoutModalSheet extends StatelessWidget {
         } else {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -153,10 +155,10 @@ class CashoutModalSheet extends StatelessWidget {
                     ),
                   ),
                   5.height,
-                  VenueCreditCardForm(
-                    isRefundable: isRefundable,
-                    onRefundableChanged: onRefundableChanged,
-                  ),
+                  // VenueCreditCardForm(
+                  //   isRefundable: isRefundable,
+                  //   onRefundableChanged: onRefundableChanged,
+                  // ),
                   Text(
                     'Please note, on confirmation ${(isRefundable ? '%15' : '%10')} of the price will not be refunded.',
                     style: const TextStyle(fontSize: kSmallFontSize),
@@ -206,10 +208,11 @@ class CashoutModalSheet extends StatelessWidget {
                                 startTime: startTime,
                                 endTime: endTime,
                                 people: people,
-                                status: OrderStatus.pending,
+                                status: OrderStatus.unpaid,
                                 createdAt: DateTime.now(),
                                 date: date!,
                                 isRefundable: isRefundable,
+                                stripeAccountId: stripeAccountId,
                               ),
                               meals,
                               drinks,
@@ -220,7 +223,7 @@ class CashoutModalSheet extends StatelessWidget {
                           ),
                         ),
                         icon: Text(
-                          'Confirm',
+                          'Checkout with Stripe',
                           style: TextStyle(
                             color: GColors.royalBlue,
                             fontSize: kSmallFontSize,

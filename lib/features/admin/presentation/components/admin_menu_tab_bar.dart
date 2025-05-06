@@ -44,14 +44,14 @@ class AdminMenuTabBar extends StatelessWidget {
               builder: (context, state) {
                 if (state is AdminUnapproveLoaded) {
                   return AdminTabItem(
-                    title: 'Unapproved',
+                    title: 'Disapproved',
                     count: state.venues.length,
                   );
                 }
                 //return normal tab if not loaded
                 else {
                   return const AdminTabItem(
-                    title: 'Unapproved',
+                    title: 'Disapproved',
                     count: 0,
                   );
                 }

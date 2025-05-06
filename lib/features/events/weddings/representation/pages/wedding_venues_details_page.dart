@@ -332,6 +332,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                     meals: selectedMeals!,
                     drinks: selectedDrinks!,
                     isRefundable: isRefundable,
+                    stripeAccountId: weddingVenue.stripeAccountId,
                   );
                 },
                 style: ButtonStyle(

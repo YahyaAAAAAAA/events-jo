@@ -1,5 +1,4 @@
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_app_bar.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_menu_tab_bar.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_cubit.dart';
@@ -7,6 +6,8 @@ import 'package:events_jo/features/admin/presentation/pages/venues/approved/admi
 import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
+import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,8 +53,11 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminAppBar(
-        user: user,
+      appBar: HomeAppBar(
+        isOwner: false,
+        title: user?.name ?? 'Guest 123',
+        onPressed: () =>
+            context.read<AuthCubit>().logout(user!.uid, user!.type),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),
           child: AdminMenuTabBar(
@@ -69,10 +73,11 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
         ],
       ),
       bottomNavigationBar: Divider(
-        color: GColors.cyanShade6,
+        color: GColors.poloBlue,
         thickness: 0.5,
         indent: 10,
         endIndent: 10,
+        height: 0,
       ),
     );
   }

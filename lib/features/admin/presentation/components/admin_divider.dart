@@ -1,3 +1,4 @@
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -15,21 +16,21 @@ class AdminDivider extends StatelessWidget {
         Expanded(
           child: Divider(
             indent: 12,
-            color: GColors.cyanShade6,
+            color: GColors.black,
           ),
         ),
         Text(
           text,
           style: TextStyle(
-            color: GColors.cyanShade6,
-            fontSize: 17,
+            color: GColors.black,
+            fontSize: kSmallFontSize,
           ),
         ),
         Expanded(
           flex: 5,
           child: Divider(
             endIndent: 12,
-            color: GColors.cyanShade6,
+            color: GColors.black,
           ),
         ),
       ],

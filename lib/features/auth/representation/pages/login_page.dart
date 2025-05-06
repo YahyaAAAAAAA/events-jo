@@ -33,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
 
     //todo remove later
     emailController.text = 'test1@gmail.com';
+    emailController.text = 'yahya@gmail.com';
     pwController.text = '123456';
 
     //get cubit

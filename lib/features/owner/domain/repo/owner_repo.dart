@@ -19,6 +19,7 @@ abstract class OwnerRepo {
     required List<int> startDate,
     required List<int> endDate,
     required List<int> time,
+    required String stripeAccountId,
     List<String>? pics,
     List<WeddingVenueMeal>? meals,
     List<WeddingVenueDrink>? drinks,

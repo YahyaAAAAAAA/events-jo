@@ -30,13 +30,9 @@ class _GlobalNavigationBarForAdminsState
     super.initState();
 
     screens = [
-      // First nav item
       const HomePageForAdmins(),
-      // Second nav item
       const AdminPageForVenues(),
-      // Third nav item
       const AdminPageForFarms(),
-      // Fourth nav item
       const AdminPageForCourts(),
     ];
   }
@@ -61,7 +57,7 @@ class _GlobalNavigationBarForAdminsState
           NavigationDestination(
             selectedIcon: Icon(
               CustomIcons.home,
-              color: GColors.royalBlue,
+              color: GColors.cyanShade6,
             ),
             icon: const Icon(
               CustomIcons.home,
@@ -71,7 +67,7 @@ class _GlobalNavigationBarForAdminsState
           NavigationDestination(
             selectedIcon: Icon(
               CustomIcons.wedding,
-              color: GColors.royalBlue,
+              color: GColors.cyanShade6,
             ),
             icon: const Icon(
               CustomIcons.wedding,
@@ -81,7 +77,7 @@ class _GlobalNavigationBarForAdminsState
           NavigationDestination(
             selectedIcon: Icon(
               CustomIcons.farm,
-              color: GColors.royalBlue,
+              color: GColors.cyanShade6,
             ),
             icon: const Icon(
               CustomIcons.farm,
@@ -91,7 +87,7 @@ class _GlobalNavigationBarForAdminsState
           NavigationDestination(
             selectedIcon: Icon(
               CustomIcons.football,
-              color: GColors.royalBlue,
+              color: GColors.cyanShade6,
             ),
             icon: const Icon(
               CustomIcons.football,
@@ -101,7 +97,12 @@ class _GlobalNavigationBarForAdminsState
         ],
         onDestinationSelected: (value) => setState(() => selectedPage = value),
       ),
-      body: screens[selectedPage],
+      body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          transitionBuilder: (child, animation) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          child: screens[selectedPage]),
     );
   }
 }

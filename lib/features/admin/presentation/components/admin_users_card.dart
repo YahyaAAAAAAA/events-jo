@@ -1,3 +1,6 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_button.dart';
 import 'package:flutter/material.dart';
@@ -21,81 +24,64 @@ class AdminUsersCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Container(
-        decoration: BoxDecoration(
-          color: GColors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border(
-            left: BorderSide(
-              color: isLoading ? GColors.white : GColors.cyanShade6,
-              width: 10,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: IconButton(
+        onPressed: onPressed,
+        icon: Row(
+          children: [
+            IconButton(
+              onPressed: null,
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  GColors.cyanShade6.shade300.withValues(alpha: 0.2),
+                ),
+              ),
+              icon: Icon(
+                Icons.person_rounded,
+                color: GColors.cyanShade6,
+                size: kNormalIconSize,
+              ),
             ),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: GColors.cyan.withValues(alpha: 0.2),
-              blurRadius: 7,
-              offset: const Offset(0, 0),
+            10.width,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: kNormalFontSize,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.circle,
+                        color:
+                            isOnline ? GColors.greenShade3 : GColors.redShade3,
+                        size: kSmallIconSize - 3,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        isOnline ? 'Online' : 'Offline',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            AdminButton(
+              onPressed: onPressed,
+              isLoading: isLoading,
+              icon: Icons.info_outline_rounded,
             ),
           ],
-        ),
-        //note: to display vertical divider
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  name,
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              VerticalDivider(
-                color: GColors.whiteShade3,
-                thickness: 5,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.circle,
-                          color: isOnline
-                              ? GColors.greenShade3
-                              : GColors.redShade3,
-                          size: 18,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          isOnline ? 'Online' : 'Offline',
-                          style: TextStyle(
-                            color: GColors.black,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              AdminButton(
-                onPressed: onPressed,
-                isLoading: isLoading,
-                padding: const EdgeInsets.all(10),
-                buttonPadding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                icon: Icons.info_outline_rounded,
-              ),
-            ],
-          ),
         ),
       ),
     );

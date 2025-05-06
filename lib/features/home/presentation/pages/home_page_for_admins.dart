@@ -1,13 +1,12 @@
+import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_app_bar.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_loading_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_dashboard_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_home_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_divider.dart';
-import 'package:events_jo/features/admin/presentation/components/admin_error_card.dart';
-import 'package:events_jo/features/admin/presentation/components/events_jo_logo_admin.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20online/admin_owners_online_cubit.dart';
@@ -24,8 +23,11 @@ import 'package:events_jo/features/admin/presentation/pages/owners/admin_owners_
 import 'package:events_jo/features/admin/presentation/pages/users/admin_users_list_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
+import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePageForAdmins extends StatefulWidget {
   const HomePageForAdmins({
@@ -81,202 +83,204 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminAppBar(
-        user: user,
+      appBar: HomeAppBar(
+        isOwner: false,
+        title: user?.name ?? 'Guest 123',
+        onPressed: () =>
+            context.read<AuthCubit>().logout(user!.uid, user!.type),
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 450),
+          constraints: const BoxConstraints(maxWidth: kListViewWidth),
           child: ListView(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(12),
             children: [
-              const EventsJoLogoAdmin(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Admin Dashboard',
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: kBiglFontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: null,
+                    style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          GColors.black,
+                        ),
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        )),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    icon: Text(
+                      'Ej',
+                      style: TextStyle(
+                        fontSize: kBiglFontSize,
+                        color: GColors.white,
+                        fontFamily: 'Gugi',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
 
-              const SizedBox(height: 20),
+              20.height,
 
               const AdminDivider(text: 'Users and Owners for EventsJo'),
 
-              const SizedBox(height: 5),
+              5.height,
 
               //* users count
-              BlocBuilder<AdminUsersCountCubit, AdminUsersCountStates>(
-                builder: (context, state) {
-                  //done
-                  if (state is AdminUsersCountLoaded) {
-                    final users = state.users;
-                    return AdminCard(
-                      count: users.length.toString(),
-                      icon: Icons.person,
-                      text: 'Users Count : ',
-                      onPressed: () =>
-                          Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AdminUsersListPage(
-                          adminUsersCountCubit: adminUsersCountCubit,
+              Wrap(
+                alignment: WrapAlignment.start,
+                spacing: 10,
+                children: [
+                  BlocBuilder<AdminUsersCountCubit, AdminUsersCountStates>(
+                    builder: (context, state) => Skeletonizer(
+                      enabled: state is AdminUsersCountLoaded ? false : true,
+                      containersColor: GColors.white,
+                      child: AdminCard(
+                        count: state is AdminUsersCountLoaded
+                            ? state.users.length.toString()
+                            : '5',
+                        icon: Icons.person,
+                        text: 'Users Count:',
+                        onPressed: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AdminUsersListPage(
+                            adminUsersCountCubit: adminUsersCountCubit,
+                          ),
+                        )),
+                      ),
+                    ),
+                  ),
+
+                  //* owners count
+                  BlocBuilder<AdminOwnersCountCubit, AdminOwnersCountStates>(
+                    builder: (context, state) => Skeletonizer(
+                      enabled: state is AdminOwnersCountLoaded ? false : true,
+                      containersColor: GColors.white,
+                      child: AdminCard(
+                        count: state is AdminOwnersCountLoaded
+                            ? state.owners.length.toString()
+                            : '5',
+                        icon: Icons.person_4,
+                        text: 'Owners Count:',
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AdminOwnersListPage(
+                              adminOwnersCountCubit: adminOwnersCountCubit,
+                            ),
+                          ),
                         ),
-                      )),
-                    );
-                  }
-                  //error
-                  if (state is AdminUsersCountError) {
-                    return AdminErrorCard(messege: state.messege);
-                  }
-                  //loading
-                  else {
-                    return const AdminLoadingCard();
-                  }
-                },
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
-              const SizedBox(height: 20),
-
-              //* owners count
-              BlocBuilder<AdminOwnersCountCubit, AdminOwnersCountStates>(
-                builder: (context, state) {
-                  //done
-                  if (state is AdminOwnersCountLoaded) {
-                    final owners = state.owners;
-                    return AdminCard(
-                      count: owners.length.toString(),
-                      icon: Icons.person_4,
-                      text: 'Owners Count : ',
-                      onPressed: () =>
-                          Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AdminOwnersListPage(
-                          adminOwnersCountCubit: adminOwnersCountCubit,
-                        ),
-                      )),
-                    );
-                  }
-                  //error
-                  if (state is AdminOwnersCountError) {
-                    return AdminErrorCard(messege: state.messege);
-                  }
-                  //loading
-                  else {
-                    return const AdminLoadingCard();
-                  }
-                },
-              ),
-
-              const SizedBox(height: 20),
+              20.height,
 
               const AdminDivider(text: 'Online Statistics'),
 
-              const SizedBox(height: 5),
+              5.height,
 
-              //* online users count
-              BlocBuilder<AdminUsersOnlineCubit, AdminUsersOnlineStates>(
-                builder: (context, state) {
-                  //done
-                  if (state is AdminUsersOnlineLoaded) {
-                    final users = state.users;
+              Wrap(
+                alignment: WrapAlignment.start,
+                spacing: 10,
+                children: [
+                  //* online users count
+                  BlocBuilder<AdminUsersOnlineCubit, AdminUsersOnlineStates>(
+                    builder: (context, state) => Skeletonizer(
+                      enabled: state is AdminUsersOnlineLoaded ? false : true,
+                      containersColor: GColors.white,
+                      child: AdminDashboardCard(
+                        count: state is AdminUsersOnlineLoaded
+                            ? state.users.length.toString()
+                            : '5',
+                        icon: Icons.circle,
+                        text: 'Online Users:',
+                        animation: 'assets/animations/dashboard_1.json',
+                      ),
+                    ),
+                  ),
 
-                    return AdminDashboardCard(
-                      count: users.length.toString(),
-                      icon: Icons.circle,
-                      text: 'Online Users   ',
-                      animation: 'assets/animations/dashboard_1.json',
-                    );
-                  }
-                  //error
-                  if (state is AdminUsersOnlineError) {
-                    return AdminErrorCard(messege: state.messege);
-                  }
-                  //loading
-                  else {
-                    return const AdminLoadingCard();
-                  }
-                },
+                  //* online owners count
+                  BlocBuilder<AdminOwnersOnlineCubit, AdminOwnersOnlineStates>(
+                    builder: (context, state) => Skeletonizer(
+                      enabled: state is AdminOwnersOnlineLoaded ? false : true,
+                      containersColor: GColors.white,
+                      child: AdminDashboardCard(
+                        count: state is AdminOwnersOnlineLoaded
+                            ? state.owners.length.toString()
+                            : '5',
+                        icon: Icons.circle,
+                        text: 'Online Owners:',
+                        animation: 'assets/animations/dashboard_2.json',
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
-              const SizedBox(height: 20),
-
-              //* online owners count
-              BlocBuilder<AdminOwnersOnlineCubit, AdminOwnersOnlineStates>(
-                builder: (context, state) {
-                  //done
-                  if (state is AdminOwnersOnlineLoaded) {
-                    final owners = state.owners;
-                    return AdminDashboardCard(
-                      count: owners.length.toString(),
-                      icon: Icons.circle,
-                      text: 'Online Owners',
-                      animation: 'assets/animations/dashboard_2.json',
-                    );
-                  }
-                  //error
-                  if (state is AdminOwnersOnlineError) {
-                    return AdminErrorCard(messege: state.messege);
-                  }
-                  //loading
-                  else {
-                    return const AdminLoadingCard();
-                  }
-                },
-              ),
-
-              const SizedBox(height: 20),
+              20.height,
 
               const AdminDivider(text: 'Venues Statistics'),
 
-              const SizedBox(height: 5),
+              5.height,
 
               //* approved venues count
               BlocBuilder<AdminApproveCubit, AdminApproveStates>(
-                builder: (context, state) {
-                  //done
-                  if (state is AdminApproveLoaded) {
-                    final venues = state.venues;
-                    return AdminHomeCard(
-                      count: venues.length.toString(),
-                      icon: CustomIcons.wedding,
-                      text: 'Approved Venues     ',
-                    );
-                  }
-                  //error
-                  if (state is AdminApproveError) {
-                    return AdminErrorCard(messege: state.message);
-                  }
-                  //loading
-                  else {
-                    return const AdminLoadingCard();
-                  }
-                },
+                builder: (context, state) => Skeletonizer(
+                  enabled: state is AdminApproveLoaded ? false : true,
+                  containersColor: GColors.white,
+                  child: AdminHomeCard(
+                    count: state is AdminApproveLoaded
+                        ? state.venues.length.toString()
+                        : '5',
+                    icon: CustomIcons.wedding,
+                    text: 'Approved Venues',
+                    bgColor: GColors.greenShade3.withValues(alpha: 0.3),
+                    iconColor: GColors.greenShade3.shade800,
+                  ),
+                ),
               ),
 
-              const SizedBox(height: 20),
+              20.height,
 
               //* unapproved venues count
               BlocBuilder<AdminUnapproveCubit, AdminUnapproveStates>(
-                builder: (context, state) {
-                  //done
-                  if (state is AdminUnapproveLoaded) {
-                    final venues = state.venues;
-                    return AdminHomeCard(
-                      count: venues.length.toString(),
-                      icon: CustomIcons.rings_wedding,
-                      text: 'Unapproved Venues ',
-                    );
-                  }
-                  //error
-                  if (state is AdminUnapproveError) {
-                    return AdminErrorCard(messege: state.message);
-                  }
-                  //loading
-                  else {
-                    return const AdminLoadingCard();
-                  }
-                },
+                builder: (context, state) => Skeletonizer(
+                  enabled: state is AdminUnapproveLoaded ? false : true,
+                  containersColor: GColors.white,
+                  child: AdminHomeCard(
+                    count: state is AdminUnapproveLoaded
+                        ? state.venues.length.toString()
+                        : '5',
+                    icon: CustomIcons.wedding,
+                    text: 'Disapproved Venues',
+                    bgColor: GColors.redShade3.withValues(alpha: 0.3),
+                    iconColor: GColors.redShade3.shade800,
+                  ),
+                ),
               ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: Divider(
-        color: GColors.cyanShade6,
+        color: GColors.poloBlue,
         thickness: 0.5,
         indent: 10,
         endIndent: 10,
+        height: 0,
       ),
     );
   }
