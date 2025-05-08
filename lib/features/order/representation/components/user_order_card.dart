@@ -17,36 +17,6 @@ class UserOrderCard extends StatelessWidget {
     this.onPressed,
   });
 
-  Color orderStatusColorBg(OrderStatus? status) {
-    if (status == null) {
-      return GColors.whiteShade3.shade600;
-    }
-    switch (status) {
-      case OrderStatus.completed:
-        return GColors.greenShade3.withValues(alpha: 0.3);
-      case OrderStatus.canceled:
-        return GColors.redShade3.withValues(alpha: 0.3);
-
-      default:
-        return GColors.whiteShade3.shade600;
-    }
-  }
-
-  Color orderStatusColor(OrderStatus? status) {
-    if (status == null) {
-      return GColors.royalBlue;
-    }
-    switch (status) {
-      case OrderStatus.completed:
-        return GColors.greenShade3.shade800;
-      case OrderStatus.canceled:
-        return GColors.redShade3.shade800;
-
-      default:
-        return GColors.royalBlue;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -67,7 +37,8 @@ class UserOrderCard extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(kOuterRadius),
-                    color: orderStatusColorBg(order?.status),
+                    color:
+                        order?.status.toColor().shade300.withValues(alpha: 0.2),
                   ),
                   padding: const EdgeInsets.symmetric(
                     vertical: 4,
@@ -79,15 +50,22 @@ class UserOrderCard extends StatelessWidget {
                       5.height,
                       Icon(
                         Icons.pending_actions_rounded,
-                        color: orderStatusColor(order?.status),
+                        color: order?.status.toColor(),
                         size: kNormalIconSize,
                       ),
-                      Text(
-                        order?.status.name.toCapitalized ?? 'dummy dummy',
-                        style: TextStyle(
-                          color: orderStatusColor(order?.status),
-                          fontSize: kSmallFontSize,
-                          fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: 70,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.center,
+                          child: Text(
+                            order?.status.name.toCapitalized ?? 'dummy dummy',
+                            style: TextStyle(
+                              color: order?.status.toColor(),
+                              fontSize: kSmallFontSize,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       ),
                       5.height,
@@ -123,18 +101,19 @@ class UserOrderCard extends StatelessWidget {
               ],
             ),
             IconButton(
-                onPressed: null,
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
-                  padding: const WidgetStatePropertyAll(
-                    EdgeInsets.all(12),
-                  ),
+              onPressed: null,
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
+                padding: const WidgetStatePropertyAll(
+                  EdgeInsets.all(12),
                 ),
-                icon: Icon(
-                  Icons.info_outline_rounded,
-                  color: GColors.white,
-                  size: kNormalIconSize,
-                ))
+              ),
+              icon: Icon(
+                Icons.info_outline_rounded,
+                color: GColors.white,
+                size: kNormalIconSize,
+              ),
+            )
           ],
         ),
       ),

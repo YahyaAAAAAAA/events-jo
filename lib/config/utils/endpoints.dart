@@ -8,3 +8,11 @@ const kHostUrl = 'http://localhost:$kHostPort';
 const kCreateConnectedAccount = '$kHostUrl/create-connected-account';
 
 const kCreateCheckoutSession = '$kHostUrl/create-checkout-session';
+
+const kRefund = '$kHostUrl/refund';
+
+const kTransfer = '$kHostUrl/transfer';
+
+const kBalance = '$kHostUrl/balance';
+
+const kPayouts = '$kHostUrl/payouts';

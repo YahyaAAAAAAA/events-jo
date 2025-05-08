@@ -1,9 +1,8 @@
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
-import 'package:events_jo/features/admin/presentation/pages/admin_page_for_courts.dart';
-import 'package:events_jo/features/admin/presentation/pages/admin_page_for_farms.dart';
-import 'package:events_jo/features/admin/presentation/pages/admin_page_for_venues.dart';
+import 'package:events_jo/features/admin/presentation/pages/admin_page_for_events.dart';
+import 'package:events_jo/features/admin/presentation/pages/admin_page_for_orders.dart';
 import 'package:events_jo/features/home/presentation/pages/home_page_for_admins.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +30,8 @@ class _GlobalNavigationBarForAdminsState
 
     screens = [
       const HomePageForAdmins(),
-      const AdminPageForVenues(),
-      const AdminPageForFarms(),
-      const AdminPageForCourts(),
+      const AdminPageForOrders(),
+      const AdminPageForEvents(),
     ];
   }
 
@@ -66,33 +64,25 @@ class _GlobalNavigationBarForAdminsState
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              CustomIcons.wedding,
+              CustomIcons.list,
               color: GColors.cyanShade6,
             ),
             icon: const Icon(
-              CustomIcons.wedding,
+              CustomIcons.list,
             ),
-            label: 'Venues',
+            label: 'Bookings',
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              CustomIcons.farm,
+              Icons.person_4_rounded,
               color: GColors.cyanShade6,
+              size: kNormalIconSize + 5,
             ),
             icon: const Icon(
-              CustomIcons.farm,
+              Icons.person_4_rounded,
+              size: kNormalIconSize + 5,
             ),
-            label: 'Farms',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(
-              CustomIcons.football,
-              color: GColors.cyanShade6,
-            ),
-            icon: const Icon(
-              CustomIcons.football,
-            ),
-            label: 'Courts',
+            label: 'Events',
           ),
         ],
         onDestinationSelected: (value) => setState(() => selectedPage = value),

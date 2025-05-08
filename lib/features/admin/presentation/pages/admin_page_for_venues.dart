@@ -6,8 +6,7 @@ import 'package:events_jo/features/admin/presentation/pages/venues/approved/admi
 import 'package:events_jo/features/admin/presentation/pages/venues/unapproved/admin_unapproved_venues_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
-import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
-import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
+import 'package:events_jo/features/settings/representation/components/settings_sub_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,11 +52,8 @@ class _AdminPageForVenuesState extends State<AdminPageForVenues>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppBar(
-        isOwner: false,
-        title: user?.name ?? 'Guest 123',
-        onPressed: () =>
-            context.read<AuthCubit>().logout(user!.uid, user!.type),
+      appBar: SettingsSubAppBar(
+        title: 'Manage Wedding Venues',
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),
           child: AdminMenuTabBar(

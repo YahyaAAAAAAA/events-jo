@@ -5,30 +5,29 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 
 class AdminHomeCard extends StatelessWidget {
-  final String count;
   final String text;
   final IconData icon;
+  final String? count;
   final Color? bgColor;
   final Color? iconColor;
+  final void Function()? onPressed;
 
   const AdminHomeCard({
     super.key,
-    required this.count,
     required this.text,
     required this.icon,
+    this.count,
     this.bgColor,
     this.iconColor,
+    this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return IconButton(
+      onPressed: onPressed,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(kOuterRadius),
-        color: GColors.white,
-      ),
-      child: Row(
+      icon: Row(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -52,21 +51,39 @@ class AdminHomeCard extends StatelessWidget {
             ),
           ),
           const Spacer(),
+          count != null
+              ? IconButton(
+                  onPressed: null,
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                      GColors.cyanShade6.shade300.withValues(alpha: 0.2),
+                    ),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  icon: Text(
+                    count!,
+                    style: TextStyle(
+                      color: GColors.cyanShade6,
+                      fontSize: kNormalFontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              : 0.width,
+          10.width,
           IconButton(
-            onPressed: null,
+            onPressed: onPressed,
             style: ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(
                 GColors.cyanShade6,
               ),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            icon: Text(
-              count,
-              style: TextStyle(
-                color: GColors.white,
-                fontSize: kNormalFontSize,
-                fontWeight: FontWeight.bold,
-              ),
+            icon: Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: GColors.white,
+              size: kSmallIconSize,
             ),
           ),
         ],

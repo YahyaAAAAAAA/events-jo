@@ -1,7 +1,7 @@
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/utils/loading/global_loading_admin.dart';
-import 'package:events_jo/features/admin/presentation/components/approved%20venues/admin_approved_venue_summary.dart';
+import 'package:events_jo/features/admin/presentation/components/approved%20venues/admin_approved_venues_summary.dart';
 import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/single%20venue/admin_single_venue_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_cubit.dart';

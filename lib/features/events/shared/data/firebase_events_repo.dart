@@ -118,17 +118,19 @@ class FirebaseEventsRepo implements EventsRepo {
     }
 
     final oldRates = List<String>.from(docSnapshot.data()?['rates'] ?? []);
+
+    //rate format in firebase
     final newRate = '$rate/$userOrdersCount/$userName/$userId';
 
-    // Check if the user has already rated
+    //check if the user has already rated
     final userRateIndex =
         oldRates.indexWhere((r) => r.split('/').last == userId);
 
     if (userRateIndex != -1) {
-      // Update the existing rate
+      //update the existing rate
       oldRates[userRateIndex] = newRate;
     } else {
-      // Add the new rate
+      //add the new rate
       oldRates.add(newRate);
     }
 

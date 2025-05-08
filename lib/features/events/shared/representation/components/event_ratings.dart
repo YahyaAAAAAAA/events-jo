@@ -77,7 +77,6 @@ class EventRating extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Title
                   Text(
                     "Ratings and reviews",
                     style: TextStyle(
@@ -86,7 +85,7 @@ class EventRating extends StatelessWidget {
                     ),
                   ),
                   8.height,
-                  // Rates distribution
+                  //rates distribution
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -138,7 +137,7 @@ class EventRating extends StatelessWidget {
                     ],
                   ),
                   20.height,
-                  // Users ratings
+                  //users ratings
                   ListView.separated(
                     itemCount: rates.length,
                     shrinkWrap: true,

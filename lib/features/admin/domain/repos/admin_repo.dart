@@ -4,6 +4,7 @@ import 'package:events_jo/features/events/shared/domain/models/football_court.da
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
+import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
 
 abstract class AdminRepo {
   Stream<QuerySnapshot<Map<String, dynamic>>>
@@ -45,7 +46,34 @@ abstract class AdminRepo {
 
   Future<void> unlockVenue(String id);
 
+  Future<void> approveCourt(String id);
+
+  Future<void> suspendCourt(String id);
+
+  Future<void> denyCourt(String id, List<dynamic> urls);
+
+  Future<void> lockCourt(String id);
+
+  Future<void> unlockCourt(String id);
+
   Future<void> deleteImagesFromServer(List<dynamic> urls);
+
+  Stream<List<EOrderDetailed>> getOrdersStream();
+
+  Future<void> refund({
+    required String paymentIntentId,
+    required String orderId,
+  });
+
+  Future<void> transfer({
+    required String stripeAccountId,
+    required String orderId,
+    required double amount,
+  });
+
+  Future<void> getBalance();
+
+  Future<void> getPayouts();
 
   String generateUniqueId();
 

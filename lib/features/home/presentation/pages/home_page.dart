@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/extensions/widget_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                   child: const Text(
                     'ddddd',
                   ),
-                ),
+                ).hide(),
                 //checkout
                 TextButton(
                   onPressed: () async {
@@ -135,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                   child: const Text(
                     'data',
                   ),
-                ),
+                ).hide(),
                 selectedTab == 0
                     ? BlocBuilder<WeddingVenuesCubit, WeddingVenuesStates>(
                         builder: (context, state) => EventSearchBar(

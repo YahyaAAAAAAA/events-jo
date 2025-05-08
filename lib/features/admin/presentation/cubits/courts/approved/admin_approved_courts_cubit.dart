@@ -89,7 +89,7 @@ class AdminApprovedCourtsCubit extends Cubit<AdminApprovedCourtsStates> {
     return footballCourts;
   }
 
-  Future<void> suspendVenue(String id) async {
+  Future<void> suspendCourt(String id) async {
     //suspend loading...
     emit(AdminApprovedCourtsSuspendActionLoading());
     try {
@@ -98,7 +98,7 @@ class AdminApprovedCourtsCubit extends Cubit<AdminApprovedCourtsStates> {
         const Duration(seconds: 1),
         () async {
           //suspending
-          await adminRepo.suspendVenue(id);
+          await adminRepo.suspendCourt(id);
         },
       );
 
@@ -114,9 +114,9 @@ class AdminApprovedCourtsCubit extends Cubit<AdminApprovedCourtsStates> {
   }
 
   //lock
-  Future<void> lockVenue(String id) async {
+  Future<void> lockCourt(String id) async {
     try {
-      await adminRepo.lockVenue(id);
+      await adminRepo.lockCourt(id);
     } catch (e) {
       //error
       emit(AdminApprovedCourtsError(e.toString()));
@@ -124,9 +124,9 @@ class AdminApprovedCourtsCubit extends Cubit<AdminApprovedCourtsStates> {
   }
 
   //unlock
-  Future<void> unlockVenue(String id) async {
+  Future<void> unlockCourt(String id) async {
     try {
-      await adminRepo.unlockVenue(id);
+      await adminRepo.unlockCourt(id);
     } catch (e) {
       //error
       emit(AdminApprovedCourtsError(e.toString()));

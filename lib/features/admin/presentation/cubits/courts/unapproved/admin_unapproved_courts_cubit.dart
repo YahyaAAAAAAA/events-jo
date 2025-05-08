@@ -29,7 +29,7 @@ class AdminUnapprovedCourtsCubit extends Cubit<AdminUnapprovedCourtsStates> {
     List<FootballCourt> footballCourts = [];
 
     //start listening
-    adminRepo.getUnapprovedWeddingVenuesStream().listen(
+    adminRepo.getUnapprovedCourtsStream().listen(
       (snapshot) async {
         final currentState = state;
         List<FootballCourt> currentCourts = [];
@@ -85,7 +85,7 @@ class AdminUnapprovedCourtsCubit extends Cubit<AdminUnapprovedCourtsStates> {
     return footballCourts;
   }
 
-  Future<void> approveVenue(String id) async {
+  Future<void> approveCourt(String id) async {
     //approve loading...
     emit(AdminUnapprovedCourtsApproveActionLoading());
     try {
@@ -93,7 +93,7 @@ class AdminUnapprovedCourtsCubit extends Cubit<AdminUnapprovedCourtsStates> {
       await Delay.oneSecond();
 
       //approving
-      await adminRepo.approveVenue(id);
+      await adminRepo.approveCourt(id);
 
       //approve done
       emit(AdminUnapprovedCourtsApproveActionLoaded());
@@ -106,7 +106,7 @@ class AdminUnapprovedCourtsCubit extends Cubit<AdminUnapprovedCourtsStates> {
     }
   }
 
-  Future<void> denyVenue(String id, List<dynamic> urls) async {
+  Future<void> denyCourt(String id, List<dynamic> urls) async {
     //deny loading...
     emit(AdminUnapprovedCourtsDenyActionLoading());
     try {
@@ -128,9 +128,9 @@ class AdminUnapprovedCourtsCubit extends Cubit<AdminUnapprovedCourtsStates> {
   }
 
   //lock
-  Future<void> lockVenue(String id) async {
+  Future<void> lockCourt(String id) async {
     try {
-      await adminRepo.lockVenue(id);
+      await adminRepo.lockCourt(id);
     } catch (e) {
       //error
       emit(AdminUnapprovedCourtsError(e.toString()));
@@ -138,9 +138,9 @@ class AdminUnapprovedCourtsCubit extends Cubit<AdminUnapprovedCourtsStates> {
   }
 
   //unlock
-  Future<void> unlockVenue(String id) async {
+  Future<void> unlockCourt(String id) async {
     try {
-      await adminRepo.unlockVenue(id);
+      await adminRepo.unlockCourt(id);
     } catch (e) {
       //error
       emit(AdminUnapprovedCourtsError(e.toString()));

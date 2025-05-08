@@ -1,13 +1,18 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
+import 'package:events_jo/config/utils/endpoints.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
+import 'package:events_jo/features/order/domain/models/e_order.dart';
+import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 class FirebaseAdminRepo implements AdminRepo {
   //firestore instance
@@ -51,7 +56,7 @@ class FirebaseAdminRepo implements AdminRepo {
   Stream<QuerySnapshot<Map<String, dynamic>>> getUnapprovedCourtsStream() {
     //notifies of query results at 'venues' collection
     return firebaseFirestore
-        .collection('venues')
+        .collection('courts')
         .where('isApproved', isEqualTo: false)
         .snapshots();
   }
@@ -256,9 +261,82 @@ class FirebaseAdminRepo implements AdminRepo {
   }
 
   @override
+  Future<void> approveCourt(String id) async {
+    await firebaseFirestore.collection('courts').doc(id).update(
+      {'isApproved': true},
+    );
+  }
+
+  @override
+  Future<void> suspendCourt(String id) async {
+    await firebaseFirestore.collection('courts').doc(id).update(
+      {'isApproved': false},
+    );
+  }
+
+  @override
+  Future<void> denyCourt(String id, List<dynamic> urls) async {
+    try {
+      //delete images from server if denied
+      await deleteImagesFromServer(urls);
+
+      final courtDocRef =
+          FirebaseFirestore.instance.collection('courts').doc(id);
+
+      //delete the main document
+      await courtDocRef.delete();
+    } catch (e) {
+      Future.error("Error deleting court: $e");
+    }
+  }
+
+  @override
   Future<void> unlockVenue(String id) async {
     DocumentReference docRef =
         await firebaseFirestore.collection('venues').doc(id);
+
+    try {
+      //check if the document exists
+      DocumentSnapshot docSnapshot = await docRef.get();
+
+      if (docSnapshot.exists) {
+        //document exists, proceed to update
+        await docRef.update({'isBeingApproved': false});
+      } else {
+        //document doesn't exist
+        return;
+      }
+    } catch (e) {
+      //error
+      Future.error(e);
+    }
+  }
+
+  @override
+  Future<void> lockCourt(String id) async {
+    DocumentReference docRef =
+        await firebaseFirestore.collection('courts').doc(id);
+    try {
+      //check if the document exists
+      DocumentSnapshot docSnapshot = await docRef.get();
+
+      if (docSnapshot.exists) {
+        //document exists, proceed to update
+        await docRef.update({'isBeingApproved': true});
+      } else {
+        //document doesn't exist
+        return;
+      }
+    } catch (e) {
+      //error
+      Future.error(e);
+    }
+  }
+
+  @override
+  Future<void> unlockCourt(String id) async {
+    DocumentReference docRef =
+        await firebaseFirestore.collection('courts').doc(id);
 
     try {
       //check if the document exists
@@ -308,6 +386,130 @@ class FirebaseAdminRepo implements AdminRepo {
 
     //id example -> 2024111609413072511999
     return "${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}${now.microsecond}$randomValue";
+  }
+
+  @override
+  Stream<List<EOrderDetailed>> getOrdersStream() async* {
+    await for (final querySnapshot
+        in firebaseFirestore.collection('orders').snapshots()) {
+      List<EOrderDetailed> detailedOrders = [];
+
+      for (var doc in querySnapshot.docs) {
+        final order = EOrder.fromJson(doc.data());
+
+        // Fetch meals
+        final mealsSnapshot = await firebaseFirestore
+            .collection('orders')
+            .doc(order.id)
+            .collection('meals')
+            .get();
+
+        final meals = mealsSnapshot.docs
+            .map((mealDoc) => WeddingVenueMeal.fromJson(mealDoc.data()))
+            .toList();
+
+        // Fetch drinks
+        final drinksSnapshot = await firebaseFirestore
+            .collection('orders')
+            .doc(order.id)
+            .collection('drinks')
+            .get();
+
+        final drinks = drinksSnapshot.docs
+            .map((drinkDoc) => WeddingVenueDrink.fromJson(drinkDoc.data()))
+            .toList();
+
+        detailedOrders.add(EOrderDetailed(
+          order: order,
+          meals: meals,
+          drinks: drinks,
+        ));
+      }
+
+      yield detailedOrders;
+    }
+  }
+
+  @override
+  Future<void> refund({
+    required String paymentIntentId,
+    required String orderId,
+  }) async {
+    try {
+      final res = await http.post(
+        Uri.parse(kRefund),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'paymentIntentId': paymentIntentId,
+          'orderId': orderId,
+        }),
+      );
+
+      final data = jsonDecode(res.body);
+
+      return data['url'];
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> transfer({
+    required String stripeAccountId,
+    required String orderId,
+    required double amount,
+  }) async {
+    try {
+      final res = await http.post(
+        Uri.parse(kTransfer),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'amount': amount,
+          'stripeAccountId': stripeAccountId,
+          'orderId': orderId,
+        }),
+      );
+
+      final data = jsonDecode(res.body);
+
+      return data['url'];
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> getBalance() async {
+    try {
+      final res = await http.get(
+        Uri.parse(kBalance),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      final data = jsonDecode(res.body);
+
+      print(data);
+      return data;
+    } catch (e) {
+      throw Exception("Error fetching balance: $e");
+    }
+  }
+
+  @override
+  Future<void> getPayouts() async {
+    try {
+      final res = await http.get(
+        Uri.parse(kPayouts),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      final data = jsonDecode(res.body);
+
+      print(data);
+      return data;
+    } catch (e) {
+      throw Exception("Error fetching balance: $e");
+    }
   }
 
   //! DEPRECATED

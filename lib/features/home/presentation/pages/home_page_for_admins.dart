@@ -1,3 +1,4 @@
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
@@ -7,6 +8,10 @@ import 'package:events_jo/features/admin/presentation/components/admin_dashboard
 import 'package:events_jo/features/admin/presentation/components/admin_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_home_card.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_divider.dart';
+import 'package:events_jo/features/admin/presentation/cubits/courts/approved/admin_approved_courts_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/courts/approved/admin_approved_courts_states.dart';
+import 'package:events_jo/features/admin/presentation/cubits/courts/unapproved/admin_unapproved_courts_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/courts/unapproved/admin_unapproved_courts_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20count/admin_owners_count_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/owners%20online/admin_owners_online_cubit.dart';
@@ -19,6 +24,8 @@ import 'package:events_jo/features/admin/presentation/cubits/venues/approved/adm
 import 'package:events_jo/features/admin/presentation/cubits/venues/approved/admin_approve_states.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/venues/unapproved/admin_unapprove_states.dart';
+import 'package:events_jo/features/admin/presentation/pages/admin_page_for_courts.dart';
+import 'package:events_jo/features/admin/presentation/pages/admin_page_for_venues.dart';
 import 'package:events_jo/features/admin/presentation/pages/owners/admin_owners_list_page.dart';
 import 'package:events_jo/features/admin/presentation/pages/users/admin_users_list_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -53,6 +60,9 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
   late final AdminUnapproveCubit adminUnapproveCubit;
   late final AdminApproveCubit adminApproveCubit;
 
+  late final AdminUnapprovedCourtsCubit adminUnapprovedCourtsCubit;
+  late final AdminApprovedCourtsCubit adminApprovedCourtsCubit;
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +81,10 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
     adminUnapproveCubit = context.read<AdminUnapproveCubit>();
     adminApproveCubit = context.read<AdminApproveCubit>();
 
+    //get courts cubits
+    adminUnapprovedCourtsCubit = context.read<AdminUnapprovedCourtsCubit>();
+    adminApprovedCourtsCubit = context.read<AdminApprovedCourtsCubit>();
+
     //listen to streams
     adminUsersCountCubit.getAllUsersStream();
     adminOwnersCountCubit.getAllOwnersStream();
@@ -78,6 +92,8 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
     adminOwnersOnlineCubit.getAllOnlineOwnersStream();
     adminUnapproveCubit.getUnapprovedWeddingVenuesStream();
     adminApproveCubit.getApprovedWeddingVenuesStream();
+    adminUnapprovedCourtsCubit.getUnapprovedCourtsStream();
+    adminApprovedCourtsCubit.getApprovedCourtStream();
   }
 
   @override
@@ -245,6 +261,7 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                     count: state is AdminApproveLoaded
                         ? state.venues.length.toString()
                         : '5',
+                    onPressed: () => context.push(const AdminPageForVenues()),
                     icon: CustomIcons.wedding,
                     text: 'Approved Venues',
                     bgColor: GColors.greenShade3.withValues(alpha: 0.3),
@@ -266,6 +283,51 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
                         : '5',
                     icon: CustomIcons.wedding,
                     text: 'Disapproved Venues',
+                    onPressed: () => context.push(const AdminPageForVenues()),
+                    bgColor: GColors.redShade3.withValues(alpha: 0.3),
+                    iconColor: GColors.redShade3.shade800,
+                  ),
+                ),
+              ),
+              20.height,
+
+              const AdminDivider(text: 'Courts Statistics'),
+
+              5.height,
+
+              //* approved courts count
+              BlocBuilder<AdminApprovedCourtsCubit, AdminApprovedCourtsStates>(
+                builder: (context, state) => Skeletonizer(
+                  enabled: state is AdminApprovedCourtsLoaded ? false : true,
+                  containersColor: GColors.white,
+                  child: AdminHomeCard(
+                    count: state is AdminApprovedCourtsLoaded
+                        ? state.courts.length.toString()
+                        : '5',
+                    icon: CustomIcons.football,
+                    text: 'Approved Courts',
+                    onPressed: () => context.push(const AdminPageForCourts()),
+                    bgColor: GColors.greenShade3.withValues(alpha: 0.3),
+                    iconColor: GColors.greenShade3.shade800,
+                  ),
+                ),
+              ),
+
+              20.height,
+
+              //* unapproved venues count
+              BlocBuilder<AdminUnapprovedCourtsCubit,
+                  AdminUnapprovedCourtsStates>(
+                builder: (context, state) => Skeletonizer(
+                  enabled: state is AdminUnapprovedCourtsLoaded ? false : true,
+                  containersColor: GColors.white,
+                  child: AdminHomeCard(
+                    count: state is AdminUnapprovedCourtsLoaded
+                        ? state.courts.length.toString()
+                        : '5',
+                    icon: CustomIcons.football,
+                    text: 'Disapproved Courts',
+                    onPressed: () => context.push(const AdminPageForCourts()),
                     bgColor: GColors.redShade3.withValues(alpha: 0.3),
                     iconColor: GColors.redShade3.shade800,
                   ),

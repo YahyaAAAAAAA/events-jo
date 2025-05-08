@@ -15,6 +15,7 @@ class AdminEventsCard extends StatelessWidget {
   final bool isBeingApproved;
   final bool isLoading;
   final void Function()? onPressed;
+  final IconData? icon;
 
   const AdminEventsCard({
     super.key,
@@ -25,6 +26,7 @@ class AdminEventsCard extends StatelessWidget {
     required this.isBeingApproved,
     required this.isLoading,
     required this.onPressed,
+    this.icon,
   });
 
   @override
@@ -45,7 +47,7 @@ class AdminEventsCard extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.all(12),
                   child: Icon(
-                    CustomIcons.wedding,
+                    icon ?? CustomIcons.wedding,
                     size: kNormalFontSize,
                     color: GColors.cyanShade6,
                   ),
