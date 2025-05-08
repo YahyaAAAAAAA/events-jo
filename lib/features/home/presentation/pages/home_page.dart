@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
-import 'package:events_jo/config/extensions/widget_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -24,8 +21,6 @@ import 'package:events_jo/features/events/weddings/representation/pages/wedding_
 import 'package:events_jo/features/owner/representation/pages/creation/owner_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   final UserType userType;
@@ -88,55 +83,6 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(12),
             child: ListView(
               children: [
-                //connect owners
-                TextButton(
-                  onPressed: () async {
-                    final res = await http.post(
-                      Uri.parse(
-                          'https://eventsjostripebackend.onrender.com/create-connected-account'),
-                    );
-
-                    if (res.statusCode == 200) {
-                      final data = jsonDecode(res.body);
-                      final onboardingUrl = data['url'];
-                      final accountId = data[
-                          'accountId']; // Save this in Firestore under the vendor
-
-                      launchUrl(Uri.parse(onboardingUrl));
-                      print(accountId);
-                    } else {
-                      print('Onboarding error: ${res.body}');
-                    }
-                  },
-                  child: const Text(
-                    'ddddd',
-                  ),
-                ).hide(),
-                //checkout
-                TextButton(
-                  onPressed: () async {
-                    final response = await http.post(
-                      Uri.parse(
-                          'https://eventsjostripebackend.onrender.com/create-checkout-session'),
-                      headers: {'Content-Type': 'application/json'},
-                      body: jsonEncode({'amount': 5000}), // e.g., 5000 = $50
-                    );
-
-                    if (response.statusCode == 200) {
-                      final data = jsonDecode(response.body);
-                      final checkoutUrl = data['url'];
-
-                      // Launch in WebView or browser
-                      launchUrl(Uri.parse(checkoutUrl),
-                          mode: LaunchMode.externalApplication);
-                    } else {
-                      print('Error: ${response.body}');
-                    }
-                  },
-                  child: const Text(
-                    'data',
-                  ),
-                ).hide(),
                 selectedTab == 0
                     ? BlocBuilder<WeddingVenuesCubit, WeddingVenuesStates>(
                         builder: (context, state) => EventSearchBar(
@@ -202,7 +148,7 @@ class _HomePageState extends State<HomePage> {
 
                 //categories buttons
                 SizedBox(
-                  height: 50,
+                  height: 60,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [

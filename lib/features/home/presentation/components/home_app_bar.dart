@@ -54,7 +54,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ),
                         ),
                         Text(
-                          'Good Morning!',
+                          DateTime.now().hour < 12
+                              ? 'Good Morning!'
+                              : 'Good Night!',
                           style: TextStyle(
                             color: GColors.black,
                             fontWeight: FontWeight.bold,

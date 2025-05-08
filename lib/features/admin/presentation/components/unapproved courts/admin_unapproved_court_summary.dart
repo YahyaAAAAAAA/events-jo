@@ -37,6 +37,7 @@ class UnapprovedAdminCourtSummary extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: kListViewWidth),
         child: ListView(
+          padding: const EdgeInsets.all(12),
           children: [
             //* summary list
             const AdminConfirmationDisplayRow(

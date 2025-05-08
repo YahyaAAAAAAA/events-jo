@@ -95,6 +95,7 @@ class _AdminPageForOrdersState extends State<AdminPageForOrders> {
                   }
                 }
                 return ListView(
+                  padding: const EdgeInsets.all(12),
                   children: [
                     Text(
                       'Monitor, Refund and Transfer Bookings',
@@ -178,6 +179,7 @@ class _AdminPageForOrdersState extends State<AdminPageForOrders> {
       enabled: true,
       containersColor: GColors.white,
       child: ListView(
+        padding: const EdgeInsets.all(12),
         children: [
           Text(
             'Monitor, Refund and Transfer Bookings',

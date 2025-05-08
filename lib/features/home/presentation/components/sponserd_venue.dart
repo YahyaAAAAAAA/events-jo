@@ -33,7 +33,7 @@ class SponserdVenue extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    width: 110,
+                    width: 115,
                     child: Text(
                       selectedTab == 0
                           ? 'Check Out Our Top Venue'

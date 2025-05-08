@@ -25,8 +25,8 @@ class VenueCard extends StatelessWidget {
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Container(
-        height: 200,
-        width: 150,
+        height: 205,
+        width: 160,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 5,
@@ -91,7 +91,7 @@ class VenueCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(kOuterRadius),
                         ),
                         child: Icon(
-                          Icons.favorite_border_outlined,
+                          CustomIcons.wedding,
                           size: kSmallIconSize,
                           color: GColors.royalBlue,
                         ),

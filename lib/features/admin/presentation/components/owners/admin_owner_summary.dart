@@ -22,6 +22,7 @@ class AdminOwnerSummary extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 450),
       child: ListView(
+        padding: const EdgeInsets.all(12),
         children: [
           AdminConfirmationDisplayRow(mainText: 'Name: ', subText: name),
 

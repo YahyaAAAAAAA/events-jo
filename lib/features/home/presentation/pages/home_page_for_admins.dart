@@ -211,6 +211,7 @@ class _HomePageForAdminsState extends State<HomePageForAdmins> {
               Wrap(
                 alignment: WrapAlignment.start,
                 spacing: 10,
+                runSpacing: 10,
                 children: [
                   //* online users count
                   BlocBuilder<AdminUsersOnlineCubit, AdminUsersOnlineStates>(

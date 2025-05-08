@@ -40,31 +40,34 @@ class _AdminPageForEventsState extends State<AdminPageForEvents> {
         onPressed: () =>
             context.read<AuthCubit>().logout(user!.uid, user!.type),
       ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: kListViewWidth),
-          child: ListView(
-            children: [
-              Text(
-                'Monitor, Refund and Transfer Bookings',
-                style: TextStyle(
-                  color: GColors.black,
-                  fontSize: kNormalFontSize,
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: kListViewWidth),
+            child: ListView(
+              padding: const EdgeInsets.all(12),
+              children: [
+                Text(
+                  'Monitor, Approve, Suspend and Deny Events',
+                  style: TextStyle(
+                    color: GColors.black,
+                    fontSize: kNormalFontSize,
+                  ),
                 ),
-              ),
-              20.height,
-              AdminHomeCard(
-                text: 'Wedding Venues',
-                icon: CustomIcons.wedding,
-                onPressed: () => context.push(const AdminPageForVenues()),
-              ),
-              10.height,
-              AdminHomeCard(
-                text: 'Football Courts',
-                icon: CustomIcons.football,
-                onPressed: () => context.push(const AdminPageForCourts()),
-              ),
-            ],
+                20.height,
+                AdminHomeCard(
+                  text: 'Wedding Venues',
+                  icon: CustomIcons.wedding,
+                  onPressed: () => context.push(const AdminPageForVenues()),
+                ),
+                10.height,
+                AdminHomeCard(
+                  text: 'Football Courts',
+                  icon: CustomIcons.football,
+                  onPressed: () => context.push(const AdminPageForCourts()),
+                ),
+              ],
+            ),
           ),
         ),
       ),

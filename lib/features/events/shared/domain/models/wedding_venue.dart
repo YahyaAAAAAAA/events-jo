@@ -63,7 +63,7 @@ class WeddingVenue extends Event {
           name: jsonVenue['name'],
           latitude: jsonVenue['latitude'].toDouble(),
           longitude: jsonVenue['longitude'].toDouble(),
-          rates: List<String>.from(jsonVenue['rates']),
+          rates: List<String>.from(jsonVenue['rates'] ?? []),
           isApproved: jsonVenue['isApproved'],
           isBeingApproved: jsonVenue['isBeingApproved'],
           pics: jsonVenue['pics'],

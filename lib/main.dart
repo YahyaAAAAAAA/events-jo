@@ -1,6 +1,8 @@
 import 'package:events_jo/config/app.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'config/firebase_options.dart';
@@ -18,6 +20,16 @@ void main() async {
   //firebase setup
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      systemNavigationBarContrastEnforced: true,
+      statusBarColor: Colors.red,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: GColors.scaffoldBg,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
   );
 
   runApp(EventsJoApp());

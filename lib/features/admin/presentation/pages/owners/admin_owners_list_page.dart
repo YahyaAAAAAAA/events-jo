@@ -57,6 +57,7 @@ class _AdminUsersListPageState extends State<AdminOwnersListPage> {
                 return ListView.builder(
                   itemCount: owners.length,
                   shrinkWrap: false,
+                  padding: const EdgeInsets.all(12),
                   itemBuilder: (context, index) {
                     return AdminUsersCard(
                       name: owners[index].name,

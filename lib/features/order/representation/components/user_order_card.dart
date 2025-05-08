@@ -49,7 +49,7 @@ class UserOrderCard extends StatelessWidget {
                     children: [
                       5.height,
                       Icon(
-                        Icons.pending_actions_rounded,
+                        order?.status.toIcon(),
                         color: order?.status.toColor(),
                         size: kNormalIconSize,
                       ),
