@@ -97,6 +97,7 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
 
   void getVenueOrders() async {
     reservedDates = await orderCubit.getVenueReservedDates(footballCourt.id);
+    print(reservedDates);
     setState(() {});
   }
 
@@ -454,7 +455,7 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
                       initTime: selectedEndTime,
                       minTime: DateTime(0, 0, 0, footballCourt.time[0]),
                       maxTime: DateTime(0, 0, 0, footballCourt.time[1]),
-                      minuteInterval: 10,
+                      minuteInterval: 60,
                       use24hFormat: false,
                       //waits for confirmation
                       onDateTimeChanged: (date) => selectedEndTimeInit = date,
@@ -490,29 +491,55 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
                     width: 0.5,
                   ),
                 ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: null,
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                            GColors.whiteShade3.shade600),
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: null,
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                              GColors.whiteShade3.shade600),
+                        ),
+                        icon: Icon(
+                          Icons.attach_money_rounded,
+                          size: kNormalIconSize,
+                          color: GColors.royalBlue,
+                        ),
                       ),
-                      icon: Icon(
-                        Icons.attach_money_rounded,
-                        size: kNormalIconSize,
-                        color: GColors.royalBlue,
+                      5.width,
+                      Text(
+                        'Price per Hour: JOD ${footballCourt.pricePerHour}',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize,
+                        ),
                       ),
-                    ),
-                    5.width,
-                    Text(
-                      'Price Per Hour: JOD ${footballCourt.pricePerHour}',
-                      style: TextStyle(
-                        color: GColors.black,
-                        fontSize: kSmallFontSize,
+                      const SizedBox(
+                        height: 50,
+                        child: VerticalDivider(),
                       ),
-                    ),
-                  ],
+                      IconButton(
+                        onPressed: null,
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                              GColors.whiteShade3.shade600),
+                        ),
+                        icon: Icon(
+                          Icons.hourglass_empty_rounded,
+                          size: kNormalIconSize,
+                          color: GColors.royalBlue,
+                        ),
+                      ),
+                      5.width,
+                      Text(
+                        'Booked for ${selectedEndTime.hour - selectedStartTime.hour} Hours',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],

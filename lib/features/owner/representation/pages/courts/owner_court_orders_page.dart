@@ -151,6 +151,7 @@ class _OwnerCourtOrdersPageState extends State<OwnerCourtOrdersPage> {
                                                         court.id,
                                                         order.id,
                                                         OrderStatus.canceled,
+                                                        canceledBy: 'owner',
                                                       );
                                                 },
                                               );

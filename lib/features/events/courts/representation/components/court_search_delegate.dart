@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/algorithms/ratings_utils.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
@@ -24,6 +25,7 @@ class CourtSearchDelegate extends SearchDelegate<FootballCourt?> {
 
   String selectedCity = 'All';
   String priceSort = 'None';
+  String rateSort = 'None';
 
   @override
   String get searchFieldLabel => 'Search football courts...';
@@ -166,6 +168,40 @@ class CourtSearchDelegate extends SearchDelegate<FootballCourt?> {
                             },
                           ),
                         ),
+                        const Row(
+                          children: [Text('Rating')],
+                        ),
+                        Flexible(
+                          child: DropdownButtonFormField<String>(
+                            decoration: dropDownbuttonDecoration(),
+                            borderRadius: BorderRadius.circular(kOuterRadius),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            dropdownColor: GColors.white,
+                            elevation: 1,
+                            style: TextStyle(
+                              color: GColors.black,
+                              fontSize: kSmallFontSize,
+                              fontFamily: 'Abel',
+                            ),
+                            iconEnabledColor: GColors.black,
+                            value: rateSort,
+                            items: [
+                              'None',
+                              'Rate Ascending',
+                              'Rate Descending',
+                            ]
+                                .map((sortOption) => DropdownMenuItem(
+                                      value: sortOption,
+                                      child: Text(sortOption),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                rateSort = value!;
+                              });
+                            },
+                          ),
+                        ),
                         IconButton(
                           onPressed: () {
                             context.pop();
@@ -285,6 +321,16 @@ class CourtSearchDelegate extends SearchDelegate<FootballCourt?> {
       courts.sort((a, b) => b.pricePerHour.compareTo(a.pricePerHour));
     }
 
+    if (rateSort == 'Rate Ascending') {
+      courts.sort((a, b) => calculateRatings(b.rates)['averageRate']
+          .toDouble()
+          .compareTo(calculateRatings(a.rates)['averageRate'].toDouble()));
+    } else if (rateSort == 'Rate Descending') {
+      courts.sort((a, b) => calculateRatings(a.rates)['averageRate']
+          .toDouble()
+          .compareTo(calculateRatings(b.rates)['averageRate'].toDouble()));
+    }
+
     return courts;
   }
 
@@ -328,7 +374,7 @@ class SearchCourtCard extends StatelessWidget {
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(kOuterRadius),
           child: CachedNetworkImage(
-            imageUrl: court.pics[0],
+            imageUrl: court.pics.isEmpty ? kPlaceholderImage : court.pics[0],
             placeholder: (context, url) => const GlobalLoadingImage(),
             errorWidget: (context, url, error) => Icon(
               Icons.error_outline,
@@ -361,7 +407,8 @@ class SearchCourtCard extends StatelessWidget {
                 size: kSmallIconSize,
               ),
               1.width,
-              Text('${court.city}'),
+              Text(
+                  '${(court.city.trim().isEmpty ? 'City NotFound' : court.city)}'),
               5.width,
               const Icon(
                 Icons.price_change_outlined,
@@ -369,6 +416,14 @@ class SearchCourtCard extends StatelessWidget {
               ),
               1.width,
               Text('${court.pricePerHour}JOD/hour'),
+              5.width,
+              const Icon(
+                Icons.star_border_rounded,
+                size: kSmallIconSize,
+              ),
+              1.width,
+              Text(
+                  '${calculateRatings(court.rates)['averageRate'].toStringAsFixed(1)} (${court.rates.length})'),
             ],
           ),
         ),

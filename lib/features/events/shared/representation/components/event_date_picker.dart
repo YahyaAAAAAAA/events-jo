@@ -87,16 +87,20 @@ class EventDatePicker extends StatelessWidget {
             color: GColors.black,
           ),
           disabledDayPredicate: (date) {
-            if (reservedDates == null) {
-              return false;
-            }
-            if (reservedDates!.isEmpty) {
-              return false;
-            }
-            for (var reservedDate in reservedDates!) {
-              if (date == reservedDate) {
-                return true;
-              }
+            // if (reservedDates == null) {
+            //   return false;
+            // }
+            // if (reservedDates!.isEmpty) {
+            //   return false;
+            // }
+            // for (var reservedDate in reservedDates!) {
+            //   if (date == reservedDate) {
+            //     return true;
+            //   }
+            // }
+
+            if (date.isBefore(DateTime.now())) {
+              return true;
             }
 
             return false;

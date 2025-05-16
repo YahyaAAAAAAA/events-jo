@@ -20,47 +20,6 @@ class VenueCreditCardForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
-            width: 250,
-            height: 40,
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: 'Card Number',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          10.height,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                width: 120,
-                height: 40,
-                child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Expire Date',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.datetime,
-                ),
-              ),
-              10.width,
-              const SizedBox(
-                width: 120,
-                height: 40,
-                child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'CVV',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  obscureText: true,
-                ),
-              ),
-            ],
-          ),
-          10.height,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 10,

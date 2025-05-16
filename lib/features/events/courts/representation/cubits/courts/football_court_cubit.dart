@@ -1,3 +1,4 @@
+import 'package:events_jo/config/algorithms/ratings_utils.dart';
 import 'package:events_jo/features/events/courts/representation/cubits/courts/football_court_states.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/shared/domain/repo/events_repo.dart';
@@ -15,6 +16,13 @@ class FootballCourtsCubit extends Cubit<FootballCourtsStates> {
     emit(FootballCourtsLoading());
     try {
       final courts = await eventsRepo.getAllCourts();
+      courts.sort(
+        (a, b) {
+          return calculateRatings(b.rates)['averageRate']
+              .toDouble()
+              .compareTo(calculateRatings(a.rates)['averageRate'].toDouble());
+        },
+      );
       cachechCourts = courts;
       emit(FootballCourtsLoaded(courts));
     } catch (e) {

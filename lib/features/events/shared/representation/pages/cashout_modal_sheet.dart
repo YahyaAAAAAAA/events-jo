@@ -7,6 +7,7 @@ import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/unique.dart';
+import 'package:events_jo/features/events/weddings/representation/components/details/venue_credit_card_card.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
 import 'package:events_jo/features/order/representation/cubits/order_cubit.dart';
 import 'package:events_jo/features/order/representation/cubits/order_states.dart';
@@ -155,10 +156,10 @@ class CashoutModalSheet extends StatelessWidget {
                     ),
                   ),
                   5.height,
-                  // VenueCreditCardForm(
-                  //   isRefundable: isRefundable,
-                  //   onRefundableChanged: onRefundableChanged,
-                  // ),
+                  VenueCreditCardForm(
+                    isRefundable: isRefundable,
+                    onRefundableChanged: onRefundableChanged,
+                  ),
                   Text(
                     'Please note, on confirmation ${(isRefundable ? '%15' : '%10')} of the price will not be refunded.',
                     style: const TextStyle(fontSize: kSmallFontSize),

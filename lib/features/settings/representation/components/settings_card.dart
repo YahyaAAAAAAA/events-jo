@@ -8,6 +8,8 @@ class SettingsCard extends StatelessWidget {
   final IconData icon;
   final bool isComingSoon;
   final void Function()? onTap;
+  final Color? iconColor;
+  final Color? buttonColor;
 
   const SettingsCard({
     super.key,
@@ -15,6 +17,8 @@ class SettingsCard extends StatelessWidget {
     required this.icon,
     this.isComingSoon = false,
     this.onTap,
+    this.iconColor,
+    this.buttonColor,
   });
 
   @override
@@ -36,7 +40,7 @@ class SettingsCard extends StatelessWidget {
             child: Icon(
               icon,
               size: kNormalIconSize,
-              color: GColors.royalBlue,
+              color: iconColor ?? GColors.royalBlue,
             ),
           ),
           Text(
@@ -50,7 +54,8 @@ class SettingsCard extends StatelessWidget {
           IconButton(
             onPressed: onTap,
             style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(GColors.royalBlue),
+              backgroundColor:
+                  WidgetStateProperty.all(buttonColor ?? GColors.royalBlue),
               padding: WidgetStateProperty.all(EdgeInsets.zero),
             ),
             icon: Icon(

@@ -116,7 +116,20 @@ class _SettingsPageState extends State<SettingsPage> {
                         icon: CustomIcons.headphones,
                         onTap: () => context.push(SupportPage()),
                       ),
+
                       10.height,
+
+                      SettingsCard(
+                        text: 'Logout',
+                        icon: Icons.logout_rounded,
+                        onTap: () => context.read<AuthCubit>().logout(
+                              user!.uid,
+                              user!.type,
+                            ),
+                      ),
+
+                      10.height,
+
                       widget.userType == UserType.owner
                           ? Text(
                               'Your Events',

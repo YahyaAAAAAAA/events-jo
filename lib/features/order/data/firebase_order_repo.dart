@@ -134,6 +134,7 @@ class FirebaseOrderRepo implements OrderRepo {
     final querySnapshot = await firebaseFirestore
         .collection('orders')
         .where('eventId', isEqualTo: venueId)
+        .where('status', isEqualTo: 'pending')
         .get();
 
     final reservedDateRanges = querySnapshot.docs.map((doc) {
@@ -151,9 +152,11 @@ class FirebaseOrderRepo implements OrderRepo {
   }
 
   @override
-  Future<void> updateOrderStatus(String orderId, OrderStatus status) async {
+  Future<void> updateOrderStatus(
+      String orderId, OrderStatus status, String? canceledBy) async {
     await firebaseFirestore.collection('orders').doc(orderId).update({
       'status': status.name,
+      'canceledBy': canceledBy,
     });
   }
 

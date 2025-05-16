@@ -142,6 +142,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
 
   void getVenueOrders() async {
     reservedDates = await orderCubit.getVenueReservedDates(weddingVenue.id);
+
     setState(() {});
   }
 

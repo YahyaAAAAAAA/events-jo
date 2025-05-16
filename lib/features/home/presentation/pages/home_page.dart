@@ -148,32 +148,37 @@ class _HomePageState extends State<HomePage> {
 
                 //categories buttons
                 SizedBox(
-                  height: 60,
+                  height: 50,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      TextButton(
+                      IconButton(
                         onPressed: () => setState(() => selectedTab = 0),
                         style:
                             Theme.of(context).textButtonTheme.style?.copyWith(
                                   backgroundColor: WidgetStatePropertyAll(
-                                      selectedTab == 0
-                                          ? GColors.royalBlue
-                                          : GColors.white),
+                                    selectedTab == 0
+                                        ? GColors.royalBlue
+                                        : GColors.white,
+                                  ),
+                                  padding: const WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(horizontal: 20)),
                                 ),
-                        child: Text(
+                        icon: Text(
                           'Wedding Venues',
                           style: TextStyle(
                             color: selectedTab == 0
                                 ? GColors.white
                                 : GColors.black,
                             fontSize: kSmallFontSize,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: selectedTab == 0
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                       ),
                       10.width,
-                      TextButton(
+                      IconButton(
                         onPressed: () => setState(() => selectedTab = 1),
                         style:
                             Theme.of(context).textButtonTheme.style?.copyWith(
@@ -181,20 +186,24 @@ class _HomePageState extends State<HomePage> {
                                       selectedTab == 1
                                           ? GColors.royalBlue
                                           : GColors.white),
+                                  padding: const WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(horizontal: 20)),
                                 ),
-                        child: Text(
+                        icon: Text(
                           'Football Courts',
                           style: TextStyle(
                             color: selectedTab == 1
                                 ? GColors.white
                                 : GColors.black,
                             fontSize: kSmallFontSize,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: selectedTab == 1
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                       ),
                       10.width,
-                      TextButton(
+                      IconButton(
                         onPressed: () => context.showSnackBar('Coming Soon'),
                         style:
                             Theme.of(context).textButtonTheme.style?.copyWith(
@@ -202,37 +211,26 @@ class _HomePageState extends State<HomePage> {
                                       selectedTab == 2
                                           ? GColors.royalBlue
                                           : GColors.white),
+                                  padding: const WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(horizontal: 20)),
                                 ),
-                        child: Text(
-                          'Farms',
-                          style: TextStyle(
-                            color: selectedTab == 2
-                                ? GColors.white
-                                : GColors.black,
-                            fontSize: kSmallFontSize,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      10.width,
-                      TextButton(
-                        onPressed: () => context.showSnackBar('Coming Soon'),
-                        style:
-                            Theme.of(context).textButtonTheme.style?.copyWith(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                      selectedTab == 2
-                                          ? GColors.royalBlue
-                                          : GColors.white),
-                                ),
-                        child: Text(
-                          'Swimming Pools',
-                          style: TextStyle(
-                            color: selectedTab == 2
-                                ? GColors.white
-                                : GColors.black,
-                            fontSize: kSmallFontSize,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        icon: Row(
+                          spacing: 5,
+                          children: [
+                            Icon(
+                              Icons.lock_outline_rounded,
+                              color: GColors.black.withValues(alpha: 0.5),
+                              size: kSmallIconSize,
+                            ),
+                            Text(
+                              'Farms',
+                              style: TextStyle(
+                                color: GColors.black.withValues(alpha: 0.5),
+                                fontSize: kSmallFontSize,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -241,7 +239,7 @@ class _HomePageState extends State<HomePage> {
 
                 20.height,
 
-                SponserdVenue(selectedTab: selectedTab),
+                SponsoredVenue(selectedTab: selectedTab, user: user!),
 
                 20.height,
 

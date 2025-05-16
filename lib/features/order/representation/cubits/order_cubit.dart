@@ -62,6 +62,7 @@ class OrderCubit extends Cubit<OrderStates> {
   //byId: using (ownerId,venueId,userId), id: the respective id (owner's,user's)
   Future<void> getOrders(String byId, String id, {bool cache = false}) async {
     emit(OrderLoading());
+
     try {
       final orders = await orderRepo.getOrders(byId, id);
 
@@ -97,8 +98,9 @@ class OrderCubit extends Cubit<OrderStates> {
     String orderId,
     OrderStatus status, {
     bool cache = false,
+    String? canceledBy,
   }) async {
-    await orderRepo.updateOrderStatus(orderId, status);
+    await orderRepo.updateOrderStatus(orderId, status, canceledBy);
     await getOrders(byId, id, cache: cache);
   }
 

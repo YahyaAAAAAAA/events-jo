@@ -17,6 +17,7 @@ class EOrder {
   final bool isRefundable;
   final String stripeAccountId;
   final String? paymentIntentId;
+  final String? canceledBy;
 
   EOrder({
     required this.id,
@@ -34,6 +35,7 @@ class EOrder {
     required this.isRefundable,
     required this.stripeAccountId,
     this.paymentIntentId,
+    this.canceledBy,
   });
 
   Map<String, dynamic> toJson() => {
@@ -52,6 +54,7 @@ class EOrder {
         'isRefundable': isRefundable,
         'stripeAccountId': stripeAccountId,
         'paymentIntentId': paymentIntentId,
+        'canceledBy': canceledBy,
       };
 
   static EOrder fromJson(Map<String, dynamic> json) => EOrder(
@@ -70,5 +73,6 @@ class EOrder {
         isRefundable: json['isRefundable'],
         stripeAccountId: json['stripeAccountId'],
         paymentIntentId: json['paymentIntentId'],
+        canceledBy: json['canceledBy'],
       );
 }

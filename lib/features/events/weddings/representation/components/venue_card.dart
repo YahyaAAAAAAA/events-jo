@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/algorithms/ratings_utils.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
@@ -87,13 +88,36 @@ class VenueCard extends StatelessWidget {
                         width: 35,
                         height: 35,
                         decoration: BoxDecoration(
-                          color: GColors.white.shade600,
+                          color: GColors.whiteShade3.shade600,
                           borderRadius: BorderRadius.circular(kOuterRadius),
                         ),
-                        child: Icon(
-                          CustomIcons.wedding,
-                          size: kSmallIconSize,
-                          color: GColors.royalBlue,
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                weddingVenue.city.isNotEmpty
+                                    ? '${calculateRatings(weddingVenue.rates)['averageRate'].toDouble().toStringAsFixed(1)}'
+                                    : 'CNF',
+                                style: TextStyle(
+                                  color: GColors.royalBlue,
+                                  fontSize: kSmallFontSize,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 2,
+                              left: 2,
+                              child: Icon(
+                                Icons.star_rate_rounded,
+                                size: kSmallIconSize - 7,
+                                color: GColors.royalBlue.withValues(alpha: 0.7),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -141,7 +165,7 @@ class VenueCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             weddingVenue.city.isNotEmpty
-                                ? weddingVenue.city
+                                ? '${weddingVenue.city}'
                                 : 'CNF',
                             style: TextStyle(
                               color: GColors.black,

@@ -82,8 +82,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     onChatsPressed != null
                         ? AppBarButton(
                             onPressed: onChatsPressed,
-                            icon: CustomIcons.bell_notification_social_media,
-                            iconSize: kSmallIconSize,
+                            icon: Icons.message_outlined,
+                            iconSize: kSmallIconSize + 3,
                           )
                         : 0.width,
                     5.width,

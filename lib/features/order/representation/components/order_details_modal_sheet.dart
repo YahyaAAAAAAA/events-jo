@@ -116,6 +116,7 @@ class OrderDetailsModalSheet extends StatelessWidget {
                                       order.id,
                                       OrderStatus.canceled,
                                       cache: true,
+                                      canceledBy: 'user',
                                     );
                               },
                               style: ButtonStyle(

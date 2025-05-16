@@ -137,13 +137,6 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
                     isComingSoon: true,
                     onTap: () => context.showSnackBar('Coming Soon'),
                   ),
-                  10.height,
-                  SettingsCard(
-                    text: 'Your Pools',
-                    icon: Icons.pool,
-                    isComingSoon: true,
-                    onTap: () => context.showSnackBar('Coming Soon'),
-                  )
                 ],
               );
             }),

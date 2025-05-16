@@ -92,30 +92,37 @@ pending:
     ✔ cached/refresh for courts @done(25-04-25 03:49)
     ✔ add price for meals/drinks in venue edit @done(25-04-25 03:49)
     ✔ fix search and sort @done(25-04-25 03:49)
-    ☐ courts update
-    ☐ replace 'cancel' with 'default' in venue edit
-    ☐ venue removal
-    ☐ substract venue meals/drinks amount on order completion
-    ☐ check appbars widths
-    ☐ fix wedding details bottom sheet state resets on drag
-    ☐ add payment method to order model
-    ☐ order page stream?
-    ☐ redesign owner page
+    ✔ courts update @done(25-05-16 05:42)
+    ✘ replace 'cancel' with 'default' in venue edit @cancelled(25-05-16 05:42)
+    ✔ check appbars widths @done(25-05-16 05:42)
+    ✔ fix wedding details bottom sheet state resets on drag @done(25-05-16 05:43)
+    ✘ substract venue meals/drinks amount on order completion @cancelled(25-05-16 05:43)
+    ✔ add payment method to order model @done(25-05-16 05:43)
+    ✘ order page stream? @cancelled(25-05-16 05:43)
+    ✔ redesign owner page @done(25-05-16 05:43)
+    ✔ redesign admin (❁´◡`❁) @done(25-05-16 05:43)
+    ✔ carousel slider removed check that later @done(25-05-16 05:42)
+    ✔ approved venues details stream @done(25-05-16 05:43)
+    ✔ owner venues feature (venues by owner id,details,update) @done(25-05-16 05:43)
+    ✔ add coming soon for farms, courts in owner page @done(25-05-16 05:43)
+    ✔ beautify numbers @done(25-05-16 05:43)
+    ✔ price for courts is correct @done(25-05-16 05:59)
+    ✔ reserved dates only for pending @done(25-05-16 05:59)
+    ✔ price in stripe is correct @done(25-05-16 06:33)
+    ✔ test new ui in android @done(25-05-16 06:59)
+    ✔ events old dates @done(25-05-16 06:59)
+    ☐ owner cancels -> user 100% refunded, user cancels -> user 90% refunded (add canceledBy)
+    ☐ handle refunded amount in admin
+    ☐ replace venue people slider with text field
+    ☐ event location on creation
+    ☐ remove notification from settings (consider email noti ?)
+    ☐ add support and problem reporting
     ☐ remove location for owners
-    ☐ redesign admin (❁´◡`❁)
-    //-----------------
-    ☐ carousel slider removed check that later 
-    //-----------------
-    ☐ approved venues details stream 
-    ☐ owner venues feature (venues by owner id,details,update)
-    //-----------------
-    ☐ add coming soon for farms, courts in owner page
     ☐ delete venues when owner is changed to user
     ☐ delete venues on account delete
     ☐ add license upload to server :D
-    ☐ beautify numbers
 
 
 vulnerabilities:
-    ☐ animated list search needs testing
-    ☐ animated list with spam searching will crash the app
+    ✔ animated list search needs testing @done(25-05-16 05:43)
+    ✔ animated list with spam searching will crash the app @done(25-05-16 05:43)

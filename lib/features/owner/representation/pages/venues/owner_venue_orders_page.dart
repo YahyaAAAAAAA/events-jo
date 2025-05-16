@@ -155,6 +155,7 @@ class _OwnerVenueOrdersPageState extends State<OwnerVenueOrdersPage> {
                                                         venue!.id,
                                                         order.id,
                                                         OrderStatus.canceled,
+                                                        canceledBy: 'owner',
                                                       );
                                                 },
                                               );

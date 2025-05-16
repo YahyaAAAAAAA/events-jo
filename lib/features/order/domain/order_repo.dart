@@ -15,7 +15,8 @@ abstract class OrderRepo {
   Future<void> addDrinksToOrder(List<WeddingVenueDrink>? drinks, String docId);
   Future<List<EOrderDetailed>> getOrders(String fromId, String id);
   Future<List<DateTimeRange>> getVenueOrders(String venueId);
-  Future<void> updateOrderStatus(String orderId, OrderStatus status);
+  Future<void> updateOrderStatus(
+      String orderId, OrderStatus status, String? canceledBy);
   Future<int> getUserOrdersCount(String userId, String venueId);
   Future<String?> createCheckoutSession({
     required String stripeAccountId,

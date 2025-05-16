@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events_jo/config/algorithms/ratings_utils.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
@@ -28,6 +29,7 @@ class VenueSearchDelegate extends SearchDelegate<WeddingVenue?> {
   int? maxPeople;
   String priceSort = 'None';
   String capacitySort = 'None';
+  String rateSort = 'None';
 
   @override
   String get searchFieldLabel => 'Search venues...';
@@ -206,6 +208,40 @@ class VenueSearchDelegate extends SearchDelegate<WeddingVenue?> {
                             onChanged: (value) {
                               setState(() {
                                 capacitySort = value!;
+                              });
+                            },
+                          ),
+                        ),
+                        const Row(
+                          children: [Text('Rating')],
+                        ),
+                        Flexible(
+                          child: DropdownButtonFormField<String>(
+                            decoration: dropDownbuttonDecoration(),
+                            borderRadius: BorderRadius.circular(kOuterRadius),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            dropdownColor: GColors.white,
+                            elevation: 1,
+                            style: TextStyle(
+                              color: GColors.black,
+                              fontSize: kSmallFontSize,
+                              fontFamily: 'Abel',
+                            ),
+                            iconEnabledColor: GColors.black,
+                            value: rateSort,
+                            items: [
+                              'None',
+                              'Rate Ascending',
+                              'Rate Descending',
+                            ]
+                                .map((sortOption) => DropdownMenuItem(
+                                      value: sortOption,
+                                      child: Text(sortOption),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                rateSort = value!;
                               });
                             },
                           ),
@@ -401,6 +437,16 @@ class VenueSearchDelegate extends SearchDelegate<WeddingVenue?> {
       venues.sort((a, b) => b.peopleMax.compareTo(a.peopleMax));
     }
 
+    if (rateSort == 'Rate Ascending') {
+      venues.sort((a, b) => calculateRatings(b.rates)['averageRate']
+          .toDouble()
+          .compareTo(calculateRatings(a.rates)['averageRate'].toDouble()));
+    } else if (rateSort == 'Rate Descending') {
+      venues.sort((a, b) => calculateRatings(a.rates)['averageRate']
+          .toDouble()
+          .compareTo(calculateRatings(b.rates)['averageRate'].toDouble()));
+    }
+
     return venues;
   }
 
@@ -492,6 +538,14 @@ class SearchVenueCard extends StatelessWidget {
               ),
               1.width,
               Text('${venue.peoplePrice}JOD'),
+              5.width,
+              const Icon(
+                Icons.star_border_rounded,
+                size: kSmallIconSize,
+              ),
+              1.width,
+              Text(
+                  '${calculateRatings(venue.rates)['averageRate'].toStringAsFixed(1)} (${venue.rates.length})'),
             ],
           ),
         ),

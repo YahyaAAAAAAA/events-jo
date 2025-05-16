@@ -1,3 +1,4 @@
+import 'package:events_jo/config/algorithms/ratings_utils.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
@@ -15,49 +16,11 @@ class EventRating extends StatelessWidget {
     required this.rates,
   });
 
-  Map<String, dynamic> calculateRatings() {
-    List<int> rateDistribution = [0, 0, 0, 0, 0];
-    double averageRate = 0;
-    double sumRate = 0;
-    double factorRate = 0;
-
-    for (int i = 0; i < rates.length; i++) {
-      final rate = rates[i].parseRateString()[0];
-      if (int.parse(rate) != 0) {
-        factorRate++;
-        sumRate += double.parse(rate);
-      }
-      switch (rate) {
-        case '1':
-          rateDistribution[4] += 1;
-          break;
-        case '2':
-          rateDistribution[3] += 1;
-          break;
-        case '3':
-          rateDistribution[2] += 1;
-          break;
-        case '4':
-          rateDistribution[1] += 1;
-          break;
-        case '5':
-          rateDistribution[0] += 1;
-          break;
-      }
-    }
-    averageRate = sumRate == 0 ? 0 : sumRate / factorRate;
-
-    return {
-      'rateDistribution': rateDistribution,
-      'averageRate': averageRate,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        final ratingsData = calculateRatings();
+        final ratingsData = calculateRatings(rates);
         final rateDistribution = ratingsData['rateDistribution'] as List<int>;
         final averageRate = ratingsData['averageRate'] as double;
 
@@ -212,7 +175,7 @@ class EventRating extends StatelessWidget {
         children: List.generate(5, (index) {
           return Icon(
             Icons.star_rate_rounded,
-            color: index < calculateRatings()['averageRate'].round()
+            color: index < calculateRatings(rates)['averageRate'].round()
                 ? GColors.fullRate
                 : GColors.emptyRate,
             size: kSmallIconSize - 5,
