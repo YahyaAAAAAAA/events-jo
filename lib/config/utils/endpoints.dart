@@ -1,8 +1,12 @@
+const isLocal = false;
+
 //port for local host
 const kHostPort = 5000;
 
 //render or localhost
-const kHostUrl = 'http://localhost:$kHostPort';
+const kHostUrl = isLocal
+    ? 'http://localhost:$kHostPort'
+    : 'https://eventsjostripebackend.onrender.com';
 
 //endpoints
 const kCreateConnectedAccount = '$kHostUrl/create-connected-account';

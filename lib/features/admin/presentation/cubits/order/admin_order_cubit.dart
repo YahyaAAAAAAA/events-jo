@@ -24,6 +24,8 @@ class AdminOrderCubit extends Cubit<AdminOrderStates> {
   Future<void> refund({
     required String? paymentIntentId,
     required String orderId,
+    required String cancelledBy,
+    required double amount,
   }) async {
     emit(AdminOrderActionLoading('Refunding in process'));
     try {
@@ -32,7 +34,11 @@ class AdminOrderCubit extends Cubit<AdminOrderStates> {
         return;
       }
       await adminRepo.refund(
-          paymentIntentId: paymentIntentId, orderId: orderId);
+        paymentIntentId: paymentIntentId,
+        orderId: orderId,
+        cancelledBy: cancelledBy,
+        amount: amount,
+      );
 
       emit(AdminOrderActionLoading('Refunding done'));
     } catch (e) {

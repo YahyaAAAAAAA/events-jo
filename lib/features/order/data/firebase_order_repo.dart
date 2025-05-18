@@ -153,10 +153,10 @@ class FirebaseOrderRepo implements OrderRepo {
 
   @override
   Future<void> updateOrderStatus(
-      String orderId, OrderStatus status, String? canceledBy) async {
+      String orderId, OrderStatus status, String? cancelledBy) async {
     await firebaseFirestore.collection('orders').doc(orderId).update({
       'status': status.name,
-      'canceledBy': canceledBy,
+      'canceledBy': cancelledBy,
     });
   }
 

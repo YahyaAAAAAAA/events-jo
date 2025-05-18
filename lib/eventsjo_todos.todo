@@ -111,8 +111,8 @@ pending:
     ✔ price in stripe is correct @done(25-05-16 06:33)
     ✔ test new ui in android @done(25-05-16 06:59)
     ✔ events old dates @done(25-05-16 06:59)
-    ☐ owner cancels -> user 100% refunded, user cancels -> user 90% refunded (add canceledBy)
-    ☐ handle refunded amount in admin
+    ✔ owner cancels -> user 100% refunded, user cancels -> user 90% refunded (add canceledBy) @done(25-05-19 01:23)
+    ✔ handle refunded amount in admin @done(25-05-19 01:23)
     ☐ replace venue people slider with text field
     ☐ event location on creation
     ☐ remove notification from settings (consider email noti ?)

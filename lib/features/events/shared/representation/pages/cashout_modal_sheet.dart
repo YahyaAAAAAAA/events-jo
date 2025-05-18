@@ -160,9 +160,10 @@ class CashoutModalSheet extends StatelessWidget {
                     isRefundable: isRefundable,
                     onRefundableChanged: onRefundableChanged,
                   ),
-                  Text(
-                    'Please note, on confirmation ${(isRefundable ? '%15' : '%10')} of the price will not be refunded.',
-                    style: const TextStyle(fontSize: kSmallFontSize),
+                  const Text(
+                    'Please note, on confirmation %10 of the price will not be refunded.',
+                    style: TextStyle(fontSize: kSmallFontSize),
+                    textAlign: TextAlign.center,
                   ),
                   10.height,
                   const Text(
@@ -171,6 +172,7 @@ class CashoutModalSheet extends StatelessWidget {
                       fontSize: kSmallFontSize,
                       fontWeight: FontWeight.w600,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   10.height,
                   Row(

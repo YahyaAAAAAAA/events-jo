@@ -48,6 +48,7 @@ class OrderCubit extends Cubit<OrderStates> {
       //pass url
       emit(OrderAdded(url));
     } catch (e) {
+      print(e);
       emit(OrderError(e.toString()));
     }
   }

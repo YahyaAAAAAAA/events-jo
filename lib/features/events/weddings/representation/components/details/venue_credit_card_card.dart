@@ -56,12 +56,6 @@ class VenueCreditCardForm extends StatelessWidget {
                               'For venues you have untill the last week of the date of the booking.'),
                           Text(
                               'For football courts you have untill the last day of the date of the booking.'),
-                          Text(
-                            'Please note, if refundable option is choosen %15 of the total price won\'t be refunded',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
                         ],
                       ),
                     );

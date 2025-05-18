@@ -4,8 +4,9 @@ enum OrderStatus {
   unpaid,
   pending,
   completed,
-  canceled,
+  cancelled,
   paid,
+  refunded,
 }
 
 extension OrderStatusExtenstions on OrderStatus {
@@ -19,8 +20,10 @@ extension OrderStatusExtenstions on OrderStatus {
         return OrderStatus.completed;
       case 'paid':
         return OrderStatus.paid;
+      case 'refunded':
+        return OrderStatus.refunded;
       default:
-        return OrderStatus.canceled;
+        return OrderStatus.cancelled;
     }
   }
 
@@ -33,7 +36,9 @@ extension OrderStatusExtenstions on OrderStatus {
       case OrderStatus.completed:
         return Colors.green;
       case OrderStatus.paid:
-        return Colors.black;
+        return Colors.grey;
+      case OrderStatus.refunded:
+        return Colors.grey;
       default:
         return Colors.red;
     }
@@ -49,6 +54,8 @@ extension OrderStatusExtenstions on OrderStatus {
         return Icons.check_circle;
       case OrderStatus.paid:
         return Icons.attach_money;
+      case OrderStatus.refunded:
+        return Icons.replay_rounded;
       default:
         return Icons.cancel;
     }

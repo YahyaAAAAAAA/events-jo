@@ -4,7 +4,7 @@ import 'package:events_jo/features/events/shared/domain/models/football_court.da
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
-import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
+import 'package:events_jo/features/order/domain/models/e_order.dart';
 
 abstract class AdminRepo {
   Stream<QuerySnapshot<Map<String, dynamic>>>
@@ -58,11 +58,13 @@ abstract class AdminRepo {
 
   Future<void> deleteImagesFromServer(List<dynamic> urls);
 
-  Stream<List<EOrderDetailed>> getOrdersStream();
+  Stream<List<EOrder>> getOrdersStream();
 
   Future<void> refund({
     required String paymentIntentId,
     required String orderId,
+    required String cancelledBy,
+    required double amount,
   });
 
   Future<void> transfer({

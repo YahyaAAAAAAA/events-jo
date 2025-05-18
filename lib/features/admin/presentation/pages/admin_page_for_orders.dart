@@ -14,7 +14,7 @@ import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/home_app_bar.dart';
-import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
+import 'package:events_jo/features/order/domain/models/e_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -80,16 +80,17 @@ class _AdminPageForOrdersState extends State<AdminPageForOrders> {
               if (state is AdminOrderLoaded) {
                 final detaildOrders = state.orders;
 
-                final Map<String, List<EOrderDetailed>> groupedOrders = {
+                final Map<String, List<EOrder>> groupedOrders = {
                   'unpaid': [],
                   'paid': [],
                   'pending': [],
                   'completed': [],
-                  'canceled': [],
+                  'cancelled': [],
+                  'refunded': [],
                 };
 
                 for (var order in detaildOrders) {
-                  final status = order.order.status.name.toLowerCase();
+                  final status = order.status.name.toLowerCase();
                   if (groupedOrders.containsKey(status)) {
                     groupedOrders[status]!.add(order);
                   }
@@ -119,8 +120,8 @@ class _AdminPageForOrdersState extends State<AdminPageForOrders> {
                     10.height,
                     _buildExpandable(
                       isExpanded: isExpanded[4],
-                      status: OrderStatus.canceled,
-                      orders: groupedOrders['canceled']!,
+                      status: OrderStatus.cancelled,
+                      orders: groupedOrders['cancelled']!,
                     ),
 
                     10.height,
@@ -154,6 +155,12 @@ class _AdminPageForOrdersState extends State<AdminPageForOrders> {
                       isExpanded: isExpanded[1],
                       status: OrderStatus.paid,
                       orders: groupedOrders['paid']!,
+                    ),
+                    10.height,
+                    _buildExpandable(
+                      isExpanded: isExpanded[1],
+                      status: OrderStatus.refunded,
+                      orders: groupedOrders['refunded']!,
                     ),
                   ],
                 );
@@ -190,19 +197,19 @@ class _AdminPageForOrdersState extends State<AdminPageForOrders> {
           ),
           20.height,
           _buildExpandable(
-              isExpanded: false, status: OrderStatus.canceled, orders: []),
+              isExpanded: false, status: OrderStatus.cancelled, orders: []),
           10.height,
           _buildExpandable(
-              isExpanded: false, status: OrderStatus.canceled, orders: []),
+              isExpanded: false, status: OrderStatus.cancelled, orders: []),
           10.height,
           _buildExpandable(
-              isExpanded: false, status: OrderStatus.canceled, orders: []),
+              isExpanded: false, status: OrderStatus.cancelled, orders: []),
           10.height,
           _buildExpandable(
-              isExpanded: false, status: OrderStatus.canceled, orders: []),
+              isExpanded: false, status: OrderStatus.cancelled, orders: []),
           10.height,
           _buildExpandable(
-              isExpanded: false, status: OrderStatus.canceled, orders: []),
+              isExpanded: false, status: OrderStatus.cancelled, orders: []),
         ],
       ),
     );
@@ -211,7 +218,7 @@ class _AdminPageForOrdersState extends State<AdminPageForOrders> {
   Widget _buildExpandable({
     required bool isExpanded,
     required OrderStatus status,
-    required List<EOrderDetailed> orders,
+    required List<EOrder> orders,
   }) {
     return Expandable(
       isExpanded: isExpanded,
@@ -271,29 +278,35 @@ class _AdminPageForOrdersState extends State<AdminPageForOrders> {
         children: orders
             .map(
               (order) => AdminOrderCard(
-                onPressed: order.order.status == OrderStatus.unpaid ||
-                        order.order.status == OrderStatus.paid ||
-                        order.order.status == OrderStatus.pending
+                subText: order.status == OrderStatus.cancelled
+                    ? order.canceledBy
+                    : null,
+                onPressed: order.status == OrderStatus.unpaid ||
+                        order.status == OrderStatus.paid ||
+                        order.status == OrderStatus.pending ||
+                        order.status == OrderStatus.refunded
                     ? null
                     //transfer
-                    : order.order.status == OrderStatus.completed
+                    : order.status == OrderStatus.completed
                         ? () async {
                             await adminOrderCubit.transfer(
-                              stripeAccountId: order.order.stripeAccountId,
-                              orderId: order.order.id,
-                              amount: order.order.amount,
+                              stripeAccountId: order.stripeAccountId,
+                              orderId: order.id,
+                              amount: order.amount,
                             );
                           }
                         //refund
-                        : order.order.status == OrderStatus.canceled
+                        : order.status == OrderStatus.cancelled
                             ? () async {
                                 await adminOrderCubit.refund(
-                                  paymentIntentId: order.order.paymentIntentId,
-                                  orderId: order.order.id,
+                                  paymentIntentId: order.paymentIntentId,
+                                  orderId: order.id,
+                                  cancelledBy: order.canceledBy ?? 'owner',
+                                  amount: order.amount,
                                 );
                               }
                             : null,
-                detaildOrder: order,
+                order: order,
               ),
             )
             .toList(),

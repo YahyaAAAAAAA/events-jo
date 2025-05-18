@@ -1,4 +1,4 @@
-import 'package:events_jo/features/order/domain/models/e_order_detailed.dart';
+import 'package:events_jo/features/order/domain/models/e_order.dart';
 
 abstract class AdminOrderStates {}
 
@@ -7,7 +7,7 @@ class AdminOrderInit extends AdminOrderStates {}
 class AdminOrderLoading extends AdminOrderStates {}
 
 class AdminOrderLoaded extends AdminOrderStates {
-  final List<EOrderDetailed> orders;
+  final List<EOrder> orders;
 
   AdminOrderLoaded(this.orders);
 }
