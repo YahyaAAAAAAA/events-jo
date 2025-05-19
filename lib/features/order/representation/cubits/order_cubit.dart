@@ -132,6 +132,7 @@ class OrderCubit extends Cubit<OrderStates> {
     required List<WeddingVenueMeal> meals,
     required List<WeddingVenueDrink> drinks,
     required String stripeAccountId,
+    required String userName,
   }) {
     return showModalBottomSheet(
       context: context,
@@ -155,6 +156,7 @@ class OrderCubit extends Cubit<OrderStates> {
               ownerId: ownerId,
               venueId: venueId,
               userId: userId,
+              userName: userName,
               date: date,
               isRefundable: isRefundable,
               onRefundableChanged: (_) =>

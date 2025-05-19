@@ -274,19 +274,21 @@ class OwnerCourtOrderDetailsModalSheet extends StatelessWidget {
               ],
             ),
             IconButton(
-              onPressed: user.uid != court!.ownerId
+              onPressed: user.uid != order.userId
                   ? () {
                       context.pop();
                       context.push(
                         ChatPage(
                           currentUserId: user.uid,
-                          otherUserId: court!.ownerId,
+                          otherUserId: order.userId,
                           currentUserName: user.name,
-                          otherUserName: court!.ownerName,
+                          otherUserName: order.userName,
                         ),
                       );
                     }
-                  : () => context.showSnackBar('You can\'t chat with yourself'),
+                  : () {
+                      context.showSnackBar('You can\'t chat with yourself');
+                    },
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(GColors.royalBlue),
                 padding: const WidgetStatePropertyAll(EdgeInsets.zero),

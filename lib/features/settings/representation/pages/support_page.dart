@@ -9,6 +9,8 @@ import 'package:events_jo/features/settings/representation/components/settings_s
 import 'package:events_jo/features/settings/representation/components/settings_text_button.dart';
 import 'package:events_jo/features/settings/representation/components/settings_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SupportPage extends StatefulWidget {
   @override
@@ -137,7 +139,21 @@ class _SupportPageState extends State<SupportPage> {
               Center(
                 child: SettingsTextButton(
                   text: 'Submit',
-                  onPressed: () {
+                  onPressed: () async {
+                    final subject = subjectController.text.trim();
+                    final message = messageController.text.trim();
+
+                    final Uri emailUri = Uri(
+                      scheme: 'mailto',
+                      path: await dotenv.get('APP_EMAIL'),
+                      queryParameters: {
+                        'subject': subject,
+                        'body': message,
+                      },
+                    );
+
+                    launchUrl(emailUri);
+
                     setState(() {
                       subjectController.clear();
                       messageController.clear();

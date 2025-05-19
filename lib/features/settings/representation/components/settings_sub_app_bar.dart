@@ -1,8 +1,10 @@
+import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/app_bar_button.dart';
+import 'package:events_jo/features/support/representation/components/problem_report_dialog.dart';
 import 'package:flutter/material.dart';
 
 class SettingsSubAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -44,10 +46,32 @@ class SettingsSubAppBar extends StatelessWidget implements PreferredSizeWidget {
             ],
           ),
           const Spacer(),
-          AppBarButton(
-            onPressed: () {},
-            icon: Icons.report_gmailerrorred_rounded,
-            iconSize: kSmallIconSize + 5,
+          CustomPopupMenu(
+            pressType: PressType.singleClick,
+            arrowColor: GColors.white,
+            menuBuilder: () {
+              return IconButton(
+                onPressed: () => context.dialog(
+                  pageBuilder: (p0, _, __) => ProblemReportDialog(
+                    onPressed: null,
+                    controller: TextEditingController(),
+                  ),
+                ),
+                icon: Text(
+                  'Report Problem',
+                  style: TextStyle(
+                    color: GColors.black,
+                    fontSize: kSmallFontSize,
+                  ),
+                ),
+              );
+            },
+            child: AppBarButton(
+              onPressed: null,
+              icon: Icons.report_gmailerrorred_rounded,
+              iconColor: GColors.black,
+              iconSize: kSmallIconSize + 5,
+            ),
           ),
           5.width,
         ],

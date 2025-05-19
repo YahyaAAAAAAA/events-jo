@@ -1,6 +1,7 @@
 import 'package:events_jo/features/chat/domain/models/chat.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dart';
+import 'package:events_jo/features/support/domain/models/problem_report.dart';
 
 //class to display empty objects when loading
 class Dummy {
@@ -62,5 +63,13 @@ class Dummy {
     lastUpdated: DateTime.now(),
     participants: ['123', '456'],
     participantsNames: ['Sender', 'Reciever'],
+  );
+
+  static ProblemReport problem = ProblemReport(
+    id: '123',
+    problem: 'Dummy Problem',
+    userId: '456',
+    userName: 'Dummy Name',
+    isDone: false,
   );
 }

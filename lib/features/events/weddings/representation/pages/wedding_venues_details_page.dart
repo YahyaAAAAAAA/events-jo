@@ -325,6 +325,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                     venueId: weddingVenue.id,
                     ownerId: weddingVenue.ownerId,
                     date: selectedDate,
+                    userName: widget.user!.name,
                     startTime: selectedStartTime.hour,
                     endTime: selectedEndTime.hour,
                     people: numberOfExpectedPeople,
@@ -480,6 +481,7 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                       ),
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         EventTimePicker(
                           text: 'Start',
@@ -513,8 +515,9 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                           //do nothing
                           cancelPressed: () => Navigator.of(context).pop(),
                         ),
+
                         const SizedBox(
-                          width: 140,
+                          width: 170,
                           child: Divider(),
                         ),
 

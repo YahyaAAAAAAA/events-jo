@@ -1,9 +1,12 @@
+import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
+import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/home/presentation/components/app_bar_button.dart';
+import 'package:events_jo/features/support/representation/components/problem_report_dialog.dart';
 import 'package:flutter/material.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -36,10 +39,27 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           title: MediaQuery.of(context).size.width >= 300
               ? Row(
                   children: [
-                    AppBarButton(
-                      onPressed: onPressed,
-                      icon: Icons.person_outline,
-                      iconSize: kNormalIconSize,
+                    CustomPopupMenu(
+                      pressType: PressType.singleClick,
+                      arrowColor: GColors.white,
+                      menuBuilder: () {
+                        return IconButton(
+                          onPressed: onPressed,
+                          icon: Text(
+                            'Logout',
+                            style: TextStyle(
+                              color: GColors.black,
+                              fontSize: kSmallFontSize,
+                            ),
+                          ),
+                        );
+                      },
+                      child: AppBarButton(
+                        onPressed: null,
+                        icon: Icons.person_outline,
+                        iconColor: GColors.black,
+                        iconSize: kNormalIconSize,
+                      ),
                     ),
                     10.width,
                     Column(
@@ -87,10 +107,32 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                           )
                         : 0.width,
                     5.width,
-                    AppBarButton(
-                      onPressed: () {},
-                      icon: CustomIcons.menu,
-                      iconSize: kSmallIconSize,
+                    CustomPopupMenu(
+                      pressType: PressType.singleClick,
+                      arrowColor: GColors.white,
+                      menuBuilder: () {
+                        return IconButton(
+                          onPressed: () => context.dialog(
+                            pageBuilder: (p0, _, __) => ProblemReportDialog(
+                              onPressed: null,
+                              controller: TextEditingController(),
+                            ),
+                          ),
+                          icon: Text(
+                            'Report Problem',
+                            style: TextStyle(
+                              color: GColors.black,
+                              fontSize: kSmallFontSize,
+                            ),
+                          ),
+                        );
+                      },
+                      child: AppBarButton(
+                        onPressed: null,
+                        icon: CustomIcons.menu,
+                        iconColor: GColors.black,
+                        iconSize: kSmallIconSize,
+                      ),
                     ),
                     5.width,
                   ],

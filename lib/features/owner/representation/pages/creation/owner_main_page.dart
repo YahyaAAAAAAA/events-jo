@@ -31,6 +31,7 @@ class OwnerMainPage extends StatefulWidget {
 
 class _OwnerMainPageState extends State<OwnerMainPage> {
   late final StripeConnectCubit stripeConnectCubit;
+  bool isStripeLoading = false;
 
   @override
   void initState() {
@@ -64,14 +65,15 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
               //not connected
               if (state is StripeNotConnected) {
                 return StripeNotConnectedPage(
+                  isLoading: isStripeLoading,
                   onPressed: () async {
+                    setState(() => isStripeLoading = true);
+
                     final url = await stripeConnectCubit
                         .startOnboarding(widget.user!.uid);
-                    final uri = Uri.parse(url);
-                    if (await canLaunchUrl(uri)) {
-                      await launchUrl(uri,
-                          mode: LaunchMode.externalApplication);
-                    }
+                    launchUrl(Uri.parse(url));
+
+                    setState(() => isStripeLoading = false);
                   },
                 );
               }
@@ -79,14 +81,15 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
               //not completed
               if (state is StripeNotCompleted) {
                 return StripeNotCompletedPage(
+                  isLoading: isStripeLoading,
                   onPressed: () async {
+                    setState(() => isStripeLoading = true);
                     final url = await stripeConnectCubit
                         .startOnboarding(widget.user!.uid);
-                    final uri = Uri.parse(url);
-                    if (await canLaunchUrl(uri)) {
-                      await launchUrl(uri,
-                          mode: LaunchMode.externalApplication);
-                    }
+
+                    launchUrl(Uri.parse(url));
+
+                    setState(() => isStripeLoading = false);
                   },
                 );
               }

@@ -143,147 +143,159 @@ class _SponsoredVenueState extends State<SponsoredVenue> {
         currentEvent.pics.isEmpty ? kPlaceholderImage : currentEvent.pics[0];
 
     return FittedBox(
-      child: Container(
-        height: 150,
-        decoration: BoxDecoration(
-          gradient: isLoading
-              ? null
-              : LinearGradient(
-                  colors: GColors.logoGradientColors.reversed.toList()),
-          color: GColors.royalBlue,
-          borderRadius: BorderRadius.circular(kOuterRadius),
-        ),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: 115,
-                    child: Text(
-                      isVenue
-                          ? 'Check Out Our Top Venues'
-                          : 'Check Out Our Top Courts',
-                      style: TextStyle(
-                        color: GColors.white,
-                        fontSize: kNormalFontSize,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      if (isVenue && currentEvent is WeddingVenue) {
-                        context.push(WeddingVenuesDetailsPage(
-                            user: widget.user, weddingVenue: currentEvent));
-                      } else if (!isVenue && currentEvent is FootballCourt) {
-                        context.push(FootballCourtsDetailsPage(
-                            user: widget.user, footballCourt: currentEvent));
-                      }
-                    },
-                    style: const ButtonStyle(
-                      padding: WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(horizontal: 20),
-                      ),
-                    ),
-                    child: Text(
-                      'Book Now',
-                      style: TextStyle(
-                        color: GColors.black,
-                        fontSize: kSmallFontSize,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(kOuterRadius),
-                bottomRight: Radius.circular(kOuterRadius),
-              ),
-              child: Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(kOuterRadius),
-                        bottomRight: Radius.circular(kOuterRadius),
-                      ),
-                      border: Border.all(
-                        color: const Color(0xFF3089dd),
-                        width: 2,
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(kOuterRadius),
-                        bottomRight: Radius.circular(kOuterRadius),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: imageUrl,
-                        placeholder: (context, url) =>
-                            const GlobalLoadingImage(),
-                        errorWidget: (context, url, error) =>
-                            Icon(Icons.error_outline, color: GColors.black),
-                        fit: BoxFit.cover,
-                        height: 150,
-                        width: 225,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:
-                          List.generate(min(events.length, maxItems), (index) {
-                        final isSelected = index == currentIndex;
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2.5),
-                          child: Container(
-                            width: 7,
-                            height: 7,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: isSelected
-                                  ? GColors.royalBlue
-                                  : GColors.white,
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: -1,
-                    left: -1,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      constraints: const BoxConstraints(maxWidth: 200),
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF3089dd),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(kOuterRadius)),
-                      ),
+      child: InkWell(
+        onTap: () {
+          if (isVenue && currentEvent is WeddingVenue) {
+            context.push(WeddingVenuesDetailsPage(
+                user: widget.user, weddingVenue: currentEvent));
+          } else if (!isVenue && currentEvent is FootballCourt) {
+            context.push(FootballCourtsDetailsPage(
+                user: widget.user, footballCourt: currentEvent));
+          }
+        },
+        borderRadius: BorderRadius.circular(kOuterRadius),
+        child: Container(
+          height: 150,
+          decoration: BoxDecoration(
+            gradient: isLoading
+                ? null
+                : LinearGradient(
+                    colors: GColors.logoGradientColors.reversed.toList()),
+            color: GColors.royalBlue,
+            borderRadius: BorderRadius.circular(kOuterRadius),
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 115,
                       child: Text(
-                        currentEvent.name,
+                        isVenue
+                            ? 'Check Out Our Top Venues'
+                            : 'Check Out Our Top Courts',
                         style: TextStyle(
                           color: GColors.white,
-                          fontSize: kSmallFontSize,
-                          overflow: TextOverflow.ellipsis,
+                          fontSize: kNormalFontSize,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        if (isVenue && currentEvent is WeddingVenue) {
+                          context.push(WeddingVenuesDetailsPage(
+                              user: widget.user, weddingVenue: currentEvent));
+                        } else if (!isVenue && currentEvent is FootballCourt) {
+                          context.push(FootballCourtsDetailsPage(
+                              user: widget.user, footballCourt: currentEvent));
+                        }
+                      },
+                      style: const ButtonStyle(
+                        padding: WidgetStatePropertyAll(
+                          EdgeInsets.symmetric(horizontal: 20),
+                        ),
+                      ),
+                      child: Text(
+                        'Book Now',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(kOuterRadius),
+                  bottomRight: Radius.circular(kOuterRadius),
+                ),
+                child: Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(kOuterRadius),
+                          bottomRight: Radius.circular(kOuterRadius),
+                        ),
+                        border: Border.all(
+                          color: const Color(0xFF3089dd),
+                          width: 2,
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(kOuterRadius),
+                          bottomRight: Radius.circular(kOuterRadius),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          placeholder: (context, url) =>
+                              const GlobalLoadingImage(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error_outline, color: GColors.black),
+                          fit: BoxFit.cover,
+                          height: 150,
+                          width: 225,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(min(events.length, maxItems),
+                            (index) {
+                          final isSelected = index == currentIndex;
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.5),
+                            child: Container(
+                              width: 7,
+                              height: 7,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: isSelected
+                                    ? GColors.royalBlue
+                                    : GColors.white,
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -1,
+                      left: -1,
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        constraints: const BoxConstraints(maxWidth: 200),
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF3089dd),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(kOuterRadius)),
+                        ),
+                        child: Text(
+                          currentEvent.name,
+                          style: TextStyle(
+                            color: GColors.white,
+                            fontSize: kSmallFontSize,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

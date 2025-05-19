@@ -6,6 +6,7 @@ import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/components/admin_home_card.dart';
 import 'package:events_jo/features/admin/presentation/pages/admin_page_for_courts.dart';
 import 'package:events_jo/features/admin/presentation/pages/admin_page_for_venues.dart';
+import 'package:events_jo/features/admin/presentation/pages/problem_report/problems_page.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/domain/entities/user_manager.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
@@ -65,6 +66,12 @@ class _AdminPageForEventsState extends State<AdminPageForEvents> {
                   text: 'Football Courts',
                   icon: CustomIcons.football,
                   onPressed: () => context.push(const AdminPageForCourts()),
+                ),
+                10.height,
+                AdminHomeCard(
+                  text: 'Problems Reports',
+                  icon: Icons.report_problem_rounded,
+                  onPressed: () => context.push(const ProblemsPage()),
                 ),
               ],
             ),

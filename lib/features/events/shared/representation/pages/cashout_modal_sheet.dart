@@ -32,6 +32,7 @@ class CashoutModalSheet extends StatelessWidget {
   final bool isRefundable;
   final void Function(bool)? onRefundableChanged;
   final String stripeAccountId;
+  final String userName;
 
   const CashoutModalSheet({
     super.key,
@@ -47,6 +48,7 @@ class CashoutModalSheet extends StatelessWidget {
     required this.people,
     required this.isRefundable,
     required this.stripeAccountId,
+    required this.userName,
     this.onRefundableChanged,
     this.meals,
     this.drinks,
@@ -202,6 +204,7 @@ class CashoutModalSheet extends StatelessWidget {
                                 id: Unique.generateUniqueId(),
                                 eventType: eventType,
                                 userId: userId,
+                                userName: userName,
                                 eventId: venueId,
                                 ownerId: ownerId,
                                 amount: isRefundable

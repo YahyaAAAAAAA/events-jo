@@ -2,6 +2,7 @@ import 'package:events_jo/config/theme/eventsjo_theme.dart';
 import 'package:events_jo/features/admin/presentation/cubits/courts/approved/admin_approved_courts_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/courts/unapproved/admin_unapproved_courts_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/order/admin_order_cubit.dart';
+import 'package:events_jo/features/admin/presentation/cubits/problem_report/admin_problem_report_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/single%20court/admin_single_court_cubit.dart';
 import 'package:events_jo/features/auth/representation/pages/user_type_gate.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
@@ -42,6 +43,8 @@ import 'package:events_jo/features/settings/representation/cubits/password/passw
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/venues/wedding_venues_cubit.dart';
 import 'package:events_jo/features/events/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
+import 'package:events_jo/features/support/data/firebase_problem_report_repo.dart';
+import 'package:events_jo/features/support/representation/cubits/problem_report/problem_report_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,6 +59,7 @@ class EventsJoApp extends StatelessWidget {
   final orderRepo = FirebaseOrderRepo();
   final eventsRepo = FirebaseEventsRepo();
   final chatRepo = FirebaseChatRepo();
+  final problemReportRepo = FirebaseProblemReportRepo();
 
   EventsJoApp({super.key});
 
@@ -136,6 +140,11 @@ class EventsJoApp extends StatelessWidget {
         BlocProvider(
           create: (context) => StripeConnectCubit(ownerRepo: ownerRepo),
         ),
+        //problems report
+        BlocProvider(
+          create: (context) =>
+              ProblemReportCubit(problemReportRepo: problemReportRepo),
+        ),
         //* -------------------Admin cubits below-------------------
         //approved venues cubit
         BlocProvider(
@@ -188,6 +197,10 @@ class EventsJoApp extends StatelessWidget {
         //admin orders cubit
         BlocProvider(
           create: (context) => AdminOrderCubit(adminRepo: adminRepo),
+        ),
+        //admin problems report cubit
+        BlocProvider(
+          create: (context) => AdminProblemReportCubit(adminRepo: adminRepo),
         ),
       ],
       child: MaterialApp(

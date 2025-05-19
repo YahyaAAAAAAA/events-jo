@@ -282,6 +282,7 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
                     endTime: selectedEndTime.hour,
                     people: numberOfExpectedPeople,
                     paymentMethod: paymentMethod,
+                    userName: widget.user!.name,
                     totalAmount: (footballCourt.pricePerHour *
                             (selectedEndTime.hour - selectedStartTime.hour))
                         .toDouble(),

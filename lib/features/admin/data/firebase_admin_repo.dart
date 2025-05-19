@@ -10,6 +10,7 @@ import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dar
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
+import 'package:events_jo/features/support/domain/models/problem_report.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -475,6 +476,23 @@ class FirebaseAdminRepo implements AdminRepo {
     } catch (e) {
       throw Exception("Error fetching balance: $e");
     }
+  }
+
+  @override
+  Future<List<ProblemReport>> getProblems() {
+    return firebaseFirestore.collection('problems').get().then((snapshot) {
+      return snapshot.docs
+          .map((doc) => ProblemReport.fromJson(doc.data()))
+          .toList();
+    });
+  }
+
+  @override
+  Future<void> checkProblem(ProblemReport problem) async {
+    await firebaseFirestore
+        .collection('problems')
+        .doc(problem.id)
+        .update({'isDone': !problem.isDone});
   }
 
   //! DEPRECATED
