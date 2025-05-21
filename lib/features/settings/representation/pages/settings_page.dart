@@ -1,5 +1,6 @@
 import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
+import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
@@ -13,7 +14,6 @@ import 'package:events_jo/features/owner/representation/pages/creation/owner_mai
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
 import 'package:events_jo/features/settings/representation/cubits/settings_cubit.dart';
 import 'package:events_jo/features/settings/representation/pages/account_page.dart';
-import 'package:events_jo/features/settings/representation/pages/notifications_page.dart';
 import 'package:events_jo/features/settings/representation/pages/privacy_page.dart';
 import 'package:events_jo/features/settings/representation/pages/support_page.dart';
 import 'package:flutter/material.dart';
@@ -87,10 +87,11 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       10.height,
                       SettingsCard(
-                        text: 'Notifications',
-                        icon: CustomIcons.bell,
-                        onTap: () => context.push(NotificationsPage()),
+                        text: 'Privacy & Security',
+                        icon: CustomIcons.lock,
+                        onTap: () => context.push(const PrivacyPage()),
                       ),
+
                       10.height,
 
                       Text(
@@ -102,14 +103,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       5.height,
-                      //privacy and security
-                      SettingsCard(
-                        text: 'Privacy & Security',
-                        icon: CustomIcons.lock,
-                        onTap: () => context.push(const PrivacyPage()),
-                      ),
-                      10.height,
-
                       //help and support
                       SettingsCard(
                         text: 'Help and Support',
@@ -117,6 +110,40 @@ class _SettingsPageState extends State<SettingsPage> {
                         onTap: () => context.push(SupportPage()),
                       ),
 
+                      10.height,
+
+                      //privacy and security
+                      SettingsCard(
+                        text: 'What is EventsJo',
+                        icon: CustomIcons.messages_question,
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            backgroundColor: GColors.whiteShade3,
+                            content: Text(
+                              'EventsJo is a comprehensive cross-platform mobile application designed to streamline the process of booking venues for various occasions in Jordan. Whether its a wedding, a football match, or a relaxing getaway at a farm, EventsJo connects users with available venues, making reservations simple and hassle-free. The app features user-friendly authentication, seamless payment options (cash or credit card), and detailed tracking of past and upcoming events.',
+                              style: TextStyle(
+                                color: GColors.black,
+                                fontSize: kSmallFontSize,
+                              ),
+                            ),
+                            actions: [
+                              IconButton(
+                                onPressed: () => context.pop(),
+                                style: ButtonStyle(
+                                    backgroundColor: WidgetStatePropertyAll(
+                                        GColors.whiteShade3.shade600)),
+                                icon: Text(
+                                  'Done',
+                                  style: TextStyle(
+                                      color: GColors.royalBlue,
+                                      fontSize: kSmallFontSize),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                       10.height,
 
                       SettingsCard(

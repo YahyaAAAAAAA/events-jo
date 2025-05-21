@@ -394,6 +394,14 @@ class _WeddingVenuesDetailsPageState extends State<WeddingVenuesDetailsPage> {
                             ),
                           ),
                         );
+                      } else if (state is SingleWeddingVenueDeletec) {
+                        return Text(
+                          'This Court is not available at this moment',
+                          style: TextStyle(
+                            color: GColors.black,
+                            fontSize: kNormalFontSize,
+                          ),
+                        );
                       } else {
                         return Text(
                           'JOD 0.0',

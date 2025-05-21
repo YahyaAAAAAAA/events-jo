@@ -41,6 +41,7 @@ class AdminOrderCubit extends Cubit<AdminOrderStates> {
       );
 
       emit(AdminOrderActionLoading('Refunding done'));
+      getOrdersStream();
     } catch (e) {
       emit(AdminOrderError(e.toString()));
     }

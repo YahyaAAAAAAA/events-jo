@@ -57,7 +57,11 @@ class FirebaseSettingsRepo implements SettingsRepo {
 
   //update user type
   @override
-  Future<UserType?> updateUserType(UserType initType, UserType newType) async {
+  Future<UserType?> updateUserType(
+    UserType initType,
+    UserType newType,
+    bool? wasOwnerAndNowUser,
+  ) async {
     final firebaseUser = firebaseAuth.currentUser;
 
     //user doesn't exist
@@ -98,7 +102,10 @@ class FirebaseSettingsRepo implements SettingsRepo {
 
       await newCollection.doc(firebaseUser.uid).set(userDoc.data());
       //update type field
-      await newCollection.doc(firebaseUser.uid).update({'type': newType.name});
+      await newCollection.doc(firebaseUser.uid).update({
+        'type': newType.name,
+        'wasOwnerAndNowUser': wasOwnerAndNowUser,
+      });
 
       // delete the document from the old collection
       await currentCollection.doc(firebaseUser.uid).delete();

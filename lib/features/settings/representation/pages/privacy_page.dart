@@ -1,5 +1,6 @@
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
+import 'package:events_jo/config/extensions/widget_extensions.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/settings/representation/components/settings_icon_button.dart';
 import 'package:events_jo/features/settings/representation/components/settings_sub_app_bar.dart';
@@ -56,7 +57,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
                 color: GColors.redShade3,
                 text: 'Deactivate Account',
                 icon: Icons.delete_forever,
-              ),
+              ).hide(),
             ],
           ),
         ),

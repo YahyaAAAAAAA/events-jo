@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:events_jo/config/enums/event_type.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/color_extensions.dart';
+import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
@@ -154,6 +157,12 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                   SelectEventNamePage(
                     eventType: eventType,
                     nameController: nameController,
+                    testPress: () {
+                      setState(() {
+                        nameController.text =
+                            'Test ${eventType.name.toCapitalized} ${Random().nextInt(900) + 100}';
+                      });
+                    },
                   ),
 
                   //location
@@ -208,7 +217,6 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                   ),
 
                   const Divider(),
-
                   //date range
                   SelectRangeDatePage(
                     eventType: eventType,
@@ -240,6 +248,11 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                       peoplePriceController: peoplePriceController,
                       peopleMinController: peopleMinController,
                       peopleMaxController: peopleMaxController,
+                      testPress: () {
+                        setState(() {
+                          peoplePriceController.text = '15'; //Receive
+                        });
+                      },
                     ),
 
                   //people range
@@ -249,6 +262,13 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                       peoplePriceController: peoplePriceController,
                       peopleMinController: peopleMinController,
                       peopleMaxController: peopleMaxController,
+                      testPress: () {
+                        setState(() {
+                          peoplePriceController.text = '1.5';
+                          peopleMaxController.text = '1000';
+                          peopleMinController.text = '10';
+                        });
+                      },
                     ),
 
                     const Divider(),
@@ -263,8 +283,12 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                       //update image when typing (only update state)
                       onTextFieldChanged: (text) => setState(() {}),
                       //update field on menu select
-                      onMealSelected: (meal) => setState(
-                          () => mealNameController.text = meal.toString()),
+                      onMealSelected: (meal) => setState(() {
+                        mealNameController.text = meal.toString();
+                        mealAmountController.text =
+                            (Random().nextInt(900) + 100).toString();
+                        mealPriceController.text = '2.5';
+                      }),
                       itemBuilder: (context, index) {
                         return OwnerMealCard(
                           meals: meals,
@@ -321,8 +345,14 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                       //update image when typing (only update state)
                       onChanged: (text) => setState(() {}),
                       //update field on menu select
-                      onDrinkSelected: (drink) => setState(
-                          () => drinkNameController.text = drink.toString()),
+                      onDrinkSelected: (drink) {
+                        setState(() {
+                          drinkNameController.text = drink.toString();
+                          drinkAmountController.text =
+                              (Random().nextInt(900) + 100).toString();
+                          drinkPriceController.text = '2.5';
+                        });
+                      },
                       itemBuilder: (context, index) {
                         return OwnerDrinkCard(
                           drinks: drinks,
@@ -540,6 +570,7 @@ class _OwnerEventCreationPageState extends State<OwnerEventCreationPage> {
                                   //call cubit
                                   await ownerCubit.addVenueToDatabase(
                                     name: nameController.text.trim(),
+                                    //TODO
                                     lat: userLocation.lat,
                                     long: userLocation.long,
                                     stripeAccountId: user.stripeAccountId!,

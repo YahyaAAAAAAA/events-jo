@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/config/utils/global_snack_bar.dart';
 import 'package:events_jo/config/enums/user_type_enum.dart';
@@ -86,11 +88,22 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: EventsJoLogoAuth(),
               ),
 
-              Text(
-                "Create an account",
-                style: TextStyle(
-                  color: GColors.black,
-                  fontSize: 22,
+              GestureDetector(
+                onTap: () {
+                  final random = Random();
+                  final randomNumber = random.nextInt(900) + 100;
+                  nameController.text = 'test$randomNumber';
+                  emailController.text = 'test$randomNumber@gmail.com';
+                  pwController.text = '123456';
+                  confirmPwController.text = '123456';
+                  setState(() {});
+                },
+                child: Text(
+                  "Create an account",
+                  style: TextStyle(
+                    color: GColors.black,
+                    fontSize: 22,
+                  ),
                 ),
               ),
 

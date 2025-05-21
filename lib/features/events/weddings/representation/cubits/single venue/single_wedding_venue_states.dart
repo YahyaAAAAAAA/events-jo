@@ -22,6 +22,11 @@ class SingleWeddingVenueChanged extends SingleWeddingVenueStates {
   SingleWeddingVenueChanged(this.change);
 }
 
+//change
+class SingleWeddingVenueDeletec extends SingleWeddingVenueStates {
+  SingleWeddingVenueDeletec();
+}
+
 //error
 class SingleWeddingVenueError extends SingleWeddingVenueStates {
   final String message;

@@ -44,38 +44,6 @@ class _SupportPageState extends State<SupportPage> {
             padding: const EdgeInsets.all(12),
             children: [
               SettingsCard(
-                text: 'What is EventsJo',
-                icon: CustomIcons.messages_question,
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    backgroundColor: GColors.whiteShade3,
-                    content: Text(
-                      'EventsJo is a comprehensive cross-platform mobile application designed to streamline the process of booking venues for various occasions in Jordan. Whether its a wedding, a football match, or a relaxing getaway at a farm, EventsJo connects users with available venues, making reservations simple and hassle-free. The app features user-friendly authentication, seamless payment options (cash or credit card), and detailed tracking of past and upcoming events.',
-                      style: TextStyle(
-                        color: GColors.black,
-                        fontSize: kSmallFontSize,
-                      ),
-                    ),
-                    actions: [
-                      IconButton(
-                        onPressed: () => context.pop(),
-                        style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                                GColors.whiteShade3.shade600)),
-                        icon: Text(
-                          'Done',
-                          style: TextStyle(
-                              color: GColors.royalBlue,
-                              fontSize: kSmallFontSize),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              20.height,
-              SettingsCard(
                 text: 'About Us',
                 icon: CustomIcons.info,
                 onTap: () => showDialog(
@@ -158,8 +126,6 @@ class _SupportPageState extends State<SupportPage> {
                       subjectController.clear();
                       messageController.clear();
                     });
-                    context
-                        .showSnackBar('Your message has been sent, Thank you');
                   },
                 ),
               ),

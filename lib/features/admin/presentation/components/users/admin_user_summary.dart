@@ -8,6 +8,7 @@ class AdminUserSummary extends StatelessWidget {
   final String email;
   final String id;
   final void Function()? showMap;
+  final bool? wasOwnerAndSwitched;
 
   const AdminUserSummary({
     super.key,
@@ -15,6 +16,7 @@ class AdminUserSummary extends StatelessWidget {
     required this.email,
     required this.id,
     this.showMap,
+    this.wasOwnerAndSwitched,
   });
 
   @override
@@ -34,6 +36,15 @@ class AdminUserSummary extends StatelessWidget {
 
           //id
           AdminConfirmationDisplayRow(mainText: 'Id: ', subText: id),
+          localDivider(),
+
+          //id
+          AdminConfirmationDisplayRow(
+            mainText: 'Was an owner: ',
+            subText: wasOwnerAndSwitched == null
+                ? 'False'
+                : wasOwnerAndSwitched.toString(),
+          ),
         ],
       ),
     );

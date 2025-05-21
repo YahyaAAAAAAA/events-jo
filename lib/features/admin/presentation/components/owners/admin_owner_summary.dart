@@ -8,6 +8,7 @@ class AdminOwnerSummary extends StatelessWidget {
   final String email;
   final String id;
   final void Function()? showMap;
+  final bool? wasOwnerAndSwitched;
 
   const AdminOwnerSummary({
     super.key,
@@ -15,6 +16,7 @@ class AdminOwnerSummary extends StatelessWidget {
     required this.email,
     required this.id,
     this.showMap,
+    this.wasOwnerAndSwitched,
   });
 
   @override

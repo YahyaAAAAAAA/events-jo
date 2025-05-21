@@ -60,7 +60,6 @@ class CashoutModalSheet extends StatelessWidget {
       listener: (context, state) {
         if (state is OrderError) {
           context.showSnackBar(state.message);
-          print(state.message);
         }
       },
       builder: (context, state) {

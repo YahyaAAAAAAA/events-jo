@@ -14,26 +14,32 @@ class SelectPeopleRange extends StatelessWidget {
     required this.peoplePriceController,
     required this.peopleMinController,
     required this.peopleMaxController,
+    this.testPress,
   });
 
   final TextEditingController peoplePriceController;
   final TextEditingController peopleMinController;
   final TextEditingController peopleMaxController;
+  final void Function()? testPress;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           //* text
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(
-              'Add the price per pesron for your ${eventType.name}',
-              style: TextStyle(
-                color: GColors.black,
-                fontSize: kSmallFontSize,
+            child: GestureDetector(
+              onTap: testPress,
+              child: Text(
+                'Add the price per ${eventType == EventType.venue ? 'pesron' : 'hour'} for your ${eventType.name}',
+                style: TextStyle(
+                  color: GColors.black,
+                  fontSize: kSmallFontSize,
+                ),
               ),
             ),
           ),

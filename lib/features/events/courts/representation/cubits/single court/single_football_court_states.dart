@@ -15,6 +15,10 @@ class SingleFootballCourtLoaded extends SingleFootballCourtStates {
   SingleFootballCourtLoaded(this.court);
 }
 
+class SingleFootballCourtDeleted extends SingleFootballCourtStates {
+  SingleFootballCourtDeleted();
+}
+
 //change
 class SingleFootballCourtChanged extends SingleFootballCourtStates {
   final String change;

@@ -114,7 +114,7 @@ class AdminUnapprovedCourtsCubit extends Cubit<AdminUnapprovedCourtsStates> {
       await Delay.oneSecond();
 
       //denying
-      await adminRepo.denyVenue(id, urls);
+      await adminRepo.denyCourt(id, urls);
 
       //deny done
       emit(AdminUnapprovedCourtsDenyActionLoaded());

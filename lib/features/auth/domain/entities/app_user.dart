@@ -12,6 +12,7 @@ class AppUser {
   String? stripeAccountId;
   String? onboardingStatus;
   bool? onboarded;
+  bool? wasOwnerAndNowUser;
 
   AppUser({
     required this.uid,
@@ -24,6 +25,7 @@ class AppUser {
     this.stripeAccountId,
     this.onboardingStatus,
     this.onboarded,
+    this.wasOwnerAndNowUser,
   });
 
   //convert app user to json
@@ -38,6 +40,8 @@ class AppUser {
       'isOnline': isOnline,
       'onboardingStatus': onboardingStatus,
       'onboarded': onboarded,
+      'wasOwnerAndNowUser': wasOwnerAndNowUser,
+      'stripeAccountId': stripeAccountId,
     };
   }
 
@@ -54,6 +58,7 @@ class AppUser {
       stripeAccountId: jsonUser['stripeAccountId'],
       onboardingStatus: jsonUser['onboardingStatus'],
       onboarded: jsonUser['onboarded'],
+      wasOwnerAndNowUser: jsonUser['wasOwnerAndNowUser'],
     );
   }
 }

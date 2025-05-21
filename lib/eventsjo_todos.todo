@@ -115,12 +115,12 @@ pending:
     ✔ handle refunded amount in admin @done(25-05-19 01:23)
     ✔ replace venue people slider with text field @done(25-05-20 00:50)
     ✔ add support and problem reporting @done(25-05-20 02:47)
-    ☐ remove notification from settings (consider email noti ?)
+    ✔ remove notification from settings (consider email noti ?) @done(25-05-20 21:05)
+    ✔ delete venues when owner is changed to user @done(25-05-20 21:05)
+    ✔ delete venues on account delete @done(25-05-20 21:05)
     ☐ event location on creation
     ☐ remove location for owners
     ☐ fix use case diagram 
-    ☐ delete venues when owner is changed to user
-    ☐ delete venues on account delete
     ☐ add license upload to server :D
 
 

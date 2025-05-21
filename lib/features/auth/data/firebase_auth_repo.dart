@@ -20,6 +20,8 @@ class FirebaseAuthRepo implements AuthRepo {
       //fetch user's type
       final type = await getUserType();
 
+      final stripeAccountId = await getCurrentUserStripeAccount(type);
+
       //fetch user's latitude
       final latitude = await getCurrentUserLatitude(type);
 
@@ -40,6 +42,7 @@ class FirebaseAuthRepo implements AuthRepo {
         isOnline: true,
         latitude: latitude ?? 0,
         longitude: longitude ?? 0,
+        stripeAccountId: stripeAccountId,
       );
     } catch (e) {
       throw Exception('Login Failed $e');
@@ -65,6 +68,8 @@ class FirebaseAuthRepo implements AuthRepo {
       //fetch user's longitude
       final longitude = await getCurrentUserLongitude(type);
 
+      final stripeAccountId = await getCurrentUserStripeAccount(type);
+
       //update email in firestore
       //incase user changed email, update the field
       await firebaseFirestore
@@ -83,6 +88,7 @@ class FirebaseAuthRepo implements AuthRepo {
         isOnline: true,
         latitude: latitude ?? 0,
         longitude: longitude ?? 0,
+        stripeAccountId: stripeAccountId,
       );
 
       //make user online on login
@@ -301,5 +307,33 @@ class FirebaseAuthRepo implements AuthRepo {
     }
 
     return 0;
+  }
+
+  @override
+  Future<String?> getCurrentUserStripeAccount(UserType? type) async {
+    //current user
+    final firebaseUser = firebaseAuth.currentUser;
+
+    //user doesn't exist
+    if (firebaseUser == null) {
+      return null;
+    }
+
+    if (type == null) {
+      return null;
+    }
+
+    //access users or owners
+    final collection = FirebaseFirestore.instance.collection('owners');
+
+    //get data fields as json
+    final docSnapshot = await collection.doc(firebaseUser.uid).get();
+
+    if (docSnapshot.exists) {
+      Map<String, dynamic> data = docSnapshot.data()!;
+
+      return data['stripeAccountId'];
+    }
+    return null;
   }
 }

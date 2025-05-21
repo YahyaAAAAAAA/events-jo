@@ -38,6 +38,9 @@ class SettingsTextField extends StatelessWidget {
           filled: true,
           fillColor: GColors.white,
           hintText: hintText,
+          hintStyle: TextStyle(
+            color: GColors.black.withValues(alpha: 0.7),
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(

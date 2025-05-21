@@ -10,12 +10,14 @@ class SelectRangeDatePage extends StatelessWidget {
   final EventType eventType;
   final DateTimeRange? range;
   final void Function(DateTimeRange)? onRangeSelected;
+  final void Function()? testPress;
 
   const SelectRangeDatePage({
     super.key,
     required this.eventType,
     required this.range,
     required this.onRangeSelected,
+    this.testPress,
   });
 
   @override
@@ -25,11 +27,14 @@ class SelectRangeDatePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 10,
         children: [
-          Text(
-            'Select dates where your ${eventType.name} would be open',
-            style: TextStyle(
-              color: GColors.black,
-              fontSize: kSmallFontSize,
+          GestureDetector(
+            onTap: testPress,
+            child: Text(
+              'Select dates where your ${eventType.name} would be open',
+              style: TextStyle(
+                color: GColors.black,
+                fontSize: kSmallFontSize,
+              ),
             ),
           ),
           FittedBox(

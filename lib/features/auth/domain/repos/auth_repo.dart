@@ -32,4 +32,6 @@ abstract class AuthRepo {
   Future<double?> getCurrentUserLatitude(UserType? type);
 
   Future<double?> getCurrentUserLongitude(UserType? type);
+
+  Future<String?> getCurrentUserStripeAccount(UserType? type);
 }

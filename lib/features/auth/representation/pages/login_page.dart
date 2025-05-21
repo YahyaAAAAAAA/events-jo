@@ -32,7 +32,6 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
 
     //todo remove later
-    emailController.text = 'yahya@gmail.com';
     emailController.text = 'test1@gmail.com';
     pwController.text = '123456';
 
@@ -64,11 +63,18 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 10),
 
                 //login message
-                Text(
-                  "Login to EventsJo",
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: 22,
+                GestureDetector(
+                  onTap: () {
+                    emailController.text = 'yahya@gmail.com';
+                    pwController.text = '123456';
+                    setState(() {});
+                  },
+                  child: Text(
+                    "Login to EventsJo",
+                    style: TextStyle(
+                      color: GColors.black,
+                      fontSize: 22,
+                    ),
                   ),
                 ),
 

@@ -4,7 +4,11 @@ import 'package:latlong2/latlong.dart';
 abstract class SettingsRepo {
   Future<String?> updateUserName(String newName);
 
-  Future<UserType?> updateUserType(UserType initType, UserType newType);
+  Future<UserType?> updateUserType(
+    UserType initType,
+    UserType newType,
+    bool? wasOwnerAndNowUser,
+  );
 
   Future<String?> updateUserEmail(
     String newEmail,

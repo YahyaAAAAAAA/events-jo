@@ -104,16 +104,7 @@ class SelectEventType extends StatelessWidget {
                     ),
                   ),
                 ),
-                PopupMenuItem(
-                  value: EventType.farm,
-                  child: Text(
-                    'Farm',
-                    style: TextStyle(
-                      color: GColors.black,
-                      fontSize: kSmallFontSize,
-                    ),
-                  ),
-                ),
+
                 PopupMenuItem(
                   value: EventType.court,
                   child: Text(

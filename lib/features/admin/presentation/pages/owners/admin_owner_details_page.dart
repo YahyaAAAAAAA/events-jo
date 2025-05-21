@@ -65,6 +65,7 @@ class _AdminOwnerDetailsPageState extends State<AdminOwnerDetailsPage> {
                 name: state.owner!.name,
                 email: state.owner!.email,
                 id: state.owner!.uid,
+                wasOwnerAndSwitched: state.owner!.wasOwnerAndNowUser,
                 //todo should update location object
                 showMap: () => locationCubit.showMapDialogPreview(context,
                     userLocation: ownerLocation,

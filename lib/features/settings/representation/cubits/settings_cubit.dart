@@ -32,12 +32,20 @@ class SettingsCubit extends Cubit<SettingsStates> {
   }
 
   //change user's type
-  Future<void> updateUserType(UserType initType, UserType newType) async {
+  Future<void> updateUserType(
+    UserType initType,
+    UserType newType,
+    bool? wasOwnerAndNowUser,
+  ) async {
     emit(SettingsLoading());
 
     try {
       //change type
-      final type = await settingsRepo.updateUserType(initType, newType);
+      final type = await settingsRepo.updateUserType(
+        initType,
+        newType,
+        wasOwnerAndNowUser,
+      );
 
       if (type != null) {
         //update currentUser in UserManager

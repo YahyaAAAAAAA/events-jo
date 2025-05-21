@@ -28,18 +28,21 @@ class EventAddedSuccessfullyPage extends StatelessWidget {
         children: [
           const SizedBox(width: 100, child: Divider()),
           10.height,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                text ??
-                    'Thank you, your ${eventType.name} has been sent for admin approval',
-                style: TextStyle(
-                  color: GColors.black,
-                  fontSize: kNormalFontSize,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  text ??
+                      'Thank you, your ${eventType.name} has been sent for admin approval',
+                  style: TextStyle(
+                    color: GColors.black,
+                    fontSize: kNormalFontSize,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           10.height,
           IconButton(

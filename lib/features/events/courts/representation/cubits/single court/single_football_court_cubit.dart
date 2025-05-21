@@ -20,6 +20,12 @@ class SingleFootballCourtCubit extends Cubit<SingleFootballCourtStates> {
       final footballCourt = await eventsRepo.getCourt(courtId);
 
       if (footballCourt == null) {
+        emit(SingleFootballCourtDeleted());
+        return;
+      }
+
+      if (footballCourt.isApproved == false) {
+        emit(SingleFootballCourtDeleted());
         return;
       }
 

@@ -401,8 +401,6 @@ class OwnerVenueOrderDetailsModalSheet extends StatelessWidget {
                       );
                     }
                   : () {
-                      print(user.uid);
-
                       context.showSnackBar('You can\'t chat with yourself');
                     },
               style: ButtonStyle(

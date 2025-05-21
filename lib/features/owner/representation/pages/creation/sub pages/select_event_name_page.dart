@@ -11,11 +11,13 @@ import 'package:flutter/material.dart';
 class SelectEventNamePage extends StatelessWidget {
   final EventType eventType;
   final TextEditingController nameController;
+  final void Function()? testPress;
 
   const SelectEventNamePage({
     super.key,
     required this.eventType,
     required this.nameController,
+    this.testPress,
   });
 
   @override
@@ -25,7 +27,7 @@ class SelectEventNamePage extends StatelessWidget {
       icon: Row(
         children: [
           IconButton(
-            onPressed: null,
+            onPressed: testPress,
             style: ButtonStyle(
               backgroundColor:
                   WidgetStatePropertyAll(GColors.whiteShade3.shade600),

@@ -97,7 +97,6 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
 
   void getVenueOrders() async {
     reservedDates = await orderCubit.getVenueReservedDates(footballCourt.id);
-    print(reservedDates);
     setState(() {});
   }
 
@@ -240,6 +239,14 @@ class _FootballCourtsDetailsPageState extends State<FootballCourtsDetailsPage> {
                 final court = state.court;
 
                 return buildVenueElements(context, court);
+              } else if (state is SingleFootballCourtDeleted) {
+                return Text(
+                  'This Court is not available at this moment',
+                  style: TextStyle(
+                    color: GColors.black,
+                    fontSize: kNormalFontSize,
+                  ),
+                );
               } else {
                 return Skeletonizer(
                     enabled: true,

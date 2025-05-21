@@ -27,6 +27,12 @@ class SingleWeddingVenueCubit extends Cubit<SingleWeddingVenueStates> {
       updatedData = detailedVenue;
 
       if (detailedVenue == null) {
+        emit(SingleWeddingVenueDeletec());
+        return;
+      }
+
+      if (detailedVenue.venue.isApproved == false) {
+        emit(SingleWeddingVenueLoading());
         return;
       }
 

@@ -17,6 +17,8 @@ import 'package:events_jo/features/settings/representation/cubits/settings_cubit
 import 'package:events_jo/features/settings/representation/cubits/settings_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountPage extends StatefulWidget {
   //todo make their own cubit
@@ -44,6 +46,8 @@ class _AccountPageState extends State<AccountPage> {
   UserType newType = UserType.user;
   UserType initType = UserType.user;
 
+  TextEditingController controller = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -66,6 +70,12 @@ class _AccountPageState extends State<AccountPage> {
       initLat: user!.latitude,
       initLong: user!.longitude,
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -95,7 +105,7 @@ class _AccountPageState extends State<AccountPage> {
                 children: [
                   //text
                   Text(
-                    'Account Name',
+                    'Request to Join Administration Team',
                     style: TextStyle(
                       color: GColors.black,
                       fontSize: kSmallFontSize,
@@ -106,11 +116,41 @@ class _AccountPageState extends State<AccountPage> {
                   5.height,
 
                   //new name field
-                  SettingsTextField(
-                    hintText: 'New Name',
-                    initialValue: user!.name,
-                    //save new name
-                    onChanged: (value) => newName = value,
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Expanded(
+                        child: SettingsTextField(
+                          hintText: 'Your Message Here',
+                          controller: controller,
+                          //save new name
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          final subject = 'Admin Request';
+                          final message = controller.text.trim();
+
+                          final Uri emailUri = Uri(
+                            scheme: 'mailto',
+                            path: await dotenv.get('APP_EMAIL'),
+                            queryParameters: {
+                              'subject': subject,
+                              'body': message,
+                            },
+                          );
+
+                          launchUrl(emailUri);
+
+                          setState(() {
+                            controller.clear();
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.send,
+                        ),
+                      ),
+                    ],
                   ),
 
                   20.height,
@@ -161,7 +201,7 @@ class _AccountPageState extends State<AccountPage> {
                       ? Padding(
                           padding: const EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            '• Your events will be deleted after changing your account type',
+                            '• Your owned events will exist in the app till all the events are done, you will gain the access back when you switch back.',
                             style: TextStyle(
                               color: GColors.redShade3,
                               fontSize: 15,
@@ -214,6 +254,9 @@ class _AccountPageState extends State<AccountPage> {
                           await widget.settingsCubit.updateUserType(
                             initType,
                             newType,
+                            newType != initType && initType == UserType.owner
+                                ? true
+                                : null,
                           );
 
                           //logout
