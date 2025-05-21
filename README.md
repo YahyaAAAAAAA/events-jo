@@ -41,17 +41,25 @@
 
 ###
 
-
-
-<h2 align="left">👋 Introduction</h2>
-
-###
+<h2 align="left">🔵 Introduction</h2>
 
 <p align="left">EventsJo is a cross-platform mobile application designed to simplify the process of booking venues for various events in Jordan, including weddings, farm gatherings, and football courts.<br> Built using Flutter and powered by Firebase, EventsJo provides a seamless experience for users to browse, book, and manage event reservations.</p>
 
 ###
 
-<h2 align="left">📱 Key Features</h2>
+<h2 align="left">🔵 Showcase</h2>
+
+https://github.com/user-attachments/assets/763e1bc2-6b00-4e15-84a3-2d3c6ef69cc5
+
+###
+
+<h2 align="left">🔵 Screenshots (20+ Screens)</h2>
+
+<img src="assets/git_images/app_images/screens.png"/>
+
+###
+
+<h2 align="left">🔵 Key Features</h2>
 
 ###
 
@@ -59,11 +67,15 @@
 
 ###
 
-<h2 align="left">🔨 Tech Stack</h2>
+<h2 align="left">🔵 Tech Stack</h2>
 
-<p align="left">• Frontend: Flutter.<br>• Backend: Firebase (Firestore, Authentication, Cloud Functions).<br>• Payment Integration: Stripe</p>
+###
 
-<h2 align="left">🚀 Download EventsJo</h2>
+<p align="left">• Frontend: Flutter.<br>• Backend: Firebase (Firestore, Authentication), NodeJs, Cloudinary, Render.<br>• Payment Integration: Stripe</p>
+
+###
+
+<h2 align="left">🔵 Download EventsJo</h2>
 
 ###
 
@@ -84,7 +96,7 @@
 
 ###
 
-<h2 align="left">📬 Contact</h2>
+<h2 align="left">🔵 Contact</h2>
 
 <p align="left">• Email: yahya.amarneh73@gmail.com</p>
 
