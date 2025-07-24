@@ -16,31 +16,6 @@ class SelectRangeTimePage extends StatelessWidget {
     required this.onTab,
   });
 
-  //  Center(
-  //           child: Text(
-  //             'Please pick your open hours',
-  //             style: TextStyle(
-  //               color: GColors.poloBlue,
-  //               fontSize: 20,
-  //               fontWeight: FontWeight.bold,
-  //             ),
-  //           ),
-  //         ),
-
-  //display time
-  // Center(
-  //   child: Text(
-  //     tempValueForTime != 0
-  //         ? 'From ${time[0].toString().toTime} To ${time[1].toString().toTime}'
-  //         : '',
-  //     style: TextStyle(
-  //       color: GColors.royalBlue,
-  //       fontSize: 22,
-  //       fontWeight: FontWeight.normal,
-  //     ),
-  //   ),
-  // ),
-
   @override
   Widget build(BuildContext context) {
     return Center(

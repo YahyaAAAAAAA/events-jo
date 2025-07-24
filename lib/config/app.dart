@@ -1,4 +1,7 @@
+import 'dart:ui' as html;
 import 'package:events_jo/config/theme/eventsjo_theme.dart';
+import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/admin/presentation/cubits/courts/approved/admin_approved_courts_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/courts/unapproved/admin_unapproved_courts_cubit.dart';
 import 'package:events_jo/features/admin/presentation/cubits/order/admin_order_cubit.dart';
@@ -45,6 +48,7 @@ import 'package:events_jo/features/events/weddings/representation/cubits/venues/
 import 'package:events_jo/features/events/weddings/representation/cubits/single%20venue/single_wedding_venue_cubit.dart';
 import 'package:events_jo/features/support/data/firebase_problem_report_repo.dart';
 import 'package:events_jo/features/support/representation/cubits/problem_report/problem_report_cubit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -203,46 +207,93 @@ class EventsJoApp extends StatelessWidget {
           create: (context) => AdminProblemReportCubit(adminRepo: adminRepo),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: eventsJoTheme(),
-        home: MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: const TextScaler.linear(1)),
-          child: BlocConsumer<AuthCubit, AuthStates>(
-            builder: (context, state) {
-              debugPrint(state.toString());
+      child: kIsWeb
+          ? WebTemplate(
+              child: buildMaterialApp(context),
+            )
+          : buildMaterialApp(context),
+    );
+  }
 
-              //not logged-in
-              if (state is Unauthenticated) {
-                return const AuthPage();
-              }
+  MaterialApp buildMaterialApp(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: eventsJoTheme(),
+      home: MediaQuery(
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1)),
+        child: BlocConsumer<AuthCubit, AuthStates>(
+          builder: (context, state) {
+            debugPrint(state.toString());
 
-              //logged-in
-              if (state is Authenticated) {
-                //user authenticated now check type (user,owner,admin)
-                return const UserTypeGate();
-              }
+            //not logged-in
+            if (state is Unauthenticated) {
+              return const AuthPage();
+            }
 
-              //loading...
-              if (state is AuthLoading) {
-                return Scaffold(
-                  body: GlobalLoadingBar(
-                    subText: state.message,
-                  ),
-                );
-              }
+            //logged-in
+            if (state is Authenticated) {
+              //user authenticated now check type (user,owner,admin)
+              return const UserTypeGate();
+            }
 
-              //error
-              else {
-                return const AuthErrorCard();
-              }
-            },
-            listener: (context, state) {
-              if (state is AuthError) {
-                GSnackBar.show(context: context, text: state.message);
-              }
-            },
+            //loading...
+            if (state is AuthLoading) {
+              return Scaffold(
+                body: GlobalLoadingBar(
+                  subText: state.message,
+                ),
+              );
+            }
+
+            //error
+            else {
+              return const AuthErrorCard();
+            }
+          },
+          listener: (context, state) {
+            if (state is AuthError) {
+              GSnackBar.show(context: context, text: state.message);
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class WebTemplate extends StatelessWidget {
+  final Widget child;
+
+  const WebTemplate({
+    super.key,
+    required this.child,
+  });
+
+  bool isMobileWeb(BuildContext context) {
+    if (!kIsWeb) return false;
+
+    return MediaQuery.of(context).size.width < 600;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color:
+          GColors.scaffoldBg.withValues(alpha: isMobileWeb(context) ? 1 : 0.7),
+      child: Center(
+        child: Container(
+          padding:
+              EdgeInsets.symmetric(vertical: isMobileWeb(context) ? 0 : 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(kOuterRadius),
+          ),
+          constraints: const BoxConstraints(
+            maxWidth: 500,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(kOuterRadius),
+            child: child,
           ),
         ),
       ),

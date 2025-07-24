@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:events_jo/features/owner/domain/models/stripe_connect.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
 import 'package:events_jo/features/owner/representation/cubits/stripe_connect/stripe_connect_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,11 +10,11 @@ class StripeConnectCubit extends Cubit<StripeConnectStates> {
 
   StripeConnectCubit({required this.ownerRepo}) : super(StripeConnectInit());
 
-  Future<String> startOnboarding(String userId) async {
+  Future<StripeConnect> startOnboarding(String userId) async {
     try {
       final result = await ownerRepo.startOnboarding(userId);
 
-      return result.onboardingUrl;
+      return result;
     } catch (e) {
       emit(StripeConnectError(e.toString()));
 

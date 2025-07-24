@@ -57,92 +57,111 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: BlocConsumer<StripeConnectCubit, StripeConnectStates>(
-                listener: (context, state) async {
-              if (state is StripeConnectError) {
-                context.showSnackBar(state.message);
-              }
-            }, builder: (context, state) {
-              //not connected
-              if (state is StripeNotConnected) {
-                return StripeNotConnectedPage(
-                  isLoading: isStripeLoading,
-                  onPressed: () async {
-                    setState(() => isStripeLoading = true);
+              listener: (context, state) async {
+                if (state is StripeConnectError) {
+                  context.showSnackBar(state.message);
+                }
+              },
+              builder: (context, state) {
+                //not connected
+                if (state is StripeNotConnected) {
+                  return StripeNotConnectedPage(
+                    isLoading: isStripeLoading,
+                    onPressed: () async {
+                      setState(() => isStripeLoading = true);
 
-                    final url = await stripeConnectCubit
-                        .startOnboarding(widget.user!.uid);
-                    launchUrl(Uri.parse(url));
+                      final connect = await stripeConnectCubit
+                          .startOnboarding(widget.user!.uid);
 
-                    setState(() => isStripeLoading = false);
-                  },
-                );
-              }
+                      widget.user!.stripeAccountId = connect.stripeAccountId;
 
-              //not completed
-              if (state is StripeNotCompleted) {
-                return StripeNotCompletedPage(
-                  isLoading: isStripeLoading,
-                  onPressed: () async {
-                    setState(() => isStripeLoading = true);
-                    final url = await stripeConnectCubit
-                        .startOnboarding(widget.user!.uid);
+                      launchUrl(Uri.parse(connect.onboardingUrl));
 
-                    launchUrl(Uri.parse(url));
+                      setState(() => isStripeLoading = false);
+                    },
+                  );
+                }
 
-                    setState(() => isStripeLoading = false);
-                  },
-                );
-              }
-              //connected
-              return ListView(
-                children: [
-                  Text(
-                    'Create Events',
-                    style: TextStyle(
-                      color: GColors.black,
-                      fontSize: kSmallFontSize + 2,
-                      fontWeight: FontWeight.bold,
+                //not completed
+                if (state is StripeNotCompleted) {
+                  return StripeNotCompletedPage(
+                    isLoading: isStripeLoading,
+                    onPressed: () async {
+                      setState(() => isStripeLoading = true);
+                      final connect = await stripeConnectCubit
+                          .startOnboarding(widget.user!.uid);
+
+                      widget.user!.stripeAccountId = connect.stripeAccountId;
+
+                      launchUrl(Uri.parse(connect.stripeAccountId));
+
+                      setState(() => isStripeLoading = false);
+                    },
+                  );
+                }
+                //connected
+                if (state is StripeConnected) {
+                  return ListView(
+                    children: [
+                      Text(
+                        'Create Events',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize + 2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      5.height,
+                      SettingsCard(
+                        text: 'Create an Event',
+                        icon: Icons.create_rounded,
+                        onTap: () => context.push(
+                          OwnerEventCreationPage(user: widget.user),
+                        ),
+                      ),
+                      10.height,
+                      Text(
+                        'Your Events',
+                        style: TextStyle(
+                          color: GColors.black,
+                          fontSize: kSmallFontSize + 2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      5.height,
+                      SettingsCard(
+                        text: 'Your Venues',
+                        icon: CustomIcons.wedding,
+                        onTap: () => context.push(const OwnerVenuesTabPage()),
+                      ),
+                      10.height,
+                      SettingsCard(
+                        text: 'Your Courts',
+                        icon: CustomIcons.football_1,
+                        onTap: () => context.push(const OwnerCourtsTabPage()),
+                      ),
+                      10.height,
+                      SettingsCard(
+                        text: 'Your Farms',
+                        icon: CustomIcons.wheat,
+                        isComingSoon: true,
+                        onTap: () => context.showSnackBar('Coming Soon'),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Center(
+                    child: Text(
+                      'There was an error, please try again later.',
+                      style: TextStyle(
+                        color: GColors.black,
+                        fontSize: kSmallFontSize,
+                      ),
                     ),
-                  ),
-                  5.height,
-                  SettingsCard(
-                    text: 'Create an Event',
-                    icon: Icons.create_rounded,
-                    onTap: () => context.push(
-                      OwnerEventCreationPage(user: widget.user),
-                    ),
-                  ),
-                  10.height,
-                  Text(
-                    'Your Events',
-                    style: TextStyle(
-                      color: GColors.black,
-                      fontSize: kSmallFontSize + 2,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  5.height,
-                  SettingsCard(
-                    text: 'Your Venues',
-                    icon: CustomIcons.wedding,
-                    onTap: () => context.push(const OwnerVenuesTabPage()),
-                  ),
-                  10.height,
-                  SettingsCard(
-                    text: 'Your Courts',
-                    icon: CustomIcons.football_1,
-                    onTap: () => context.push(const OwnerCourtsTabPage()),
-                  ),
-                  10.height,
-                  SettingsCard(
-                    text: 'Your Farms',
-                    icon: CustomIcons.wheat,
-                    isComingSoon: true,
-                    onTap: () => context.showSnackBar('Coming Soon'),
-                  ),
-                ],
-              );
-            }),
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),

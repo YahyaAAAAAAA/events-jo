@@ -6,6 +6,7 @@ import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/packages/image%20slideshow/image_slideshow.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -68,10 +69,15 @@ class SelectImagesPage extends StatelessWidget {
                               return ClipRRect(
                                 borderRadius:
                                     BorderRadius.circular(kOuterRadius),
-                                child: Image.file(
-                                  File(images[index].path),
-                                  fit: BoxFit.contain,
-                                ),
+                                child: kIsWeb
+                                    ? Image.network(
+                                        images[index].path,
+                                        fit: BoxFit.contain,
+                                      )
+                                    : Image.file(
+                                        File(images[index].path),
+                                        fit: BoxFit.contain,
+                                      ),
                               );
                             },
                           ),

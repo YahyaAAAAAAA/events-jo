@@ -15,6 +15,7 @@ import 'package:events_jo/features/owner/representation/components/venues/owner_
 import 'package:events_jo/features/owner/representation/cubits/courts/owner_courts_cubit.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
 import 'package:events_jo/features/settings/representation/components/settings_sub_app_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -220,11 +221,20 @@ class _OwnerApprovedCourtDetailsPageState
                                                         size: 40,
                                                       ),
                                                     )
-                                                  //todo will fail on web
                                                   //new local images
-                                                  : Image.file(File(
-                                                      updatedImages![index]
-                                                          [0])),
+                                                  : (kIsWeb
+                                                      ? Image.network(
+                                                          updatedImages![index]
+                                                              [0],
+                                                          fit: BoxFit.contain,
+                                                        )
+                                                      : Image.file(
+                                                          File(
+                                                            updatedImages![
+                                                                index][0],
+                                                          ),
+                                                          fit: BoxFit.contain,
+                                                        )),
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(12),

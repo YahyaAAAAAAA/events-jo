@@ -44,6 +44,9 @@ class _RegisterPageState extends State<RegisterPage> {
   late final LocationCubit locationCubit;
   late EjLocation userLocation;
 
+  bool pwHideToggle = true;
+  bool confirmPwHideToggle = true;
+
   //user type
   UserType type = UserType.user;
 
@@ -88,22 +91,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: EventsJoLogoAuth(),
               ),
 
-              GestureDetector(
-                onTap: () {
-                  final random = Random();
-                  final randomNumber = random.nextInt(900) + 100;
-                  nameController.text = 'test$randomNumber';
-                  emailController.text = 'test$randomNumber@gmail.com';
-                  pwController.text = '123456';
-                  confirmPwController.text = '123456';
-                  setState(() {});
-                },
-                child: Text(
-                  "Create an account",
-                  style: TextStyle(
-                    color: GColors.black,
-                    fontSize: 22,
-                  ),
+              Text(
+                "Create an account",
+                style: TextStyle(
+                  color: GColors.black,
+                  fontSize: 22,
                 ),
               ),
 
@@ -120,6 +112,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     setState(() => type = UserType.owner);
                   }
                 },
+                onRandomPress: () {
+                  final random = Random();
+                  final randomNumber = random.nextInt(900) + 100;
+                  nameController.text = 'test$randomNumber';
+                  emailController.text = 'test$randomNumber@gmail.com';
+                  pwController.text = '123456';
+                  confirmPwController.text = '123456';
+                  setState(() {});
+                },
                 type: type,
               ),
 
@@ -129,7 +130,6 @@ class _RegisterPageState extends State<RegisterPage> {
               AuthTextField(
                 controller: nameController,
                 hintText: "Name",
-                obscureText: false,
                 maxLength: 15,
               ),
 
@@ -139,7 +139,6 @@ class _RegisterPageState extends State<RegisterPage> {
               AuthTextField(
                 controller: emailController,
                 hintText: "Email",
-                obscureText: false,
               ),
 
               const SizedBox(height: 10),
@@ -148,7 +147,9 @@ class _RegisterPageState extends State<RegisterPage> {
               AuthTextField(
                 controller: pwController,
                 hintText: "Password",
-                obscureText: true,
+                obscureText: pwHideToggle,
+                toggleObscure: () =>
+                    setState(() => pwHideToggle = !pwHideToggle),
               ),
 
               const SizedBox(height: 10),
@@ -156,7 +157,9 @@ class _RegisterPageState extends State<RegisterPage> {
               AuthTextField(
                 controller: confirmPwController,
                 hintText: "Confirm Password",
-                obscureText: true,
+                obscureText: confirmPwHideToggle,
+                toggleObscure: () =>
+                    setState(() => confirmPwHideToggle = !confirmPwHideToggle),
               ),
 
               const SizedBox(height: 10),

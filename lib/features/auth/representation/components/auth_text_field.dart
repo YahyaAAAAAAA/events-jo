@@ -20,6 +20,7 @@ class AuthTextField extends StatelessWidget {
   final double? elevation;
 
   final TextFieldInputType? inputType;
+  final void Function()? toggleObscure;
 
   const AuthTextField({
     super.key,
@@ -35,6 +36,7 @@ class AuthTextField extends StatelessWidget {
     this.maxLength,
     this.inputType,
     this.enabledColor,
+    this.toggleObscure,
   });
 
   @override
@@ -79,6 +81,18 @@ class AuthTextField extends StatelessWidget {
           hintText: hintText,
           //note: hides maxLength counter
           counterText: "",
+          suffixIcon: toggleObscure == null
+              ? null
+              : GestureDetector(
+                  onTap: toggleObscure,
+                  child: Icon(
+                    obscureText == true
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: GColors.black,
+                    size: kSmallIconSize,
+                  ),
+                ),
           hintStyle: TextStyle(
             color: GColors.black.withValues(alpha: 0.5),
             fontSize: kSmallFontSize,

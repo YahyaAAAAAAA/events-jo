@@ -118,6 +118,8 @@ pending:
     ✔ remove notification from settings (consider email noti ?) @done(25-05-20 21:05)
     ✔ delete venues when owner is changed to user @done(25-05-20 21:05)
     ✔ delete venues on account delete @done(25-05-20 21:05)
+    ☐ fix stripeAccountId in auth repo
+    ☐ find host on web, release on android and wind
     ☐ event location on creation
     ☐ remove location for owners
     ☐ fix use case diagram 

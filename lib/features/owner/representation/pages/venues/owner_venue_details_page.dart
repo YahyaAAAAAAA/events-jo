@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:events_jo/config/algorithms/image_for_string.dart';
@@ -22,6 +21,7 @@ import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dar
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -253,11 +253,19 @@ class _OwnerApprovedVenueDetailsPageState
                                                         size: 40,
                                                       ),
                                                     )
-                                                  //todo will fail on web
-                                                  //new local images
-                                                  : Image.file(File(
-                                                      updatedImages![index]
-                                                          [0])),
+                                                  : (kIsWeb
+                                                      ? Image.network(
+                                                          updatedImages![index]
+                                                              [0],
+                                                          fit: BoxFit.contain,
+                                                        )
+                                                      : Image.file(
+                                                          File(
+                                                            updatedImages![
+                                                                index][0],
+                                                          ),
+                                                          fit: BoxFit.contain,
+                                                        )),
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(12),
