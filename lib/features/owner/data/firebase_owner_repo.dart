@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/config/extensions/string_extensions.dart';
 import 'package:events_jo/config/utils/endpoints.dart';
+import 'package:events_jo/config/utils/enviroment.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
 import 'package:events_jo/features/owner/domain/models/stripe_connect.dart';
 import 'package:events_jo/features/owner/domain/repo/owner_repo.dart';
@@ -11,7 +12,6 @@ import 'package:events_jo/features/events/shared/domain/models/wedding_venue.dar
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_detailed.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_drink.dart';
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -21,9 +21,9 @@ class FirebaseOwnerRepo implements OwnerRepo {
 
   //setup cloudinary server (for image upload & removal)
   final cloudinary = Cloudinary.full(
-    apiKey: dotenv.get('IMG_API_KEY'),
-    apiSecret: dotenv.get('IMG_API_SECRET'),
-    cloudName: dotenv.get('IMG_CLOUD_NAME'),
+    apiKey: Environment.imgApiKey,
+    apiSecret: Environment.imgApiSecret,
+    cloudName: Environment.imgCloudName,
   );
 
   @override

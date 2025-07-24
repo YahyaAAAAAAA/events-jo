@@ -1,4 +1,3 @@
-import 'dart:ui' as html;
 import 'package:events_jo/config/theme/eventsjo_theme.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/global_colors.dart';

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:events_jo/config/utils/endpoints.dart';
+import 'package:events_jo/config/utils/enviroment.dart';
 import 'package:events_jo/features/admin/domain/repos/admin_repo.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/events/shared/domain/models/football_court.dart';
@@ -11,7 +12,6 @@ import 'package:events_jo/features/events/shared/domain/models/wedding_venue_dri
 import 'package:events_jo/features/events/shared/domain/models/wedding_venue_meal.dart';
 import 'package:events_jo/features/order/domain/models/e_order.dart';
 import 'package:events_jo/features/support/domain/models/problem_report.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class FirebaseAdminRepo implements AdminRepo {
@@ -20,9 +20,9 @@ class FirebaseAdminRepo implements AdminRepo {
 
   //setup cloudinary server (for image upload & removal)
   final cloudinary = Cloudinary.full(
-    apiKey: dotenv.get('IMG_API_KEY'),
-    apiSecret: dotenv.get('IMG_API_SECRET'),
-    cloudName: dotenv.get('IMG_CLOUD_NAME'),
+    apiKey: Environment.imgApiKey,
+    apiSecret: Environment.imgApiSecret,
+    cloudName: Environment.imgCloudName,
   );
 
   @override

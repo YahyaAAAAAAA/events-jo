@@ -2,6 +2,7 @@ import 'package:events_jo/config/enums/user_type_enum.dart';
 import 'package:events_jo/config/extensions/build_context_extenstions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
+import 'package:events_jo/config/utils/enviroment.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/config/utils/loading/global_loading.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
@@ -17,7 +18,6 @@ import 'package:events_jo/features/settings/representation/cubits/settings_cubit
 import 'package:events_jo/features/settings/representation/cubits/settings_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AccountPage extends StatefulWidget {
@@ -133,7 +133,7 @@ class _AccountPageState extends State<AccountPage> {
 
                           final Uri emailUri = Uri(
                             scheme: 'mailto',
-                            path: await dotenv.get('APP_EMAIL'),
+                            path: Environment.appEmail,
                             queryParameters: {
                               'subject': subject,
                               'body': message,

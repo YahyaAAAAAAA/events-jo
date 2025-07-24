@@ -3,13 +3,13 @@ import 'package:events_jo/config/extensions/color_extensions.dart';
 import 'package:events_jo/config/extensions/int_extensions.dart';
 import 'package:events_jo/config/utils/constants.dart';
 import 'package:events_jo/config/utils/custom_icons_icons.dart';
+import 'package:events_jo/config/utils/enviroment.dart';
 import 'package:events_jo/config/utils/global_colors.dart';
 import 'package:events_jo/features/settings/representation/components/settings_card.dart';
 import 'package:events_jo/features/settings/representation/components/settings_sub_app_bar.dart';
 import 'package:events_jo/features/settings/representation/components/settings_text_button.dart';
 import 'package:events_jo/features/settings/representation/components/settings_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SupportPage extends StatefulWidget {
@@ -113,7 +113,7 @@ class _SupportPageState extends State<SupportPage> {
 
                     final Uri emailUri = Uri(
                       scheme: 'mailto',
-                      path: await dotenv.get('APP_EMAIL'),
+                      path: Environment.appEmail,
                       queryParameters: {
                         'subject': subject,
                         'body': message,
