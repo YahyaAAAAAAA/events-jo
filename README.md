@@ -96,6 +96,14 @@ https://github.com/user-attachments/assets/763e1bc2-6b00-4e15-84a3-2d3c6ef69cc5
 
 ###
 
+<h2 align="left">🔵 Project Status</h2>
+
+###
+
+<p align="left">• Done</p>
+
+###
+
 <h2 align="left">🔵 Contact</h2>
 
 <p align="left">• Email: yahya.amarneh73@gmail.com</p>
